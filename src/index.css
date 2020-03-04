@@ -1,0 +1,12 @@
+body {
+    background: url('https://getwall.net/wp-content/uploads/2019/04/Light-desktop-hd-wallpapers-768x480.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
