@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-
 import axios from 'axios';
 
 class LmUpdateForm extends Component {
@@ -16,7 +14,7 @@ class LmUpdateForm extends Component {
     handleUpdate = (props) => {
         const { toggle } = this.props;
 
-        toggle();
+        toggle(); 
 
         alert(this.state.levelOfEducation);
         this.setState({ highestlevelOfEducation: '', natureOfWork: '' });

@@ -23,19 +23,22 @@ class EasUpdateForm extends Component {
         const { levelOfEducation, intendedStudy } = this.state
 
         const data = {
-            user_id: this.props.user.id,
             levelOfEducation: levelOfEducation,
             intendedStudy: intendedStudy
         }
         //make axios request to update db
     }
 
+
     //make axios call to api and get data to be edited and store in state
 
-    componentWillMount() {
-        // axios.get()
-        // .then(response => this.setState(levelOfEducation: response.data.levelOfEducation,intendedStudy: response.data.intendedStudy).catch(err => err.message)
-        console.log('making axios request')
+
+    componentDidMount() {
+        const { id } = this.props.user;
+        axios.get(`localhost:5000/subscriptioneas/${id}`)
+            .then(response => console.log(response.email))
+            .catch(err => err.message)
+
     }
 
 
@@ -51,12 +54,12 @@ class EasUpdateForm extends Component {
 
 
     render() {
-
         const { isOpen, toggle } = this.props;
 
         const sub_statusColor = this.state.sub_status === false ? '#ae2b26' : 'green';
 
-        const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID'
+        const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID';
+
 
         return (
 
@@ -96,4 +99,7 @@ class EasUpdateForm extends Component {
 
     }
 }
+// localhost:5000/subscriptioneas/`${id}`
+// localhost:5000/subscriptioneas/update/id
+
 export default EasUpdateForm;

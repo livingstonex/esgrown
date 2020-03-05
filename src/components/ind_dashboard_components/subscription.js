@@ -23,7 +23,7 @@ import LMForm from './subscription-forms/lm-form';
 import EasModal from './subscription-pages/eas/eas_sub_page/eas_sub_page';
 import EfaModal from './subscription-pages/efa/efa_sub_page/efa_sub_page';
 import RmModal from './subscription-pages/rm/rm_sub_page/rm_sub_page';
-import LmModal from './subscription-pages/Lm/Lm_sub_page/lm_sub_page';
+import LmModal from './subscription-pages/lm/lm_sub_page/lm_sub_page';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
