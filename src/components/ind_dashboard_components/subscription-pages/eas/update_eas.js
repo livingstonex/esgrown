@@ -36,6 +36,7 @@ class updateForm extends Component {
                 </FormGroup>
                 <Button onClick={this.update(this.state)}>Submit</Button>
             </Form>
+           
         )
 
     }

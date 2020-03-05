@@ -37,4 +37,21 @@ router.route('/update').post((req, res) => {
 
 });
 
+
+//============================= UPDATE FOR EAS FORM ===============================
+
+router.route(`/update/:id`).post((req, res) => {
+    EAS.findById(req.params.id)
+                .then(eas => { 
+                            eas.update(
+                                {
+                                    levelofeducation: req.body.levelofeducation,
+                                    field_of_intended_study: req.body.field_of_intended_study
+                                }
+                                ).then((res)=>res.json('Subscription Updated Successfully! ' + res))
+                            .catch(err => res.status(400).json('Error: '+ err));
+                })
+                .catch(err => res.status(400).json('Request Failed:  '+ err));
+});
+
 module.exports = router;
