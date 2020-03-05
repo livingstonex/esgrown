@@ -18,4 +18,30 @@ router.route('/add').post((req, res) => {
 
 });
 
+
+
+
+//============================= Get Individual's RM Sub Details ===========================
+
+router.route(`/:id`).get((req, res) => {
+    RM.find({user_id: req.params.id})
+            .then(rm => res.json(rm))
+            .catch(err => res.status(400).json('Error: ' + err));   
+});
+
+
+
+//============================= UPDATE FOR RM FORM ===============================
+
+router.route(`/update/:id`).post((req, res) => {
+    RM.findOneAndUpdate(
+                        {user_id: req.params.id}, 
+                        {  
+                        highest_level_of_education: req.body.highest_level_of_education,
+                        field_of_training: req.body.field_of_training,
+                        }
+                    ).then(rm => res.json(rm))
+                    .catch(err => res.json('Err: ' + err));
+});
+
 module.exports = router;

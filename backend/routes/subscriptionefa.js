@@ -20,4 +20,29 @@ router.route('/add').post((req, res) => {
 
 });
 
+
+
+//============================= Get Individual's EFA Sub Details ===========================
+
+router.route(`/:id`).get((req, res) => {
+    EFA.find({user_id: req.params.id})
+            .then(efa => res.json(efa))
+            .catch(err => res.status(400).json('Error: ' + err));   
+});
+
+
+
+//============================= UPDATE FOR EFA FORM ===============================
+
+router.route(`/update/:id`).post((req, res) => {
+    EFA.findOneAndUpdate(
+        {user_id: req.params.id}, 
+        {  levelofeducation: req.body.levelofeducation,
+           next_intended_education_level: req.body.next_intended_education_level,
+           field_of_intended_study: req.body.field_of_intended_study
+        }
+        ).then(ef => res.json(ef))
+                        .catch(err => res.json('Err: ' + err));
+});
+
 module.exports = router;

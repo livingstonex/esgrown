@@ -20,7 +20,7 @@ router.route('/add').post((req, res) => {
 });
 
 
-//============================= Get Individua Sub Details ===========================
+//============================= Get Individual's EAS Sub Details ===========================
 
 router.route(`/:id`).get((req, res) => {
     EAS.find({user_id: req.params.id})
