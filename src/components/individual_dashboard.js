@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from './navbar';
 import Profile from './ind_dashboard_components/profile';
 import Account from './ind_dashboard_components/account';
@@ -101,17 +101,17 @@ export default function MiniDrawer() {
   const [page, setPage] = useState(0);
   const [user, setUser] = useState({});
 
-  useEffect(()=>{
+  useEffect(() => {
     const userr = JSON.parse(sessionStorage.getItem("key"));
     setUser(userr);
-  },[])
+  }, [])
 
   //Functions to set setPage based on where the user clicks
   const setActPage = () => {
-      setPage(0);
+    setPage(0);
   };
   const setProfilePage = () => {
-      setPage(1);
+    setPage(1);
   }
   const setSubPage = () => {
     setPage(2);
@@ -127,94 +127,94 @@ export default function MiniDrawer() {
   };
 
   return (
-    <> 
-    <div className={classes.root}>  
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar> 
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Welcome to Dashboard: {user.name}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+    <>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, {
+                [classes.hide]: open,
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              Welcome to Dashboard: {user.name}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
-        </div>
-        <Divider />
-        <List> 
-          {
-            <ListItem button onClick={setActPage}>  
+          </div>
+          <Divider />
+          <List>
+            {
+              <ListItem button onClick={setActPage}>
                 <ListItemIcon>
-                <SvgIcon color="primary">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                </SvgIcon>    
+                  <SvgIcon color="primary">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                  </SvgIcon>
                 </ListItemIcon>
                 <ListItemText primary={'Account'} />
-          </ListItem> 
-          }
-          {
-            <ListItem button onClick={setProfilePage}>  
-                <ListItemIcon><PersonIcon color="primary"/> </ListItemIcon>
-                <ListItemText primary={'Profile'} />
-            </ListItem> 
-          }
-          {
-            <ListItem button onClick={setSubPage}>  
-                <ListItemIcon><SubscriptionIcon color="primary"/> </ListItemIcon>
-                <ListItemText primary={'Subscription'} />
-            </ListItem> 
-          }
-        </List>
-        <Divider />
-        <List>
-          <Link to="/logout" style={{'text-decoration':'none'}}>
+              </ListItem>
+            }
             {
-              <ListItem button onClick={{}}>  
-                    <ListItemIcon><LogoutIcon color="primary"/> </ListItemIcon>
-                    <ListItemText primary={'Logout'} />
-              </ListItem> 
+              <ListItem button onClick={setProfilePage}>
+                <ListItemIcon><PersonIcon color="primary" /> </ListItemIcon>
+                <ListItemText primary={'Profile'} />
+              </ListItem>
+            }
+            {
+              <ListItem button onClick={setSubPage}>
+                <ListItemIcon><SubscriptionIcon color="primary" /> </ListItemIcon>
+                <ListItemText primary={'Subscription'} />
+              </ListItem>
+            }
+          </List>
+          <Divider />
+          <List>
+            <Link to="/logout" style={{ 'text-decoration': 'none' }}>
+              {
+                <ListItem button onClick={{}}>
+                  <ListItemIcon><LogoutIcon color="primary" /> </ListItemIcon>
+                  <ListItemText primary={'Logout'} />
+                </ListItem>
               }
-          </Link>
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-     
-        {
-           (page == 0)? <Account/> : (page == 1)? <Profile/> : (page == 2)? <Subscription/>: ''
-        }
-      </main>
-    </div>
+            </Link>
+          </List>
+        </Drawer>
+        <main className={classes.content}>
+
+          {
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : ''
+          }
+        </main>
+      </div>
     </>
   );
 }
