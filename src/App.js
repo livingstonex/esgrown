@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar";
@@ -12,15 +12,17 @@ import Services from "./components/services";
 
 import Logout from "./components/logout";
 import Frontier from "./components/frontier";
+import EasSubPage from "./components/ind_dashboard_components/subscription-pages/eas/eas_sub_page/eas_sub_page";
 
-import {AuthProvider} from "./AuthContext";
+
+import { AuthProvider } from "./AuthContext";
 
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar/>
+        <Navbar />
         <Route path="/" exact component={Home} />
         <Route path="/corporate_login" exact component={SignIn} />
         <Route path="/signup_individual" exact component={SignUp_Individual} />
@@ -28,7 +30,11 @@ function App() {
         <Route path="/about" exact component={About} />
         <Route path="/services" exact component={Services} />
         <Route path="/logout" exact component={Logout} />
-        <Route path="/frontier" exact component={Frontier}/>
+        <Route path="/frontier" exact component={Frontier} />
+
+
+        <Route path="/sub/eas" exact component={EasSubPage} />
+
       </Router>
     </AuthProvider>
   );

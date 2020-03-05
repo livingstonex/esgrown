@@ -29,12 +29,16 @@ const subscriptionefaRouter = require('./routes/subscriptionefa');
 const subscriptionrmRouter = require('./routes/subscriptionrm');
 const subscriptionlmRouter = require('./routes/subscriptionlm');
 
+//SUB_EAS Expose
+const easSubGetRouter = require('./routes/subscriptioneas');
+
 app.use('/individuals', individualsRouter);
 app.use('/corporates', corporatesRouter);
 app.use('/subscriptioneas', subscriptioneasRouter);
 app.use('/subscriptionefa', subscriptionefaRouter);
 app.use('/subscriptionrm', subscriptionrmRouter);
 app.use('/subscriptionlm', subscriptionlmRouter);
+
 
 app.listen(port, () => {console.log(`App is running successfully on port ${port}` ); 
 });
