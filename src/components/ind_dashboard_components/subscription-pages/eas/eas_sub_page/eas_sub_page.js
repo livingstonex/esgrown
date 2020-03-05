@@ -9,34 +9,51 @@ class EasUpdateForm extends Component {
     state = {
         levelOfEducation: '',
         intendedStudy: '',
-        sub_status: false
+        sub_status: false,
+        user_id: ''
     }
 
 
     handleUpdate = (props) => {
-        // axios.post().then(response => console.log(response))
+
         const { toggle } = this.props;
         toggle();
 
         this.setState({ levelOfEducation: '', intendedStudy: '' })
 
-        const { levelOfEducation, intendedStudy } = this.state
+        const { levelOfEducation, intendedStudy } = this.state;
+
+        const id = this.state.user_id;
+
 
         const data = {
-            levelOfEducation: levelOfEducation,
-            intendedStudy: intendedStudy
+            levelofeducation: levelOfEducation,
+            field_of_intended_study: intendedStudy
         }
+
+
         //make axios request to update db
+        axios.post(`http://localhost:5000/subscriptioneas/update/${id}`, data)
+            .then(response => console.log(response))
+            .catch(err => console.log(err.message))
+
+
     }
 
 
-    //make axios call to api and get data to be edited and store in state
-
-
+    //get values to be updated
     componentDidMount() {
-        const { id } = this.props.user;
-        axios.get(`localhost:5000/subscriptioneas/${id}`)
-            .then(response => console.log(response.email))
+        const userData = JSON.parse(sessionStorage.getItem('key'));
+
+        this.setState({ user_id: userData.id });
+
+
+        axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
+            .then(response => this.setState({
+                levelOfEducation: response.data[0].levelofeducation,
+                intendedStudy: response.data[0].field_of_intended_study
+            }))
+
             .catch(err => err.message)
 
     }
@@ -100,6 +117,6 @@ class EasUpdateForm extends Component {
     }
 }
 // localhost:5000/subscriptioneas/`${id}`
-// localhost:5000/subscriptioneas/update/id
+// localhost:5000/subscriptioneas/update/id{}
 
 export default EasUpdateForm;
