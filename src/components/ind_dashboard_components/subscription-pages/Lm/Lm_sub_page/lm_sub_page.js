@@ -6,31 +6,44 @@ class LmUpdateForm extends Component {
 
     state = {
         highestlevelOfEducation: '',
-        natureOfWork: '',
-        sub_status: false
+        natureOfBusiness: '',
+        sub_status: false,
+        user_id: '',
+        message: ''
     }
 
 
-    handleUpdate = (props) => {
-        const { toggle } = this.props;
-
-        toggle(); 
-
-        alert(this.state.levelOfEducation);
-        this.setState({ highestlevelOfEducation: '', natureOfWork: '' });
+    handleUpdate = () => {
 
         const data = {
-            natureOfWork: this.state.natureOfWork,
-            highestlevelOfEducation: this.state.highestlevelOfEducation
+            nature_of_work_business: this.state.natureOfBusiness,
+            highest_level_of_education: this.state.highestlevelOfEducation
         }
 
-        // axios.post(http://).then(response => console.log(response))
+        axios.post(`http://localhost:5000/subscriptionlm/update/${this.state.user_id}`, data)
+            .then(response => {
+                if (response.status === 200) {
+                    this.setState({
+                        message: 'Subscription details updated successful'
+                    })
+                }
+            })
+            .catch(err => this.setState({ message: 'Update failed. Please try again' }))
     }
 
     //make axios call to api and get data to be edited and store in state
+    componentDidMount() {
+        const userData = JSON.parse(sessionStorage.getItem('key'));
 
-    // axios.get()
-    // .then(data => this.setState(levelOfEducation: data.levelOfEducation,intendedStudy:data.intendedStudy)
+        this.setState({ user_id: userData.id });
+
+        axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
+            .then(response => this.setState({
+                highestlevelOfEducation: response.data[0].highest_level_of_education,
+                natureOfBusiness: response.data[0].nature_of_work_business
+            }))
+            .catch(err => console.log(err));
+    }
 
     changeHandler = event => {
 
@@ -55,8 +68,8 @@ class LmUpdateForm extends Component {
             <div>
                 <Modal isOpen={isOpen} toggle={toggle} centered>
                     <ModalHeader>
-                        Update your Info
-                        <Button style={{ float: 'right', marginLeft: 280, backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button>
+                        <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18 }}>Leadership Management Subscription</p></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -70,17 +83,19 @@ class LmUpdateForm extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="intendedStudy">Nature Of Work Or Business</Label>
+                                <Label for="natureOfBusiness">Nature Of Work Or Business</Label>
                                 <Input type="text"
-                                    name="natureOfWork"
-                                    value={this.state.natureOfWork}
+                                    name="natureOfBusiness"
+                                    value={this.state.natureOfBusiness}
                                     onChange={this.changeHandler}
                                 />
                             </FormGroup>
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
+                        {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
+                        {' '}{''}
+                        <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>{' '}
                     </ModalFooter>
                 </Modal>
             </div>

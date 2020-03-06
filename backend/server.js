@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-require('dotenv').config();  
+require('dotenv').config();
 
 //setup express
 const app = express();
@@ -17,8 +17,8 @@ app.use(express.json());
 const uri = process.env.URI;
 
 //connect to mongoDB using mongoose
-mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`, 
-    {useUnifiedTopology:true, useNewUrlParser:true, useCreateIndex:true})
+mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
+    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
 
@@ -40,5 +40,6 @@ app.use('/subscriptionrm', subscriptionrmRouter);
 app.use('/subscriptionlm', subscriptionlmRouter);
 
 
-app.listen(port, () => {console.log(`App is running successfully on port ${port}` ); 
+app.listen(port, () => {
+    console.log(`App is running successfully on port ${port}`);
 });

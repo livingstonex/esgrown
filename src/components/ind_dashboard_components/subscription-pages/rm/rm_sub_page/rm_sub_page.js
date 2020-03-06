@@ -9,26 +9,45 @@ class RmUpdateForm extends Component {
     state = {
         highestlevelOfEducation: '',
         intendedStudy: '',
-        sub_status: false
+        sub_status: false,
+        user_id: '',
+        message: ''
     }
 
 
-    handleUpdate = (props) => {
-        // axios.post().then(response => console.log(response))
-        const { toggle } = this.props;
+    handleUpdate = () => {
 
-        toggle();
+        const data = {
+            highest_level_of_education: this.state.highestlevelOfEducation,
+            field_of_training: this.state.intendedStudy,
+        };
 
-        alert(this.state.highestlevelOfEducation);
-        this.setState({ highestlevelOfEducation: '', intendedStudy: '' })
-
-
-
-
+        //make axios request and update
+        axios.post(`http://localhost:5000/subscriptionrm/update/${this.state.user_id}`, data)
+            .then(response => {
+                if (response.status == 200) {
+                    this.setState({ message: 'Subscription details updated successful' })
+                }
+            })
+            .catch(err => this.setState({ message: 'Update failed. Please try again' }))
 
     }
 
     //make axios call to api and get data to be edited and store in state
+    // : : 
+    componentDidMount() {
+        const userData = JSON.parse(sessionStorage.getItem('key'));
+
+        this.setState({ user_id: userData.id });
+
+        axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
+            .then(response => this.setState({
+                highestlevelOfEducation: response.data[0].highest_level_of_education,
+                intendedStudy: response.data[0].field_of_training
+            }))
+            .catch(err => console.log(err))
+
+    }
 
     // axios.get()
     // .then(data => this.setState(highestlevelOfEducation: data.highestlevelOfEducation,intendedStudy:data.intendedStudy)
@@ -56,8 +75,8 @@ class RmUpdateForm extends Component {
             <div>
                 <Modal isOpen={isOpen} toggle={toggle} centered>
                     <ModalHeader>
-                        Update your Info
-                        <Button style={{ float: 'right', marginLeft: 280, backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button>
+                        <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18}}>Recruitment Management Subscription</p></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -71,7 +90,7 @@ class RmUpdateForm extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="intendedStudy">Intended Study</Label>
+                                <Label for="intendedStudy">Field Of Training</Label>
                                 <Input type="text"
                                     name="intendedStudy"
                                     value={this.state.intendedStudy}
@@ -81,10 +100,12 @@ class RmUpdateForm extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
+                        {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
+                        {' '}{''}
                         <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
                     </ModalFooter>
                 </Modal>
-            </div>
+            </div >
         )
 
     }

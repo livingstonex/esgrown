@@ -10,33 +10,54 @@ class EfaUpdateForm extends Component {
         levelOfEducation: '',
         nextIntendedEductionLevel: '',
         filedOfStudy: '',
-        sub_status: false
+        sub_status: false,
+        user_id: '',
+        message: ''
     }
 
 
-    handleUpdate = (props) => {
-        // axios.post().then(response => console.log(response))
-        const { toggle } = this.props;
-        toggle();
-
-        this.setState({ levelOfEducation: '', intendedStudy: '' });
+    handleUpdate = () => {
 
         const data = {
-            levelOfEducation: this.state.levelOfEducation,
-            nextIntendedEductionLevel: this.state.nextIntendedEductionLevel,
-            filedOfStudy: this.state.filedOfStudy
+            levelofeducation: this.state.levelOfEducation,
+            next_intended_education_level: this.state.nextIntendedEductionLevel,
+            field_of_intended_study: this.state.filedOfStudy
         };
 
         //make axios request and update
+        axios.post(`http://localhost:5000/subscriptionefa/update/${this.state.user_id}`, data)
+            .then(response => {
+                if (response.status == 200) {
+                    this.setState({
+                        message: 'Subscription details updated successful'
+})
+                }
+            })
+            .catch(err => this.setState({ message: 'Update failed. Please try again' }))
 
 
 
     }
 
-    //make axios call to api and get data to be edited and store in state
 
-    // axios.get()
-    // .then(data => this.setState(levelOfEducation: data.levelOfEducation,intendedStudy:data.intendedStudy)
+    //make axios call to api and get data to be edited and store in state
+    componentDidMount() {
+        const userData = JSON.parse(sessionStorage.getItem('key'));
+
+        this.setState({ user_id: userData.id });
+
+        axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
+            .then(response => this.setState({
+                levelOfEducation: response.data[0].levelofeducation,
+                nextIntendedEductionLevel: response.data[0].next_intended_education_level,
+                filedOfStudy: response.data[0].field_of_intended_study
+
+            }))
+            .catch(err => console.log(err.message))
+
+    }
+
+
 
     changeHandler = event => {
 
@@ -58,10 +79,11 @@ class EfaUpdateForm extends Component {
         return (
 
             <div>
-                <Modal isOpen={isOpen} toggle={toggle} centered>
+
+                <Modal isOpen={isOpen} toggle={toggle} onHide={() => this.setState({ messsage: ' ' })} centered >
                     <ModalHeader>
-                        Update your Info
-                        <Button style={{ float: 'right', marginLeft: 280, backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button>
+                        <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18 }}>Education Finances Advisory Subscription</p></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -75,7 +97,7 @@ class EfaUpdateForm extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="levelOfEducation">next Intended Eduction Level</Label>
+                                <Label for="levelOfEducation">Next Intended Eduction Level</Label>
                                 <Input type="text"
                                     name="nextIntendedEductionLevel"
                                     value={this.state.nextIntendedEductionLevel}
@@ -84,7 +106,7 @@ class EfaUpdateForm extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="intendedStudy">filed Of Study</Label>
+                                <Label for="intendedStudy">Filed Of Study</Label>
                                 <Input type="text"
                                     name="filedOfStudy"
                                     value={this.state.filedOfStudy}
@@ -94,7 +116,9 @@ class EfaUpdateForm extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
+                        {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
+                        {' '}{''}
+                        <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>{' '}
                     </ModalFooter>
                 </Modal>
             </div>

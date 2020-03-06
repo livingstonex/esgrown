@@ -86,7 +86,6 @@ export default function Subscription() {
   const toggleEfa = () => setEfamodal(!efamodal)
   const toggleRm = () => setRmmodal(!rmmodal)
   const toggleLm = () => setLmmodal(!lmmodal)
-
   return (
     <>
       <div className="container">
@@ -200,10 +199,10 @@ export default function Subscription() {
         </div>
 
       </div>
-      <EasModal isOpen={easmodal} toggle={toggleEas} user={User} />
+      <EasModal isOpen={easmodal} toggle={toggleEas} user={User.id} />
       <EfaModal isOpen={efamodal} toggle={toggleEfa} user={User} />
       <RmModal isOpen={rmmodal} toggle={toggleRm} user={User} />
-      <RmModal isOpen={lmmodal} toggle={toggleLm} user={User} />
+      <LmModal isOpen={lmmodal} toggle={toggleLm} user={User} />
     </>
   );
 }
