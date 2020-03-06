@@ -10,6 +10,7 @@ export default function Form(props) {
     const [FIS, setFIS] = useState("");
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
+    const [pmtModalShow, setPmtModalShow] = useState(false)
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -57,6 +58,8 @@ export default function Form(props) {
                     console.log(res.data);
                     setSpinner(false);
                     setModalShow(false);
+                    setPmtModalShow(true);
+
                 })
                 .catch((err) => {
                     console.log('Err: ' + err);
@@ -166,6 +169,15 @@ export default function Form(props) {
                         </div>
                     </form>
                 </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={pmtModalShow}
+                onHide={() => setPmtModalShow(false)}
+                aria-labelledby="example-custom-modal-styling-title"
+                centered
+            >
+                <Modal.Header></Modal.Header>
             </Modal>
 
         </React.Fragment>

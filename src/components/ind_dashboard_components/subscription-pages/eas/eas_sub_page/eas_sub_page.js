@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+    Button,
+    Form, FormGroup,
+    Label, Input,
+    Modal, ModalHeader,
+    ModalBody, ModalFooter,
+    InputGroup, InputGroupAddon,
+    InputGroupText,
+} from 'reactstrap';
 
 
 import axios from 'axios';
@@ -92,23 +100,48 @@ class EasUpdateForm extends Component {
                     </ModalHeader>
                     <ModalBody>
                         <Form>
-                            <FormGroup>
+                            {/* <FormGroup>
                                 <Label for="levelOfEducation">Level Of Education</Label>
                                 <Input type="text"
                                     name="levelOfEducation"
                                     value={this.state.levelOfEducation}
                                     onChange={this.changeHandler}
                                 />
-                            </FormGroup>
+                            </FormGroup> */}
+                            <Label for="levelOfEducation">Level Of Education</Label>
+                            <InputGroup>
+                                <Input type="text"
+                                    name="levelOfEducation"
+                                    value={this.state.levelOfEducation}
+                                    onChange={this.changeHandler}
+                                    disabled
+                                />
+                                <InputGroupAddon addonType="append">
+                                    <Button color="info">edit</Button>
+                                </InputGroupAddon>
+                            </InputGroup>
+                            <br />
+                            <Label for="intendedStudy">Field Of Intended Study</Label>
+                            <InputGroup>
+                                <Input type="text"
+                                    name="intendedStudy"
+                                    value={this.state.intendedStudy}
+                                    onChange={this.changeHandler}
+                                    disabled
+                                />
+                                <InputGroupAddon addonType="append">
+                                    <Button color="info">edit</Button>
+                                </InputGroupAddon>
+                            </InputGroup>
 
-                            <FormGroup>
+                            {/* <FormGroup>
                                 <Label for="intendedStudy">Field Of Intended Study</Label>
                                 <Input type="text"
                                     name="intendedStudy"
                                     value={this.state.intendedStudy}
                                     onChange={this.changeHandler}
                                 />
-                            </FormGroup>
+                            </FormGroup> */}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
