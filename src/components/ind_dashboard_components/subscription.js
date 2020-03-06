@@ -202,7 +202,7 @@ export default function Subscription() {
       <EasModal isOpen={easmodal} toggle={toggleEas} user={User.id} />
       <EfaModal isOpen={efamodal} toggle={toggleEfa} user={User} />
       <RmModal isOpen={rmmodal} toggle={toggleRm} user={User} />
-      <RmModal isOpen={lmmodal} toggle={toggleLm} user={User} />
+      <LmModal isOpen={lmmodal} toggle={toggleLm} user={User} />
     </>
   );
 }

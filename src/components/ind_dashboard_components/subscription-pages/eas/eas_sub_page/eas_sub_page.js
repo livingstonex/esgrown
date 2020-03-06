@@ -10,16 +10,16 @@ class EasUpdateForm extends Component {
         levelOfEducation: '',
         intendedStudy: '',
         sub_status: false,
-        user_id: ''
+        user_id: '',
+        message: ''
     }
 
 
     handleUpdate = (props) => {
 
-        const { toggle } = this.props;
-        toggle();
 
-        this.setState({ levelOfEducation: '', intendedStudy: '' })
+
+
 
         const { levelOfEducation, intendedStudy } = this.state;
 
@@ -34,7 +34,11 @@ class EasUpdateForm extends Component {
 
         //make axios request to update db
         axios.post(`http://localhost:5000/subscriptioneas/update/${id}`, data)
-            .then(response => console.log(response))
+            .then(response => {
+                if (response.status === 200) {
+                    this.setState({ message: 'Subscription details updated successful' })
+                }
+            })
             .catch(err => console.log(err.message))
 
 
@@ -83,8 +87,8 @@ class EasUpdateForm extends Component {
             <div>
                 <Modal isOpen={isOpen} toggle={toggle} centered>
                     <ModalHeader>
-                        Update your Info
-                        <Button style={{ float: 'right', marginLeft: 280, backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button>
+                        <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18 }}>Education Advisory Services Subscription</p></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -108,6 +112,8 @@ class EasUpdateForm extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
+                        {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
+                        {' '}{''}
                         <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
                     </ModalFooter>
                 </Modal>
@@ -116,7 +122,6 @@ class EasUpdateForm extends Component {
 
     }
 }
-// localhost:5000/subscriptioneas/`${id}`
-// localhost:5000/subscriptioneas/update/id{}
+
 
 export default EasUpdateForm;
