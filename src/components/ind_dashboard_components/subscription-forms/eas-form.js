@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Modal, Spinner } from 'react-bootstrap';
+import { Modal, Spinner, Button } from 'react-bootstrap';
+import PaystackButton from 'react-paystack';
 import axios from 'axios';
 
 
@@ -10,10 +11,27 @@ export default function Form(props) {
     const [FIS, setFIS] = useState("");
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
-    const [pmtModalShow, setPmtModalShow] = useState(false)
+
+    const [pmtModalShow, setPmtModalShow] = useState(false);
+    const [userEmail, setUserEmail] = useState("");
+    const [username, setUserName] = useState("");
+
+    const [amount, setAmount] = useState("");
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
+
+    //GET LOGGEDIN USER CREDENTIALS FOR PMT
+    useEffect(() => {
+        const userData = JSON.parse(sessionStorage.getItem('key'));
+        const userEmail = userData.email;
+        const username = userData.username;
+        setUserEmail(userEmail);
+        setUserName(username);
+    }, [])
+
+
+
 
 
     const onChangeLOE = (e) => {
@@ -36,6 +54,10 @@ export default function Form(props) {
 
     const onChangeTIC = (e) => {
         setTIC(e.target.value);
+    }
+
+    const close = () => {
+        console.log("Payment closed");
     }
 
     const onSubmit = (e) => {
@@ -91,7 +113,7 @@ export default function Form(props) {
                 centered
             >
                 <Modal.Body>
-                    <form className="container py-4" onSubmit={onSubmit}>
+                    <form className="container py-4" >
                         <div className="row">
                             <div className="col">
                                 <h6>Subscription Details</h6>
@@ -168,6 +190,7 @@ export default function Form(props) {
                             </div>
                         </div>
                     </form>
+                    
                 </Modal.Body>
             </Modal>
 
@@ -177,8 +200,24 @@ export default function Form(props) {
                 aria-labelledby="example-custom-modal-styling-title"
                 centered
             >
-                <Modal.Header></Modal.Header>
+                <Modal.Body>
+                    <form className="container py-4" >
+                        <PaystackButton
+                            text="Proceed"
+                            class="payButton"
+                            close={close}
+                            disabled={false}
+                            embed={true}
+                            email={userEmail}
+                            amount="515000"
+                            paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
+                            tag="button"
+                        />
+                    </form>   
+                </Modal.Body>
             </Modal>
+
+            
 
         </React.Fragment>
     );
