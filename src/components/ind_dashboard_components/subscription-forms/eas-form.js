@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Modal, Spinner, Button } from 'react-bootstrap';
 import PaystackButton from 'react-paystack';
 import axios from 'axios';
+import './paystack.css';
 
 
 export default function Form(props) {
@@ -60,6 +61,12 @@ export default function Form(props) {
         console.log("Payment closed");
     }
 
+    const callback = (response) => {
+        console.log(response);
+        setPmtModalShow(false);
+
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -113,7 +120,8 @@ export default function Form(props) {
                 centered
             >
                 <Modal.Body>
-                    <form className="container py-4" >
+
+                    <form className="container py-4" onSubmit={onSubmit}>
                         <div className="row">
                             <div className="col">
                                 <h6>Subscription Details</h6>
@@ -190,7 +198,7 @@ export default function Form(props) {
                             </div>
                         </div>
                     </form>
-                    
+
                 </Modal.Body>
             </Modal>
 
@@ -200,24 +208,21 @@ export default function Form(props) {
                 aria-labelledby="example-custom-modal-styling-title"
                 centered
             >
-                <Modal.Body>
-                    <form className="container py-4" >
-                        <PaystackButton
-                            text="Proceed"
-                            class="payButton"
-                            close={close}
-                            disabled={false}
-                            embed={true}
-                            email={userEmail}
-                            amount="515000"
-                            paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
-                            tag="button"
-                        />
-                    </form>   
+
+                <Modal.Body style={{ width: 'auto', background: '#21a5e7' }}>
+                    <PaystackButton
+                        text="Proceed To Payment"
+                        class="pay-btn"
+                        close={close}
+                        embed={false}
+                        callback={callback}
+                        email={userEmail}
+                        amount="515000"
+                        paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
+                        tag="button"
+                    />
                 </Modal.Body>
             </Modal>
-
-            
 
         </React.Fragment>
     );
