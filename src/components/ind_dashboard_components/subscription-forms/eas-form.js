@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import PaystackButton from 'react-paystack';
+import PayStackButton from '../paystack/paystackpaymentbutton';
 import { Modal, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -13,6 +13,7 @@ export default function Form(props) {
     const [FIS, setFIS] = useState("");
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
+    const [useremail, setUserEmail] = useState("");
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -21,13 +22,8 @@ export default function Form(props) {
     useEffect(() => {
         const userData = JSON.parse(sessionStorage.getItem('key'));
         const userEmail = userData.email;
-        const username = userData.username;
         setUserEmail(userEmail);
-        setUserName(username);
     }, [])
-
-
-
 
 
     const onChangeLOE = (e) => {
@@ -52,15 +48,6 @@ export default function Form(props) {
         setTIC(e.target.value);
     }
 
-    const close = () => {
-        console.log("Payment closed");
-    }
-
-    const callback = (response) => {
-        console.log(response);
-        setPmtModalShow(false);
-
-    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -93,15 +80,14 @@ export default function Form(props) {
         } catch (error) {
             console.log(error);
         }
-
-
-
-
     }
 
+
     //Paystack Functions
-    const callback = (response) => {
-        console.log(response); // card charged successfully, get reference here
+    const onSuccess = (res) => {
+        console.log(res); // card charged successfully, get reference here
+        setModalPayShow(false)
+
     }
 
     const close = () => {
@@ -202,59 +188,14 @@ export default function Form(props) {
 
                 </Modal.Body>
             </Modal>
-
-
-
-            {/* Payment modal */}
-
-            <Modal
+            <PayStackButton
                 show={modalPayShow}
                 onHide={() => setModalPayShow(false)}
-                aria-labelledby="example-custom-modal-styling-title"
-                centered
-            >
-<<<<<<< HEAD
-                <Modal.Body style={{ width: 'auto', background: '#21a5e7' }}>
-                    <PaystackButton
-                        text="Proceed To Payment"
-                        class="pay-btn"
-                        close={close}
-                        embed={false}
-                        callback={callback}
-                        email={userEmail}
-                        amount="515000"
-                        paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
-                        tag="button"
-                    />
-                </Modal.Body>
-=======
-                <Modal.Body >
-                    <div className="row d-flex justify-content-center">
-                        <div className="col"></div>
-                        <div className="col mt-2 justify-content-center">
-                                <PaystackButton 
-                                        text="Make Subscription Payment"
-                                        className="pay-butt"
-                                        callback={callback}
-                                        close={close}
-                                        disabled={false} 
-                                        email="test@gmail.com"
-                                        amount="515000"
-                                        paystackkey="pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc" 
-                                    />
-                        </div>
-                        <div className="col"></div>
-                    </div>
-                        
-                    
-                </Modal.Body>
-            </Modal>
-           
->>>>>>> 3aea7a84d5e7cf50026e50889c9f41ba3c3cd97d
+                close={close}
+                callback={onSuccess}
+                email={useremail}
+                amount="515000" />
 
-
-            </Modal>
-            
         </React.Fragment>
     );
 }
