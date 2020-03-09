@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Spinner} from 'react-bootstrap';
-import PayStackButton from '../paystack/paystackpaymentbutton';
+import React, { useState, useEffect, Fragment } from 'react';
 import PaystackButton from 'react-paystack';
-import '../paystack/paystack.css';
-
+import { Modal, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
 
@@ -11,16 +8,11 @@ import axios from 'axios';
 export default function Form(props) {
 
     const [modalShow, setModalShow] = useState(false);
+    const [modalPayShow, setModalPayShow] = useState(false);
     const [LOE, setLOE] = useState("");
     const [FIS, setFIS] = useState("");
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
-
-    const [pmtModalShow, setPmtModalShow] = useState(false);
-    const [userEmail, setUserEmail] = useState("");
-    const [username, setUserName] = useState("");
-
-    // const [amount, setAmount] = useState("");
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -90,8 +82,7 @@ export default function Form(props) {
                     console.log(res.data);
                     setSpinner(false);
                     setModalShow(false);
-                    setPmtModalShow(true);
-
+                    setModalPayShow(true);
                 })
                 .catch((err) => {
                     console.log('Err: ' + err);
@@ -107,6 +98,16 @@ export default function Form(props) {
 
 
     }
+
+    //Paystack Functions
+    const callback = (response) => {
+        console.log(response); // card charged successfully, get reference here
+    }
+
+    const close = () => {
+        console.log("Payment closed");
+    }
+
     //console.log(props.user);
     return (
         <React.Fragment>
@@ -133,15 +134,12 @@ export default function Form(props) {
                         {/* Level of Education */}
                         <div className="row mt-3">
                             <div className="col">
-                                <input
-                                    label="Level of Education"
-                                    type="text"
-                                    value={LOE}
-                                    onChange={onChangeLOE}
-                                    placeholder='Level of Education'
-                                    required
-                                    className="form-control"
-                                />
+                                <select className="form-control" required onChange={onChangeLOE}>
+                                    <option>Level of Education</option>
+                                    <option value="degree">Degree</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="phd">Ph.D</option>
+                                </select>
                             </div>
                         </div>
 
@@ -205,12 +203,17 @@ export default function Form(props) {
                 </Modal.Body>
             </Modal>
 
+
+
+            {/* Payment modal */}
+
             <Modal
-                show={pmtModalShow}
-                onHide={() => setPmtModalShow(false)}
+                show={modalPayShow}
+                onHide={() => setModalPayShow(false)}
                 aria-labelledby="example-custom-modal-styling-title"
                 centered
             >
+<<<<<<< HEAD
                 <Modal.Body style={{ width: 'auto', background: '#21a5e7' }}>
                     <PaystackButton
                         text="Proceed To Payment"
@@ -224,6 +227,30 @@ export default function Form(props) {
                         tag="button"
                     />
                 </Modal.Body>
+=======
+                <Modal.Body >
+                    <div className="row d-flex justify-content-center">
+                        <div className="col"></div>
+                        <div className="col mt-2 justify-content-center">
+                                <PaystackButton 
+                                        text="Make Subscription Payment"
+                                        className="pay-butt"
+                                        callback={callback}
+                                        close={close}
+                                        disabled={false} 
+                                        email="test@gmail.com"
+                                        amount="515000"
+                                        paystackkey="pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc" 
+                                    />
+                        </div>
+                        <div className="col"></div>
+                    </div>
+                        
+                    
+                </Modal.Body>
+            </Modal>
+           
+>>>>>>> 3aea7a84d5e7cf50026e50889c9f41ba3c3cd97d
 
 
             </Modal>

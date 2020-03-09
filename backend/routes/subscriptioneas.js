@@ -10,8 +10,9 @@ router.route('/add').post((req, res) => {
     const levelofeducation = req.body.levelofeducation;
     const field_of_intended_study = req.body.field_of_intended_study;
     const tic = req.body.tic;
+    const ref = req.body.ref;
 
-    const newSubscriptionEAS = new EAS({user_id, sub_status, user_name, user_email, user_status, levelofeducation, field_of_intended_study, tic});
+    const newSubscriptionEAS = new EAS({user_id, sub_status, user_name, user_email, user_status, levelofeducation, field_of_intended_study, tic, ref});
 
     newSubscriptionEAS.save()
         .then((sub) => res.json(sub))
@@ -42,4 +43,7 @@ router.route(`/update/:id`).post((req, res) => {
                         .catch(err => res.json('Err: ' + err));
 });
 
+
+//=========================== Check Ref to be used to Toggle Subscription State =========================
+ 
 module.exports = router;

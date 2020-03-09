@@ -75,30 +75,21 @@ export default function Form(props){
                             {/* Level of Education */}
                             <div className="row mt-3">
                                 <div className="col">
-                                    <input
-                                        label="Highest Level of Education"
-                                        type="text"
-                                        value={HLE}
-                                        onChange={onChangeHLE} 
-                                        placeholder='Highest Level of Education'
-                                        required
-                                        className="form-control"
-                                    />
+                                <select className="form-control" required onChange={onChangeHLE}>
+                                    <option>Level of Education</option>
+                                    <option value="degree">Degree</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="phd">Ph.D</option>
+                                </select>
                                 </div>
                             </div>
 
                          {/* Intended Study field */}
                             <div className="row mt-3">
                                 <div className="col"> 
-                                    <input
-                                        label=""
-                                        type="text"
-                                        value={NOWP}
-                                        onChange={onChangeNOWP}
-                                        placeholder="Nature of Work or Business"
-                                        required
-                                        className="form-control"  
-                                    />
+                                    <textarea value={NOWP} onChange={onChangeNOWP} rows='7' className="form-control" required placeholder="Nature of Work or Business">
+
+                                    </textarea>
                                 </div>
                             </div>
 

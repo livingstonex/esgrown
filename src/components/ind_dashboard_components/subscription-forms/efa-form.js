@@ -97,30 +97,24 @@ export default function Form(props){
                             {/* Level of Education */}
                             <div className="row mt-3">
                                 <div className="col">
-                                    <input
-                                        label="Level of Education"
-                                        type="text"
-                                        value={LOE}
-                                        onChange={onChangeLOE} 
-                                        placeholder='Level of Education'
-                                        required
-                                        className="form-control"
-                                    />
+                                    <select className="form-control" required onChange={onChangeLOE}>
+                                    <option>Level of Education</option>
+                                    <option value="degree">Degree</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="phd">Ph.D</option>
+                                </select>
                                 </div>
                             </div>
 
                          {/* Next intended education level field */}
                             <div className="row mt-3">
-                                <div className="col"> 
-                                    <input
-                                        label=""
-                                        type="text"
-                                        value={NIEL}
-                                        onChange={onChangeNIEL}
-                                        placeholder="Next Intended Education Level"
-                                        required
-                                        className="form-control"  
-                                    />
+                                <div className="col">  
+                                    <select className="form-control" required onChange={onChangeNIEL}>
+                                        <option>Next Intended Education Level</option>
+                                        <option value="degree">Degree</option>
+                                        <option value="masters">Masters</option>
+                                        <option value="phd">Ph.D</option>
+                                    </select>
                                 </div>
                             </div>
 
