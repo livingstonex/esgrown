@@ -57,9 +57,11 @@ class EasUpdateForm extends Component {
 
 
         axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
-            .then(response => this.setState({
-                levelOfEducation: response.data[0].levelofeducation,
-                intendedStudy: response.data[0].field_of_intended_study
+            .then(res => this.setState({
+                levelOfEducation: res.data[0].levelofeducation,
+                intendedStudy: res.data[0].field_of_intended_study,
+                sub_status: res.data[0].sub_status
+
             }))
 
             .catch(err => err.message)
@@ -81,7 +83,7 @@ class EasUpdateForm extends Component {
     render() {
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === false ? '#ae2b26' : 'green';
+        const sub_statusColor = this.state.sub_status === false ? '#e68723' : '#97ba0d';
 
         const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID';
 

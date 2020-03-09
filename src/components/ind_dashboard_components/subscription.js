@@ -70,6 +70,7 @@ export default function Subscription() {
     const userData = JSON.parse(sessionStorage.getItem('key'));
     //console.log(userData);
     setUser(userData);
+    
 
   }, []);
 

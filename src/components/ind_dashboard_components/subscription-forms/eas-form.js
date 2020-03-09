@@ -15,6 +15,7 @@ export default function Form(props) {
     const [ticDisable, setTicDisable] = useState(true);
     const [useremail, setUserEmail] = useState("");
     const [userId, setUserId] = useState("");
+    const [subStatus, setSubStatus] = useState("")
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -26,6 +27,17 @@ export default function Form(props) {
         const userId = userData.id;
         setUserEmail(userEmail);
         setUserId(userId);
+
+        //get sub status for user
+        axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
+            .then(res => {
+                if (res.data[0].ref === null && res.data[0].sub_status === false) {
+                    return
+                }
+                setSubStatus(res.data[0].sub_status)
+            })
+            .catch(err => console.log(err))
+
     }, [])
 
 
@@ -112,7 +124,8 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>
+                    {subStatus ? <button className="btn btn-info btn-sm" style={{ color: 'white', background: '#97ba0d' }}>Subscribed</button> :
+                        <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
                 </React.Fragment>
 
             </div>
