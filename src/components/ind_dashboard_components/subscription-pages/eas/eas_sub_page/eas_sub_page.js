@@ -25,10 +25,6 @@ class EasUpdateForm extends Component {
 
     handleUpdate = (props) => {
 
-
-
-
-
         const { levelOfEducation, intendedStudy } = this.state;
 
         const id = this.state.user_id;
@@ -117,7 +113,7 @@ class EasUpdateForm extends Component {
                                     disabled
                                 />
                                 <InputGroupAddon addonType="append">
-                                    <Button color="info">edit</Button>
+                                    <Button>edit</Button>
                                 </InputGroupAddon>
                             </InputGroup>
                             <br />
@@ -130,7 +126,7 @@ class EasUpdateForm extends Component {
                                     disabled
                                 />
                                 <InputGroupAddon addonType="append">
-                                    <Button color="info">edit</Button>
+                                    <Button>edit</Button>
                                 </InputGroupAddon>
                             </InputGroup>
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Modal, Spinner, Button } from 'react-bootstrap';
-import PaystackButton from 'react-paystack';
+import React, { useState, useEffect } from 'react';
+import { Modal, Spinner} from 'react-bootstrap';
+import PayStackButton from '../paystack/paystackpaymentbutton';
 import axios from 'axios';
-import './paystack.css';
+
 
 
 export default function Form(props) {
@@ -17,7 +17,7 @@ export default function Form(props) {
     const [userEmail, setUserEmail] = useState("");
     const [username, setUserName] = useState("");
 
-    const [amount, setAmount] = useState("");
+    // const [amount, setAmount] = useState("");
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -202,28 +202,16 @@ export default function Form(props) {
                 </Modal.Body>
             </Modal>
 
-            <Modal
+            <PayStackButton
+                onHide={setPmtModalShow(false)} 
                 show={pmtModalShow}
-                onHide={() => setPmtModalShow(false)}
-                aria-labelledby="example-custom-modal-styling-title"
-                centered
-            >
-
-                <Modal.Body style={{ width: 'auto', background: '#21a5e7' }}>
-                    <PaystackButton
-                        text="Proceed To Payment"
-                        class="pay-btn"
-                        close={close}
-                        embed={false}
-                        callback={callback}
-                        email={userEmail}
-                        amount="515000"
-                        paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
-                        tag="button"
-                    />
-                </Modal.Body>
-            </Modal>
-
+                close={close} 
+                callBack={callback}
+                amount="515000"
+                email={userEmail}
+                firstname={username}
+            />
+            
         </React.Fragment>
     );
 }
