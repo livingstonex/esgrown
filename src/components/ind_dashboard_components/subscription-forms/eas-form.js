@@ -14,6 +14,7 @@ export default function Form(props) {
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
     const [useremail, setUserEmail] = useState("");
+    const [userId, setUserId] = useState("");
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -22,7 +23,9 @@ export default function Form(props) {
     useEffect(() => {
         const userData = JSON.parse(sessionStorage.getItem('key'));
         const userEmail = userData.email;
+        const userId = userData.id;
         setUserEmail(userEmail);
+        setUserId(userId);
     }, [])
 
 
@@ -85,13 +88,23 @@ export default function Form(props) {
 
     //Paystack Functions
     const onSuccess = (res) => {
-        console.log(res); // card charged successfully, get reference here
-        setModalPayShow(false)
+        console.log(res);
+        setModalPayShow(false);
+
+        const data = {
+            ref: res.reference,
+            sub_status: true
+        }
+        //make axios call to update user reference
+        axios.post(`http://localhost:5000/subscriptioneas/update/easref/${userId}`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
 
     }
 
     const close = () => {
         console.log("Payment closed");
+        setModalPayShow(false)
     }
 
     //console.log(props.user);
@@ -194,7 +207,7 @@ export default function Form(props) {
                 close={close}
                 callback={onSuccess}
                 email={useremail}
-                amount="515000" />
+                amount={515000} />
 
         </React.Fragment>
     );
