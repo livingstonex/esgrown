@@ -45,5 +45,15 @@ router.route(`/update/:id`).post((req, res) => {
 
 
 //=========================== Check Ref to be used to Toggle Subscription State =========================
- 
+
+router.route(`/update/easref/:id`).post((req, res) => {
+    EAS.findOneAndUpdate(
+        {user_id: req.params.id}, 
+        {  
+            ref: req.body.ref,
+        }
+        ).then(es => res.json(es))
+                        .catch(err => res.json('Err: ' + err));
+});
+
 module.exports = router;
