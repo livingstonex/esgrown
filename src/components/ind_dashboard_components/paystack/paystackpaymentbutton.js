@@ -26,7 +26,6 @@ const PayStackButton = (props) => {
                         callback={callback}
                         email={email}
                         amount={amount}
-                        firstname={firstName}
                         paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
                         tag="button"
                     />
