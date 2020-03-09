@@ -11,8 +11,9 @@ router.route('/add').post((req, res) => {
     const next_intended_education_level = req.body.next_intended_education_level;
     const field_of_intended_study = req.body.field_of_intended_study;
     const tic = req.body.tic;  
+    const ref = req.body.ref;
 
-    const newSubscriptionEFA = new EFA({user_id, sub_status, user_name, user_email, user_status, levelofeducation, next_intended_education_level, field_of_intended_study, tic});
+    const newSubscriptionEFA = new EFA({user_id, sub_status, user_name, user_email, user_status, levelofeducation, next_intended_education_level, field_of_intended_study, tic, ref});
 
     newSubscriptionEFA.save()
         .then((sub) => res.json(sub))

@@ -37,6 +37,10 @@ const subscriptionEFASchema = new Schema({
     tic:{
         type: String,
         required: false
+    },
+    ref:{
+        type: String,
+        required: false
     }
 }, {
     timestamps:true,

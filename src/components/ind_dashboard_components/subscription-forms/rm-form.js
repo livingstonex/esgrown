@@ -80,15 +80,12 @@ export default function Form(props){
                             {/* Highest Level of Education */}
                             <div className="row mt-3">
                                 <div className="col">
-                                    <input
-                                        label="Highest Level of Education"
-                                        type="text"
-                                        value={HLE}
-                                        onChange={onChangeHLE} 
-                                        placeholder='Highest Level of Education'
-                                        required
-                                        className="form-control"
-                                    />
+                                    <select className="form-control" required onChange={onChangeHLE}>
+                                        <option>Highest Level of Education</option>
+                                        <option value="degree">Degree</option>
+                                        <option value="masters">Masters</option>
+                                        <option value="phd">Ph.D</option>
+                                    </select>
                                 </div>
                             </div>
 

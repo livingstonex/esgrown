@@ -29,6 +29,10 @@ const subscriptionRMSchema = new Schema({
         type:String,
         required: true
     },
+    ref:{
+        type: String,
+        required: false
+    }
     
 }, {
     timestamps:true,

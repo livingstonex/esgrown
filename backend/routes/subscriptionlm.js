@@ -9,8 +9,9 @@ router.route('/add').post((req, res) => {
     const user_status = req.body.user_status;
     const highest_level_of_education = req.body.highest_level_of_education;
     const nature_of_work_business = req.body.nature_of_work_business;
+    const ref = req.body.ref;
 
-    const newSubscriptionLM = new LM({user_id, sub_status, user_name, user_email, user_status, highest_level_of_education, nature_of_work_business});
+    const newSubscriptionLM = new LM({user_id, sub_status, user_name, user_email, user_status, highest_level_of_education, nature_of_work_business, ref});
 
     newSubscriptionLM.save()
         .then((sub) => res.json(sub))

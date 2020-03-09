@@ -4,6 +4,7 @@ import NavBar from './navbar';
 import Profile from './ind_dashboard_components/profile';
 import Account from './ind_dashboard_components/account';
 import Subscription from './ind_dashboard_components/subscription';
+import Services from './ind_dashboard_components/services';
 
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -23,6 +24,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/PersonPinSharp';
 import SubscriptionIcon from '@material-ui/icons/Subscriptions';
+import ServicesIcon from '@material-ui/icons/RoomService';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
 
@@ -117,6 +119,10 @@ export default function MiniDrawer() {
     setPage(2);
   }
 
+  const setServicePage = () => {
+    setPage(3);
+  }
+
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -195,6 +201,12 @@ export default function MiniDrawer() {
                 <ListItemText primary={'Subscription'} />
               </ListItem>
             }
+             {
+              <ListItem button onClick={setServicePage}>
+                <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                <ListItemText primary={'Services'} />
+              </ListItem>
+            }
           </List>
           <Divider />
           <List>
@@ -211,7 +223,7 @@ export default function MiniDrawer() {
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : ''
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <Services /> : ''
           }
         </main>
       </div>
