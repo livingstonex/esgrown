@@ -52,9 +52,11 @@ router.route(`/update/easref/:id`).post((req, res) => {
         { user_id: req.params.id },
         {
             ref: req.body.ref,
+            sub_status: req.body.sub_status
         }
-    ).then(es => res.json(es))
-        .catch(err => res.json('Err: ' + err));
+        ).then(es => res.json(es))
+                        .catch(err => res.json('Err: ' + err));
+
 });
 
 module.exports = router;
