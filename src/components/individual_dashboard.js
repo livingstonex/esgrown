@@ -173,6 +173,8 @@ export default function MiniDrawer() {
           }}
         >
           <div className={classes.toolbar}>
+            {/* Place Logo here */}
+
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
