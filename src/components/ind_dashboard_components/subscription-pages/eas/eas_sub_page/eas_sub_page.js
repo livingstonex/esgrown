@@ -19,7 +19,9 @@ class EasUpdateForm extends Component {
         intendedStudy: '',
         sub_status: false,
         user_id: '',
-        message: ''
+        message: '',
+        LOE: true,
+        FIS: true
     }
 
 
@@ -108,14 +110,19 @@ class EasUpdateForm extends Component {
                             </FormGroup> */}
                             <Label for="levelOfEducation">Level Of Education</Label>
                             <InputGroup>
-                                <Input type="text"
+                                <Input type="select"
                                     name="levelOfEducation"
                                     value={this.state.levelOfEducation}
                                     onChange={this.changeHandler}
-                                    disabled
-                                />
+                                    disabled={this.state.LOE}
+                                >
+                                    <option>Level of Education</option>
+                                    <option value="degree">Degree</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="phd">Ph.D</option>
+                                </Input>
                                 <InputGroupAddon addonType="append">
-                                    <Button>edit</Button>
+                                    <Button style={{ background: 'lightgrey', border: 'none' }} onClick={() => this.setState({ LOE: !this.state.LOE })}>edit</Button>
                                 </InputGroupAddon>
                             </InputGroup>
                             <br />
@@ -125,10 +132,10 @@ class EasUpdateForm extends Component {
                                     name="intendedStudy"
                                     value={this.state.intendedStudy}
                                     onChange={this.changeHandler}
-                                    disabled
+                                    disabled={this.state.FIS}
                                 />
                                 <InputGroupAddon addonType="append">
-                                    <Button>edit</Button>
+                                    <Button style={{ background: 'lightgrey', border: 'none' }} onClick={() => this.setState({ FIS: !this.state.FIS })}>edit</Button>
                                 </InputGroupAddon>
                             </InputGroup>
 

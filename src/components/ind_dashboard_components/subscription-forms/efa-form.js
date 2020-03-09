@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
+import PayStackButton from '../paystack/paystackpaymentbutton';
 import { Modal } from 'react-bootstrap/';
 
 
-export default function Form(props){
-  
+export default function Form(props) {
+
     const [modalShow, setModalShow] = useState(false);
     const [spinner, setSpinner] = useState(false);
     const [LOE, setLOE] = useState("");
@@ -12,7 +13,35 @@ export default function Form(props){
     const [FIS, setFIS] = useState("");
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
-    
+
+    const [useremail, setUserEmail] = useState("");
+    const [userId, setUserId] = useState("");
+    const [subStatus, setSubStatus] = useState(false);
+    const [modalPayShow, setModalPayShow] = useState(false);
+
+
+
+    //GET LOGGEDIN USER CREDENTIALS FOR PMT
+    useEffect(() => {
+        const userData = JSON.parse(sessionStorage.getItem('key'));
+        const userEmail = userData.email;
+        const userId = userData.id;
+        setUserEmail(userEmail);
+        setUserId(userId);
+
+        //get sub status for user
+        axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
+            .then(res => {
+                if (res.data[0].ref === null && res.data[0].sub_status === false) {
+                    return
+                }
+                setSubStatus(res.data[0].sub_status);
+            })
+            .catch(err => console.log(err))
+
+    }, [])
+
+
 
     const onChangeLOE = (e) => {
         setLOE(e.target.value);
@@ -23,9 +52,9 @@ export default function Form(props){
     }
 
     const onRefferalChange = (e) => {
-        if(e.target.value == "yes"){
+        if (e.target.value == "yes") {
             setTicDisable(false);
-        }else if(e.target.value == "no"){
+        } else if (e.target.value == "no") {
             setTicDisable(true);
             setTIC("");
         }
@@ -57,124 +86,154 @@ export default function Form(props){
         try {
             setSpinner(true);
             axios.post('http://localhost:5000/subscriptionefa/add', SubObject)
-            .then((res) => {
-                console.log(res.data);
-                setSpinner(false);
-                setModalShow(false);
-            })
-            .catch((err) => {
-                console.log('Err: ' + err);
-                setSpinner(false);
-                setModalShow(false);
-            });
-            
+                .then((res) => {
+                    console.log(res.data);
+                    setSpinner(false);
+                    setModalShow(false);
+                    setModalPayShow(true);
+
+                })
+                .catch((err) => {
+                    console.log('Err: ' + err);
+                    setSpinner(false);
+                    setModalShow(false);
+                });
+
         } catch (error) {
             console.log(error);
         }
     }
 
+    //Paystack Functions
+    const onSuccess = (res) => {
+        console.log(res);
+        setModalPayShow(false);
+
+        const data = {
+            ref: res.reference,
+            sub_status: true
+        }
+        //make axios call to update user reference
+        axios.post(`http://localhost:5000/subscriptionefa/update/easref/${userId}`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+
+    }
+
+    const close = () => {
+        console.log("Payment closed");
+        setModalPayShow(false)
+    }
+
     return (
         <React.Fragment>
-            <div className="ml-auto d-flex align-items-center"> 
+            <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
                     <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>
                 </React.Fragment>
-                
-        </div>
-        <Modal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            aria-labelledby="example-custom-modal-styling-title"
-            centered
-                >
-                    <Modal.Body>
-                        <form className="container py-4" onSubmit={onSubmit}>
-                            <div className="row">
-                                <div className="col">
-                                    <h6>Subscription Details</h6>
-                                </div>
+
+            </div>
+            <Modal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                aria-labelledby="example-custom-modal-styling-title"
+                centered
+            >
+                <Modal.Body>
+                    <form className="container py-4" onSubmit={onSubmit}>
+                        <div className="row">
+                            <div className="col">
+                                <h6>Subscription Details</h6>
                             </div>
-                            {/* Level of Education */}
-                            <div className="row mt-3">
-                                <div className="col">
-                                    <select className="form-control" required onChange={onChangeLOE}>
+                        </div>
+                        {/* Level of Education */}
+                        <div className="row mt-3">
+                            <div className="col">
+                                <select className="form-control" required onChange={onChangeLOE}>
                                     <option>Level of Education</option>
                                     <option value="degree">Degree</option>
                                     <option value="masters">Masters</option>
                                     <option value="phd">Ph.D</option>
                                 </select>
-                                </div>
                             </div>
+                        </div>
 
-                         {/* Next intended education level field */}
-                            <div className="row mt-3">
-                                <div className="col">  
-                                    <select className="form-control" required onChange={onChangeNIEL}>
-                                        <option>Next Intended Education Level</option>
-                                        <option value="degree">Degree</option>
-                                        <option value="masters">Masters</option>
-                                        <option value="phd">Ph.D</option>
-                                    </select>
-                                </div>
+                        {/* Next intended education level field */}
+                        <div className="row mt-3">
+                            <div className="col">
+                                <select className="form-control" required onChange={onChangeNIEL}>
+                                    <option>Next Intended Education Level</option>
+                                    <option value="degree">Degree</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="phd">Ph.D</option>
+                                </select>
                             </div>
+                        </div>
 
-                               {/* Field of Intended Study */}
-                               <div className="row mt-3">
-                                <div className="col"> 
-                                    <input
-                                        label=""
-                                        type="text"
-                                        value={FIS}
-                                        onChange={onChangeFIS}
-                                        placeholder="Field of Intended Study"
-                                        required
-                                        className="form-control"  
-                                    />
-                                </div>
+                        {/* Field of Intended Study */}
+                        <div className="row mt-3">
+                            <div className="col">
+                                <input
+                                    label=""
+                                    type="text"
+                                    value={FIS}
+                                    onChange={onChangeFIS}
+                                    placeholder="Field of Intended Study"
+                                    required
+                                    className="form-control"
+                                />
                             </div>
+                        </div>
 
-                            <div className="row mt-3">
-                                <div className="col">  
-                                   <select className="form-control" onChange={onRefferalChange}>
-                                       <option>Where you refered by a Teacher?</option>
-                                       <option value="yes">Yes</option>
-                                       <option value="no">No</option>
-                                   </select>
-                                </div>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <select className="form-control" onChange={onRefferalChange}>
+                                    <option>Where you refered by a Teacher?</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
                             </div>
+                        </div>
 
-                                   {/* Tic field */}
-                            <div className="row mt-3">
-                                <div className="col">
-                                    
-                                    <input
-                                        label=""
-                                        type="text"
-                                        disabled={ticDisable}
-                                        value={TIC}
-                                        onChange={onChangeTIC}
-                                        placeholder="TIC"
-                                        className="form-control"
-                                        
-                                    />
-                                </div>
-                            </div>
+                        {/* Tic field */}
+                        <div className="row mt-3">
+                            <div className="col">
 
-                            {/* submit button */}
-                            <div className="row mt-3">
-                                <div className="col">
-                                    <button
-                                        type="submit"
-                                        disabled={spinner}
-                                        className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
-                                        // disabled={null}
-                                    >Proceed</button>
-                                </div>
+                                <input
+                                    label=""
+                                    type="text"
+                                    disabled={ticDisable}
+                                    value={TIC}
+                                    onChange={onChangeTIC}
+                                    placeholder="TIC"
+                                    className="form-control"
+
+                                />
                             </div>
-                        </form>
-                    </Modal.Body>
-                </Modal>
-        
+                        </div>
+
+                        {/* submit button */}
+                        <div className="row mt-3">
+                            <div className="col">
+                                <button
+                                    type="submit"
+                                    disabled={spinner}
+                                    className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
+                                // disabled={null}
+                                >Proceed</button>
+                            </div>
+                        </div>
+                    </form>
+                </Modal.Body>
+            </Modal>
+            <PayStackButton
+                show={modalPayShow}
+                onHide={() => setModalPayShow(false)}
+                close={close}
+                callback={onSuccess}
+                email={useremail}
+                amount={515000} />
+
         </React.Fragment>
     );
 }

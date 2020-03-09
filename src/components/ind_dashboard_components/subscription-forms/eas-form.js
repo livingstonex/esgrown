@@ -15,7 +15,7 @@ export default function Form(props) {
     const [ticDisable, setTicDisable] = useState(true);
     const [useremail, setUserEmail] = useState("");
     const [userId, setUserId] = useState("");
-    const [subStatus, setSubStatus] = useState("")
+    const [subStatus, setSubStatus] = useState(false);
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
@@ -34,7 +34,7 @@ export default function Form(props) {
                 if (res.data[0].ref === null && res.data[0].sub_status === false) {
                     return
                 }
-                setSubStatus(res.data[0].sub_status)
+                setSubStatus(res.data[0].sub_status);
             })
             .catch(err => console.log(err))
 
@@ -119,7 +119,7 @@ export default function Form(props) {
         setModalPayShow(false)
     }
 
-    //console.log(props.user);
+
     return (
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
