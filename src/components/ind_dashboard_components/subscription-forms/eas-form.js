@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import PaystackButton from 'react-paystack';
+import PayStackButton from '../paystack/paystackpaymentbutton';
 import { Modal, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -13,9 +13,32 @@ export default function Form(props) {
     const [FIS, setFIS] = useState("");
     const [TIC, setTIC] = useState("");
     const [ticDisable, setTicDisable] = useState(true);
+    const [useremail, setUserEmail] = useState("");
+    const [userId, setUserId] = useState("");
+    const [subStatus, setSubStatus] = useState("")
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
+
+    //GET LOGGEDIN USER CREDENTIALS FOR PMT
+    useEffect(() => {
+        const userData = JSON.parse(sessionStorage.getItem('key'));
+        const userEmail = userData.email;
+        const userId = userData.id;
+        setUserEmail(userEmail);
+        setUserId(userId);
+
+        //get sub status for user
+        axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
+            .then(res => {
+                if (res.data[0].ref === null && res.data[0].sub_status === false) {
+                    return
+                }
+                setSubStatus(res.data[0].sub_status)
+            })
+            .catch(err => console.log(err))
+
+    }, [])
 
 
     const onChangeLOE = (e) => {
@@ -39,6 +62,7 @@ export default function Form(props) {
     const onChangeTIC = (e) => {
         setTIC(e.target.value);
     }
+
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -71,19 +95,28 @@ export default function Form(props) {
         } catch (error) {
             console.log(error);
         }
-
-
-
-
     }
 
+
     //Paystack Functions
-    const callback = (response) => {
-        console.log(response); // card charged successfully, get reference here
+    const onSuccess = (res) => {
+        console.log(res);
+        setModalPayShow(false);
+
+        const data = {
+            ref: res.reference,
+            sub_status: true
+        }
+        //make axios call to update user reference
+        axios.post(`http://localhost:5000/subscriptioneas/update/easref/${userId}`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+
     }
 
     const close = () => {
         console.log("Payment closed");
+        setModalPayShow(false)
     }
 
     //console.log(props.user);
@@ -91,7 +124,8 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>
+                    {subStatus ? <button className="btn btn-info btn-sm" style={{ color: 'white', background: '#97ba0d' }}>Subscribed</button> :
+                        <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
                 </React.Fragment>
 
             </div>
@@ -102,6 +136,7 @@ export default function Form(props) {
                 centered
             >
                 <Modal.Body>
+
                     <form className="container py-4" onSubmit={onSubmit}>
                         <div className="row">
                             <div className="col">
@@ -176,41 +211,16 @@ export default function Form(props) {
                             </div>
                         </div>
                     </form>
+
                 </Modal.Body>
             </Modal>
-
-
-
-            {/* Payment modal */}
-
-            <Modal
+            <PayStackButton
                 show={modalPayShow}
                 onHide={() => setModalPayShow(false)}
-                aria-labelledby="example-custom-modal-styling-title"
-                centered
-            >
-                <Modal.Body >
-                    <div className="row d-flex justify-content-center">
-                        <div className="col"></div>
-                        <div className="col mt-2 justify-content-center">
-                                <PaystackButton 
-                                        text="Make Subscription Payment"
-                                        className="pay-butt"
-                                        callback={callback}
-                                        close={close}
-                                        disabled={false} 
-                                        email="test@gmail.com"
-                                        amount="515000"
-                                        paystackkey="pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc" 
-                                    />
-                        </div>
-                        <div className="col"></div>
-                    </div>
-                        
-                    
-                </Modal.Body>
-            </Modal>
-           
+                close={close}
+                callback={onSuccess}
+                email={useremail}
+                amount={515000} />
 
         </React.Fragment>
     );

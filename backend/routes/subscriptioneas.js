@@ -12,11 +12,11 @@ router.route('/add').post((req, res) => {
     const tic = req.body.tic;
     const ref = req.body.ref;
 
-    const newSubscriptionEAS = new EAS({user_id, sub_status, user_name, user_email, user_status, levelofeducation, field_of_intended_study, tic, ref});
+    const newSubscriptionEAS = new EAS({ user_id, sub_status, user_name, user_email, user_status, levelofeducation, field_of_intended_study, tic, ref });
 
     newSubscriptionEAS.save()
         .then((sub) => res.json(sub))
-        .catch(err => res.status(400).json('Error: '+ err));
+        .catch(err => res.status(400).json('Error: ' + err));
 
 });
 
@@ -24,9 +24,9 @@ router.route('/add').post((req, res) => {
 //============================= Get Individual's EAS Sub Details ===========================
 
 router.route(`/:id`).get((req, res) => {
-    EAS.find({user_id: req.params.id})
-            .then(eas => res.json(eas))
-            .catch(err => res.status(400).json('Error: ' + err));   
+    EAS.find({ user_id: req.params.id })
+        .then(eas => res.json(eas))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
@@ -35,12 +35,13 @@ router.route(`/:id`).get((req, res) => {
 
 router.route(`/update/:id`).post((req, res) => {
     EAS.findOneAndUpdate(
-        {user_id: req.params.id}, 
-        {  levelofeducation: req.body.levelofeducation,
-           field_of_intended_study: req.body.field_of_intended_study
+        { user_id: req.params.id },
+        {
+            levelofeducation: req.body.levelofeducation,
+            field_of_intended_study: req.body.field_of_intended_study
         }
-        ).then(es => res.json(es))
-                        .catch(err => res.json('Err: ' + err));
+    ).then(es => res.json(es))
+        .catch(err => res.json('Err: ' + err));
 });
 
 
@@ -48,8 +49,8 @@ router.route(`/update/:id`).post((req, res) => {
 
 router.route(`/update/easref/:id`).post((req, res) => {
     EAS.findOneAndUpdate(
-        {user_id: req.params.id}, 
-        {  
+        { user_id: req.params.id },
+        {
             ref: req.body.ref,
             sub_status: req.body.sub_status
         }
