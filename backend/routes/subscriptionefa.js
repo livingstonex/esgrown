@@ -54,7 +54,8 @@ router.route(`/update/efaref/:id`).post((req, res) => {
         {user_id: req.params.id}, 
         {  
             ref: req.body.ref,
-            sub_status: req.body.sub_status
+            sub_status: req.body.sub_status,
+            plan_code: req.body.plan_code
         }
         ).then(efa => res.json(efa))
                         .catch(err => res.json('Err: ' + err));

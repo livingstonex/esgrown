@@ -10,8 +10,8 @@ export default function Form(props) {
     const [spinner, setSpinner] = useState(false);
     const [HLE, setHLE] = useState("");
     const [NOWP, setNOWP] = useState("");
-    const [subPlan, setSubPlan] = useState("");
 
+    const [subPlan, setSubPlan] = useState("");
     const [amount, setAmount] = useState("");
     const [modalPayShow, setModalPayShow] = useState(false);
     const [useremail, setUserEmail] = useState("");
@@ -32,6 +32,7 @@ export default function Form(props) {
         const plan = e.target.value.split('/');
         setSubPlan(plan[0]);
         setAmount(plan[1]);
+        console.log(plan)
     }
 
     const onSubmit = (e) => {
@@ -54,6 +55,8 @@ export default function Form(props) {
                     console.log(res.data);
                     setSpinner(false);
                     setModalShow(false);
+                    setModalPayShow(true);
+
                 })
                 .catch(err => {
                     console.log('Err: ' + err);
@@ -98,7 +101,7 @@ export default function Form(props) {
             plan_code: subPlan
         }
         //make axios call to update user reference
-        axios.post(`http://localhost:5000/subscriptionlm/update/easref/${userId}`, data)
+        axios.post(`http://localhost:5000/subscriptionlm/update/lmref/${userId}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 
@@ -112,7 +115,7 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    {subStatus ? <button className="btn btn-info btn-sm" style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> :
+                    {subStatus ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> :
                         <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
                 </React.Fragment>
 
@@ -156,8 +159,9 @@ export default function Form(props) {
                             <div className="col">
                                 <select className="form-control" required onChange={onChangePlan}>
                                     <option>Select Subscription Plan</option>
-                                    <option value="PLN_txgxcy2nqdqofkd/460000">Biannual (six Months)</option>
-                                    <option value="PLN_d14bmlqitn9yce4/785000">Annual (one Year)</option>
+                                    <option value="PLN_hwug5s75tf2rcqu/289000">Quarterly (three Months)</option>
+                                    <option value="PLN_072a7glz3tv6fzi/455000">Biannual (six Months)</option>
+                                    <option value="PLN_wma6tld3z1g2zef/797000">Annual (one Year)</option>
                                 </select>
                             </div>
                         </div>

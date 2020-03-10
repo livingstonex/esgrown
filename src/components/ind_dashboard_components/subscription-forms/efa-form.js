@@ -125,7 +125,7 @@ export default function Form(props) {
             plan_code: subPlan
         }
         //make axios call to update user reference
-        axios.post(`http://localhost:5000/subscriptionefa/update/easref/${userId}`, data)
+        axios.post(`http://localhost:5000/subscriptionefa/update/efaref/${userId}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 
@@ -140,7 +140,7 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    {subStatus ? <button className="btn btn-info btn-sm" style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> :
+                    {subStatus ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> :
                         <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
                 </React.Fragment>
 
