@@ -11,8 +11,9 @@ router.route('/add').post((req, res) => {
     const field_of_intended_study = req.body.field_of_intended_study;
     const tic = req.body.tic;
     const ref = req.body.ref;
+    const plan_code = req.body.plancode;
 
-    const newSubscriptionEAS = new EAS({ user_id, sub_status, user_name, user_email, user_status, levelofeducation, field_of_intended_study, tic, ref });
+    const newSubscriptionEAS = new EAS({ user_id, sub_status, user_name, user_email, user_status, levelofeducation, field_of_intended_study, tic, ref, plan_code });
 
     newSubscriptionEAS.save()
         .then((sub) => res.json(sub))
@@ -38,8 +39,7 @@ router.route(`/update/:id`).post((req, res) => {
         { user_id: req.params.id },
         {
             levelofeducation: req.body.levelofeducation,
-            field_of_intended_study: req.body.field_of_intended_study,
-            plan_code: req.body.plan_code
+            field_of_intended_study: req.body.field_of_intended_study
         }
     ).then(es => res.json(es))
         .catch(err => res.json('Err: ' + err));
