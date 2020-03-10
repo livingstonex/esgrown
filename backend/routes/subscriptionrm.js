@@ -40,9 +40,26 @@ router.route(`/update/:id`).post((req, res) => {
                         {  
                         highest_level_of_education: req.body.highest_level_of_education,
                         field_of_training: req.body.field_of_training,
+                        plan_code: req.body.plan_code
                         }
                     ).then(rm => res.json(rm))
                     .catch(err => res.json('Err: ' + err));
+});
+
+
+//=========================== Check Ref to be used to Toggle Subscription State =========================
+
+router.route(`/update/rmref/:id`).post((req, res) => {
+    RM.findOneAndUpdate(
+        {user_id: req.params.id}, 
+        {  
+            ref: req.body.ref,
+            sub_status: req.body.sub_status
+        }
+        ).then(rm => res.json(rm))
+                        .catch(err => res.json('Err: ' + err));
+
+
 });
 
 module.exports = router;

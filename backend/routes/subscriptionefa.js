@@ -40,10 +40,25 @@ router.route(`/update/:id`).post((req, res) => {
         {user_id: req.params.id}, 
         {  levelofeducation: req.body.levelofeducation,
            next_intended_education_level: req.body.next_intended_education_level,
-           field_of_intended_study: req.body.field_of_intended_study
+           field_of_intended_study: req.body.field_of_intended_study,
+           plan_code: req.body.plan_code
         }
         ).then(ef => res.json(ef))
                         .catch(err => res.json('Err: ' + err));
+});
+
+//=========================== Check Ref to be used to Toggle Subscription State =========================
+
+router.route(`/update/efaref/:id`).post((req, res) => {
+    EFA.findOneAndUpdate(
+        {user_id: req.params.id}, 
+        {  
+            ref: req.body.ref,
+            sub_status: req.body.sub_status
+        }
+        ).then(efa => res.json(efa))
+                        .catch(err => res.json('Err: ' + err));
+
 });
 
 module.exports = router;

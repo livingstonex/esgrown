@@ -36,11 +36,27 @@ router.route(`/:id`).get((req, res) => {
 router.route(`/update/:id`).post((req, res) => {
     LM.findOneAndUpdate(
                         {user_id: req.params.id}, 
-                        {  highest_level_of_education: req.body.highest_level_of_education,
-                        nature_of_work_business: req.body.nature_of_work_business,
+                        {  
+                            highest_level_of_education: req.body.highest_level_of_education,
+                            nature_of_work_business: req.body.nature_of_work_business,
+                            plan_code: req.body.plan_code
                         }
                     ).then(lm => res.json(lm))
                     .catch(err => res.json('Err: ' + err));
+});
+
+//=========================== Check Ref to be used to Toggle Subscription State =========================
+
+router.route(`/update/lmref/:id`).post((req, res) => {
+    LM.findOneAndUpdate(
+        {user_id: req.params.id}, 
+        {  
+            ref: req.body.ref,
+            sub_status: req.body.sub_status
+        }
+        ).then(lm => res.json(lm))
+                        .catch(err => res.json('Err: ' + err));
+
 });
 
 module.exports = router;
