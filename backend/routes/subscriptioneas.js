@@ -54,6 +54,7 @@ router.route(`/update/easref/:id`).post((req, res) => {
         {
             ref: req.body.ref,
             sub_status: req.body.sub_status,
+            plan_code: req.body.plan_code
         }
         ).then(es => res.json(es))
                         .catch(err => res.json('Err: ' + err));
