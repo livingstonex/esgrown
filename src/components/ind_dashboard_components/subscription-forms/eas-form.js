@@ -35,10 +35,9 @@ export default function Form(props) {
         //get sub status for user
         axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
             .then(res => {
-                if (res.data[0].ref === null && res.data[0].sub_status === false) {
-                    return
+                if (res.data[0].ref != null) {
+                    setSubStatus(res.data[0].sub_status);
                 }
-                setSubStatus(res.data[0].sub_status);
             })
             .catch(err => console.log(err))
 
