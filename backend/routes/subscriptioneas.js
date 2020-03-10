@@ -38,7 +38,8 @@ router.route(`/update/:id`).post((req, res) => {
         { user_id: req.params.id },
         {
             levelofeducation: req.body.levelofeducation,
-            field_of_intended_study: req.body.field_of_intended_study
+            field_of_intended_study: req.body.field_of_intended_study,
+            plan_code: req.body.plan_code
         }
     ).then(es => res.json(es))
         .catch(err => res.json('Err: ' + err));
@@ -52,7 +53,7 @@ router.route(`/update/easref/:id`).post((req, res) => {
         { user_id: req.params.id },
         {
             ref: req.body.ref,
-            sub_status: req.body.sub_status
+            sub_status: req.body.sub_status,
         }
         ).then(es => res.json(es))
                         .catch(err => res.json('Err: ' + err));

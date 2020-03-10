@@ -39,6 +39,7 @@ router.route(`/update/:id`).post((req, res) => {
                         {  
                             highest_level_of_education: req.body.highest_level_of_education,
                             nature_of_work_business: req.body.nature_of_work_business,
+                            plan_code: req.body.plan_code
                         }
                     ).then(lm => res.json(lm))
                     .catch(err => res.json('Err: ' + err));

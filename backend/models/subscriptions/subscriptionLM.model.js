@@ -33,8 +33,11 @@ const subscriptionLMSchema = new Schema({
     ref:{
         type: String,
         required: false
+    },
+    plan_code:{
+        type: String,
+        required: false
     }
-    
 }, {
     timestamps:true,
 });

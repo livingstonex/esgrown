@@ -40,7 +40,8 @@ router.route(`/update/:id`).post((req, res) => {
         {user_id: req.params.id}, 
         {  levelofeducation: req.body.levelofeducation,
            next_intended_education_level: req.body.next_intended_education_level,
-           field_of_intended_study: req.body.field_of_intended_study
+           field_of_intended_study: req.body.field_of_intended_study,
+           plan_code: req.body.plan_code
         }
         ).then(ef => res.json(ef))
                         .catch(err => res.json('Err: ' + err));
