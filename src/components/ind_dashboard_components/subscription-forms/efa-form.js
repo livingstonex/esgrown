@@ -19,6 +19,10 @@ export default function Form(props) {
     const [subStatus, setSubStatus] = useState(false);
     const [modalPayShow, setModalPayShow] = useState(false);
 
+    const [subPlan, setSubPlan] = useState("");
+    const [amount, setAmount] = useState("")
+
+
 
 
     //GET LOGGEDIN USER CREDENTIALS FOR PMT
@@ -68,6 +72,12 @@ export default function Form(props) {
         setTIC(e.target.value);
     }
 
+    const onChangePlan = (e) => {
+        const plan = e.target.value.split('/');
+        setSubPlan(plan[0]);
+        setAmount(plan[1]);
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -111,7 +121,8 @@ export default function Form(props) {
 
         const data = {
             ref: res.reference,
-            sub_status: true
+            sub_status: true,
+            plan_code: subPlan
         }
         //make axios call to update user reference
         axios.post(`http://localhost:5000/subscriptionefa/update/easref/${userId}`, data)
@@ -187,6 +198,16 @@ export default function Form(props) {
 
                         <div className="row mt-3">
                             <div className="col">
+                                <select className="form-control" required onChange={onChangePlan}>
+                                    <option>Select Subscription Plan</option>
+                                    <option value="PLN_gkcu1vni2vwc56h/524000">Annual(One Year)</option>
+                                    <option value="PLN_7b0a3p1r8im1xb8/279000">Biannual(6 Months)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col">
                                 <select className="form-control" onChange={onRefferalChange}>
                                     <option>Where you refered by a Teacher?</option>
                                     <option value="yes">Yes</option>
@@ -232,7 +253,9 @@ export default function Form(props) {
                 close={close}
                 callback={onSuccess}
                 email={useremail}
-                amount={515000} />
+                amount={amount}
+                plan={subPlan}
+            />
 
         </React.Fragment>
     );

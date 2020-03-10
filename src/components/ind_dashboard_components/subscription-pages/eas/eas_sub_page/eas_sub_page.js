@@ -96,7 +96,7 @@ class EasUpdateForm extends Component {
                 <Modal isOpen={isOpen} toggle={toggle} centered>
                     <ModalHeader>
                         <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18 }}>Education Advisory Services Subscription</p></div>
-                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white', border: sub_statusColor }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -152,7 +152,7 @@ class EasUpdateForm extends Component {
                     <ModalFooter>
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
                         {' '}{''}
-                        <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
+                        <Button style={{ background: '#1c8496', border:'#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
                     </ModalFooter>
                 </Modal>
             </div>

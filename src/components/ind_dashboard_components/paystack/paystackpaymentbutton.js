@@ -7,7 +7,7 @@ import './paystack.css';
 
 const PayStackButton = (props) => {
 
-    const { show, onHide, close, callback, email, amount } = props
+    const { show, onHide, close, callback, email, amount, plan } = props
 
     return (
         <React.Fragment>
@@ -26,6 +26,7 @@ const PayStackButton = (props) => {
                         callback={callback}
                         email={email}
                         amount={amount}
+                        plan={plan}
                         paystackkey='pk_test_7b545e0d7a1aaa0e39782e7d5aa7e9595a8082fc'
                         tag="button"
                     />

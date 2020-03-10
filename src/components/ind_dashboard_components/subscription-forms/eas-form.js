@@ -17,6 +17,10 @@ export default function Form(props) {
     const [userId, setUserId] = useState("");
     const [subStatus, setSubStatus] = useState(false);
 
+
+    const [subPlan, setSubPlan] = useState("");
+    const [amount, setAmount] = useState("");
+
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);
 
@@ -63,6 +67,12 @@ export default function Form(props) {
         setTIC(e.target.value);
     }
 
+    const onChangePlan = (e) => {
+        const plan = e.target.value.split('/');
+        setAmount(plan[1]);
+        setSubPlan(plan[0]);
+    }
+
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -105,7 +115,8 @@ export default function Form(props) {
 
         const data = {
             ref: res.reference,
-            sub_status: true
+            sub_status: true,
+            plan_code: subPlan
         }
         //make axios call to update user reference
         axios.post(`http://localhost:5000/subscriptioneas/update/easref/${userId}`, data)
@@ -124,7 +135,7 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    {subStatus ? <button className="btn btn-info btn-sm" style={{ color: 'white', background: '#97ba0d' }}>Subscribed</button> :
+                    {subStatus ? <button className="btn btn-info btn-sm" style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> :
                         <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
                 </React.Fragment>
 
@@ -167,6 +178,15 @@ export default function Form(props) {
                                     required
                                     className="form-control"
                                 />
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col">
+                                <select className="form-control" required onChange={onChangePlan}>
+                                    <option>Select Subscription Plan</option>
+                                    <option value="PLN_euav5svesnpj2ct/515000">Annual(One Year)</option>
+                                </select>
                             </div>
                         </div>
 
@@ -220,8 +240,9 @@ export default function Form(props) {
                 close={close}
                 callback={onSuccess}
                 email={useremail}
-                amount={515000} />
-
+                amount={amount}
+                plan={subPlan}
+            />
         </React.Fragment>
     );
 }
