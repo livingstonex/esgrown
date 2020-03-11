@@ -17,6 +17,8 @@ export default function Form(props) {
     const [useremail, setUserEmail] = useState("");
     const [userId, setUserId] = useState("");
     const [subStatus, setSubStatus] = useState(false);
+    const [button, setButton] = useState(0)
+
 
 
 
@@ -83,7 +85,10 @@ export default function Form(props) {
         axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
             .then(res => {
                 if (res.data[0].ref != null) {
-                    setSubStatus(res.data[0].sub_status);
+                    // setSubStatus(res.data[0].sub_status);
+                    setButton(1);
+                } else {
+                    setButton(2);
                 }
             })
             .catch(err => console.log(err))
@@ -115,8 +120,7 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    {subStatus ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> :
-                        <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
+                    {(button === 1) ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> : (button === 2) ? <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button> : ""}
                 </React.Fragment>
 
             </div>
