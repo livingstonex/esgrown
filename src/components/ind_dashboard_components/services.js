@@ -9,6 +9,7 @@ import EFAService from './services-components/service-cards/efaservice';
 import LMService from './services-components/service-cards/lmservice';
 import RMService from './services-components/service-cards/rmservice';
 import axios from 'axios';
+import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 
 
 
@@ -54,7 +55,25 @@ export default function Services() {
                 res.data[0].sub_status ? setPageRM(1) : setPageRM(2)
             })
             .catch(err => console.log(err))
-    })
+    });
+
+    const popover = (
+        <Popover id="popover-basic">
+          <Popover.Title as="h3">Popover right</Popover.Title>
+          <Popover.Content>
+            And here's some <strong>amazing</strong> content. It's very engaging.
+            right?
+          </Popover.Content>
+        </Popover>
+      );
+      
+      const Example = () => (
+        <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+          <Button variant="success">Click me to see</Button>
+        </OverlayTrigger>
+      );
+
+
     return (
         <div className="container">
             <div className="row">
@@ -77,6 +96,8 @@ export default function Services() {
                 </div>
 
             </div>
+
+            <Example/>
         </div>
     );
 }

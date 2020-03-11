@@ -27,9 +27,13 @@ import SubscriptionIcon from '@material-ui/icons/Subscriptions';
 import ServicesIcon from '@material-ui/icons/RoomService';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
+// import popover from '@material-ui/core/Popover/Popover';
+import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
+import logo from '../img/esgrown.png';
+import avatar from '../img/boy.svg';
 
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -132,6 +136,8 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+
+
   return (
     <>
       <div className={classes.root}>
@@ -157,6 +163,11 @@ export default function MiniDrawer() {
             <Typography variant="h6" noWrap>
               Welcome to Dashboard: {user.name}
             </Typography>
+            <div className="row">
+              <div >
+                <img src={avatar} width="30%"  style={{marginLeft:'500%'}}/>
+              </div>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -173,8 +184,11 @@ export default function MiniDrawer() {
           }}
         >
           <div className={classes.toolbar}>
+            <div style={{height:'100%', width:'8px', backgroundColor:'#3F51b5'}}></div>
             {/* Place Logo here */}
-
+            <div style={{marginLeft:'20px'}}>
+              <img src={logo} width="50%"/>
+            </div>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -204,10 +218,19 @@ export default function MiniDrawer() {
               </ListItem>
             }
              {
-              <ListItem button onClick={setServicePage}>
-                <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Services'} />
-              </ListItem>
+                <List>
+                   <ListItem button onClick={setServicePage} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                      <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                          <ListItemText primary={'Service'} className="dropdown-toggle " />
+                          <div className="dropdown-menu" style={{position:'absolute', }}>
+                            <a className="dropdown-item " href="#">EAS</a>
+                            <a className="dropdown-item" href="#">EFA</a>
+                            <a className="dropdown-item" href="#">RM</a>
+                            <a className="dropdown-item" href="#">LM</a>
+                          </div>               
+                   </ListItem>  
+              </List>
+              
             }
           </List>
           <Divider />
@@ -220,7 +243,7 @@ export default function MiniDrawer() {
                 </ListItem>
               }
             </Link>
-          </List>
+          </List>  
         </Drawer>
         <main className={classes.content}>
 
@@ -231,4 +254,13 @@ export default function MiniDrawer() {
       </div>
     </>
   );
+
+}
+
+  const renderAvatar = () => {
+    const avatar = {
+        backgroundImage: `url(${avatar})`
+    };
+
+    return avatar;
 }
