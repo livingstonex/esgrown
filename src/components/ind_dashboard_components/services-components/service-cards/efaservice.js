@@ -1,4 +1,5 @@
-import React, { useState, Link } from 'react';
+import React, { useState,  } from 'react';
+import {Link, } from 'react-router-dom';
 import { Card, Button, Badge } from 'react-bootstrap';
 
 
@@ -14,11 +15,9 @@ const EFAService = () => {
                 <Card.Body>
                     {badge ? <Badge variant="success" style={{ float: 'right' }}>New 9</Badge> : ""}
                     <Card.Title>Eduction Advisory Service</Card.Title>
-                    <Link to="#servicesmodal">
                         <Card.Text>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.incididunt ut labore et dolore magna aliqua.
                         </Card.Text>
-                    </Link>
                     <Button
                         variant="primary"
                         size="sm"

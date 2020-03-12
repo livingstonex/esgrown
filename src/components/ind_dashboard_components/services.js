@@ -4,10 +4,10 @@ import EASCard from './services-components/cards/eascard';
 import EFACard from './services-components/cards/efacard';
 import LMCard from './services-components/cards/lmcard';
 import RMCard from './services-components/cards/rmcard';
-import EASService from './services-components/service-cards/easservice';
-import EFAService from './services-components/service-cards/efaservice';
-import LMService from './services-components/service-cards/lmservice';
-import RMService from './services-components/service-cards/rmservice';
+import EASServicePage from './services-components/eas_service_page';
+import EFAServicePage from './services-components/efa_service_page';
+import LMServicePage from './services-components/lm_service_page';
+import RMServicePage from './services-components/rm_service_page';
 import axios from 'axios';
 import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 
@@ -17,10 +17,11 @@ import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 export default function Services() {
 
 
-    const [pageEFA, setPageEFA] = useState(0);
+    
     const [pageRM, setPageRM] = useState(0);
     const [pageLM, setPageLM] = useState(0);
     const [pageEAS, setPageEAS] = useState(0);
+    const [pageEFA, setPageEFA] = useState(0);
 
 
     useEffect(() => {
@@ -38,9 +39,11 @@ export default function Services() {
         //efa
         axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
             .then(res => {
-                res.data[0].sub_status ? setPageEFA(1) : setPageEFA(2)
+                res.data[0].sub_status ? setPageEFA(1) : setPageEFA(2); 
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                return console.log(err);
+            }); 
 
         //lm
         axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
@@ -52,38 +55,21 @@ export default function Services() {
         //rm
         axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
             .then(res => {
-                res.data[0].sub_status ? setPageRM(1) : setPageRM(2)
+                res.data[0].sub_status ? setPageRM(1) : setPageRM(2);
             })
             .catch(err => console.log(err))
-    });
-
-    const popover = (
-        <Popover id="popover-basic">
-          <Popover.Title as="h3">Popover right</Popover.Title>
-          <Popover.Content>
-            And here's some <strong>amazing</strong> content. It's very engaging.
-            right?
-          </Popover.Content>
-        </Popover>
-      );
-      
-      const Example = () => (
-        <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-          <Button variant="success">Click me to see</Button>
-        </OverlayTrigger>
-      );
-
+    },[]);
 
     return (
         <div className="container">
             <div className="row">
-                <div className="col col-lg-3 col-sm-6">
+                {/* <div className="col col-lg-3 col-sm-6">
                     <br />
                     {(pageEAS === 0) ? <Spinner as="span" animation="grow" role="status" aria-hidden="true" /> : (pageEAS === 1) ? <EASService /> : (pageEAS === 2) ? <EASCard /> : ""}
                 </div>
                 <div className="col col-lg-3 col-sm-6" >
                     <br />
-                    {(pageEFA === 0) ? <Spinner as="span" animation="grow" size="lg" role="status" aria-hidden="true" /> : (pageEFA === 1) ? <EFAService /> : (pageEFA === 2) ? <EFACard /> : ""}
+                    {(pageEFA === 0) ? <Spinner as="span" animation="grow" role="status" aria-hidden="true" /> : (pageEFA === 1) ? <EFAService /> : (pageEFA === 2) ? <EFACard /> : ""}
                 </div>
 
                 <div className="col col-lg-3 col-sm-6" >
@@ -93,11 +79,9 @@ export default function Services() {
                 <div className="col col-lg-3 col-sm-6" >
                     <br />
                     {(pageRM === 0) ? <Spinner as="span" animation="grow" size="lg" role="status" aria-hidden="true" /> : (pageRM === 1) ? <RMService /> : (pageRM === 2) ? <RMCard /> : ""}
-                </div>
+                </div> */}
 
             </div>
-
-            <Example/>
         </div>
     );
 }
