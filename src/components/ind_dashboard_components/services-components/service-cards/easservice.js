@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
-import { Card, Button, Badge } from 'react-bootstrap';
+import React from 'react';
+import { Pagination } from 'react-bootstrap'
+
 
 
 
 
 const EASService = () => {
 
-    const [badge, setBadge] = useState(true);
-    const [modalShow, setModalShow] = useState(false);
+    let active = 2;
+    let items = [];
+    for (let number = 1; number <= 5; number++) {
+        items.push(
+            <Pagination.Item key={number} active={number === active}>
+                {number}
+            </Pagination.Item>
+        );
+    }
 
     return (
-        <div>
-            <Card style={{ width: '16rem', height: '18rem' }}>
-                <Card.Body>
-                    {badge ? <Badge variant="success" style={{ float: 'right' }}>New 9</Badge> : ""}
-                    <Card.Title>Eduction Advisory Service</Card.Title>
-                    <Card.Text >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.incididunt ut labore et dolore magna aliqua.
-                    </Card.Text>
-                    <Button
-                        variant="primary"
-                        size="sm"
-                        className="btn btn-info btn-sm"
-                    // style={{ background: '#97ba0d', borderRadius: 20, border: '#97ba0d' }}
-                    >
-                        More Info
-                    </Button>
-                </Card.Body>
-            </Card>
+        <div className="container">
+            <div className="row">
+                <div className="col col-lg-2 col-sm-3" style={{ width: '100%', height: 500, boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', background: '#ffffff', padding: '20px', borderRadius: '10px', marginRight: '5px' }}>hello</div>
+                <div className="col col-lg-9 col-sm-6" style={{ width: '100%', height: 500, boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', background: '#ffffff', padding: '20px', borderRadius: '10px' }}>
+                    <div className="" style={{ textAlign: 'center' }}>
+                        <h5>Education Advisory Service </h5>
+                        <div style={{ height: 400, background: '#ddf7fc'}}>
+                            <p>content</p>
+                        </div>
+                        <div style={{ marginLeft:'40%'}}>
+                            <Pagination>{items}</Pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
