@@ -51,6 +51,7 @@ import SendIcon from '@material-ui/icons/Send';
 import EduIcon from '@material-ui/icons/CastForEducation';
 
 
+
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -342,20 +343,7 @@ export default function MiniDrawer() {
                           <ListItemText primary="LM Services" />
                         </StyledMenuItem> 
 
-                    </StyledMenu>
-
-                      {/* <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
-                          <ListItemText primary={'Service'} className="dropdown-toggle"/>
-                          <div className="dropdown-menu" style={{position:'absolute', }}>
-                            <a className="dropdown-item" >
-                              <ListItemText primary={'EAS'} className="dropdown-toggle" onClick={()=>setEasServicePage} />
-                            </a>
-                            <a className="dropdown-item"><button onClick={setEfaServicePage} >EFA</button></a>
-                            <a className="dropdown-item"  onClick={setRmServicePage}>RM</a>
-                            <a className="dropdown-item"  onClick={setLmServicePage}>LM</a>
-                          </div>   */}
-
-                 
+                    </StyledMenu>              
               </List>
 
             }
