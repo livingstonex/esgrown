@@ -26,7 +26,7 @@ const EFAServicePage = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col col-lg-10 col-sm-10">
+                <div className="col col-lg-12 col-sm-10">
                     {(pageEFA === 0) ? <Spinner as="span" animation="grow" role="status" aria-hidden="true" /> : (pageEFA === 1) ? <EFAService /> : (pageEFA === 2) ? <EFAVideoCard /> : ""}
                 </div>
             </div>

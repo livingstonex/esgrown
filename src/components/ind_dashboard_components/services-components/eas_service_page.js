@@ -26,7 +26,7 @@ const EASServicePage = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col col-lg-12 col-sm-10" >
+                <div className="col col-lg-12 col-sm-10">
                     {(pageEAS === 0) ? <Spinner as="span" animation="grow" role="status" aria-hidden="true" /> : (pageEAS === 1) ? <EASService /> : (pageEAS === 2) ? <EASVideoCard /> : ""}
                 </div>
             </div>

@@ -27,6 +27,7 @@ const LMService = () => {
                         <div style={{ height: 400, background: '#ddf7fc' }}>
                             <p>content</p>
                         </div>
+                        <div style={{ height: '5px' }}></div>
                         <div style={{ marginLeft: '40%' }}>
                             <Pagination>{items}</Pagination>
                         </div>

@@ -27,9 +27,31 @@ import SubscriptionIcon from '@material-ui/icons/Subscriptions';
 import ServicesIcon from '@material-ui/icons/RoomService';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
+// import popover from '@material-ui/core/Popover/Popover';
+import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
+import logo from '../img/esgrown.png';
+import avatar from '../img/boy.svg';
+import bell from '../img/bell.svg';
+
+//Service Pages
+import EASServicePage from './ind_dashboard_components/services-components/eas_service_page';
+import EFAServicePage from './ind_dashboard_components/services-components/efa_service_page';
+import LMServicePage from './ind_dashboard_components/services-components/lm_service_page';
+import RMServicePage from './ind_dashboard_components/services-components/rm_service_page';
+
+//Dropdown import setup
+import { withStyles } from '@material-ui/core/styles';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+//import ListItemIcon from '@material-ui/core/ListItemIcon';
+//import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import EduIcon from '@material-ui/icons/CastForEducation';
 
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -92,6 +114,39 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+//Dropdown Setup
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})(props => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
+
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
@@ -119,10 +174,21 @@ export default function MiniDrawer() {
     setPage(2);
   }
 
-  const setServicePage = () => {
+  const setEasServicePage = () => {
     setPage(3);
   }
 
+  const setEfaServicePage = () => {
+    setPage(4);
+  }
+
+  const setRmServicePage = () => {
+    setPage(5);
+  }
+
+  const setLmServicePage = () => {
+    setPage(6);
+  }
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -130,6 +196,18 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+
+  //dropdown
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -154,9 +232,16 @@ export default function MiniDrawer() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap>
-              Welcome to Dashboard: {user.name}
+            <Typography variant="" wrap>
+              Welcome: {user.name}
             </Typography>
+            <div className="row d-flex" style={{width:'100%', position:'relative'}}>
+                <div className="row" style={{marginLeft:'83%'}}>    
+                  <img src={bell} width="15%" height="30px" />
+                  <div style={{width:'10px'}}></div>
+                  <img src={avatar} width="30%" height="30px" />
+                </div>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -170,11 +255,15 @@ export default function MiniDrawer() {
               [classes.drawerOpen]: open,
               [classes.drawerClose]: !open,
             }),
+        
           }}
         >
-          <div className={classes.toolbar}>
+          <div className={classes.toolbar} style={{marginLeft:'-10px'}}>
+            <div style={{height:'100%', width:'25px', backgroundColor:'#3F51b5'}}></div>
             {/* Place Logo here */}
-
+            <div style={{marginLeft:'60px'}}>
+              <img src={logo} width="80%"/>
+            </div>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -204,10 +293,71 @@ export default function MiniDrawer() {
               </ListItem>
             }
              {
-              <ListItem button onClick={setServicePage}>
-                <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Services'} />
-              </ListItem>
+                <List>
+                  {/* List Item for Services */}
+                    <ListItem
+                      aria-controls="customized-menu"
+                      aria-haspopup="true"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleClick}
+                    >
+                      <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                      <ListItemText primary={'Services'} />
+                    </ListItem>
+
+                    {/* ListItem Menu for Services */}
+                    <StyledMenu
+                      id="customized-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                        <StyledMenuItem onClick={setEasServicePage}>
+                          <ListItemIcon>
+                            <EduIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="EAS Services" />
+                        </StyledMenuItem>
+
+                        <StyledMenuItem onClick={setEfaServicePage}>
+                          <ListItemIcon>
+                            <DraftsIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="EFA Services" />
+                        </StyledMenuItem>
+
+                        <StyledMenuItem onClick={setRmServicePage}>
+                          <ListItemIcon>
+                            <DraftsIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="RM Services" />
+                        </StyledMenuItem>
+
+                        <StyledMenuItem onClick={setLmServicePage}>
+                          <ListItemIcon>
+                            <DraftsIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="LM Services" />
+                        </StyledMenuItem> 
+
+                    </StyledMenu>
+
+                      {/* <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                          <ListItemText primary={'Service'} className="dropdown-toggle"/>
+                          <div className="dropdown-menu" style={{position:'absolute', }}>
+                            <a className="dropdown-item" >
+                              <ListItemText primary={'EAS'} className="dropdown-toggle" onClick={()=>setEasServicePage} />
+                            </a>
+                            <a className="dropdown-item"><button onClick={setEfaServicePage} >EFA</button></a>
+                            <a className="dropdown-item"  onClick={setRmServicePage}>RM</a>
+                            <a className="dropdown-item"  onClick={setLmServicePage}>LM</a>
+                          </div>   */}
+
+                 
+              </List>
+
             }
           </List>
           <Divider />
@@ -220,15 +370,24 @@ export default function MiniDrawer() {
                 </ListItem>
               }
             </Link>
-          </List>
+          </List>  
         </Drawer>
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <Services /> : ''
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage/> : (page == 6) ? <LMServicePage/> :  ''
           }
         </main>
       </div>
     </>
   );
+
+}
+
+  const renderAvatar = () => {
+    const avatar = {
+        backgroundImage: `url(${avatar})`
+    };
+
+    return avatar;
 }
