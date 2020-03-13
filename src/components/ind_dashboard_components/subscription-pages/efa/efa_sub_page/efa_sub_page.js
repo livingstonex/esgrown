@@ -12,7 +12,9 @@ class EfaUpdateForm extends Component {
         filedOfStudy: '',
         sub_status: false,
         user_id: '',
-        message: ''
+        message: '',
+        LOE: true,
+        NILE: true
     }
 
 
@@ -33,7 +35,7 @@ class EfaUpdateForm extends Component {
 })
                 }
             })
-            .catch(err => this.setState({ message: 'Update failed. Please try again' }))
+            .catch(err => this.setState({ message: 'There was a problem updating your account. Please try again' }))
 
 
 
@@ -50,7 +52,9 @@ class EfaUpdateForm extends Component {
             .then(response => this.setState({
                 levelOfEducation: response.data[0].levelofeducation,
                 nextIntendedEductionLevel: response.data[0].next_intended_education_level,
-                filedOfStudy: response.data[0].field_of_intended_study
+                filedOfStudy: response.data[0].field_of_intended_study,
+                sub_status: response.data[0].sub_status
+
 
             }))
             .catch(err => console.log(err.message))
@@ -73,7 +77,7 @@ class EfaUpdateForm extends Component {
 
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === false ? '#ae2b26' : 'green';
+        const sub_statusColor = this.state.sub_status === false ? '#e68723' : '#97ba0d';
 
         const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID'
         return (
@@ -83,26 +87,39 @@ class EfaUpdateForm extends Component {
                 <Modal isOpen={isOpen} toggle={toggle} onHide={() => this.setState({ messsage: ' ' })} centered >
                     <ModalHeader>
                         <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18 }}>Education Finances Advisory Subscription</p></div>
-                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white', border: sub_statusColor }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
-                                <Label for="levelOfEducation">Level Of Education</Label>
-                                <Input type="text"
-                                    name="levelOfEducation"
-                                    value={this.state.levelOfEducation}
-                                    onChange={this.changeHandler}
-                                />
+                                <div className="row mt-3">
+                                    <div className="col input-group">
+                                        <div class="input-group-prepend" style={{cursor:'pointer'}}>
+                                            <div class="input-group-text" onClick={() => this.setState({ LOE: !this.state.LOE })}>edit</div>
+                                        </div>
+                                        <select className="form-control" name="levelOfEducation" value={this.state.levelOfEducation} disabled={this.state.LOE } required onChange={this.changeHandler}>
+                                            <option>Level of Education</option>
+                                            <option value="degree">Degree</option>
+                                            <option value="masters">Masters</option>
+                                            <option value="phd">Ph.D</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="levelOfEducation">Next Intended Eduction Level</Label>
-                                <Input type="text"
-                                    name="nextIntendedEductionLevel"
-                                    value={this.state.nextIntendedEductionLevel}
-                                    onChange={this.changeHandler}
-                                />
+                                <div className="row mt-3">
+                                    <div className="col input-group">
+                                        <div class="input-group-prepend" style={{ cursor: 'pointer' }}>
+                                            <div class="input-group-text" onClick={() => this.setState({ NILE: !this.state.NILE })}>edit</div>
+                                        </div>
+                                        <select className="form-control" name="nextIntendedEductionLevel" disabled={this.state.NILE} required onChange={this.changeHandler} value={this.state.nextIntendedEductionLevel}>                                            <option>Next Intended Education Level</option>
+                                            <option value="degree">Degree</option>
+                                            <option value="masters">Masters</option>
+                                            <option value="phd">Ph.D</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </FormGroup>
 
                             <FormGroup>
@@ -117,7 +134,8 @@ class EfaUpdateForm extends Component {
                     </ModalBody>
                     <ModalFooter>
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
-                        {' '}{''}
+                        {' '}{' '}
+                        {' '}{' '}
                         <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>{' '}
                     </ModalFooter>
                 </Modal>
