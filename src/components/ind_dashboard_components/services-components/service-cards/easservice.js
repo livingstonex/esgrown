@@ -28,7 +28,7 @@ const EASService = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col col-lg-12 col-sm-6" style={{ width: '100%', height: 500, boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', background: '#ffffff', padding: '20px', borderRadius: '10px', overflow:'scroll' }}>
+                <div className="col col-lg-12 col-sm-6" style={{ width: '100%', height: 500, boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', background: '#ffffff', padding: '20px', borderRadius: '10px', overflow:'scroll',  overflowX:'hidden' }}>
                     <div className="">
                         <div>
                             {spinner ? <Spinner animation="grow" /> : data.map((data) => {
@@ -36,7 +36,7 @@ const EASService = () => {
                                 return (
                                     <div className="container">
                                         <div className="row">
-                                            <div className="col-md-6 col-md-offset-3">
+                                            <div className="col-md-8 offset-2">
                                                 <div className="card" style={{ fontFamily: 'Roboto,sans-serif', boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)',marginBottom:'10px'}}>   
                                                     <div className="card-content" style={{ padding: '10px' }}>
                                                         <img className="img-responsive" src="http://lorempixel.com/555/300/sports" alt="placeholder" style={{width:'100%'}} />
