@@ -36,11 +36,11 @@ const EASService = () => {
                                 return (
                                     <div className="container">
                                         <div className="row">
-                                            <div className="col-md-6 col-md-offset-3">
+                                            <div className="col-md-8 offset-md-2" >
                                                 <div className="card" style={{ fontFamily: 'Roboto,sans-serif', boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)',marginBottom:'10px'}}>   
                                                     <div className="card-content" style={{ padding: '10px' }}>
                                                         <img className="img-responsive" src="http://lorempixel.com/555/300/sports" alt="placeholder" style={{width:'100%'}} />
-                                                        <h6>{data.title}</h6>
+                                                        <h6>Title: {data.title}</h6>
                                                         <p>{data.body}</p>
                                                     </div>
                                                 </div>
