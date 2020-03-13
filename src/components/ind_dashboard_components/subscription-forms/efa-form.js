@@ -146,6 +146,7 @@ export default function Form(props) {
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
                     {(button === 1) ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> : (button === 2) ? <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button> : ""}
+
                 </React.Fragment>
 
             </div>

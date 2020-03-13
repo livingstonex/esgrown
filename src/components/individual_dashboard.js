@@ -236,10 +236,36 @@ export default function MiniDrawer() {
               Welcome: {user.name}
             </Typography>
             <div className="row d-flex" style={{width:'100%', position:'relative'}}>
-                <div className="row" style={{marginLeft:'83%'}}>    
-                  <img src={bell} width="15%" height="30px" />
-                  <div style={{width:'10px'}}></div>
-                  <img src={avatar} width="30%" height="30px" />
+              <div className="row" style={{ marginLeft: '83%' }}> 
+                <div className="dropdown" style={{ cursor: 'pointer' }}>
+                  <a data-toggle="dropdown">
+                          <img src={bell} height="20px" className = "mt-1" />
+                  </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="">update1</a>
+                        <a class="dropdown-item" href="">update2</a>
+                        <a class="dropdown-item" href="">update3</a>
+                        <a class="dropdown-item" href="">update4</a>
+
+                    </div>
+                </div>
+                
+                    {/* <div style={{ width: '20px' }}></div> */}
+                
+                <div className="dropdown" style={{ cursor: 'pointer' }}>
+                        <a data-toggle="dropdown">
+                          <img src={avatar} width="30%" height="30px" />
+                        </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" onClick={setActPage}> Accounts</a>
+                                <a class="dropdown-item" href="#" onClick={setProfilePage}>Profile</a>
+                                <a class="dropdown-item" href="#" onClick={setSubPage}>Subscription</a>
+                                <a class="dropdown-item" href="#" onClick={setEasServicePage}>EAS</a>
+                                <a class="dropdown-item" href="#" onClick={setEfaServicePage}>EFA</a>
+                                <a class="dropdown-item" href="#" onClick={setRmServicePage}>RM</a>
+                                <a class="dropdown-item" href="#" onClick={setLmServicePage}>LM</a>
+                            </div>
+                    </div>
                 </div>
             </div>
           </Toolbar>
