@@ -6,15 +6,7 @@ const LMCard = () => {
 
     return (
         <div>
-            <Card>
-                <Card.Img variant="top" style={{ height:300}} src="" />
-
-                <Card.Footer >
-                    Leadership Management 
-                    <br />
-                    <small className="text-muted">Why You Should Subscribe</small>
-                </Card.Footer>
-            </Card>
+            <iframe width="791" height="445" src="https://www.youtube.com/embed/2SfSUjxNHtE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     );
 }
