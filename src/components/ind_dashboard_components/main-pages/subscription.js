@@ -16,14 +16,14 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import { Modal } from 'react-bootstrap/';
-import EASForm from './subscription-forms/eas-form';
-import EFAForm from './subscription-forms/efa-form';
-import RMForm from './subscription-forms/rm-form';
-import LMForm from './subscription-forms/lm-form';
-import EasModal from './subscription-pages/eas/eas_sub_page/eas_sub_page';
-import EfaModal from './subscription-pages/efa/efa_sub_page/efa_sub_page';
-import RmModal from './subscription-pages/rm/rm_sub_page/rm_sub_page';
-import LmModal from './subscription-pages/lm/lm_sub_page/lm_sub_page';
+import EASForm from '../subscription-forms/eas-form';
+import EFAForm from '../subscription-forms/efa-form';
+import RMForm from '../subscription-forms/rm-form';
+import LMForm from '../subscription-forms/lm-form';
+import EasModal from '../subscription-pages/eas/eas_sub_page/eas_sub_page';
+import EfaModal from '../subscription-pages/efa/efa_sub_page/efa_sub_page';
+import RmModal from '../subscription-pages/rm/rm_sub_page/rm_sub_page';
+import LmModal from '../subscription-pages/lm/lm_sub_page/lm_sub_page';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

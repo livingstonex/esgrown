@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from './navbar';
-import Profile from './ind_dashboard_components/profile';
-import Account from './ind_dashboard_components/account';
-import Subscription from './ind_dashboard_components/subscription';
-import Services from './ind_dashboard_components/services';
+import Profile from './ind_dashboard_components/main-pages/profile';
+import Account from './ind_dashboard_components/main-pages/account';
+import Subscription from './ind_dashboard_components/main-pages/subscription';
+import Services from './ind_dashboard_components/main-pages/services';
 
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -45,10 +45,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 //import ListItemIcon from '@material-ui/core/ListItemIcon';
 //import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+import MoneyIcon from '@material-ui/icons/Money';
+import PersoIcon from '@material-ui/icons/Person';
 import EduIcon from '@material-ui/icons/CastForEducation';
+import PeopleIcon from '@material-ui/icons/People';
 
 
 
@@ -177,18 +177,22 @@ export default function MiniDrawer() {
 
   const setEasServicePage = () => {
     setPage(3);
+    handleClose();
   }
 
   const setEfaServicePage = () => {
     setPage(4);
+    handleClose();
   }
 
   const setRmServicePage = () => {
     setPage(5);
+    handleClose();
   }
 
   const setLmServicePage = () => {
     setPage(6);
+    handleClose();
   }
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
@@ -238,7 +242,7 @@ export default function MiniDrawer() {
             </Typography>
             <div className="row d-flex" style={{width:'100%', position:'relative'}}>
                 <div className="row" style={{marginLeft:'83%'}}>    
-                  <img src={bell} width="15%" height="30px" />
+                  <img src={bell} width="11%" height="30px" />
                   <div style={{width:'10px'}}></div>
                   <img src={avatar} width="30%" height="30px" />
                 </div>
@@ -324,21 +328,21 @@ export default function MiniDrawer() {
 
                         <StyledMenuItem onClick={setEfaServicePage}>
                           <ListItemIcon>
-                            <DraftsIcon fontSize="small" />
+                            <MoneyIcon fontSize="small" />
                           </ListItemIcon>
                           <ListItemText primary="EFA Services" />
                         </StyledMenuItem>
 
                         <StyledMenuItem onClick={setRmServicePage}>
                           <ListItemIcon>
-                            <DraftsIcon fontSize="small" />
+                            <PeopleIcon fontSize="small" />
                           </ListItemIcon>
                           <ListItemText primary="RM Services" />
                         </StyledMenuItem>
 
                         <StyledMenuItem onClick={setLmServicePage}>
                           <ListItemIcon>
-                            <DraftsIcon fontSize="small" />
+                            <PersoIcon fontSize="small" />
                           </ListItemIcon>
                           <ListItemText primary="LM Services" />
                         </StyledMenuItem> 
