@@ -4,7 +4,7 @@ import NavBar from './navbar';
 import Profile from './ind_dashboard_components/main-pages/profile';
 import Account from './ind_dashboard_components/main-pages/account';
 import Subscription from './ind_dashboard_components/main-pages/subscription';
-import Services from './ind_dashboard_components/main-pages/services';
+// import Services from './ind_dashboard_components/main-pages/services';
 
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -38,6 +38,11 @@ import EASServicePage from './ind_dashboard_components/services-components/eas_s
 import EFAServicePage from './ind_dashboard_components/services-components/efa_service_page';
 import LMServicePage from './ind_dashboard_components/services-components/lm_service_page';
 import RMServicePage from './ind_dashboard_components/services-components/rm_service_page';
+
+//Exercise pages
+import EASExercise from './ind_dashboard_components/exercises/eas_exercise';
+
+
 
 //Dropdown import setup
 import { withStyles } from '@material-ui/core/styles';
@@ -194,6 +199,28 @@ export default function MiniDrawer() {
     setPage(6);
     handleClose();
   }
+
+  const setEasExercisePage = () => {
+    setPage(7);
+    handleClose();
+
+  }
+  const setEfaExercisePage = () => {
+    setPage(8);
+    handleClose();
+
+  }
+  const setLmExercisePage = () => {
+    setPage(9);
+    handleClose();
+
+  }
+  const setRmExercisePage = () => {
+    setPage(10);
+    handleClose();
+
+  }
+
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -215,8 +242,8 @@ export default function MiniDrawer() {
     setAnchorEl(null);
   };
 
-  return (  
-      <>
+  return (
+    <>
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -240,38 +267,38 @@ export default function MiniDrawer() {
             <Typography variant="" wrap>
               Welcome: {user.name}
             </Typography>
-            <div className="row d-flex" style={{width:'100%', position:'relative'}}>
-              <div className="row" style={{ marginLeft: '83%' }}> 
+            <div className="row d-flex" style={{ width: '100%', position: 'relative' }}>
+              <div className="row" style={{ marginLeft: '83%' }}>
                 <div className="dropdown" style={{ cursor: 'pointer' }}>
                   <a data-toggle="dropdown">
-                          <img src={bell} height="20px" className = "mt-1" />
+                    <img src={bell} height="20px" className="mt-1" />
                   </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="">update1</a>
-                        <a class="dropdown-item" href="">update2</a>
-                        <a class="dropdown-item" href="">update3</a>
-                        <a class="dropdown-item" href="">update4</a>
-                    </div>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="">update1</a>
+                    <a class="dropdown-item" href="">update2</a>
+                    <a class="dropdown-item" href="">update3</a>
+                    <a class="dropdown-item" href="">update4</a>
+                  </div>
                 </div>
-                
-                    {/* <div style={{ width: '20px' }}></div> */}
-                
+
+                {/* <div style={{ width: '20px' }}></div> */}
+
                 <div className="dropdown" style={{ cursor: 'pointer' }}>
-                        <a data-toggle="dropdown">
-                          <img src={avatar} width="30%" height="30px" />
-                        </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" onClick={setActPage}> Accounts</a>
-                                <a class="dropdown-item" href="#" onClick={setProfilePage}>Profile</a>
-                                <a class="dropdown-item" href="#" onClick={setSubPage}>Subscription</a>
-                                <a class="dropdown-item" href="#" onClick={setEasServicePage}>EAS</a>
-                                <a class="dropdown-item" href="#" onClick={setEfaServicePage}>EFA</a>
-                                <a class="dropdown-item" href="#" onClick={setRmServicePage}>RM</a>
-                                <a class="dropdown-item" href="#" onClick={setLmServicePage}>LM</a>
-                            </div>
-                    </div>
+                  <a data-toggle="dropdown">
+                    <img src={avatar} width="30%" height="30px" />
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" onClick={setActPage}> Accounts</a>
+                    <a class="dropdown-item" href="#" onClick={setProfilePage}>Profile</a>
+                    <a class="dropdown-item" href="#" onClick={setSubPage}>Subscription</a>
+                    <a class="dropdown-item" href="#" onClick={setEasServicePage}>EAS</a>
+                    <a class="dropdown-item" href="#" onClick={setEfaServicePage}>EFA</a>
+                    <a class="dropdown-item" href="#" onClick={setRmServicePage}>RM</a>
+                    <a class="dropdown-item" href="#" onClick={setLmServicePage}>LM</a>
+                  </div>
                 </div>
               </div>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -285,18 +312,18 @@ export default function MiniDrawer() {
               [classes.drawerOpen]: open,
               [classes.drawerClose]: !open,
             }),
-        
+
           }}
         >
-          <div className={classes.toolbar} style={{marginLeft:'-10px'}}>
-            <div style={{height:'100%', width:'25px', backgroundColor:'#3F51b5'}}></div>
+          <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
+            <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
             {/* Place Logo here */}
-            <div style={{marginLeft:'60px'}}>
-              <img src={logo} width="80%"/>
+            <div style={{ marginLeft: '60px' }}>
+              <img src={logo} width="80%" />
             </div>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+            </IconButton>
           </div>
           <Divider />
           <List>
@@ -322,57 +349,114 @@ export default function MiniDrawer() {
                 <ListItemText primary={'Subscription'} />
               </ListItem>
             }
-             {
-                <List>
-                  {/* List Item for Services */}
-                    <ListItem
-                      aria-controls="customized-menu"
-                      aria-haspopup="true"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleClick}
-                    >
-                      <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
-                      <ListItemText primary={'Services'} />
-                    </ListItem>
+            {
+              <List>
+                {/* List Item for Services */}
+                <ListItem
+                  aria-controls="customized-menu"
+                  aria-haspopup="true"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleClick}
+                  style={{ cursor: 'pointer' }}
 
-                    {/* ListItem Menu for Services */}
-                    <StyledMenu
-                      id="customized-menu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    >
-                        <StyledMenuItem onClick={setEasServicePage}>
-                          <ListItemIcon>
-                            <EduIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="EAS Services" />
-                        </StyledMenuItem>
+                >
+                  <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                  <ListItemText primary={'Services'} />
+                </ListItem>
 
-                        <StyledMenuItem onClick={setEfaServicePage}>
-                          <ListItemIcon>
-                            <MoneyIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="EFA Services" />
-                        </StyledMenuItem>
+                {/* ListItem Menu for Services */}
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <StyledMenuItem onClick={setEasServicePage}>
+                    <ListItemIcon>
+                      <EduIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="EAS Services" />
+                  </StyledMenuItem>
 
-                        <StyledMenuItem onClick={setRmServicePage}>
-                          <ListItemIcon>
-                            <PeopleIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="RM Services" />
-                        </StyledMenuItem>
+                  <StyledMenuItem onClick={setEfaServicePage}>
+                    <ListItemIcon>
+                      <MoneyIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="EFA Services" />
+                  </StyledMenuItem>
 
-                        <StyledMenuItem onClick={setLmServicePage}>
-                          <ListItemIcon>
-                            <PersoIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="LM Services" />
-                        </StyledMenuItem> 
+                  <StyledMenuItem onClick={setRmServicePage}>
+                    <ListItemIcon>
+                      <PeopleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="RM Services" />
+                  </StyledMenuItem>
 
-                    </StyledMenu>              
+                  <StyledMenuItem onClick={setLmServicePage}>
+                    <ListItemIcon>
+                      <PersoIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="LM Services" />
+                  </StyledMenuItem>
+
+                </StyledMenu>
+              </List>
+
+            }
+            {
+              <List>
+                {/* List Item for Exercises */}
+                <ListItem
+                  aria-controls="customized-menu"
+                  aria-haspopup="true"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleClick}
+                  style={{cursor:'pointer'}}
+                >
+                  <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                  <ListItemText primary={'Exercises'} />
+                </ListItem>
+
+                {/* ListItem Menu for Exercises */}
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <StyledMenuItem onClick={setEasExercisePage}>
+                    <ListItemIcon>
+                      <EduIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="EAS Exercises" />
+                  </StyledMenuItem>
+
+                  <StyledMenuItem onClick={setEfaExercisePage}>
+                    <ListItemIcon>
+                      <MoneyIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="EFA Exercises" />
+                  </StyledMenuItem>
+
+                  <StyledMenuItem onClick={setRmExercisePage}>
+                    <ListItemIcon>
+                      <PeopleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="RM Exercises" />
+                  </StyledMenuItem>
+
+                  <StyledMenuItem onClick={setLmExercisePage}>
+                    <ListItemIcon>
+                      <PersoIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="LM Exercises" />
+                  </StyledMenuItem>
+
+                </StyledMenu>
               </List>
 
             }
@@ -387,13 +471,12 @@ export default function MiniDrawer() {
                 </ListItem>
               }
             </Link>
-          </List>  
+          </List>
         </Drawer>
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage/> : (page == 6) ? <LMServicePage/> :  ''
-          }
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <EASExercise />:''}
         </main>
       </div>
     </>
@@ -401,10 +484,10 @@ export default function MiniDrawer() {
 
 }
 
-  const renderAvatar = () => {
-    const avatar = {
-        backgroundImage: `url(${avatar})`
-    };
+const renderAvatar = () => {
+  const avatar = {
+    backgroundImage: `url(${avatar})`
+  };
 
-    return avatar;
+  return avatar;
 }
