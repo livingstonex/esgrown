@@ -3,8 +3,8 @@ const Schema =  mongoose.Schema;
 
 const corporateSchema = new Schema({
     org_name: {
-        type: String,
-        required: true,
+        // type: String,
+        // required: true,
     },
     email:{
         type: String,

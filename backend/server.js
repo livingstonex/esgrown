@@ -28,6 +28,9 @@ const subscriptioneasRouter = require('./routes/subscriptioneas');
 const subscriptionefaRouter = require('./routes/subscriptionefa');
 const subscriptionrmRouter = require('./routes/subscriptionrm');
 const subscriptionlmRouter = require('./routes/subscriptionlm');
+const excerciseRouter = require('./routes/excercise/excercise');
+const questionRouter = require('./routes/question/question');
+const answerRouter = require('./routes/answer/answer');
 
 //SUB_EAS Expose
 const easSubGetRouter = require('./routes/subscriptioneas');
@@ -38,6 +41,9 @@ app.use('/subscriptioneas', subscriptioneasRouter);
 app.use('/subscriptionefa', subscriptionefaRouter);
 app.use('/subscriptionrm', subscriptionrmRouter);
 app.use('/subscriptionlm', subscriptionlmRouter);
+app.use('/excercise', excerciseRouter);
+app.use('/question', questionRouter);
+app.use('/answer', answerRouter);
 
 
 app.listen(port, () => {
