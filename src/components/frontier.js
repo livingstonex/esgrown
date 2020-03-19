@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {AuthContext} from "../AuthContext";
+import React, { Component } from "react";
+import { AuthContext } from "../AuthContext";
 
 import IndividualDashboard from "./individual_dashboard";
 import CorporateDashboard from "./corporate_dashboard"
@@ -8,38 +8,38 @@ import CorporateDashboard from "./corporate_dashboard"
 
 
 
-export default class Frontier extends Component{
+export default class Frontier extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            name : '',
+            name: '',
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const u = JSON.parse(sessionStorage.getItem("key"));
-        if(!(u.isLogged)){
+        if (!(u.isLogged)) {
             window.location = "/"
         }
         console.log(u)
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <AuthContext.Consumer>
-                {
+            {
                         (context) => (
-                            (context.data.status == "corporate") ?
-                            <CorporateDashboard />
-                            : 
-                            <IndividualDashboard /> 
-                        )
-                }   
+            (context.data.status == "corporate") ?
+                <CorporateDashboard />
+                :
+                <IndividualDashboard />
+        )
+    }
             </AuthContext.Consumer>
         
         );
-    }
+}
 }
 
 
@@ -66,7 +66,7 @@ export default class Frontier extends Component{
 //         console.log(u)
 //     }
 
-    
+
 //     render(){
 //         return(
 //             <AuthContext.Consumer>
@@ -117,7 +117,7 @@ export default class Frontier extends Component{
 //                         )
 //                 }   
 //             </AuthContext.Consumer>
-        
+
 //         );
 //     }
 // }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import JobsModal from '../jobsmodal';
 
 
 import axios from 'axios';
@@ -11,7 +12,8 @@ class RmUpdateForm extends Component {
         intendedStudy: '',
         sub_status: false,
         user_id: '',
-        message: ''
+        message: '',
+        jobsModal: false,
     }
 
 
@@ -43,14 +45,14 @@ class RmUpdateForm extends Component {
         axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
             .then(response => this.setState({
                 highestlevelOfEducation: response.data[0].highest_level_of_education,
-                intendedStudy: response.data[0].field_of_training
+                intendedStudy: response.data[0].field_of_training,
+                sub_status: response.data[0].sub_status
             }))
             .catch(err => console.log(err))
 
     }
 
-    // axios.get()
-    // .then(data => this.setState(highestlevelOfEducation: data.highestlevelOfEducation,intendedStudy:data.intendedStudy)
+
 
     changeHandler = event => {
 
@@ -66,7 +68,7 @@ class RmUpdateForm extends Component {
 
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === false ? '#ae2b26' : 'green';
+        const sub_statusColor = this.state.sub_status === false ? '#e68723' : '#97ba0d';
 
         const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID'
 
@@ -75,8 +77,8 @@ class RmUpdateForm extends Component {
             <div>
                 <Modal isOpen={isOpen} toggle={toggle} centered>
                     <ModalHeader>
-                        <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18}}>Recruitment Management Subscription</p></div>
-                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white' }}>{buttonText}</Button></div>
+                        <div style={{ float: 'left' }}><p style={{ font: 'verdana', fontSize: 18 }}>Recruitment Management Subscription</p></div>
+                        <div style={{ float: 'right', marginLeft: 300, marginTop: -45, paddingRight: 0 }}><Button style={{ float: 'right', backgroundColor: sub_statusColor, color: 'white', border: sub_statusColor }}>{buttonText}</Button></div>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -102,12 +104,13 @@ class RmUpdateForm extends Component {
                     <ModalFooter>
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
                         {' '}{''}
-                        <Button style={{ background: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
+                        <Button className="btn btn-sm btn-info" onClick={this.handleUpdate}>Update</Button>
+                        <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal})}>Add Job </button>
                     </ModalFooter>
                 </Modal>
+                <JobsModal onHide={() => this.setState({ jobsModal: false })} show={this.state.jobsModal} />
             </div >
         )
-
     }
 }
 export default RmUpdateForm;
