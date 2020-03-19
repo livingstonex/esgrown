@@ -25,6 +25,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/PersonPinSharp';
 import SubscriptionIcon from '@material-ui/icons/Subscriptions';
 import ServicesIcon from '@material-ui/icons/RoomService';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
 // import popover from '@material-ui/core/Popover/Popover';
@@ -233,13 +234,22 @@ export default function MiniDrawer() {
 
   //dropdown
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElement, setAnchorElement] = useState(null);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
+  
+  const getClicks = event => {
+    setAnchorElement(event.currentTarget);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const Close = () => {
+    setAnchorElement(null);
   };
 
   return (
@@ -361,7 +371,9 @@ export default function MiniDrawer() {
                   style={{ cursor: 'pointer' }}
 
                 >
-                  <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
+                  <ListItemIcon>
+                    <ServicesIcon color="primary" />
+                </ListItemIcon>
                   <ListItemText primary={'Services'} />
                 </ListItem>
 
@@ -403,24 +415,76 @@ export default function MiniDrawer() {
 
                 </StyledMenu>
               </List>
-
             }
+
             {
               <List>
-                {/* List Item for Exercises */}
+                <ListItem
+                  variant="contained"
+                  color="primary"
+                  onClick={getClicks}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <ListItemIcon><AssessmentIcon color="primary" /></ListItemIcon>
+                  <ListItemText primary="Exercises" />
+                </ListItem>
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={anchorElement}
+                  keepMounted
+                  open={Boolean(anchorElement)}
+                  onClose={Close}
+                >
+                  <StyledMenuItem onClick={setEasExercisePage}>
+                    <ListItemIcon>
+                      <EduIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="EAS Exercises" />
+                  </StyledMenuItem>
+
+                  <StyledMenuItem onClick={setEfaExercisePage}>
+                    <ListItemIcon>
+                      <MoneyIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="EFA Exercises" />
+                  </StyledMenuItem>
+
+                  <StyledMenuItem onClick={setRmExercisePage}>
+                    <ListItemIcon>
+                      <PeopleIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="RM Exercises" />
+                  </StyledMenuItem>
+
+                  <StyledMenuItem onClick={setLmExercisePage}>
+                    <ListItemIcon>
+                      <PersoIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="LM Exercises" />
+                  </StyledMenuItem>
+
+                </StyledMenu>
+
+
+              </List>
+            }
+
+            {/* {
+              <List>
+
                 <ListItem
                   aria-controls="customized-menu"
                   aria-haspopup="true"
                   variant="contained"
                   color="primary"
-                  onClick={handleClick}
-                  style={{cursor:'pointer'}}
+                  onClick={handleClicks}
+                  style={{ cursor: 'pointer' }}
                 >
                   <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
                   <ListItemText primary={'Exercises'} />
                 </ListItem>
 
-                {/* ListItem Menu for Exercises */}
+
                 <StyledMenu
                   id="customized-menu"
                   anchorEl={anchorEl}
@@ -459,7 +523,8 @@ export default function MiniDrawer() {
                 </StyledMenu>
               </List>
 
-            }
+            } */}
+
           </List>
           <Divider />
           <List>

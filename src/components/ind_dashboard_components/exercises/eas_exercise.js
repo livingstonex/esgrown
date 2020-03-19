@@ -97,6 +97,7 @@ const EASExercise = () => {
 
         var ans = localStorage.getItem('ans');
         setUserAns(ans)
+        
         localStorage.removeItem('ans');
 
     }
