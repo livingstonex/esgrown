@@ -15,10 +15,14 @@ const EASExercise = () => {
     // const [question, setQuestion] = useState("");
     const [activeStep, setActiveStep] = useState(0);
     const [userAns, setUserAns] = useState({})
-    const [q2userAns, setQ2UserAns] = useState("")
-    const [q3userAns, setQ3UserAns] = useState("")
-    const [q4userAns, setQ4UserAns] = useState("")
-    const [q5userAns, setQ5UserAns] = useState("")
+    const [startTimer, setStartTimer] = useState(false)
+    const [timer, setTimer] = useState(false)
+    const [startQuiz, setStartQuiz] = useState(true)
+
+    const [timeLeft, setTimeLeft] = useState();
+    const [page, setPage] = useState(1);
+
+
 
 
 
@@ -34,6 +38,35 @@ const EASExercise = () => {
     //     setActiveStep(0);
     // };
 
+    useEffect(() => {
+
+        if (timeLeft == 0) {
+            setPage(3)
+            return
+        }
+
+        const intervalId = setInterval(() => {
+            setTimeLeft(timeLeft - 1);
+        }, 1000);
+
+
+        return () => clearInterval(intervalId);
+
+    }, [timeLeft]);
+
+
+    const setStart = () => {
+        setPage(2)
+        alert('started');
+        setTimeLeft(5)
+        document.getElementById('timer').display = 'show';
+
+    }
+
+
+    // if (timeLeft == 0) {
+        
+    // }
 
 
 
@@ -49,12 +82,12 @@ const EASExercise = () => {
 
         storedAns = storedAns ? JSON.parse(storedAns) : [];
 
-        storedAns.push( {
+        storedAns.push({
             question: e.target.parentNode.parentNode.parentNode.firstChild.value,
             userAns: e.target.value
         })
 
-            localStorage.setItem('ans', JSON.stringify(storedAns))
+        localStorage.setItem('ans', JSON.stringify(storedAns))
 
 
     }
@@ -67,6 +100,7 @@ const EASExercise = () => {
         localStorage.removeItem('ans');
 
     }
+
     console.log(userAns);
 
     // useEffect(() => {
@@ -77,48 +111,50 @@ const EASExercise = () => {
     //         })
     //         .catch(err => console.log(err));
     // },[])
-    // setTimeout( ()=> { alert("Hello"); }, 3000);
 
-    const question = [{ q: ['1950', '1970', '1960', '1978'], t: 'when was Nigeria independence', correct_ans: ['1960', '1920'] }, { q: ['place of worship', 'house', 'building', 'place'], t: 'what is church', correct_ans: ['place of worship'] }, { q: ['my house', 'my home', 'jos', 'james'], t: 'what is a moon', correct_ans: ['james'] }]
-    
+    // components 
+    const StartBtn = () => {
+        return (
+            <>
+                <button className="btn btn-lg btn-primary" onClick={setStart}>Start Exercise</button>
+            </>
+        );
+    }
 
-    return (
-        <div className="">
-
+    const Quiz = () => {
+        return (
+            <>
+            <span style={{ fontSize: '18px' }}>Time alloted for this Quiz: 50 sec </span>
             <Stepper activeStep={activeStep} orientation="horizontal">
                 {question.map((que) => (
                     <Step key={que.t}>
-                        <StepContent>{que.t}</StepContent>
+                        <StepContent style={{ fontWeight: 'bolder', fontStyle: 'italic', color: 'red' }}>Time alloted this question: 10 sec </StepContent>
+                        <StepContent style={{ fontSize: '20px' }}>{que.t}</StepContent>
                         <StepContent>
                             <input type="hidden" value={que.t} />
                             <Typography>{que.q.map((a) => {
                                 let ans;
-                                if(que.correct_ans.length > 1){
+                                if (que.correct_ans.length > 1) {
                                     ans = <div>
-                                            <input type="checkbox" value={a} onClick={handelUserAns} />{a}
-                                        </div>
+                                        <input type="checkbox" value={a} onClick={handelUserAns} />{a}
+                                    </div>
                                 } else {
-                                    ans =  <div>
-                                            <input type="radio" name="ans" value={a} onClick={handelUserAns} /> {a}
-                                        </div>;
+                                    ans = <div>
+                                        <input type="radio" name="ans" value={a} onClick={handelUserAns} /> {a}
+                                    </div>;
                                 }
-                                    
+
                                 return ans;
                             })}</Typography>
                             <div className="">
                                 <div>
-                                    {/* <Button
-                                        disabled={activeStep === 0}
-                                        onClick={handleBack}
-                                        className=""
-                                    >
-                                        Back
-                                    </Button> */}
+
                                     <Button
                                         variant="contained"
                                         color="primary"
                                         onClick={handleNext}
                                         className=""
+                                        id={activeStep}
                                     >
                                         {activeStep === question.length - 1 ? 'Finish' : 'Next'}
                                     </Button>
@@ -128,21 +164,41 @@ const EASExercise = () => {
                     </Step>
                 ))}
             </Stepper>
-            {activeStep === question.length && (
+            { activeStep === question.length && (
                 <Paper square elevation={0} className="">
                     <Typography>All steps completed - you &apos;re finished</Typography>
 
                     <Button
-                        onClick
                         className=""
                         color="primary"
                         variant="contained"
                         onClick={submitAns}
+                        id="submit"
                     >
                         submit Ans
                     </Button>
                 </Paper>
-            )}
+            )} 
+        </>
+        );
+    }
+
+
+
+
+        
+
+    const question = [{ q: ['1950', '1970', '1960', '1978'], t: 'when was Nigeria independence', correct_ans: ['1960', '1920'] }, { q: ['place of worship', 'house', 'building', 'place'], t: 'what is church', correct_ans: ['place of worship'] }, { q: ['my house', 'my home', 'jos', 'james'], t: 'what is a moon', correct_ans: ['james'] }]
+
+
+    return (
+        <div className="">
+
+
+            {
+                (page == 1) ? <StartBtn /> : (page == 2) ? <Quiz /> : (page == 3) ? <Button color="primary" variant="contained" onClick={submitAns} id="submit">submit Ans</Button> : ""}
+
+            <span id="timer" style={{display:'none'}}>{timeLeft}</span>
         </div>
     );
 }

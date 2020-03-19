@@ -105,13 +105,7 @@ class RmUpdateForm extends Component {
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
                         {' '}{''}
                         <Button className="btn btn-sm btn-info" onClick={this.handleUpdate}>Update</Button>
-                        <button className="btn btn-sm btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" style={{ background: '#2e5978', border: '#2e5978' }}>Add Job </button>
-                        <div class="dropdown-menu text-center">
-                            <button class="dropdown-item" href="" onClick={() => this.setState({ jobsModal: true })}>Apple</button>
-                            <button class="dropdown-item" href="">IBM</button>
-                            <button class="dropdown-item" href="#">Microsoft</button>
-
-                        </div>
+                        <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal})}>Add Job </button>
                     </ModalFooter>
                 </Modal>
                 <JobsModal onHide={() => this.setState({ jobsModal: false })} show={this.state.jobsModal} />
