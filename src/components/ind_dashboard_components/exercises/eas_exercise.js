@@ -42,6 +42,7 @@ const EASExercise = () => {
 
         if (timeLeft == 0) {
             setPage(3)
+            document.getElementById('timer').style.display = 'none';
             return
         }
 
@@ -57,9 +58,8 @@ const EASExercise = () => {
 
     const setStart = () => {
         setPage(2)
-        alert('started');
         setTimeLeft(5)
-        document.getElementById('timer').display = 'show';
+        document.getElementById('timer').style.display = 'inline-block';
 
     }
 
@@ -116,7 +116,14 @@ const EASExercise = () => {
     const StartBtn = () => {
         return (
             <>
-                <button className="btn btn-lg btn-primary" onClick={setStart}>Start Exercise</button>
+                <div className="container">
+                    <div className="text-center" style={{marginTop:'5%'}}>
+                        <h5>You have 50 seconds to answere all Question. Click start when you are ready</h5>
+                    </div>
+                    <div className="text-center">
+                        <button className="btn btn-lg btn-primary" onClick={setStart}>Start Exercise</button>
+                    </div>
+                </div>
             </>
         );
     }
@@ -124,11 +131,9 @@ const EASExercise = () => {
     const Quiz = () => {
         return (
             <>
-            <span style={{ fontSize: '18px' }}>Time alloted for this Quiz: 50 sec </span>
             <Stepper activeStep={activeStep} orientation="horizontal">
                 {question.map((que) => (
                     <Step key={que.t}>
-                        <StepContent style={{ fontWeight: 'bolder', fontStyle: 'italic', color: 'red' }}>Time alloted this question: 10 sec </StepContent>
                         <StepContent style={{ fontSize: '20px' }}>{que.t}</StepContent>
                         <StepContent>
                             <input type="hidden" value={que.t} />
@@ -183,6 +188,29 @@ const EASExercise = () => {
         );
     }
 
+    const SubmitBtn = () => {
+
+        return (
+            <>
+                <div className="container text-center" >
+                    <div style={{ marginTop: '5%' }}>
+                        <h6>You have exceeded your alloted time. Please click on the button to submit your answeres</h6>
+                    </div>
+                    <div style={{}}>
+                        <Button 
+                            style={{ background: '#21a5e7', border: '#21a5e7'}} 
+                            variant="contained" 
+                            onClick={submitAns}
+                            size="lg" 
+                        >
+                            submit Answeres
+                        </Button>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
 
 
 
@@ -196,9 +224,10 @@ const EASExercise = () => {
 
 
             {
-                (page == 1) ? <StartBtn /> : (page == 2) ? <Quiz /> : (page == 3) ? <Button color="primary" variant="contained" onClick={submitAns} id="submit">submit Ans</Button> : ""}
+                (page == 1) ? <StartBtn /> : (page == 2) ? <Quiz /> : (page == 3) ? <SubmitBtn /> : ""
+            }
 
-            <span id="timer" style={{display:'none'}}>{timeLeft}</span>
+            <span id="timer" style={{display:'none',color:'red',fontSize:'20px',fontStyle:'italic'}}>You have: {timeLeft} seconds Left</span>
         </div>
     );
 }
