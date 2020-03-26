@@ -40,8 +40,8 @@ import EFAServicePage from './ind_dashboard_components/services-components/efa_s
 import LMServicePage from './ind_dashboard_components/services-components/lm_service_page';
 import RMServicePage from './ind_dashboard_components/services-components/rm_service_page';
 
-//Exercise pages
-import EASExercise from './ind_dashboard_components/exercises/eas_exercise';
+//Exercise page
+import Exercises from './ind_dashboard_components/exercises/exercise';
 
 
 
@@ -201,7 +201,7 @@ export default function MiniDrawer() {
     handleClose();
   }
 
-  const setEasExercisePage = () => {
+  const setExercisePage = () => {
     setPage(7);
     handleClose();
 
@@ -239,7 +239,7 @@ export default function MiniDrawer() {
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const getClicks = event => {
     setAnchorElement(event.currentTarget);
   };
@@ -280,9 +280,10 @@ export default function MiniDrawer() {
             <div className="row d-flex" style={{ width: '100%', position: 'relative' }}>
               <div className="row" style={{ marginLeft: '83%' }}>
                 <div className="dropdown" style={{ cursor: 'pointer' }}>
-                  <a data-toggle="dropdown">
+                  <button data-toggle="dropdown" className="MuiButtonBase-root MuiIconButton-root MuiIconButton-ColorInherit" tabindex="0">
                     <img src={bell} height="20px" className="mt-1" />
-                  </a>
+                    <span className="MuiTouch"></span>
+                  </button>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="">update1</a>
                     <a class="dropdown-item" href="">update2</a>
@@ -373,7 +374,7 @@ export default function MiniDrawer() {
                 >
                   <ListItemIcon>
                     <ServicesIcon color="primary" />
-                </ListItemIcon>
+                  </ListItemIcon>
                   <ListItemText primary={'Services'} />
                 </ListItem>
 
@@ -416,115 +417,12 @@ export default function MiniDrawer() {
                 </StyledMenu>
               </List>
             }
-
             {
-              <List>
-                <ListItem
-                  variant="contained"
-                  color="primary"
-                  onClick={getClicks}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <ListItemIcon><AssessmentIcon color="primary" /></ListItemIcon>
-                  <ListItemText primary="Exercises" />
-                </ListItem>
-                <StyledMenu
-                  id="customized-menu"
-                  anchorEl={anchorElement}
-                  keepMounted
-                  open={Boolean(anchorElement)}
-                  onClose={Close}
-                >
-                  <StyledMenuItem onClick={setEasExercisePage}>
-                    <ListItemIcon>
-                      <EduIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="EAS Exercises" />
-                  </StyledMenuItem>
-
-                  <StyledMenuItem onClick={setEfaExercisePage}>
-                    <ListItemIcon>
-                      <MoneyIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="EFA Exercises" />
-                  </StyledMenuItem>
-
-                  <StyledMenuItem onClick={setRmExercisePage}>
-                    <ListItemIcon>
-                      <PeopleIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="RM Exercises" />
-                  </StyledMenuItem>
-
-                  <StyledMenuItem onClick={setLmExercisePage}>
-                    <ListItemIcon>
-                      <PersoIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="LM Exercises" />
-                  </StyledMenuItem>
-
-                </StyledMenu>
-
-
-              </List>
+              <ListItem button onClick={setExercisePage}>
+                <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
+                <ListItemText primary={'Exercises'} />
+              </ListItem>
             }
-
-            {/* {
-              <List>
-
-                <ListItem
-                  aria-controls="customized-menu"
-                  aria-haspopup="true"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleClicks}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <ListItemIcon><ServicesIcon color="primary" /> </ListItemIcon>
-                  <ListItemText primary={'Exercises'} />
-                </ListItem>
-
-
-                <StyledMenu
-                  id="customized-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <StyledMenuItem onClick={setEasExercisePage}>
-                    <ListItemIcon>
-                      <EduIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="EAS Exercises" />
-                  </StyledMenuItem>
-
-                  <StyledMenuItem onClick={setEfaExercisePage}>
-                    <ListItemIcon>
-                      <MoneyIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="EFA Exercises" />
-                  </StyledMenuItem>
-
-                  <StyledMenuItem onClick={setRmExercisePage}>
-                    <ListItemIcon>
-                      <PeopleIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="RM Exercises" />
-                  </StyledMenuItem>
-
-                  <StyledMenuItem onClick={setLmExercisePage}>
-                    <ListItemIcon>
-                      <PersoIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="LM Exercises" />
-                  </StyledMenuItem>
-
-                </StyledMenu>
-              </List>
-
-            } */}
-
           </List>
           <Divider />
           <List>
@@ -541,7 +439,7 @@ export default function MiniDrawer() {
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <EASExercise />:''}
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises /> : ''}
         </main>
       </div>
     </>
@@ -549,10 +447,10 @@ export default function MiniDrawer() {
 
 }
 
-const renderAvatar = () => {
-  const avatar = {
-    backgroundImage: `url(${avatar})`
-  };
+// const renderAvatar = () => {
+//   const avatar = {
+//     backgroundImage: `url(${avatar})`
+//   };
 
-  return avatar;
-}
+//   return avatar;
+// }

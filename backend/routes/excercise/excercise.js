@@ -4,8 +4,9 @@ let EX = require('../../models/excercises/excercise.model');
 router.route('/add').post((req, res) => {
     const title = req.body.title;
     const service = req.body.service;
+    const duration = req.body.duration;
 
-    const newEX = new EX({ title, service}); 
+    const newEX = new EX({ title, service, duration });
 
     newEX.save()
         .then((sub) => res.json(sub))
@@ -14,7 +15,7 @@ router.route('/add').post((req, res) => {
 });
 
 
-//============================= Get Individual's EAS Sub Details ===========================
+//============================= Get all Exercises ===========================
 
 router.route(`/`).get((req, res) => {
     EX.find()
@@ -24,18 +25,18 @@ router.route(`/`).get((req, res) => {
 
 
 
-// //============================= UPDATE FOR EAS FORM ===============================
+// ============================= Get update based on user last login ===============================
 
-// router.route(`/update/:id`).post((req, res) => {
-//     EAS.findOneAndUpdate(
-//         { user_id: req.params.id },
-//         {
-//             levelofeducation: req.body.levelofeducation,
-//             field_of_intended_study: req.body.field_of_intended_study
-//         }
-//     ).then(es => res.json(es))
-//         .catch(err => res.json('Err: ' + err));
-// });
+router.route('/notification').post((req, res) => {
+    const lastLogin = req.body.lastLogin;
+    EX.find({
+        createdAt: {
+            $gte: lastLogin
+        }
+    })
+        .then(data => res.json(data))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 
 // //=========================== Check Ref to be used to Toggle Subscription State =========================

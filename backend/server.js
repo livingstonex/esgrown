@@ -31,9 +31,15 @@ const subscriptionlmRouter = require('./routes/subscriptionlm');
 const excerciseRouter = require('./routes/excercise/excercise');
 const questionRouter = require('./routes/question/question');
 const answerRouter = require('./routes/answer/answer');
+const notificationRouter = require('./routes/notification/notification');
+const serviceeasContentRouter = require('./routes/service-content/serviceconteneas');
+const serviceefaContentRouter = require('./routes/service-content/servicecontentefa');
+const servicelmContentRouter = require('./routes/service-content/servicecontentlm');
+const servicermContentRouter = require('./routes/service-content/servicecontentrm');
+
 
 //SUB_EAS Expose
-const easSubGetRouter = require('./routes/subscriptioneas');
+// const easSubGetRouter = require('./routes/subscriptioneas');
 
 app.use('/individuals', individualsRouter);
 app.use('/corporates', corporatesRouter);
@@ -44,6 +50,12 @@ app.use('/subscriptionlm', subscriptionlmRouter);
 app.use('/excercise', excerciseRouter);
 app.use('/question', questionRouter);
 app.use('/answer', answerRouter);
+app.use('/notification', notificationRouter);
+app.use('/servicecontenteas', serviceeasContentRouter);
+app.use('/servicecontentefa', serviceefaContentRouter);
+app.use('/servicecontentlm', servicelmContentRouter);
+app.use('/servicecontentrm', servicermContentRouter);
+
 
 
 app.listen(port, () => {

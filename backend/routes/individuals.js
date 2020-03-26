@@ -38,8 +38,9 @@ router.route('/add').post((req, res) => {
     const state = req.body.state;
     const password = hash;
     const status = req.body.status;
+    const lastLogin = Date.parse(new Date());
 
-    const newIndividual = new Individual({fullname, email, phone, gender, dob, country, state, password, status});
+    const newIndividual = new Individual({fullname, email, phone, gender, dob, country, state, password, status,lastLogin});
 
     newIndividual.save()
         .then((individ) => res.json(individ))
@@ -59,15 +60,21 @@ router.route('/login_email').post((req, res) => {
 });
 
 //Login Route
-router.route('/login').post((req, res)=>{
+router.route('/login').post((req, res) => {
     const email = req.body.email;
     const hash_password = req.body.hash_password;
     const normal_password = req.body.normal_password;
-
+    const lastLogin = Date.parse(new Date());
     try {
         const equal = bcrypt.compareSync(normal_password, hash_password);
-        if(equal){
+        if (equal) {
             res.json(1);
+            Individual.find({ email: email })
+                .then(res =>
+                    res.updateOne({ lastLogin: lastLogin })
+                        .then(res => res.json('LastLogin Updated: ' + res))
+                        .catch(err => res.json('ERr: ' + err)),
+                ).catch(err => res.json('Error: ' + err));
         }else{
             res.json(0);
         }

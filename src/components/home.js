@@ -190,6 +190,7 @@ export default class Home extends Component{
                                                                                 const user_country = res.data[0].country;
                                                                                 const user_state = res.data[0].state;
                                                                                 const user_status = res.data[0].status;
+                                                                                const lastLogin = res.data[0].lastLogin;
 
                                                                                 //console.log(User.password);
                                                                                 const user_data = {
@@ -215,7 +216,8 @@ export default class Home extends Component{
                                                                                                 dos: user_dob,
                                                                                                 country: user_country,
                                                                                                 state: user_state,  
-                                                                                                status: user_status                            
+                                                                                                status: user_status,
+                                                                                                lastLogin: lastLogin
                                                                                                 }
                                                                                              
                                                                                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));

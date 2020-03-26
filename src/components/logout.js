@@ -6,7 +6,7 @@ export default class Logout extends Component{
 
   componentDidMount(){
     const u = JSON.parse(sessionStorage.getItem("key"));
-    console.log("heyyy")
+    // console.log("heyyy")
   }
     render(){ 
         const GlobalUser = {
