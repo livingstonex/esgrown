@@ -16,13 +16,19 @@ router.route('/add').post((req, res) => {
 
 });
 
+router.route('/').get((req, res) => { 
+    LMS.find().sort({ createdAt: -1 })
+        .then(lm => res.json(lm))
+        .catch(err => res.status(400).json('Error '+ err))
+});
+
 router.route('/notification').post((req, res) => {
     const lastLogin = req.body.lastLogin;
     LMS.find({
         createdAt: {
             $gte: lastLogin
         }
-    })
+    }).sort({ cratedAt: -1 })
         .then(data => res.json(data))
         .catch(err => res.status(400).json('Error: ' + err));
 });

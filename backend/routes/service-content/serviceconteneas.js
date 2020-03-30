@@ -16,15 +16,23 @@ router.route('/add').post((req, res) => {
 
 });
 
+
+router.route('/').get((req, res) => {
+    EASS.find().sort({ createdAt: -1 })
+        .then(eas => res.json(eas))
+        .catch(err => res.status(400).json('Error ' + err))
+})
+
+
 router.route('/notification').post((req, res) => {
     const lastLogin = req.body.lastLogin;
     EASS.find({
         createdAt: {
             $gte: lastLogin
         }
-    })
+    }).sort({ cratedAt: -1 })
         .then(data => res.json(data))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.json('Error: ' + err));
 });
 
 module.exports = router;

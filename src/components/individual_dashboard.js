@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 import NavBar from './navbar';
 import Profile from './ind_dashboard_components/main-pages/profile';
 import Account from './ind_dashboard_components/main-pages/account';
@@ -28,6 +29,7 @@ import ServicesIcon from '@material-ui/icons/RoomService';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
+import Badge from '@material-ui/core/Badge';
 // import popover from '@material-ui/core/Popover/Popover';
 import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import logo from '../img/esgrown.png';
@@ -165,6 +167,241 @@ export default function MiniDrawer() {
   const [page, setPage] = useState(0);
   const [user, setUser] = useState({});
 
+  //state for notifications
+  const [easNotification, setEasNotification] = useState([])
+  const [efaNotification, setEfaNotification] = useState([])
+  const [lmNotification, setLmNotification] = useState([])
+  const [rmNotification, setRmNotification] = useState([])
+  const [exNotification, setExNotification] = useState([])
+  const [count, setCount] = useState(true);
+
+
+  //get all notifications from api
+
+
+  useEffect(() => {
+    const userData = JSON.parse(sessionStorage.getItem('key'));
+    const notify = JSON.parse(localStorage.getItem('notify'));
+    console.log(notify)
+
+    if (notify == 'loaded') {
+
+    } else {
+      //get eas subscription
+      axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
+        .then(res => {
+
+          if (res.data.length > 0) {
+            if (res.data[0].sub_status) {
+
+              const lastLogin = {
+                "lastLogin": userData.lastLogin
+              }
+              //get eas notifications
+              axios.post(`http://localhost:5000/servicecontenteas/notification`, lastLogin)
+                .then(res => {
+                  setEasNotification(res.data)
+                })
+                .catch(err => console.log(err));
+
+              //get eas exercises
+              axios.post(`http://localhost:5000/excercise/notification`, lastLogin)
+                .then(res => {
+
+                  const easEx = res.data.filter(ex => {
+                    return ex.service === 'EAS'
+                  })
+                  setExNotification(easEx);
+
+
+                })
+                .catch(err => console.log(err))
+            }
+
+          }
+        })
+        .catch(err => console.log(err));
+
+      //get efa subscription
+      axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
+        .then(res => {
+
+          if (res.data.length > 0) {
+            if (res.data[0].sub_status) {
+
+              const lastLogin = {
+                "lastLogin": userData.lastLogin
+              }
+              // get efa notifications
+              axios.post(`http://localhost:5000/servicecontentefa/notification`, lastLogin)
+                .then(res => {
+                  setEfaNotification(res.data);
+
+
+                })
+                .catch(err => console.log(err));
+
+              //get efa exercises
+              axios.post(`http://localhost:5000/excercise/notification`, lastLogin)
+                .then(res => {
+
+                  const efaEx = res.data.filter(ex => {
+                    return ex.service === 'EFA'
+                  })
+                  setExNotification(efaEx);
+
+                })
+                .catch(err => console.log(err))
+
+            }
+
+          }
+        }).catch(err => console.log(err));
+
+
+      //get lm subscription
+      axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
+        .then(res => {
+
+          if (res.data.length > 0) {
+            if (res.data[0].sub_status) {
+
+              const lastLogin = {
+                "lastLogin": userData.lastLogin
+              }
+              //get lm notifications
+              axios.post(`http://localhost:5000/servicecontentlm/notification`, lastLogin)
+                .then(res => {
+                  setLmNotification(res.data)
+
+                })
+                .catch(err => console.log(err));
+
+              //get lm exercises
+              axios.post(`http://localhost:5000/excercise/notification`, lastLogin)
+                .then(res => {
+
+                  const lmEx = res.data.filter(ex => {
+                    return ex.service === 'LM'
+                  })
+                  setExNotification(lmEx);
+
+                })
+                .catch(err => console.log(err))
+
+            }
+
+          }
+        })
+        .catch(err => console.log(err))
+
+
+      //get rm subscription
+      axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
+        .then(res => {
+
+          if (res.data.length > 0) {
+            if (res.data[0].sub_status) {
+
+              const lastLogin = {
+                "lastLogin": userData.lastLogin
+              }
+              // get rm notifications
+              axios.post(`http://localhost:5000/servicecontentrm/notification`, lastLogin)
+                .then(res => {
+
+                  setRmNotification(res.data)
+
+                })
+                .catch(err => console.log(err));
+
+              //get rm exercises
+              axios.post(`http://localhost:5000/excercise/notification`, lastLogin)
+                .then(res => {
+
+                  const rmEx = res.data.filter(ex => {
+                    return ex.service === 'RM'
+                  })
+                  setExNotification(rmEx);
+
+
+
+                })
+                .catch(err => console.log(err))
+
+            }
+
+          }
+        })
+        .catch(err => console.log(err))
+
+    }
+
+
+  }, [])
+
+
+  let total;
+  if (count == true) {
+    total = easNotification.length + efaNotification.length + lmNotification.length + rmNotification.length + exNotification.length;
+  } else {
+    total = 0
+  }
+
+  const clickNotification = (e) => {
+
+    localStorage.setItem('notify', JSON.stringify('loaded'));
+
+    const service = e.target.getAttribute('data-service');
+
+    if (service == 'EAS') {
+      const id = e.target.getAttribute('data-id');
+      const newEAS = easNotification.filter(eas => {
+        return eas._id != id
+      })
+      setEasNotification(newEAS);
+      console.log(newEAS)
+      setPage(3);
+
+    } else if (service == 'EFA') {
+      const id = e.target.getAttribute('data-id');
+
+      const efa = efaNotification.filter(efa => {
+        return efa._id !== id
+      });
+      setEfaNotification(efa)
+      setPage(4);
+    } else if (service == 'LM') {
+      const id = e.target.getAttribute('data-id');
+
+      const lm = lmNotification.filter(lm => {
+        return lm._id !== id;
+      })
+      setLmNotification(lm)
+      setPage(6);
+
+    } else if (service == 'RM') {
+      const id = e.target.getAttribute('data-id');
+
+      const rm = rmNotification.filter(rm => {
+        return rm._id !== id
+      })
+      setRmNotification(rm)
+      setPage(5);
+
+    } else if (service == 'EX') {
+      const id = e.target.getAttribute('data-id');
+
+      const ex = exNotification.filter(ex => {
+        return ex._id !== id
+      })
+      setExNotification(ex);
+      setPage(7);
+    }
+
+  }
+
+
   useEffect(() => {
     const userr = JSON.parse(sessionStorage.getItem("key"));
     setUser(userr);
@@ -277,18 +514,47 @@ export default function MiniDrawer() {
             <Typography variant="" wrap>
               Welcome: {user.name}
             </Typography>
-            <div className="row d-flex" style={{ width: '100%', position: 'relative' }}>
+            <div className="row d-flex" style={{ width: '100%', position: 'relative', overFlow: 'scroll' }}>
               <div className="row" style={{ marginLeft: '83%' }}>
                 <div className="dropdown" style={{ cursor: 'pointer' }}>
-                  <button data-toggle="dropdown" className="MuiButtonBase-root MuiIconButton-root MuiIconButton-ColorInherit" tabindex="0">
-                    <img src={bell} height="20px" className="mt-1" />
-                    <span className="MuiTouch"></span>
+                  <button className="btn btn" drop="left" data-toggle="dropdown">
+
+                    <Badge color="secondary" onClick={() => setCount(false)} badgeContent={total}>
+                      <img src={bell} height="20px" className="mt-1" style={{ position: 'relative', zIndex: '.9' }} />
+                    </Badge>
                   </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="">update1</a>
-                    <a class="dropdown-item" href="">update2</a>
-                    <a class="dropdown-item" href="">update3</a>
-                    <a class="dropdown-item" href="">update4</a>
+                    {easNotification.map(eas => {
+                      return (
+                        <p class="dropdown-item" data-service="EAS" data-id={eas._id} onClick={clickNotification}>{eas.title}</p>
+                      )
+                    })}
+                    <Divider />
+                    {efaNotification.map(efa => {
+                      return (
+                        <p class="dropdown-item" data-service="EFA" data-id={efa._id} onClick={clickNotification}>{efa.title}</p>
+                      );
+                    })}
+
+                    <Divider />
+                    {rmNotification.map(rm => {
+                      return (
+                        <p class="dropdown-item" data-service="RM" data-id={rm._id} onClick={clickNotification}>{rm.title}</p>
+                      );
+                    })}
+                    <Divider />
+                    {lmNotification.map(lm => {
+
+                      return (
+                        <p class="dropdown-item" data-service="LM" data-id={lm._id} onClick={clickNotification}>{lm.title}</p>
+                      );
+                    })}
+                    <Divider />
+                    {exNotification.map(ex => {
+                      return (
+                        <p class="dropdown-item" data-service="EX" data-id={ex._id} onClick={clickNotification}>{ex.title}</p>
+                      );
+                    })}
                   </div>
                 </div>
 

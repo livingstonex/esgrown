@@ -38,13 +38,13 @@ class QuestionsComponent extends Component {
         }
     }
 
-    // startTimer() {
-    //     this.setState({ currentCount: 30 });
-    //     setInterval(this.timer.bind(this), 1000);
-    // }
+    startTimer() {
+        this.setState({ currentCount: this.props.duration });
+        setInterval(this.timer.bind(this), 1000);
+    }
 
     componentDidMount() {
-        // this.intervalId = setInterval(this.timer.bind(this), 1000);
+        this.intervalId = setInterval(this.timer.bind(this), 1000);
 
         //get questions
         axios.post(`http://localhost:5000/question/${this.props.exerciseId}`)
@@ -59,14 +59,14 @@ class QuestionsComponent extends Component {
             })
             .catch(err => console.log(err));
 
-        // if (this.state.spinner == false) {
-        //     this.setState({ page: 1 })
-        // }
+        if (this.state.spinner == false) {
+            this.setState({ page: 1 })
+        }
     }
 
-    // componentWillUnmount() {
-    //     clearInterval(this.intervalId);
-    // }
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
+    }
 
 
     setStart = () => {
@@ -76,7 +76,6 @@ class QuestionsComponent extends Component {
     }
 
     handelUserAns = (e) => {
-
 
         if (e.target.type == 'radio') {
             const q = e.target.parentNode.parentNode.parentNode.firstChild.value;
@@ -144,13 +143,10 @@ class QuestionsComponent extends Component {
     }
 
 
-
     render() {
 
         const { question,spinner } = this.state
 
-
-        console.log(this.state.userAns)
 
        
 

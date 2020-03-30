@@ -38,7 +38,8 @@ export default class Logout extends Component{
                                 {
                                   sessionStorage.setItem("key", JSON.stringify(GlobalUser)),
                                   sessionStorage.setItem("corp_key", JSON.stringify(Global_CorpUser)),
-                                  
+
+                                  localStorage.removeItem('notify'),
                                   window.location = "/"
                                  
                                 }

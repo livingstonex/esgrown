@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardActionArea, Typography, CardContent, CardActions } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
-import QuestionComponent from './questionscomponent';
+import QuestionComponentRM from './questionscomponent';
+import QuestionComponentLM from './questionscomponent';
 
 
 
@@ -28,7 +29,7 @@ const Exercises = () => {
     const [exerciseId, setExerciseId] = useState('');
     const [currentService, setCurrentService] = useState('')
     const [qspinner, setQSpinner] = useState(true);
-    
+
 
 
 
@@ -36,10 +37,9 @@ const Exercises = () => {
     //get all exercises and filter for rm and lm
     useEffect(() => {
 
+        //rm exercises
         axios.get(`http://localhost:5000/excercise`)
             .then(res => {
-                console.log(res.data)
-
 
                 const rm = res.data.filter((r) => {
                     return r.service === "RM"
@@ -47,7 +47,22 @@ const Exercises = () => {
                 setRMExercise(rm)
                 setSpinner(false)
             })
+            .catch(err => console.log(err));
+
+
+        //lm exercise
+        axios.get(`http://localhost:5000/excercise`)
+            .then(res => {
+
+                const lm = res.data.filter((r) => {
+                    return r.service === "LM"
+                })
+                setLMExercise(lm)
+                setSpinner(false)
+            })
             .catch(err => console.log(err))
+
+
 
     }, []);
 
@@ -76,7 +91,7 @@ const Exercises = () => {
 
     }, [])
 
-    const getQuestions = (e) => {   
+    const getQuestions = (e) => {
 
         const id = e.target.id;
         setExerciseId(id)
@@ -90,7 +105,7 @@ const Exercises = () => {
     }
 
     // console.log("the ques "+questions); 
-    
+
     return (
         <>
             <div className="container">
@@ -99,25 +114,25 @@ const Exercises = () => {
                         <br />
                         <Card className="">
 
-                                <CardContent>
-                                    <Typography gutterBottom variant="" component="h5">
-                                        Recruitment Management
+                            <CardContent>
+                                <Typography gutterBottom variant="" component="h5">
+                                    Recruitment Management
                                         <hr />
-                                    </Typography>
-                                    {spinner ? <Spinner animation="grow" /> : RMSubStatus === "true" ? RMExercise.map(r => {
-                                        return (
-                                            <ul>
-                                                <li className={`ui floating message`} data-service="RM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br/><small>Duration: {r.duration} minutes</small></li>
-                                            </ul>
-                                        );
-                                    }) : RMExercise.map(r => {
-                                        return (
-                                            <ul>
-                                                <li id={r._id} style={{ cursor: 'pointer' }}>{r.title}</li>
-                                            </ul>
-                                        );
-                                    })}
-                                </CardContent>
+                                </Typography>
+                                {spinner ? <Spinner animation="grow" /> : RMSubStatus === "true" ? RMExercise.map(r => {
+                                    return (
+                                        <ul>
+                                            <li className={`ui floating message`} data-service="RM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
+                                        </ul>
+                                    );
+                                }) : RMExercise.map(r => {
+                                    return (
+                                        <ul>
+                                            <li id={r._id} style={{ cursor: 'pointer' }}>{r.title}</li>
+                                        </ul>
+                                    );
+                                })}
+                            </CardContent>
 
 
                             <CardActions style={{ background: '#e9ecef' }}>
@@ -125,9 +140,9 @@ const Exercises = () => {
                             </CardActions>
                         </Card>
                     </div>
-                    {displayQuestions ?
-                        <div style={{marginBottom:'200px',marginTop:'50px'}}>
-                            <QuestionComponent duration={duration} exerciseId={exerciseId} service={currentService} />
+                    {displayQuestions && currentService == 'RM' ?
+                        <div style={{ marginBottom: '200px', marginTop: '50px' }}>
+                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} />
                         </div>
                         : ''}
 
@@ -135,21 +150,39 @@ const Exercises = () => {
                     <div className="col col-lg-12 col-sm-6">
                         <br />
                         <Card className="">
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom variant="" component="h5">
-                                        Leadership Management
-                                         <hr />
-                                    </Typography>
-                                    {LMSubStatus === "true" ? 'clickable' : 'unclickable'}
-                                </CardContent>
 
-                            </CardActionArea>
+                            <CardContent>
+                                <Typography gutterBottom variant="" component="h5">
+                                    Recruitment Management
+                                        <hr />
+                                </Typography>
+                                {spinner ? <Spinner animation="grow" /> : LMSubStatus === "true" ? LMExercise.map(r => {
+                                    return (
+                                        <ul>
+                                            <li className={`ui floating message`} data-service="LM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
+                                        </ul>
+                                    );
+                                }) : LMExercise.map(r => {
+                                    return (
+                                        <ul>
+                                            <li id={r._id} style={{ cursor: 'pointer' }}>{r.title}</li>
+                                        </ul>
+                                    );
+                                })}
+                            </CardContent>
+
+
                             <CardActions style={{ background: '#e9ecef' }}>
                                 <small>Note: You are only allowed to take a test only once</small>
                             </CardActions>
                         </Card>
                     </div>
+                    {displayQuestions && currentService == 'LM' ?
+                        <div style={{ marginBottom: '200px', marginTop: '50px' }}>
+                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} />
+                        </div>
+                        : ''}
+
                 </div>
             </div>
             {/* <span id="timer">{timeLeft}</span> */}

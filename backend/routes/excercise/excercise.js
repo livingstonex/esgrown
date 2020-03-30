@@ -32,11 +32,12 @@ router.route('/notification').post((req, res) => {
     EX.find({
         createdAt: {
             $gte: lastLogin
-        }
-    })
+        } 
+    }).sort({createdAt:-1})
         .then(data => res.json(data))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
 
 
 // //=========================== Check Ref to be used to Toggle Subscription State =========================
