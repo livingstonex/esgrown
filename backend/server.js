@@ -16,11 +16,18 @@ app.use(express.json());
 //define your connection uri
 const uri = process.env.URI;
 
-//connect to mongoDB using mongoose
-mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
-    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+// connect to mongoDB using mongoose
+// mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
+//     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+//     .then(() => console.log("MongoDB successfully connected"))
+//     .catch(err => console.log(err));
+
+
+// connect to mongoDB using mongoose
+mongoose.connect(`mongodb://127.0.0.1:27017/`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
+
 
 const individualsRouter = require('./routes/individuals');
 const corporatesRouter = require('./routes/corporates');
@@ -35,6 +42,7 @@ const serviceeasContentRouter = require('./routes/service-content/servicecontene
 const serviceefaContentRouter = require('./routes/service-content/servicecontentefa');
 const servicelmContentRouter = require('./routes/service-content/servicecontentlm');
 const servicermContentRouter = require('./routes/service-content/servicecontentrm');
+const adminRouter = require('./routes/admin/admin');
 
 
 //SUB_EAS Expose
@@ -53,6 +61,7 @@ app.use('/servicecontenteas', serviceeasContentRouter);
 app.use('/servicecontentefa', serviceefaContentRouter);
 app.use('/servicecontentlm', servicelmContentRouter);
 app.use('/servicecontentrm', servicermContentRouter);
+app.use('/admin', adminRouter);
 
 
 

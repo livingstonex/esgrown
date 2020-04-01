@@ -29,13 +29,13 @@ export default class Frontier extends Component {
         return (
             <AuthContext.Consumer>
             {
-                        (context) => (
-            (context.data.status == "corporate") ?
-                <CorporateDashboard />
-                :
-                <IndividualDashboard />
-        )
-    }
+                (context) => (
+                (context.data.status == "corporate") ?
+                    <CorporateDashboard />
+                    :
+                    <IndividualDashboard />
+                )
+            }
             </AuthContext.Consumer>
         
         );

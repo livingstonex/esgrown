@@ -136,7 +136,9 @@ export default class IndividualSignUp extends Component{
                                 // const data = sessionStorage.getItem('key');
                                 // console.log(data);
 
-                                window.location = "/individual_dashboard";
+                                // window.location = "/individual_dashboard";
+                                window.location = "/frontier";
+
                             })
                             .catch(err => console.log("Error is: " + err));
 

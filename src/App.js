@@ -13,6 +13,7 @@ import Services from "./components/services";
 import Logout from "./components/logout";
 import Frontier from "./components/frontier";
 import EasSubPage from "./components/ind_dashboard_components/subscription-pages/eas/eas_sub_page/eas_sub_page";
+import Admin from './components/admin_dashboard';
 
 
 import { AuthProvider } from "./AuthContext";
@@ -34,6 +35,7 @@ function App() {
 
 
         <Route path="/sub/eas" exact component={EasSubPage} />
+        <Route path="/admin" exact component={Admin} />
 
       </Router>
     </AuthProvider>
