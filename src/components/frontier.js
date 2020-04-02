@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { AuthContext } from "../AuthContext";
 
 import IndividualDashboard from "./individual_dashboard";
-import CorporateDashboard from "./corporate_dashboard"
+import CorporateDashboard from "./corporate_dashboard";
+import AdminDashboard from './admin_dashboard';
 
 
 
@@ -19,9 +20,10 @@ export default class Frontier extends Component {
 
     componentDidMount() {
         const u = JSON.parse(sessionStorage.getItem("key"));
+
         if (!(u.isLogged)) {
             window.location = "/"
-        }
+        } 
         console.log(u)
     }
 
@@ -30,10 +32,7 @@ export default class Frontier extends Component {
             <AuthContext.Consumer>
             {
                 (context) => (
-                (context.data.status == "corporate") ?
-                    <CorporateDashboard />
-                    :
-                    <IndividualDashboard />
+                    (context.data.status == "corporate") ? <CorporateDashboard /> : (context.admin) ? <AdminDashboard /> : <IndividualDashboard />
                 )
             }
             </AuthContext.Consumer>
