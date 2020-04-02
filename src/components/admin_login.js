@@ -25,13 +25,6 @@ const AdminLogin = () => {
 
     }
 
-    const handleLogin = () => {
-
-
-
-
-    }
-
 
     const styles = {
         'background-color': 'skyblue',
@@ -114,9 +107,12 @@ const AdminLogin = () => {
 
                                                             const user = {
                                                                 email: email,
-                                                                isLogged: true
+                                                                isLogged: true,
+                                                                user: "Admin",
+                                                                status: "Admin"
                                                             }
                                                             sessionStorage.setItem("key", JSON.stringify(user));
+
 
                                                             setSpinner(false)
                                                             window.location = "/frontier";

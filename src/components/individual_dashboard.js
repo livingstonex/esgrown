@@ -182,7 +182,6 @@ export default function MiniDrawer() {
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem('key'));
     const notify = JSON.parse(localStorage.getItem('notify'));
-    console.log(notify)
 
     if (notify == 'loaded') {
 
@@ -491,14 +490,14 @@ export default function MiniDrawer() {
 
   return (
     <>
-      <div className={classes.root}>
+      <div className={classes.root}>y
         <CssBaseline />
         <AppBar
           position="fixed"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
-        >
+        > 
           <Toolbar>
             <IconButton
               color="inherit"
@@ -712,11 +711,3 @@ export default function MiniDrawer() {
   );
 
 }
-
-// const renderAvatar = () => {
-//   const avatar = {
-//     backgroundImage: `url(${avatar})`
-//   };
-
-//   return avatar;
-// }

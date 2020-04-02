@@ -23,22 +23,23 @@ export default class Frontier extends Component {
 
         if (!(u.isLogged)) {
             window.location = "/"
-        } 
-        console.log(u)
+        }
+        // console.log(u)
     }
 
     render() {
         return (
             <AuthContext.Consumer>
-            {
-                (context) => (
-                    (context.data.status == "corporate") ? <CorporateDashboard /> : (context.admin) ? <AdminDashboard /> : <IndividualDashboard />
-                )
-            }
+                {
+                    (context) => (
+
+                        (context.data.status == "corporate") ? <CorporateDashboard /> : (context.data.status == "Admin") ? <AdminDashboard /> : <IndividualDashboard />
+                    )
+                }
             </AuthContext.Consumer>
-        
+
         );
-}
+    }
 }
 
 

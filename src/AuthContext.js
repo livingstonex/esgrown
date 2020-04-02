@@ -13,9 +13,8 @@ export class AuthProvider extends Component{
 
         // localStorage.setItem("key", JSON.stringify(this.GlobalUser)); 
         // console.log(JSON.parse(localStorage.getItem("key")) );  
-        const idv_data = JSON.parse(sessionStorage.getItem("key"));   
-        const corp_data = JSON.parse(sessionStorage.getItem("corp_key"));
-        const admin_data = JSON.parse(sessionStorage.getItem("admin"));                      
+        const logedinData = JSON.parse(sessionStorage.getItem("key"));   
+        const corp_data = JSON.parse(sessionStorage.getItem("corp_key"));                      
         return(
                 <AuthContext.Provider value={{
                     state: this.state,
@@ -23,8 +22,7 @@ export class AuthProvider extends Component{
                         isLogged: isLogged,
                     })
                 },
-                    data: idv_data,
-                    admin: admin_data
+                data: logedinData,
                    //c_data: corp_data
                 }}> 
                     {this.props.children}
