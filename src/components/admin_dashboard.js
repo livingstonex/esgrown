@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
-import NavBar from './navbar';
-import Profile from './ind_dashboard_components/main-pages/profile';
-import Account from './ind_dashboard_components/main-pages/account';
-import Subscription from './ind_dashboard_components/main-pages/subscription';
-// import Services from './ind_dashboard_components/main-pages/services';
-
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -23,18 +16,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import PersonIcon from '@material-ui/icons/PersonPinSharp';
-import SubscriptionIcon from '@material-ui/icons/Subscriptions';
 import ServicesIcon from '@material-ui/icons/RoomService';
 import AssessmentIcon from '@material-ui/icons/Assessment';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
-import Badge from '@material-ui/core/Badge';
-// import popover from '@material-ui/core/Popover/Popover';
-import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import logo from '../img/esgrown.png';
 import avatar from '../img/boy.svg';
-import { } from "react-bootstrap";
 
 
 //Dropdown import setup

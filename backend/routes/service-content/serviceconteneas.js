@@ -6,13 +6,14 @@ router.route('/add').post((req, res) => {
     const title = req.body.title;
     const content = req.body.content;
     const is_published = req.body.is_published;
-    const date_to_publish = Date.parse(req.body.date_to_publish);
+    const date_to_publish = req.body.date_to_publish == null ? null : Date.parse(req.body.date_to_publish);
+    const image = req.body.image;
 
-    const newServiceContent = new EASS({ title, content, is_published, date_to_publish });
+    const newServiceContent = new EASS({ title, content, is_published, date_to_publish,image });
 
     newServiceContent.save()
         .then(eass => res.json(eass))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json('Err: ' + err));
 
 });
 

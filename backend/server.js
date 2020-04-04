@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -11,7 +12,8 @@ const port = process.env.PORT || 5000;
 
 //setup middleware
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ limit: "100mb", extended: true, parameterLimit: 100000 }));
 
 //define your connection uri
 const uri = process.env.URI;
@@ -24,7 +26,7 @@ const uri = process.env.URI;
 
 
 // connect to mongoDB using mongoose
-mongoose.connect(`mongodb://127.0.0.1:27017/`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+mongoose.connect(`mongodb://127.0.0.1:27017/test`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
 
