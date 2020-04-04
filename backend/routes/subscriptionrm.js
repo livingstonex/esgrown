@@ -42,7 +42,7 @@ router.route(`/update/:id`).post((req, res) => {
                         highest_level_of_education: req.body.highest_level_of_education,
                         field_of_training: req.body.field_of_training,
                         plan_code: req.body.plan_code
-                        }
+                        } 
                     ).then(rm => res.json(rm))
                     .catch(err => res.json('Err: ' + err));
 });

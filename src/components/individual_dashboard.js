@@ -287,7 +287,7 @@ export default function MiniDrawer() {
                     <a class="dropdown-item" href="">update1</a>
                     <a class="dropdown-item" href="">update2</a>
                     <a class="dropdown-item" href="">update3</a>
-                    <a class="dropdown-item" href="">update4</a>
+                    <a class="dropdown-item" href="">update4</a>  
                   </div>
                 </div>
 
