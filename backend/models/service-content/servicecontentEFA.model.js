@@ -19,6 +19,10 @@ const servicecontentEFASchema = new Schema({
     date_to_publish: {
         type: Date,
         required: true
+    },
+    media: {
+        type: String,
+        required: false
     }
 
 }, {

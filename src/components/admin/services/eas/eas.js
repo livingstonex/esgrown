@@ -9,8 +9,11 @@ const EAS = () => {
 
 
     const title = "EAS Service Content Log";
+    const contentTitle = "Create New EAS Content";
     const [easlog, setEaslog] = useState([]);
     const [spinner, setSpinner] = useState(true);
+
+    const newContentUrl = `http://localhost:5000/servicecontenteas/add`;
 
 
     useEffect(() => {
@@ -22,16 +25,15 @@ const EAS = () => {
                     setSpinner(false)
 
                 }
-            }).catch(err => alert('oops Your ' + err))
+            }).catch(err => alert('oops ' + err))
     },[])
-    console.log(easlog)
 
     return (
         <>
             <div className="container">
                 <div className="row">
                     <EASlog title={title} data={easlog} spinner={spinner} />
-                    <EASnewContent />
+                    <EASnewContent url={newContentUrl} title={contentTitle} />
                 </div>
             </div>
         </>

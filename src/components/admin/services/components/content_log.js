@@ -26,7 +26,7 @@ const Contentlog = (props) => {
                                         <Card.Body>
                                             {data.content}
                                             {
-                                                data.image ? data.image.split(';')[0].split(':')[1].split('/')[0] == "image" ? <img src={data.image} style={{ height: '100px' }} /> :<video src={data.image} controls style={{height:'100px'}}></video>: ''
+                                                data.media ? data.media.split(';')[0].split(':')[1].split('/')[0] == "image" ? <img src={data.media} style={{ height: '100px' }} /> : <video src={data.media} controls style={{height:'100px'}}></video>: ''
                                             }
                                         </Card.Body>
                                         

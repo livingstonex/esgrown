@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap';
 
 
 
-const NewContent = () => {
+const NewContent = (props) => {
 
     const [data, setData] = useState(
         'title',
@@ -56,11 +56,11 @@ const NewContent = () => {
             content: data.content,
             is_published: data.publish == "YES" ? true : false,
             date_to_publish: data.publish_later == undefined ? null : data.publish_later,
-            image: selectedFile
+            media: selectedFile
         }
 
 
-        axios.post(`http://localhost:5000/servicecontenteas/add`, submitData)
+        axios.post(props.url, submitData)
             .then(res => {
                 console.log(res.data)
                 setSpinner(false)
@@ -71,7 +71,6 @@ const NewContent = () => {
                 alert('OOPS! :' + err)
             });
 
-        console.log();
 
     }
 
@@ -80,7 +79,7 @@ const NewContent = () => {
         <>
             <Card className="col col-lg-6 col-sm-6">
                 <CardContent>
-                    <h6>Create New EAS content</h6>
+                    <h6>{props.title}</h6>
                     <form className="container py-4">
                         <div className="row mt-3">
                             <div className="col">

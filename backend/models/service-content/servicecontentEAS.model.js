@@ -20,7 +20,7 @@ const servicecontentEASSchema = new Schema({
         type: Date,
         required: false
     },
-    image: {
+    media: {
         type: String,
         required:false
     }

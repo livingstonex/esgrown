@@ -11,7 +11,7 @@ const questionSchema = new Schema({
         type: String,
         required: true
     },
-    answer:{
+    options:{
         type:Array,
         required:true
         },

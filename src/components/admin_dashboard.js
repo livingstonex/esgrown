@@ -36,6 +36,7 @@ import PeopleIcon from '@material-ui/icons/People';
 
 //pages
 import Services from './admin/services/services';
+import Exercises from './admin/exercises/exercises';
 
 
 
@@ -162,8 +163,13 @@ const AdminDashboard = () => {
     //Functions to set setPage based on where the user clicks
     const setServicesPage = () => {
         setPage(0);
+        // window.location = '/frontier'
 
     };
+
+    const setExercisePage = () => {
+        setPage(1)
+    }
 
 
     // const setProfilePage = () => {
@@ -192,10 +198,6 @@ const AdminDashboard = () => {
     //     setPage(6);
     //     handleClose();
     // }
-
-    // const setExercisePage = () => {
-    //     setPage(7);
-    //     handleClose();
 
     // }
     // const setEfaExercisePage = () => {
@@ -314,16 +316,17 @@ const AdminDashboard = () => {
                                 <ListItemIcon><PersonIcon color="primary" /> </ListItemIcon>
                                 <ListItemText primary={'Profile'} />
                             </ListItem>
-                        }
-                        {
-                            <ListItem button onClick={setSubPage}>
-                                <ListItemIcon><SubscriptionIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Subscription'} />
-                            </ListItem>
-                        }*/}
+                        } */}
+                        
                         {
                             <ListItem button onClick={setServicesPage}>
                                 <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
+                                <ListItemText primary={'Services'} />
+                            </ListItem>
+                        }
+                        {
+                            <ListItem button onClick={setExercisePage}>
+                                <ListItemIcon><EduIcon color="primary" /> </ListItemIcon>
                                 <ListItemText primary={'Exercises'} />
                             </ListItem>
                         }
@@ -344,7 +347,7 @@ const AdminDashboard = () => {
                 <main className={classes.content}>
 
                     {
-                        (page == 0) ? <Services /> : ""
+                        (page == 0) ? <Services /> : (page == 1) ? <Exercises /> : ""
                     }
                 </main>
             </div>

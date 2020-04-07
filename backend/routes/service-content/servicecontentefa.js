@@ -6,9 +6,12 @@ router.route('/add').post((req, res) => {
     const title = req.body.title;
     const content = req.body.content;
     const is_published = req.body.is_published;
-    const date_to_publish = Date.parse(req.body.date_to_publish);
+    const date_to_publish = req.body.date_to_publish == null ? null : Date.parse(req.body.date_to_publish);
+    const media = req.body.media;
 
-    const newServiceContent = new EFAS({ title, content, is_published, date_to_publish });
+
+
+    const newServiceContent = new EFAS({ title, content, is_published, date_to_publish, media });
 
     newServiceContent.save()
         .then(efas => res.json(efas))
