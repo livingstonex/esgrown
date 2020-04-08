@@ -9,7 +9,7 @@ const NewExercises = (props) => {
 
     const exUrl = `http://localhost:5000/excercise/add`;
 
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(2)
 
 
     const [spinner, setSpinner] = useState(false);
@@ -49,41 +49,18 @@ const NewExercises = (props) => {
 
     const createQuestion = () => {
 
-        if (ans != '' && options != '' && score != '' && question != "") {
+        if (ans !== "" && options !== "" && score !== "" && question !== "") {
             setSpinner(true);
 
-            //split options to get each value and turn to array 
-            let optionsArray = [];
-
-            const splitOptions = options.split(',')
-
-            for (var i = 0; i < splitOptions.length; i++) {
-                optionsArray.push(splitOptions[i])
-            }
-
-
-            //split ans array to get answers if they are multiple ans question
-            let ansArray = [];
+            const splitOptions = options.split(',');
 
             const splitAns = ans.split(',');
-
-            let Answers;
-
-            if (splitAns.length > 1) {
-                for (var j = 0; j < splitAns.length; j++) {
-                    ansArray.push(splitAns[j]);
-                    Answers = ansArray
-                }
-            } else {
-                Answers = ans
-            }
-
 
             const questionData = {
                 excercise_id: exId,
                 question: question,
-                options: optionsArray,
-                correct_ans: Answers,
+                options: splitOptions,
+                correct_ans: splitAns,
                 score: score
             }
 
@@ -107,7 +84,7 @@ const NewExercises = (props) => {
 
             console.log(questionData);
 
-                
+
         }
 
     }
@@ -220,7 +197,7 @@ const NewExercises = (props) => {
                                     <>
                                         <span style={{ fontWeight: 'bold' }}><u>Exercise: {extitle}</u></span><br />
                                         <span style={{ fontWeight: 'bold' }}><u>Number of questions: {totalQ}</u></span>
-                                        <hr/>
+                                        <hr />
                                         <div className="row mt-3">
                                             <div className="col">
                                                 <label style={{ fontWeight: 'bold' }}>Question</label>
