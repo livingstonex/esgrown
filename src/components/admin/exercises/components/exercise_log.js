@@ -19,7 +19,6 @@ const ExercisesLog = (props) => {
 
         axios.post(`http://localhost:5000/question/${id}`)
             .then(res => {
-                console.log(res.data)
                 setQues(res.data)
                 setQuesSpinner(false)
 
@@ -53,6 +52,8 @@ const ExercisesLog = (props) => {
                                                     return (
                                                         <>
                                                             <p style={{ color: '#E8943F' }}>{q.question}</p>
+
+                                                            <span style={{ color: '#E8943F', fontStyle: 'italic' }}><u>Options</u></span>
 
                                                             <ul>
                                                                 {q.options.map(op => {
