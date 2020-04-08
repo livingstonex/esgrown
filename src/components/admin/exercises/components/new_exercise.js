@@ -9,7 +9,7 @@ const NewExercises = (props) => {
 
     const exUrl = `http://localhost:5000/excercise/add`;
 
-    const [page, setPage] = useState(2)
+    const [page, setPage] = useState(0)
 
 
     const [spinner, setSpinner] = useState(false);
