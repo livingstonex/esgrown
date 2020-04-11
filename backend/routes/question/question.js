@@ -22,7 +22,7 @@ router.route(`/:id`).post((req, res) => {
     ).then((question) => {
         res.json(question);
     })
-    .catch((err) => { res.json('Qustion not Found'); })
+    .catch((err) => { res.json('Question not Found'); })
 })
 
 

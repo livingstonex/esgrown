@@ -100,19 +100,19 @@ const AdminLogin = () => {
 
 
                                                 //check login details
-                                                axios.post(`http://localhost:5000/admin/login`, data)
+                                                axios.post(`http://localhost:5000/admin/login`, loginData)
                                                     .then(res => {
-                                                        if (res.data == 1) {
+                                                        if (res.data !== 0) {
                                                             context.setUserAuthData(true);
 
                                                             const user = {
-                                                                email: email,
+                                                                privilege: res.data[0].privilege,
+                                                                email: res.data[0].email,
+                                                                role: res.data[0].role,
                                                                 isLogged: true,
-                                                                user: "Admin",
-                                                                status: "Admin"
+                                                                status: "ADMIN"
                                                             }
                                                             sessionStorage.setItem("key", JSON.stringify(user));
-
 
                                                             setSpinner(false)
                                                             window.location = "/frontier";

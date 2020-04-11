@@ -354,12 +354,17 @@ export default function MiniDrawer() {
     const service = e.target.getAttribute('data-service');
 
     if (service == 'EAS') {
+
       const id = e.target.getAttribute('data-id');
+
       const newEAS = easNotification.filter(eas => {
-        return eas._id != id
+        return eas._id !== id
       })
+
       setEasNotification(newEAS);
+
       console.log(newEAS)
+
       setPage(3);
 
     } else if (service == 'EFA') {
@@ -368,8 +373,11 @@ export default function MiniDrawer() {
       const efa = efaNotification.filter(efa => {
         return efa._id !== id
       });
+
       setEfaNotification(efa)
+
       setPage(4);
+
     } else if (service == 'LM') {
       const id = e.target.getAttribute('data-id');
 
@@ -497,7 +505,7 @@ export default function MiniDrawer() {
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
-        > 
+        >
           <Toolbar>
             <IconButton
               color="inherit"

@@ -158,12 +158,9 @@ const AdminDashboard = () => {
         setUser(a);
     }, [])
 
-    console.log(user)
-
     //Functions to set setPage based on where the user clicks
     const setServicesPage = () => {
         setPage(0);
-        // window.location = '/frontier'
 
     };
 
@@ -271,7 +268,7 @@ const AdminDashboard = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="" wrap>
-                            Welcome: {user.user}
+                            Welcome: {user.role}
                         </Typography>
                     </Toolbar>
                 </AppBar>
