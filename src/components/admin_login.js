@@ -76,8 +76,8 @@ const AdminLogin = () => {
                                         <label style={{ 'fontWeight': 'bold' }}>Admin Sign In </label>
                                         <Form >
                                             <Form.Group controlId="formBasicEmail">
-                                                <Form.Label>Email address:</Form.Label>
-                                                <Form.Control type="email" name="email" required placeholder="Enter email" onChange={handleChange} value={data.email} />
+                                                <Form.Label>Username:</Form.Label>
+                                                <Form.Control type="email" name="username" required placeholder="Enter Username" onChange={handleChange} value={data.email} />
                                                 <Form.Text className="text-muted">
                                                 </Form.Text>
                                             </Form.Group>
@@ -89,12 +89,12 @@ const AdminLogin = () => {
                                             <Button variant="primary" onClick={() => {
                                                 setSpinner(true)
 
-                                                const email = data.email;
+                                                const username = data.username;
                                                 const password = data.password;
 
 
                                                 const loginData = {
-                                                    email: email,
+                                                    username: username,
                                                     password: password
                                                 }
 
@@ -106,9 +106,10 @@ const AdminLogin = () => {
                                                             context.setUserAuthData(true);
 
                                                             const user = {
-                                                                privilege: res.data[0].privilege,
-                                                                email: res.data[0].email,
-                                                                role: res.data[0].role,
+                                                                name: res.data.name,
+                                                                privilege: res.data.privilege,
+                                                                email: res.data.email,
+                                                                role: res.data.role,
                                                                 isLogged: true,
                                                                 status: "ADMIN"
                                                             }

@@ -34,7 +34,7 @@ const AdminSchema = new Schema({
     },
     privilege: {
         type: Array,
-        required: true
+        required: false
     },
 }, {
     timestamps: true,

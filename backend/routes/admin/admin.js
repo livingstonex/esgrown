@@ -50,7 +50,7 @@ router.route('/login').post((req, res) => {
 //------------- API Routes for country admin-------------------------//
 
 //check if a country already has an admin to prevent a country from having more than one country admin
-router.route(`/:country`).post((req, res) => {
+router.route(`/check/:country`).post((req, res) => {
     Admin.find({
         $and: [
             { country: req.params.country },
@@ -61,6 +61,13 @@ router.route(`/:country`).post((req, res) => {
         .then(country => res.json(country))
         .catch(err => res.status(400).json(err));
 });
+
+//check if username exist to prevent duplicates
+router.route(`/check/username/:username`).post((req, res) => {
+    Admin.find({ username: req.params.username })
+        .then(user => res.json(user))
+    .catch(err => res.status(400).json(err))
+})
 
 //get all country admin for super admin to view
 router.route(`/country_admins`).get((req, res) => {
