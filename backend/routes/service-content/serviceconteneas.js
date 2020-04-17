@@ -37,4 +37,10 @@ router.route('/notification').post((req, res) => {
         .catch(err => res.json('Error: ' + err));
 });
 
+router.route(`/activity/:id`).get((req, res) => {
+    EASS.find({ admin_id: req.params.id })
+        .then(eas => res.json(eas))
+        .catch(err => res.status(400).json(err));
+});
+
 module.exports = router;

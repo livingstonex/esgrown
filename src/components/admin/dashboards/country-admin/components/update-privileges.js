@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, CardContent, CardActionArea, Typography, CardActions } from '@material-ui/core';
+import { Card, CardContent, CardActionArea, Typography, CardActions, } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 import Modal from './update-modal';
 import DeleteModal from './delete-modal';
@@ -93,7 +93,7 @@ const UpdatePrivileges = () => {
                 setShow(false);
             })
             .catch(err => console.log(err));
-        
+
         //clear old values
         setPrivilege({
             EAS: false,
@@ -161,37 +161,52 @@ const UpdatePrivileges = () => {
                             {admins.map(ad => {
                                 return (
 
-                                    <div className="col col-lg-3 col-sm-6">
-                                        <Card>
-                                            <CardActionArea >
-                                                <CardContent style={{ height: "201px", background: '#E1E1E1' }} >
-                                                    <Typography gutterBottom variant="" component="h5" style={{ textAlign: 'center' }}>
-                                                        <span >{ad.name}</span>
-                                                    </Typography>
+                                    <div className="col col-lg-4 col-sm-6">
+                                        <Card style={{ height: '310px', background: '#F7F7F7', marginBottom: '10px' }}>
+                                            <CardContent >
+                                                <Typography gutterBottom variant="" component="h5" style={{ textAlign: 'center' }}>
+                                                    <span >{ad.name}</span>
+                                                </Typography>
 
-                                                    <Typography gutterBottom variant="" component="h5" style={{ textAlign: 'center' }}>
-                                                        <span style={{ fontWeight: 'Bold', fontSize: "16px" }}>{ad.country}</span>
-                                                    </Typography><br />
+                                                <div style={{ paddingLeft: '20px', fontSize: '16px' }}>
+                                                    <div className="row" >
+                                                        <div>Country:</div>
 
-                                                    <Typography variant="body2" color="textSecondary" component="p">
-                                                        <span>Privileges: &nbsp;</span>
-                                                        <ul>
-                                                            {ad.privilege.map(pri => {
-                                                                return (
-                                                                    <li style={{ fontWeight: 'Bold', fontSize: "16px" }}>{pri}</li>
+                                                        <div style={{ paddingLeft: '20px' }}>{ad.country}</div>
+                                                    </div><br />
 
-                                                                );
-                                                            })}
-                                                        </ul>
-                                                    </Typography>
-                                                </CardContent>
-                                            </CardActionArea>
-                                            <CardActions style={{ background: '#E1E1E1' }}>
-                                                <button className="btn btn-sm btn-default pull-left" style={{ fontStyle: 'italic' }} data-id={ad._id} onClick={showUpdateModal}>Update</button>
-                                                <button className="btn btn-sm btn-default pull-right" style={{ fontStyle: 'italic', marginLeft: '55px' }} data-id={ad._id} onClick={getDelDetails}>Delete</button>
-                                            </CardActions>
+                                                    <div className="row" >
+                                                        <div>Email:</div>
+
+                                                        <div style={{ paddingLeft: '20px' }}>{ad.email}</div>
+                                                    </div><br />
+
+                                                    <div className="row" >
+                                                        <div>Username:</div>
+
+                                                        <div style={{ paddingLeft: '20px' }}>{ad.username}</div>
+                                                    </div><br />
+
+                                                    <div className="row" >
+                                                        <div>Privileges:
+                                                                <ul>
+                                                                {ad.privilege.map(pri => {
+                                                                    return (
+                                                                        <li>{pri}</li>
+
+                                                                    );
+                                                                })}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style={{ textAlign: 'center' }}>
+                                                    <button className="btn btn-sm btn-default pull-left" style={{ fontStyle: 'italic', boxShadow: '1px 1px 1px 1px rgb(0,0,0,.3)', marginRight: '20px' }} data-id={ad._id} onClick={showUpdateModal}>Update</button>
+                                                    <button className="btn btn-sm btn-default pull-right" style={{ fontStyle: 'italic', boxShadow: '1px 1px 1px 1px rgb(0,0,0,.3)' }} data-id={ad._id} onClick={getDelDetails}>Delete</button>
+                                                </div>
+                                            </CardContent>
+
                                         </Card>
-                                        <br />
                                     </div>
 
                                 );

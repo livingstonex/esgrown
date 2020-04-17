@@ -7,6 +7,7 @@ import { Spinner, Accordion, Button, Card } from 'react-bootstrap';
 
 const Activity = () => {
 
+    const [user, setUser] = useState();
     const [admins, setAdmin] = useState([]);
     const [spinner, setSpinner] = useState(true);
     const [exActivity, setExActivity] = useState([]);
@@ -15,13 +16,15 @@ const Activity = () => {
     const [lmActivity, setLmActivity] = useState([]);
     const [rmActivity, setRmActivity] = useState([]);
 
-    
-    
+
+
 
 
     useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem("key"));
+        setUser(user)
 
-        axios.get(`http://localhost:5000/admin/country_admins`)
+        axios.post(`http://localhost:5000/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
                     setAdmin(res.data);
@@ -59,7 +62,7 @@ const Activity = () => {
                     setEfaActivity(res.data)
                 }
             }).catch(err => console.log(err));
-        
+
         // get LM 
         axios.get(`http://localhost:5000/servicecontentlm/activity/${id}`)
             .then(res => {
@@ -67,7 +70,7 @@ const Activity = () => {
                     setLmActivity(res.data)
                 }
             }).catch(err => console.log(err));
-        
+
         // get RM 
         axios.get(`http://localhost:5000/servicecontentlm/activity/${id}`)
             .then(res => {
@@ -76,8 +79,6 @@ const Activity = () => {
                 }
             }).catch(err => console.log(err));
     }
-
-
 
     return (
         <>

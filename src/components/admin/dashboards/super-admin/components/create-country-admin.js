@@ -100,7 +100,7 @@ const CreateCountryAdmin = () => {
             <div className="container">
                 <div className="row">
                     <Col md={{ span: 12, offset: 3 }}>
-                        <Card className="col col-sm-6 col-md-offset-3" style={{ background: '#E1E1E1' }}>
+                        <Card className="col col-sm-6 col-md-offset-3" style={{ background: '#F7F7F7' }}>
                             <CardContent>
                                 <div className="row mt-3">
                                     <div className="col">

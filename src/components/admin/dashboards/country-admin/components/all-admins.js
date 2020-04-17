@@ -6,60 +6,69 @@ import { Card, CardContent, CardActionArea, Typography, CardActions } from '@mat
 
 
 
-const AllAdmins = () => {
+const Home = () => {
 
-    const [countryAdmins, setCountryAdmins] = useState([]);
-    const [spinner, setSpinner] = useState(true)
+    const [user, setUser] = useState();
+    const [admins, setAdmins] = useState([]);
+    const [spinner, setSpinner] = useState(false);
+
 
     useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem("key"));
+        setUser(user)
 
-        axios.get(`http://localhost:5000/admin/country_admins`)
+        setSpinner(true)
+        axios.post(`http://localhost:5000/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
-                    setCountryAdmins(res.data);
+                    setAdmins(res.data);
                     setSpinner(false)
+
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+    }, []);
 
-    }, [])
     return (
         <>
             {
-                spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> :
+                spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                    :
                     <div className="container">
                         <div className="row">
 
-                            {countryAdmins.map(ad => {
+                            {admins.map(ad => {
                                 return (
+
                                     <>
                                         <div className="col col-lg-4 col-sm-6">
-                                            <Card style={{ height: '300px', background: '#F7F7F7' }}>
+                                            <Card style={{ height: '300px', background: '#F7F7F7'}}>
                                                 <CardContent >
                                                     <Typography gutterBottom variant="" component="h5" style={{ textAlign: 'center' }}>
                                                         <span>{ad.name}</span>
-                                                    </Typography><br />
-                                                    <div style={{ paddingLeft: '20px', fontSize: '16px' }}>
+                                                    </Typography><br/>
+                                                    <div style={{ paddingLeft:'20px',fontSize: '16px' }}>
                                                         <div className="row" >
                                                             <div>Country:</div>
 
-                                                            <div style={{ paddingLeft: '20px' }}>{ad.country}</div>
-                                                        </div><br />
+                                                            <div style={{paddingLeft:'20px'}}>{ad.country}</div>
+                                                        </div><br/>
 
                                                         <div className="row" >
                                                             <div>Email:</div>
 
                                                             <div style={{ paddingLeft: '20px' }}>{ad.email}</div>
-                                                        </div><br />
+                                                        </div><br/>
 
                                                         <div className="row" >
                                                             <div>Username:</div>
 
                                                             <div style={{ paddingLeft: '20px' }}>{ad.username}</div>
-                                                        </div><br />
+                                                        </div><br/>
 
                                                         <div className="row" >
                                                             <div>Privileges:
+
                                                                 <ul>
                                                                     {ad.privilege.map(pri => {
                                                                         return (
@@ -76,8 +85,8 @@ const AllAdmins = () => {
                                             <br />
                                         </div>
                                     </>
-                                );
 
+                                );
                             })}
                         </div>
                     </div>
@@ -85,4 +94,4 @@ const AllAdmins = () => {
         </>
     );
 }
-export default AllAdmins
+export default Home;

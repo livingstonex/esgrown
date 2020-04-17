@@ -86,6 +86,7 @@ const SuperAdminDashboard = () => {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
+            background: '#e9e9e9'
         },
         drawerClose: {
             transition: theme.transitions.create('width', {
@@ -97,6 +98,7 @@ const SuperAdminDashboard = () => {
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing(9) + 1,
             },
+            background: '#e9e9e9'
         },
         toolbar: {
             display: 'flex',

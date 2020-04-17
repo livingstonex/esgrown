@@ -36,6 +36,7 @@ import CreateAdmin from './components/create-admin';
 import UpdateAdminPrivilege from './components/update-privileges';
 import Exercises from '../../exercises/exercises';
 import Services from '../../services/services';
+import Home from './components/home';
 
 
 
@@ -83,6 +84,7 @@ const CountryAdminDashboard = () => {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
+            background: '#e9e9e9'
         },
         drawerClose: {
             transition: theme.transitions.create('width', {
@@ -94,6 +96,7 @@ const CountryAdminDashboard = () => {
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing(9) + 1,
             },
+            background: '#e9e9e9'
         },
         toolbar: {
             display: 'flex',
@@ -250,10 +253,11 @@ const CountryAdminDashboard = () => {
                 >
                     <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
                         <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
-                        {/* Place Logo here */}
+
                         <div style={{ marginLeft: '60px' }}>
                             <img src={logo} width="80%" alt="" />
                         </div>
+
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
@@ -320,10 +324,10 @@ const CountryAdminDashboard = () => {
                         </Link>
                     </List>
                 </Drawer>
-                <main className={classes.content} style={{ background: "#D0CFCF" }}>
+                <main className={classes.content} style={{ background: "#D0CFCF", height: '800px' }}>
 
                     {
-                        (page === 0) ? "Home" : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdateAdminPrivilege /> : (page == 3) ? <Services /> : (page == 4) ? <Exercises /> : ""
+                        (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdateAdminPrivilege /> : (page == 3) ? <Services /> : (page == 4) ? <Exercises /> : ""
                     }
                 </main>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CardActionArea, Card, CardContent, Typography } from '@material-ui/core';
-import AllAdmins from './all-admin';
+import AllAdmins from './all-admins';
 import Activities from './activity';
 
 
@@ -28,10 +28,10 @@ const Home = () => {
                                     <CardActionArea>
                                         <CardContent onClick={setAdmins} style={{ textAlign: 'center', padding: '40px' }}>
                                             <Typography gutterBottom variant="" component="h5">
-                                                All Country Admins
+                                                All Admins
                                     </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
-                                                View all country admin details
+                                                View all admin details
                                     </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -44,10 +44,10 @@ const Home = () => {
 
                                         <CardContent onClick={setActivityPage} style={{ textAlign: 'center', padding: '40px' }}>
                                             <Typography gutterBottom variant="" component="h5">
-                                                Country Admin Activities
+                                                 Admin Activities
                                     </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
-                                                View activities by country
+                                                View activities by Admins
                                     </Typography>
                                         </CardContent>
                                     </CardActionArea>

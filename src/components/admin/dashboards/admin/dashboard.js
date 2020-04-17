@@ -81,7 +81,7 @@ const AdminDashboard = () => {
         drawer: {
             width: drawerWidth,
             flexShrink: 0,
-            whiteSpace: 'nowrap',
+            whiteSpace: 'nowrap'
         },
         drawerOpen: {
             width: drawerWidth,
@@ -89,6 +89,7 @@ const AdminDashboard = () => {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
+            background: '#e9e9e9'
         },
         drawerClose: {
             transition: theme.transitions.create('width', {
@@ -100,6 +101,8 @@ const AdminDashboard = () => {
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing(9) + 1,
             },
+            background: '#e9e9e9'
+
         },
         toolbar: {
             display: 'flex',
@@ -152,8 +155,6 @@ const AdminDashboard = () => {
 
     const [user, setUser] = useState({});
     const [page, setPage] = useState(0);
-    const [exercise, setExercise] = useState(false);
-    const [services, setServices] = useState(false);
 
     const [eas, setEas] = useState(false)
     const [efa, setEfa] = useState(false)
@@ -283,7 +284,7 @@ const AdminDashboard = () => {
                     }}
 
                 >
-                    <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
+                    <div className={classes.toolbar} style={{ marginLeft: '-10px'}}>
                         <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
                         <div style={{ marginLeft: '60px' }}>
                             <img src={logo} width="80%" alt="" />
@@ -293,12 +294,12 @@ const AdminDashboard = () => {
                         </IconButton>
                     </div>
                     <Divider />
-                    <List>
+                    <List style={{ background: '#e9e9e9'}}>
                         <div style={{ marginLeft: '15px' }}><img src={avatar} alt="Avatar" style={{ width: "50%" }} /></div><br />
                     </List>
                     <Divider />
 
-                    <List>
+                    <List style={{ }}>
                         {
                             <ListItem button onClick={setHomePage}>
                                 <ListItemIcon>
@@ -389,7 +390,7 @@ const AdminDashboard = () => {
 
                     </List>
                     <Divider />
-                    <List>
+                    <List style={{ background: '#e9e9e9'}}>
                         <Link to="/logout" style={{ 'text-decoration': 'none' }}>
                             {
                                 <ListItem button onClick={{}}>
@@ -401,7 +402,7 @@ const AdminDashboard = () => {
                     </List>
                 </Drawer>
 
-                <main className={classes.content} style={{ background: "#D0CFCF" }}>
+                <main className={classes.content} style={{ background: "#D0CFCF", height: '800px' }}>
 
                     {
                         (page == 0) ? "HOME" : (page == 1) ? <EASService /> : (page == 2) ? <EFAService /> : (page == 3) ? <LMService /> : (page == 4) ? <RMService /> : (page == 5) ? <LMExercise /> : (page == 6) ? <RMExercise /> : (page == 7) ? <Exercises /> : (page == 8) ? <Services /> : ""
