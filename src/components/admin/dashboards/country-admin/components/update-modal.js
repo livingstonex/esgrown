@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Spinner } from 'react-bootstrap';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+import Privileges from './privileges';
 
 
 const UpdateModal = (props) => {
 
-    const { show, hide, admin, getprivilege, update, spinner} = props;
+    const { show, hide, admin, getprivilege, update, spinner, privilege } = props;
 
-    // const [privilege, setPrivilege] = useState();
-    // const [spinner, setSpinner] = useState(false);
-
-    // const getPrivileges = (e) => {
-
-    //     setPrivilege(e.target.value);
-    // }
-
-    
 
     return (
         <>
@@ -56,15 +54,24 @@ const UpdateModal = (props) => {
                             <input type="text" name="name" disabled value={admin.role} className="form-control" required />
                         </div>
                     </div>
+                    
                     <div className="row mt-3">
                         <div className="col">
-                            <label style={{ fontWeight: 'bold' }}>Privileges</label>
-                            <select className="form-control" name="privileges" onChange={getprivilege}>
-                                <option>Select privilege</option>
-                                <option value="exercises">Exercise</option>
-                                <option value="services">Services</option>
-                                <option value="exercises/services">Exercise and Services</option>
-                            </select>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend" style={{ fontWeight: 'bold' }}>Assign Privileges</FormLabel>
+                            {Privileges.map(pri => {
+                                return (
+                                    <>
+                                        <FormGroup>
+                                            <FormControlLabel
+                                                control={<Checkbox checked={privilege.name} onChange={getprivilege} name={pri.name} value={pri.value} color="primary"/>}
+                                                label={pri.label}
+                                            />
+                                        </FormGroup>
+                                    </>
+                                );
+                            })}
+                            </FormControl>
                         </div>
                     </div>
 

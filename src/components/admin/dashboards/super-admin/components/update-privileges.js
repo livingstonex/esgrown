@@ -67,7 +67,7 @@ const UpdatePrivileges = () => {
             privilege: privilege.split('/')
         }
 
-        axios.post(`http://localhost:5000/admin/update/country_admin/${userId}`, data)
+        axios.post(`http://localhost:5000/admin/update/${userId}`, data)
             .then(res => {
                 if (res.data) {
                         axios.get(`http://localhost:5000/admin/country_admins`)

@@ -102,14 +102,16 @@ const AdminLogin = () => {
                                                 //check login details
                                                 axios.post(`http://localhost:5000/admin/login`, loginData)
                                                     .then(res => {
-                                                        if (res.data !== 0) {
+                                                        if (res.data !== 'failed') {
                                                             context.setUserAuthData(true);
-
+                                                            console.log(res.data)
                                                             const user = {
                                                                 name: res.data.name,
                                                                 privilege: res.data.privilege,
                                                                 email: res.data.email,
                                                                 role: res.data.role,
+                                                                country: res.data.country,
+                                                                id:res.data._id,
                                                                 isLogged: true,
                                                                 status: "ADMIN"
                                                             }

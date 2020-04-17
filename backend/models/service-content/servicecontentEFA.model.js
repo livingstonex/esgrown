@@ -23,6 +23,10 @@ const servicecontentEFASchema = new Schema({
     media: {
         type: String,
         required: false
+    },
+    admin_id: {
+        type: String,
+        required:true
     }
 
 }, {

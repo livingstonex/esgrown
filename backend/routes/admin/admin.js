@@ -35,10 +35,9 @@ router.route('/login').post((req, res) => {
     Admin.findOne({ username: user })
         .then(admin => {
             if (bcrypt.compareSync(password, admin.password)) {
-
                 res.json(admin)
             } else {
-                res.json("login details incorrect! Please try again")
+                res.json('failed')
             }
         })
         .catch(err => res.status(400).json(err));
@@ -66,7 +65,7 @@ router.route(`/check/:country`).post((req, res) => {
 router.route(`/check/username/:username`).post((req, res) => {
     Admin.find({ username: req.params.username })
         .then(user => res.json(user))
-    .catch(err => res.status(400).json(err))
+        .catch(err => res.status(400).json(err))
 })
 
 //get all country admin for super admin to view
@@ -77,11 +76,11 @@ router.route(`/country_admins`).get((req, res) => {
 });
 
 //update country admin privileges by super admin
-router.route(`/update/country_admin/:id`).post((req, res) => {
+router.route(`/update/:id`).post((req, res) => {
     Admin.findById(req.params.id)
         .then(ca => {
             ca.updateOne({ privilege: req.body.privilege })
-                .then(() => res.json('Country Admin privileges updated successfully'))
+                .then(() => res.json('Privileges updated successfully'))
                 .catch(err => res.status().json(err))
         }).catch(err => res.status().json("Request Failed " + err))
 });
@@ -89,22 +88,18 @@ router.route(`/update/country_admin/:id`).post((req, res) => {
 //====================== API routes for Admin ====================//
 
 //get all admin for a particular country for a country admin to view
-router.route(`/admins`).get((req, res) => {
-    Admin.find({ role: "Admin" })
+router.route(`/admins/:country`).post((req, res) => {
+    Admin.find({
+        $and: [
+            { country: req.params.country },
+            { role: "Admin" }
+        ]
+
+    })
         .then(admin => res.json(admin))
         .catch(err => res.status().json(err));
 })
 
-//update admin privileges by country admin
-router.route(`/update/admin/:id`).post((req, res) => {
-    Admin.findById(req.params.id)
-        .then(admin => {
-            admin.updateOne({ privilege: req.body.privilege })
-                .then(() => res.json("Admin Privileges updated successfully"))
-                .catch(err => res.status().json(err))
-        })
-        .catch(err => res.status().json("Request Failed " + err));
-});
 
 
 //==================== delete either country admin or an admin =================//

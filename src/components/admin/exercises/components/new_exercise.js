@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardContent } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
+import { set } from 'mongoose';
 
 
 
@@ -25,6 +26,16 @@ const NewExercises = (props) => {
     const [ans, setAns] = useState([]);
     const [score, setScore] = useState('');
     const [totalQ, setTotalQ] = useState(0);
+
+    //admin createing this exercise
+    const [admin, setAdmin] = useState();
+
+
+    //get logged in Admin
+    useEffect(() => { 
+        const admin = JSON.parse(sessionStorage.getItem("key"));
+        setAdmin(admin.id)
+    }, []);
 
 
     // question functions
@@ -109,7 +120,8 @@ const NewExercises = (props) => {
         const exData = {
             title: extitle,
             duration: exduration,
-            service: props.service
+            service: props.service,
+            admin_id: admin
         }
 
         if (extitle == "") {

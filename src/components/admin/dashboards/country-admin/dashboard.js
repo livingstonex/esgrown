@@ -17,9 +17,11 @@ import ListItem from '@material-ui/core/ListItem';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ServicesIcon from '@material-ui/icons/RoomService';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import ExposureIcon from '@material-ui/icons/Exposure';
+import UpdateIcon from '@material-ui/icons/Update';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import LogoutIcon from '@material-ui/icons/Lock';
+import RoomServiceIcon from '@material-ui/icons/RoomService';
 import logo from '../../../../img/esgrown.png';
 import avatar from '../../../../img/boy.svg';
 
@@ -28,27 +30,22 @@ import avatar from '../../../../img/boy.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-//import ListItemIcon from '@material-ui/core/ListItemIcon';
-//import ListItemText from '@material-ui/core/ListItemText';
-import MoneyIcon from '@material-ui/icons/Money';
-import PersoIcon from '@material-ui/icons/Person';
-import EduIcon from '@material-ui/icons/CastForEducation';
-import PeopleIcon from '@material-ui/icons/People';
 
 
-import CreateAdmin from './components/create-country-admin';
-import UpdatePrivileges from './components/update-privileges';
-import Home from './components/home';
+import CreateAdmin from './components/create-admin';
+import UpdateAdminPrivilege from './components/update-privileges';
+import Exercises from '../../exercises/exercises';
+import Services from '../../services/services';
 
 
 
 
 
 
-const SuperAdminDashboard = () => {
+const CountryAdminDashboard = () => {
 
 
-    const drawerWidth = 250;
+    const drawerWidth = 260;
 
     const useStyles = makeStyles(theme => ({
         root: {
@@ -149,25 +146,48 @@ const SuperAdminDashboard = () => {
 
     const [user, setUser] = useState({});
     const [page, setPage] = useState(0);
+    const [exercise, setExercise] = useState(false);
+    const [services, setServices] = useState(false);
 
 
+    
+    //page functions
+    const setHomePage = () => {
+        setPage(0)
+    }
+    const setCreateAdminPage = () => {
+        setPage(1)
+    }
+    const setUpdatePage = () => {
+        setPage(2)
+    }
+    const setServicePage = () => {
+        setPage(3)
+    }
+    const setExercisePage = () => {
+        setPage(4)
+    }
+    
+
+    //get logged in user
     useEffect(() => {
         const admin = JSON.parse(sessionStorage.getItem("key"));
         setUser(admin)
 
+        if (admin.privilege.length > 1) {
+            setServices(true);
+            setExercise(true);
+        } else {
+            if (admin.privilege == 'exercise') {
+                setExercise(true);
+            } else {
+                setServices(true);
+
+            }
+        }
+
     }, []);
 
-
-    const setCreatePage = () => {
-        setPage(1);
-    }
-
-    const setUpdatePage = () => {
-        setPage(2);
-    }
-    const setHomePage = () => {
-        setPage(0);
-    }
 
 
     //Drawer Open and  Close Functions
@@ -183,15 +203,6 @@ const SuperAdminDashboard = () => {
     //dropdown
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorElement, setAnchorElement] = useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-
-    const Close = () => {
-        setAnchorElement(null);
-    };
 
 
     return (
@@ -218,7 +229,7 @@ const SuperAdminDashboard = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="" wrap>
-                            Welcome: Super Admin
+                            Welcome: Country Admin
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -262,16 +273,38 @@ const SuperAdminDashboard = () => {
                         }
 
                         {
-                            <ListItem button onClick={setCreatePage}>
-                                <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Create Country Admin'} style={{ fontSize: '15px', textAlign: 'center' }} />
+                            <ListItem button onClick={setCreateAdminPage}>
+                                <ListItemIcon><AddBoxIcon color="primary" /> </ListItemIcon>
+                                <ListItemText primary={'Create Admin'} />
                             </ListItem>
                         }
                         {
                             <ListItem button onClick={setUpdatePage}>
-                                <ListItemIcon><EduIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Update Privileges'} />
+                                <ListItemIcon><UpdateIcon color="primary" /> </ListItemIcon>
+                                <ListItemText primary={'Update Admin Privileges'} />
                             </ListItem>
+                        }
+
+                        {
+                            exercise
+                                ?
+                                <ListItem button onClick={setExercisePage}>
+                                    <ListItemIcon> <ExposureIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create Exercises'} />
+                                </ListItem>
+                                :
+                                ""
+                        }
+
+                        {
+                            services
+                                ?
+                                <ListItem button onClick={setServicePage}>
+                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create Services'} />
+                                </ListItem>
+                                :
+                                ""
                         }
 
                     </List>
@@ -287,10 +320,10 @@ const SuperAdminDashboard = () => {
                         </Link>
                     </List>
                 </Drawer>
-                <main className={classes.content} style={{ background: "#D0CFCF",height:'800px' }}>
+                <main className={classes.content} style={{ background: "#D0CFCF" }}>
 
                     {
-                        (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdatePrivileges /> : ""
+                        (page === 0) ? "Home" : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdateAdminPrivilege /> : (page == 3) ? <Services /> : (page == 4) ? <Exercises /> : ""
                     }
                 </main>
             </div>
@@ -298,4 +331,4 @@ const SuperAdminDashboard = () => {
     );
 }
 
-export default SuperAdminDashboard;
+export default CountryAdminDashboard;

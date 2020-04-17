@@ -22,7 +22,11 @@ const servicecontentEASSchema = new Schema({
     },
     media: {
         type: String,
-        required:false
+        required: false
+    },
+    admin_id: {
+        type: String,
+        required: true
     }
 
 }, {

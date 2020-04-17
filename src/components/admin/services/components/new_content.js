@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardContent } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
@@ -18,6 +18,15 @@ const NewContent = (props) => {
 
 
     const [spinner, setSpinner] = useState(false)
+
+    const [admin, setAdmin] = useState();
+
+    useEffect(() => { 
+        const admin = JSON.parse(sessionStorage.getItem("key"));
+
+        setAdmin(admin.id)
+
+    }, []);
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -42,10 +51,6 @@ const NewContent = (props) => {
     }
 
 
-
-    console.log(selectedFile)
-
-
     const handleSubmit = (e) => {
         setSpinner(true)
         e.preventDefault();
@@ -56,7 +61,8 @@ const NewContent = (props) => {
             content: data.content,
             is_published: data.publish == "YES" ? true : false,
             date_to_publish: data.publish_later == undefined ? null : data.publish_later,
-            media: selectedFile
+            media: selectedFile,
+            admin_id: admin
         }
 
 
@@ -70,7 +76,14 @@ const NewContent = (props) => {
                 setSpinner(false);
                 alert('OOPS! :' + err)
             });
-
+        
+        setData({
+            title: '',
+            content: '',
+            publish:'',
+            publish_later: '',
+            content: ''
+            })
 
     }
 

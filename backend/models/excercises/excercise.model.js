@@ -13,6 +13,10 @@ const excerciseSchema = new Schema({
     duration: {
         type: Number,
         required: true
+    },
+    admin_id: {
+        type: String,
+        required:true
     }
 
 }, {

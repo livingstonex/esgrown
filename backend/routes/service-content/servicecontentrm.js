@@ -7,8 +7,10 @@ router.route('/add').post((req, res) => {
     const content = req.body.content;
     const is_published = req.body.is_published;
     const date_to_publish = Date.parse(req.body.date_to_publish);
+    const media = req.body.media;
+    const admin_id = req.body.admin_id;
 
-    const newServiceContent = new RMS({ title, content, is_published, date_to_publish });
+    const newServiceContent = new RMS({ title, content, is_published, date_to_publish, media, admin_id });
 
     newServiceContent.save()
         .then(rms => res.json(rms))

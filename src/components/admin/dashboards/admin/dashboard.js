@@ -17,9 +17,11 @@ import ListItem from '@material-ui/core/ListItem';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ServicesIcon from '@material-ui/icons/RoomService';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import ExposureIcon from '@material-ui/icons/Exposure';
+import UpdateIcon from '@material-ui/icons/Update';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import LogoutIcon from '@material-ui/icons/Lock';
+import RoomServiceIcon from '@material-ui/icons/RoomService';
 import logo from '../../../../img/esgrown.png';
 import avatar from '../../../../img/boy.svg';
 
@@ -28,27 +30,28 @@ import avatar from '../../../../img/boy.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-//import ListItemIcon from '@material-ui/core/ListItemIcon';
-//import ListItemText from '@material-ui/core/ListItemText';
-import MoneyIcon from '@material-ui/icons/Money';
-import PersoIcon from '@material-ui/icons/Person';
-import EduIcon from '@material-ui/icons/CastForEducation';
-import PeopleIcon from '@material-ui/icons/People';
-
-
-import CreateAdmin from './components/create-country-admin';
-import UpdatePrivileges from './components/update-privileges';
-import Home from './components/home';
 
 
 
+import Exercises from '../../exercises/exercises';
+import Services from '../../services/services';
+import LMExercise from '../../exercises/lm/lm';
+import RMExercise from '../../exercises/rm/rm';
+import EASService from '../../services/eas/eas';
+import EFAService from '../../services/efa/efa';
+import LMService from '../../services/lm/lm';
+import RMService from '../../services/rm/rm';
 
 
 
-const SuperAdminDashboard = () => {
 
 
-    const drawerWidth = 250;
+
+
+const AdminDashboard = () => {
+
+
+    const drawerWidth = 230;
 
     const useStyles = makeStyles(theme => ({
         root: {
@@ -149,25 +152,77 @@ const SuperAdminDashboard = () => {
 
     const [user, setUser] = useState({});
     const [page, setPage] = useState(0);
+    const [exercise, setExercise] = useState(false);
+    const [services, setServices] = useState(false);
+
+    const [eas, setEas] = useState(false)
+    const [efa, setEfa] = useState(false)
+    const [lm, setLm] = useState(false)
+    const [rm, setRm] = useState(false)
+    const [lmex, setLmex] = useState(false)
+    const [rmex, setRmex] = useState(false)
+    const [allex, setAllex] = useState(false)
+    const [allsrv, setAllsrv] = useState(false)
 
 
+
+    //page functions
+    const setHomePage = () => {
+        setPage(0)
+    }
+    const setEasPage = () => {
+        setPage(1)
+    }
+    const setEfaPage = () => {
+        setPage(2)
+    }
+    const setLmPage = () => {
+        setPage(3)
+    }
+    const setRmPage = () => {
+        setPage(4)
+    }
+    const setLmExPage = () => {
+        setPage(5)
+    }
+    const setRmExPage = () => {
+        setPage(6)
+    }
+    const setAllExPage = () => {
+        setPage(7)
+    }
+    const setAllSrvPage = () => {
+        setPage(8)
+    }
+
+
+    //get logged in user
     useEffect(() => {
         const admin = JSON.parse(sessionStorage.getItem("key"));
         setUser(admin)
 
+        admin.privilege.map(pri => {
+            if (pri == 'EAS') {
+                setEas(true)
+            } else if (pri == 'EFA') {
+                setEfa(true);
+            } else if (pri == 'LM') {
+                setLm(true)
+            } else if (pri == 'RM') {
+                setRm(true)
+            } else if (pri == 'LMExercise') {
+                setLmex(true);
+            } else if (pri == 'RMExercise') {
+                setRmex(true)
+            } else if (pri == 'AllServices') {
+                setAllsrv(true);
+            } else if (pri == 'AllExercises') {
+                setAllex(true)
+            }
+
+        })
+
     }, []);
-
-
-    const setCreatePage = () => {
-        setPage(1);
-    }
-
-    const setUpdatePage = () => {
-        setPage(2);
-    }
-    const setHomePage = () => {
-        setPage(0);
-    }
 
 
     //Drawer Open and  Close Functions
@@ -183,15 +238,6 @@ const SuperAdminDashboard = () => {
     //dropdown
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorElement, setAnchorElement] = useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-
-    const Close = () => {
-        setAnchorElement(null);
-    };
 
 
     return (
@@ -218,7 +264,7 @@ const SuperAdminDashboard = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="" wrap>
-                            Welcome: Super Admin
+                            Welcome: Admin
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -239,7 +285,6 @@ const SuperAdminDashboard = () => {
                 >
                     <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
                         <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
-                        {/* Place Logo here */}
                         <div style={{ marginLeft: '60px' }}>
                             <img src={logo} width="80%" alt="" />
                         </div>
@@ -250,6 +295,10 @@ const SuperAdminDashboard = () => {
                     <Divider />
                     <List>
                         <div style={{ marginLeft: '15px' }}><img src={avatar} alt="Avatar" style={{ width: "50%" }} /></div><br />
+                    </List>
+                    <Divider />
+
+                    <List>
                         {
                             <ListItem button onClick={setHomePage}>
                                 <ListItemIcon>
@@ -261,17 +310,81 @@ const SuperAdminDashboard = () => {
                             </ListItem>
                         }
 
-                        {
-                            <ListItem button onClick={setCreatePage}>
-                                <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Create Country Admin'} style={{ fontSize: '15px', textAlign: 'center' }} />
+                        {eas ?
+                            <ListItem button onClick={setEasPage}>
+                                <ListItemIcon><AddBoxIcon color="primary" /> </ListItemIcon>
+                                <ListItemText primary={'Create EAS service'} />
                             </ListItem>
+                            : ""
+                        }
+                        {efa ?
+                            <ListItem button onClick={setEfaPage}>
+                                <ListItemIcon><UpdateIcon color="primary" /> </ListItemIcon>
+                                <ListItemText primary={'Create EFA Service'} />
+                            </ListItem>
+                            : ""
+                        }
+
+                        {
+                            rm
+                                ?
+                                <ListItem button onClick={setRmPage}>
+                                    <ListItemIcon> <ExposureIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create RM Services'} />
+                                </ListItem>
+                                :
+                                ""
+                        }
+
+                        {
+                            lm
+                                ?
+                                <ListItem button onClick={setLmPage}>
+                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create LM Service'} />
+                                </ListItem>
+                                :
+                                ""
                         }
                         {
-                            <ListItem button onClick={setUpdatePage}>
-                                <ListItemIcon><EduIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Update Privileges'} />
-                            </ListItem>
+                            lmex
+                                ?
+                                <ListItem button onClick={setLmExPage}>
+                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create LM Exercises'} />
+                                </ListItem>
+                                :
+                                ""
+                        }
+                        {
+                            rmex
+                                ?
+                                <ListItem button onClick={setRmExPage}>
+                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create RM Exercises'} />
+                                </ListItem>
+                                :
+                                ""
+                        }
+                        {
+                            allex
+                                ?
+                                <ListItem button onClick={setAllExPage}>
+                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create All Exercises'} />
+                                </ListItem>
+                                :
+                                ""
+                        }
+                        {
+                            allsrv
+                                ?
+                                <ListItem button onClick={setAllSrvPage}>
+                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
+                                    <ListItemText primary={'Create All Services'} />
+                                </ListItem>
+                                :
+                                ""
                         }
 
                     </List>
@@ -287,10 +400,11 @@ const SuperAdminDashboard = () => {
                         </Link>
                     </List>
                 </Drawer>
-                <main className={classes.content} style={{ background: "#D0CFCF",height:'800px' }}>
+
+                <main className={classes.content} style={{ background: "#D0CFCF" }}>
 
                     {
-                        (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdatePrivileges /> : ""
+                        (page == 0) ? "HOME" : (page == 1) ? <EASService /> : (page == 2) ? <EFAService /> : (page == 3) ? <LMService /> : (page == 4) ? <RMService /> : (page == 5) ? <LMExercise /> : (page == 6) ? <RMExercise /> : (page == 7) ? <Exercises /> : (page == 8) ? <Services /> : ""
                     }
                 </main>
             </div>
@@ -298,4 +412,4 @@ const SuperAdminDashboard = () => {
     );
 }
 
-export default SuperAdminDashboard;
+export default AdminDashboard;
