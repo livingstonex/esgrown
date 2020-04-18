@@ -94,7 +94,6 @@ export default function Form(props) {
             setSpinner(true);
             axios.post('http://localhost:5000/subscriptioneas/add', SubObject)
                 .then((res) => {
-                    console.log(res.data);
                     setSpinner(false);
                     setModalShow(false);
                     setModalPayShow(true);

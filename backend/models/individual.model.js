@@ -37,6 +37,10 @@ const individualSchema = new Schema({
     status:{
         type:String,
         //required: true
+    },
+    lastLogin: {
+        type: Date,
+        required: true
     }
 
 }, {

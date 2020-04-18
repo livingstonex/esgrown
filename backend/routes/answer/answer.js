@@ -7,9 +7,9 @@ router.route('/add').post((req, res) => {
     const service = req.body.service;
     const name = req.body.name;
     const email = req.body.email;
-    const answers = req.body.answers;
+    const answers = req.body.answers; 
 
-    const newAns = new Answer({ user_id, excercise_id, service, name, email, answers }); 
+    const newAns = new Answer({ user_id, excercise_id, service, name, email, answers });
 
     newAns.save()
         .then((sub) => res.json(sub))
@@ -21,9 +21,26 @@ router.route('/add').post((req, res) => {
 //============================= Get Individual's EAS Sub Details ===========================
 
 router.route(`/:id`).get((req, res) => {
-    Answer.find({user_id: req.params.id})
+    Answer.find({ user_id: req.params.id })
         .then(answer => res.json(answer))
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
+
+
+router.route('/check').post((req, res) => {
+    const userid = req.body.user_id;
+    const ex_id = req.body.ex_id;
+
+    Answer.find({
+        $and: [
+            { excercise_id: ex_id },
+            { user_id: userid}
+        ]
+    })
+        .then(ans => res.json(ans))
+        .catch(err => res.status(400).json('Error ' + err))
 });
 
 

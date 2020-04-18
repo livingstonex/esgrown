@@ -13,7 +13,7 @@ export class AuthProvider extends Component{
 
         // localStorage.setItem("key", JSON.stringify(this.GlobalUser)); 
         // console.log(JSON.parse(localStorage.getItem("key")) );  
-        const idv_data = JSON.parse(sessionStorage.getItem("key"));   
+        const logedinData = JSON.parse(sessionStorage.getItem("key"));   
         const corp_data = JSON.parse(sessionStorage.getItem("corp_key"));                      
         return(
                 <AuthContext.Provider value={{
@@ -22,7 +22,7 @@ export class AuthProvider extends Component{
                         isLogged: isLogged,
                     })
                 },
-                   data: idv_data,
+                data: logedinData,
                    //c_data: corp_data
                 }}> 
                     {this.props.children}

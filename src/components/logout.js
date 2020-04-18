@@ -6,7 +6,7 @@ export default class Logout extends Component{
 
   componentDidMount(){
     const u = JSON.parse(sessionStorage.getItem("key"));
-    console.log("heyyy")
+    // console.log("heyyy")
   }
     render(){ 
         const GlobalUser = {
@@ -38,7 +38,8 @@ export default class Logout extends Component{
                                 {
                                   sessionStorage.setItem("key", JSON.stringify(GlobalUser)),
                                   sessionStorage.setItem("corp_key", JSON.stringify(Global_CorpUser)),
-                                  
+
+                                  localStorage.removeItem('notify'),
                                   window.location = "/"
                                  
                                 }
