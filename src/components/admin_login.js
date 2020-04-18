@@ -76,8 +76,8 @@ const AdminLogin = () => {
                                         <label style={{ 'fontWeight': 'bold' }}>Admin Sign In </label>
                                         <Form >
                                             <Form.Group controlId="formBasicEmail">
-                                                <Form.Label>Email address:</Form.Label>
-                                                <Form.Control type="email" name="email" required placeholder="Enter email" onChange={handleChange} value={data.email} />
+                                                <Form.Label>Username:</Form.Label>
+                                                <Form.Control type="email" name="username" required placeholder="Enter Username" onChange={handleChange} value={data.email} />
                                                 <Form.Text className="text-muted">
                                                 </Form.Text>
                                             </Form.Group>
@@ -89,30 +89,33 @@ const AdminLogin = () => {
                                             <Button variant="primary" onClick={() => {
                                                 setSpinner(true)
 
-                                                const email = data.email;
+                                                const username = data.username;
                                                 const password = data.password;
 
 
                                                 const loginData = {
-                                                    email: email,
+                                                    username: username,
                                                     password: password
                                                 }
 
 
                                                 //check login details
-                                                axios.post(`http://localhost:5000/admin/login`, data)
+                                                axios.post(`http://localhost:5000/admin/login`, loginData)
                                                     .then(res => {
-                                                        if (res.data == 1) {
+                                                        if (res.data !== 'failed') {
                                                             context.setUserAuthData(true);
-
+                                                            console.log(res.data)
                                                             const user = {
-                                                                email: email,
+                                                                name: res.data.name,
+                                                                privilege: res.data.privilege,
+                                                                email: res.data.email,
+                                                                role: res.data.role,
+                                                                country: res.data.country,
+                                                                id:res.data._id,
                                                                 isLogged: true,
-                                                                user: "Admin",
-                                                                status: "Admin"
+                                                                status: "ADMIN"
                                                             }
                                                             sessionStorage.setItem("key", JSON.stringify(user));
-
 
                                                             setSpinner(false)
                                                             window.location = "/frontier";

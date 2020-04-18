@@ -24,7 +24,7 @@ export default class Frontier extends Component {
         if (!(u.isLogged)) {
             window.location = "/"
         }
-        // console.log(u)
+        console.log(u)
     }
 
     render() {
@@ -33,7 +33,7 @@ export default class Frontier extends Component {
                 {
                     (context) => (
 
-                        (context.data.status == "corporate") ? <CorporateDashboard /> : (context.data.status == "Admin") ? <AdminDashboard /> : <IndividualDashboard />
+                        (context.data.status == "corporate") ? <CorporateDashboard /> : (context.data.status == "ADMIN") ? <AdminDashboard /> : <IndividualDashboard />
                     )
                 }
             </AuthContext.Consumer>

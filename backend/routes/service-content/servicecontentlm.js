@@ -7,8 +7,10 @@ router.route('/add').post((req, res) => {
     const content = req.body.content;
     const is_published = req.body.is_published;
     const date_to_publish = Date.parse(req.body.date_to_publish);
+    const media = req.body.media;
+    const admin_id = req.body.admin_id
 
-    const newServiceContent = new LMS({ title, content, is_published, date_to_publish });
+    const newServiceContent = new LMS({ title, content, is_published, date_to_publish,media,admin_id });
 
     newServiceContent.save()
         .then(lms => res.json(lms))
@@ -32,5 +34,12 @@ router.route('/notification').post((req, res) => {
         .then(data => res.json(data))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+router.route(`/activity/:id`).get((req, res) => {
+    LMS.find({ admin_id: req.params.id })
+        .then(eas => res.json(eas))
+        .catch(err => res.status(400).json(err));
+});
+
+
 
 module.exports = router;

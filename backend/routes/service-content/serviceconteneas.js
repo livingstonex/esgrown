@@ -7,9 +7,10 @@ router.route('/add').post((req, res) => {
     const content = req.body.content;
     const is_published = req.body.is_published;
     const date_to_publish = req.body.date_to_publish == null ? null : Date.parse(req.body.date_to_publish);
-    const image = req.body.image;
+    const media = req.body.media;
+    const admin_id = req.body.admin_id;
 
-    const newServiceContent = new EASS({ title, content, is_published, date_to_publish,image });
+    const newServiceContent = new EASS({ title, content, is_published, date_to_publish, media, admin_id });
 
     newServiceContent.save()
         .then(eass => res.json(eass))
@@ -34,6 +35,12 @@ router.route('/notification').post((req, res) => {
     }).sort({ cratedAt: -1 })
         .then(data => res.json(data))
         .catch(err => res.json('Error: ' + err));
+});
+
+router.route(`/activity/:id`).get((req, res) => {
+    EASS.find({ admin_id: req.params.id })
+        .then(eas => res.json(eas))
+        .catch(err => res.status(400).json(err));
 });
 
 module.exports = router;

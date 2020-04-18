@@ -5,8 +5,9 @@ router.route('/add').post((req, res) => {
     const title = req.body.title;
     const service = req.body.service;
     const duration = req.body.duration;
+    const admin_id = req.body.admin_id;
 
-    const newEX = new EX({ title, service, duration });
+    const newEX = new EX({ title, service, duration, admin_id });
 
     newEX.save()
         .then((sub) => res.json(sub))
@@ -40,19 +41,16 @@ router.route('/notification').post((req, res) => {
 
 
 
-// //=========================== Check Ref to be used to Toggle Subscription State =========================
+// //=========================== Get Exercises based on admin ID =========================
 
-// router.route(`/update/easref/:id`).post((req, res) => {
-//     EAS.findOneAndUpdate(
-//         { user_id: req.params.id },
-//         {
-//             ref: req.body.ref,
-//             sub_status: req.body.sub_status,
-//             plan_code: req.body.plan_code
-//         }
-//         ).then(es => res.json(es))
-//                         .catch(err => res.json('Err: ' + err));
+router.route(`/activity/:id`).get((req, res) => {
 
-// });
+    EX.find({ admin_id: req.params.id })
+        .then(ex => res.json(ex))
+        .catch(err => res.status(400).json(err));
+    
+});
+
+
 
 module.exports = router;

@@ -20,9 +20,13 @@ const servicecontentEASSchema = new Schema({
         type: Date,
         required: false
     },
-    image: {
+    media: {
         type: String,
-        required:false
+        required: false
+    },
+    admin_id: {
+        type: String,
+        required: true
     }
 
 }, {

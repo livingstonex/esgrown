@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardContent } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 
 
 
-const NewContent = () => {
+const NewContent = (props) => {
 
     const [data, setData] = useState(
         'title',
@@ -18,6 +18,15 @@ const NewContent = () => {
 
 
     const [spinner, setSpinner] = useState(false)
+
+    const [admin, setAdmin] = useState();
+
+    useEffect(() => { 
+        const admin = JSON.parse(sessionStorage.getItem("key"));
+
+        setAdmin(admin.id)
+
+    }, []);
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -42,10 +51,6 @@ const NewContent = () => {
     }
 
 
-
-    console.log(selectedFile)
-
-
     const handleSubmit = (e) => {
         setSpinner(true)
         e.preventDefault();
@@ -56,11 +61,12 @@ const NewContent = () => {
             content: data.content,
             is_published: data.publish == "YES" ? true : false,
             date_to_publish: data.publish_later == undefined ? null : data.publish_later,
-            image: selectedFile
+            media: selectedFile,
+            admin_id: admin
         }
 
 
-        axios.post(`http://localhost:5000/servicecontenteas/add`, submitData)
+        axios.post(props.url, submitData)
             .then(res => {
                 console.log(res.data)
                 setSpinner(false)
@@ -70,8 +76,14 @@ const NewContent = () => {
                 setSpinner(false);
                 alert('OOPS! :' + err)
             });
-
-        console.log();
+        
+        setData({
+            title: '',
+            content: '',
+            publish:'',
+            publish_later: '',
+            content: ''
+            })
 
     }
 
@@ -80,7 +92,7 @@ const NewContent = () => {
         <>
             <Card className="col col-lg-6 col-sm-6">
                 <CardContent>
-                    <h6>Create New EAS content</h6>
+                    <h6>{props.title}</h6>
                     <form className="container py-4">
                         <div className="row mt-3">
                             <div className="col">
