@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+
 require('dotenv').config();
 
 //setup express
@@ -54,6 +55,30 @@ const serviceefaContentRouter = require('./routes/service-content/servicecontent
 const servicelmContentRouter = require('./routes/service-content/servicecontentlm');
 const servicermContentRouter = require('./routes/service-content/servicecontentrm');
 const adminRouter = require('./routes/admin/admin');
+const jobRouter = require('./routes/corporate/job');
+const applicationRouter = require('./routes/corporate/application/application');
+const corporateSubRouter = require('./routes/corporate/subscription/subscription');
+const mathsRouter = require('./routes/tutor/senior/maths');
+const physicsRouter = require('./routes/tutor/senior/physics');
+const generalKnowledgeRouter = require('./routes/tutor/senior/general_knowledge');
+const chemistryRouter = require('./routes/tutor/senior/chemistry');
+const biologyRouter = require('./routes/tutor/senior/biology');
+const geographyRouter = require('./routes/tutor/senior/geography');
+const economicsRouter = require('./routes/tutor/senior/economics');
+const accountingRouter = require('./routes/tutor/senior/accounting');
+const historyRouter = require('./routes/tutor/senior/history');
+const businessStudiesRouter = require('./routes/tutor/junior/business_studies');
+const integratedScienceRouter = require('./routes/tutor/junior/integrated_science');
+const juniorGeneralKnowledgeRouter = require('./routes/tutor/junior/junior_general_knowledge');
+const juniorHistoryRouter = require('./routes/tutor/junior/juniorhistory');
+const juniorMathsRouter = require('./routes/tutor/junior/junior_maths');
+const socialStudiesRouter = require('./routes/tutor/junior/social_studies');
+
+
+
+
+
+
 
 
 //SUB_EAS Expose
@@ -73,6 +98,28 @@ app.use('/servicecontentefa', serviceefaContentRouter);
 app.use('/servicecontentlm', servicelmContentRouter);
 app.use('/servicecontentrm', servicermContentRouter);
 app.use('/admin', adminRouter);
+app.use('/jobs', jobRouter);
+app.use('/applications', applicationRouter);
+app.use('/corporatesubscriptions', corporateSubRouter);
+app.use('/senior/mathematics', mathsRouter);
+app.use('/senior/physics', physicsRouter);
+app.use('/senior/general-Knowledge', generalKnowledgeRouter);
+app.use('./senior/chemistry', chemistryRouter);
+app.use('./senior/biology', biologyRouter);
+app.use('./senior/geography', geographyRouter);
+app.use('./senior/economics', economicsRouter);
+app.use('./senior/accounting', accountingRouter);
+app.use('./senior/history', historyRouter);
+app.use('./junior/business-studies', businessStudiesRouter);
+app.use('./junior/integrated-science', integratedScienceRouter);
+app.use('./junior/general-knowledge', juniorGeneralKnowledgeRouter);
+app.use('./junior/history', juniorHistoryRouter);
+app.use('./junior/mathematics', juniorMathsRouter);
+app.use('./junior/social-studies', socialStudiesRouter);
+
+
+
+
 
 
 

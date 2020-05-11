@@ -17,7 +17,7 @@ class QuestionsComponent extends Component {
         super(props);
 
         this.state = {
-            currentCount: 40,
+            currentCount: '',
             activeStep: 0,
             userAns: [],
             page: 1,
@@ -30,11 +30,11 @@ class QuestionsComponent extends Component {
 
     timer() {
         this.setState({
-           currentCount: this.state.currentCount - 1
+            currentCount: this.state.currentCount - 1
         })
         if (this.state.currentCount < 1) {
             clearInterval(this.intervalId);
-            this.setState({ page:3 })
+            this.setState({ page: 3 })
         }
     }
 
@@ -49,12 +49,11 @@ class QuestionsComponent extends Component {
         //get questions
         axios.post(`http://localhost:5000/question/${this.props.exerciseId}`)
             .then(res => {
-                if (res.data.length > 0 ) {
+                if (res.data.length > 0) {
                     this.setState({
                         question: res.data,
-                        spinner:false
+                        spinner: false
                     })
-                    console.log(res.data)
                 }
             })
             .catch(err => console.log(err));
@@ -71,7 +70,7 @@ class QuestionsComponent extends Component {
 
     setStart = () => {
         this.setState({ page: 2 })
-        // this.startTimer()
+        this.startTimer()
 
     }
 
@@ -105,14 +104,14 @@ class QuestionsComponent extends Component {
 
             }
         } else {
-            
+
         }
 
         this.setState({ userAns: userAnswer });
 
     }
 
-    
+
 
 
     submitAns = () => {
@@ -121,7 +120,7 @@ class QuestionsComponent extends Component {
         const { name, email } = userData;
 
         const { exerciseId, service } = this.props;
-        
+
         const data = {
             user_id: userData.id,
             excercise_id: exerciseId,
@@ -133,9 +132,9 @@ class QuestionsComponent extends Component {
         }
 
         //send to db
-        axios.post(`http://localhost:5000/answer/add`,data)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        axios.post(`http://localhost:5000/answer/add`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
 
 
         this.setState({ page: 0 })
@@ -145,16 +144,15 @@ class QuestionsComponent extends Component {
 
     render() {
 
-        const { question,spinner } = this.state
+        const { question, spinner } = this.state
 
 
-       
+
 
         return (
             <>
                 {
                     (this.state.page == 1) ? <StartBtn setStart={this.setStart} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} countDown={this.state.currentCount} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
-                    // spinner ? <Spinner animation="grow" /> : <StartBtn setStart={this.setStart} />
                 }
 
 

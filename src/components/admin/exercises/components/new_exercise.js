@@ -55,8 +55,6 @@ const NewExercises = (props) => {
 
         setScore(value);
     }
-    // excercise_id, question, options, correct_ans, score
-    // console.log(score)
 
     const createQuestion = () => {
 
@@ -139,6 +137,7 @@ const NewExercises = (props) => {
                     setExId(res.data._id);
                     setSpinner(false);
                     setPage(2)
+                    props.refreshContentLog();
                     console.log(res.data)
                 })
                 .catch(err => {

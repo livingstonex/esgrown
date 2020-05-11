@@ -19,6 +19,7 @@ export default class IndividualSignUp extends Component{
         this.onChangeCountry = this.onChangeCountry.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeType = this.onChangeType.bind(this);
 
         this.state = {
             org_name:'',
@@ -28,7 +29,8 @@ export default class IndividualSignUp extends Component{
             doi: new Date(),
             country:'',
             state:'',
-            status: 'corporate'
+            status: 'corporate',
+            corp_user_type: ''
         }
     }
 
@@ -74,6 +76,11 @@ export default class IndividualSignUp extends Component{
         });
     }
 
+    onChangeType(e) {
+        this.setState({ corp_type: e.target.value });
+        console.log(e.target.value)
+    }
+
     
     onSubmit(e){
         e.preventDefault();
@@ -86,7 +93,8 @@ export default class IndividualSignUp extends Component{
             doi: this.state.doi,
             country: this.state.country,
             state: this.state.state,
-            status: this.state.status
+            status: this.state.status,
+            corp_type: this.state.corp_type
         }
 
 
@@ -115,7 +123,8 @@ export default class IndividualSignUp extends Component{
                                     doi: res.data.doi,
                                     country: res.data.country,
                                     state: res.data.state,
-                                    status: res.data.status                                      
+                                    status: res.data.status,
+                                    corp_type:res.data.corp_type
                                     }
                                     
                                     //Save the Global_CorpUser in sessionStorage after stringifying it
@@ -154,6 +163,17 @@ export default class IndividualSignUp extends Component{
                             <Card.Header as="h5"><br/></Card.Header>
                             <Card.Body style={{'opacity':'0.7',}}>
                                 <form onSubmit={this.onSubmit}>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect01">Organization Type</label>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" required onChange={this.onChangeType}>
+                                            <option>Select...</option>
+                                            <option value="school">School</option>
+                                            <option value="company">Company</option>
+                                        </select>
+                                    </div>
+
                                     <div className="form-group">
                                         <label>Name of Organization:</label>
                                         <input className="form-control" required type="text" onChange={this.onChangeOrgname} value={this.state.org_name} placeholder="Enter name of Organization..."></input>

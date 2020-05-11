@@ -37,8 +37,9 @@ router.route('/add').post((req, res) => {
     const state = req.body.state;
     const password = hash;
     const status = req.body.status;
+    const corp_type = req.body.corp_type;
 
-    const newCorporate = new Corporate({ org_name, email, phone, doi, country, state, password, status });
+    const newCorporate = new Corporate({ org_name, email, phone, doi, country, state, password, status, corp_type });
 
     newCorporate.save()
         .then(corporate => res.json(corporate))

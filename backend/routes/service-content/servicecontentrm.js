@@ -9,8 +9,10 @@ router.route('/add').post((req, res) => {
     const date_to_publish = Date.parse(req.body.date_to_publish);
     const media = req.body.media;
     const admin_id = req.body.admin_id;
+    const user_class = req.body.user_class;
 
-    const newServiceContent = new RMS({ title, content, is_published, date_to_publish, media, admin_id });
+
+    const newServiceContent = new RMS({ title, content, is_published, date_to_publish, media, admin_id, user_class});
 
     newServiceContent.save()
         .then(rms => res.json(rms))
@@ -19,7 +21,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/').get((req, res) => {
-    RMS.find().sort({ createdAt: -1 })
+    RMS.find({ is_published: true }).sort({ createdAt: -1 })
         .then(rm => res.json(rm))
         .catch(err => res.status(400).json('Error ' + err))
 });

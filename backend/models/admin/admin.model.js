@@ -32,6 +32,10 @@ const AdminSchema = new Schema({
         required: true
 
     },
+    tutor_level: {
+        type: String,
+        required: false
+    },
     privilege: {
         type: Array,
         required: false

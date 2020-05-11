@@ -153,7 +153,7 @@ const CountryAdminDashboard = () => {
     const [services, setServices] = useState(false);
 
 
-    
+
     //page functions
     const setHomePage = () => {
         setPage(0)
@@ -170,7 +170,7 @@ const CountryAdminDashboard = () => {
     const setExercisePage = () => {
         setPage(4)
     }
-    
+
 
     //get logged in user
     useEffect(() => {
@@ -232,7 +232,7 @@ const CountryAdminDashboard = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="" wrap>
-                            Welcome: Country Admin
+                            Welcome: {user.role} {" "} {user.name}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -251,11 +251,11 @@ const CountryAdminDashboard = () => {
                     }}
 
                 >
-                    <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
-                        <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
+                    <div className={classes.toolbar} style={{ marginLeft: '-60px' }}>
+                        <div style={{ height: '100%', width: '30px', backgroundColor: '#3F51b5' }}></div>
 
                         <div style={{ marginLeft: '60px' }}>
-                            <img src={logo} width="80%" alt="" />
+                            <img src={logo} width="60%" alt="" />
                         </div>
 
                         <IconButton onClick={handleDrawerClose}>
@@ -264,7 +264,11 @@ const CountryAdminDashboard = () => {
                     </div>
                     <Divider />
                     <List>
-                        <div style={{ marginLeft: '15px' }}><img src={avatar} alt="Avatar" style={{ width: "50%" }} /></div><br />
+
+                        <div className="d-flex justify-content-center mt-4">
+                            <img src={avatar} alt="Avatar" style={{ width: "30%" }} />
+                        </div>
+                        <br />
                         {
                             <ListItem button onClick={setHomePage}>
                                 <ListItemIcon>
@@ -324,7 +328,7 @@ const CountryAdminDashboard = () => {
                         </Link>
                     </List>
                 </Drawer>
-                <main className={classes.content} style={{ background: "#D0CFCF", height: '800px' }}>
+                <main className={classes.content} style={{ background: "#D0CFCF", height: 'auto' }}>
 
                     {
                         (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdateAdminPrivilege /> : (page == 3) ? <Services /> : (page == 4) ? <Exercises /> : ""

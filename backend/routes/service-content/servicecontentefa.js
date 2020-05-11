@@ -9,10 +9,12 @@ router.route('/add').post((req, res) => {
     const date_to_publish = req.body.date_to_publish == null ? null : Date.parse(req.body.date_to_publish);
     const media = req.body.media;
     const admin_id = req.body.admin_id;
+    const user_class = req.body.user_class;
 
 
 
-    const newServiceContent = new EFAS({ title, content, is_published, date_to_publish, media, admin_id });
+
+    const newServiceContent = new EFAS({ title, content, is_published, date_to_publish, media, admin_id,user_class });
 
     newServiceContent.save()
         .then(efas => res.json(efas))
@@ -21,7 +23,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/').get((req, res) => {
-    EFAS.find().sort({ createdAt: -1 })
+    EFAS.find({ is_published: true }).sort({ createdAt: -1 })
         .then(efa => res.json(efa))
         .catch(err => res.status(400).json('Error ' + err))
 });

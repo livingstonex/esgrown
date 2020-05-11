@@ -7,10 +7,36 @@ const JobsModal = (props) => {
 
     const { show, onHide } = props;
 
-    // const [apple, setApple] = useState(false);
+    const [data, setData] = useState([]);
+    const [disabled, setDisabled] = useState(false)
+    const [user, setUser] = useState();
+    const [] = useState([]);
 
     useEffect(() => {
+        //get user
+        const user = JSON.parse(sessionStorage.getItem('key'))
+        setUser(user)
+
         //make api call to get all jobs and set in state
+        axios.get(`http://localhost:5000/jobs`)
+            .then(res => {
+                if (res.data.length > 0) {
+                    setData(res.data)
+                }
+                console.log(res.data)
+            })
+            .catch(err => console.log(err));
+
+
+        //check to see if user has applied for max jobs allowed
+        axios.get(`http://localhost:5000/applications/check/${user.id}`)
+            .then(res => {
+                if (res.data.jobs_applied_for.length > 1) {
+                    setDisabled(true)
+                }
+                console.log(res.data.jobs_applied_for);
+            })
+            .catch(err => console.log(err));
     }, [])
 
 
@@ -20,6 +46,11 @@ const JobsModal = (props) => {
     const [companiesAppliedTo, setCompaniesAppliedTo] = useState([])
     const [jobsAppliedfor, setJobsAppliedfor] = useState([])
 
+
+    // if (onHide) {
+    //     setCompaniesAppliedTo('');
+    //     setJobsAppliedfor('');
+    // }
 
 
     const toggleJobs = (e) => {
@@ -39,22 +70,39 @@ const JobsModal = (props) => {
 
 
     const postToServer = () => {
-        const userDetails = JSON.parse(sessionStorage.getItem('key'))
+
         if (companiesAppliedTo.length < 1) {
             alert("you need to apply to at least one company")
             return
+        } else if (jobsAppliedfor.length > 2) {
+            alert("You can only apply to a max of two jobs")
+            setJobsAppliedfor('')
+            return
         }
+
         const postData = {
-            id: userDetails.id,
-            name: userDetails.name,
-            email: userDetails.email,
+            applicant_id: user.id,
+            applicant_name: user.name,
+            applicant_email: user.email,
             companies_applied_to: companiesAppliedTo,
-            jobs: jobsAppliedfor
+            jobs_applied_for: jobsAppliedfor
         }
 
         console.log(postData)
-        //make axios post request and attach user id.
+
+        // axios.post(`http://localhost:5000/applications/add`, postData)
+        //     .then(res => {
+        //         if (res.data.length > 0) {
+        //             alert("Job applied for successfully")
+        //         }
+        //     })
+        //     .catch(err => console.log(err));
+
+        setCompaniesAppliedTo('')
+        setJobsAppliedfor('')
     }
+
+
 
     const getDesc = (e) => {
 
@@ -63,41 +111,11 @@ const JobsModal = (props) => {
 
         displayJobs.map((job) => {
             if (job.title == e.target.value) {
-                // console.log(job.description);
                 setDesc(job.description)
             }
         })
     }
-    console.log(companiesAppliedTo)
-    console.log(jobsAppliedfor)
 
-
-    const data = [{
-        company_name: 'Apple',
-        jobs: [
-            { title: 'sys admin', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-            { title: 'Data Analyst', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-            { title: 'Engineer', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' }
-        ]
-    },
-    {
-        company_name: 'IBM',
-        jobs: [
-            { title: 'Data admin', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-            { title: 'python Dev', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-            { title: 'java dev', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-        ]
-    },
-    {
-        company_name: 'MicroSoft',
-        jobs: [
-            { title: 'javascript', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-            { title: 'react', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-            { title: 'flutter', description: "We'll have several cards, so, for the container element it will be displayed as a grid", dead_line: '3/10/2020' },
-        ]
-
-    }
-    ]
 
     return (
 
@@ -107,7 +125,7 @@ const JobsModal = (props) => {
                 <h5>Get A Job</h5>
                 <div className="container">
                     <div className="mb-3" style={{}}>
-                        <Form.Control as="select" onChange={toggleJobs}>
+                        <Form.Control as="select" onChange={toggleJobs} disabled={disabled}>
                             <option>where you would like to work</option>
                             {data.map((job) => {
                                 return <option name={job.company_name} value={job.company_name}>{job.company_name}</option>
@@ -116,7 +134,7 @@ const JobsModal = (props) => {
                         </Form.Control>
                     </div>
                     <div className="mb-3">
-                        <Form.Control as="select" onChange={getDesc}>
+                        <Form.Control as="select" onChange={getDesc} disabled={disabled}>
                             <option>what would you like to work as</option>
                             {displayJobs ? displayJobs.map((job) => {
                                 return <option value={job.title}>{job.title}</option>
@@ -128,13 +146,31 @@ const JobsModal = (props) => {
                     <div className="mb-3">
                         <Form.Control as="textarea" rows="4"
                             value={desc ? desc : ""}
+                            disabled={disabled}
                         />
                     </div>
-                    <Button size="sm" style={{ background: '#21a5e7', border: '#21a5e7' }} block onClick={postToServer}>Apply</Button>
+                    <Button size="sm" style={{ background: '#21a5e7', border: '#21a5e7' }} block onClick={postToServer}>
+                        {disabled ? "You have applied for max Jobs already" : "Apply"}
+                    </Button>
                 </div>
             </Modal.Body>
             <Modal.Footer style={{ background: '#dbdee0', width: '550px' }}>
                 <small>Note: you can only add a maximum of two jobs</small>
+            </Modal.Footer>
+            <Modal.Footer style={{ background: '#dbdee0', width: '550px' }}>
+                {
+                    jobsAppliedfor.length > 0 ?
+                        <>
+                            Current Jobs: <br />
+                            {jobsAppliedfor.map(j => {
+                                return (
+                                    <>
+                                        <span style={{ textAlign: 'left' }}>{j}</span>
+                                    </>
+                                );
+                            })}
+                        </>
+                        : ""}
             </Modal.Footer>
         </Modal>
     );

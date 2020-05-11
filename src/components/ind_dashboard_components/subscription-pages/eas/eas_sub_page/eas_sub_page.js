@@ -8,8 +8,6 @@ import {
     InputGroup, InputGroupAddon,
     InputGroupText,
 } from 'reactstrap';
-
-
 import axios from 'axios';
 
 class EasUpdateForm extends Component {

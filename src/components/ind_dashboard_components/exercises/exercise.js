@@ -72,7 +72,9 @@ const Exercises = () => {
 
         //lm sub status
         const userData = JSON.parse(sessionStorage.getItem('key'))
+        
         console.log(userData.id)
+
         axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
             .then(res => {
                 setLMSubStatus(res.data[0].sub_status)
@@ -99,12 +101,8 @@ const Exercises = () => {
         setDuration(e.target.getAttribute('data-duration'));
         setDisplayQuestions(true)
 
-
-        // console.log()
-
     }
 
-    // console.log("the ques "+questions); 
 
     return (
         <>
@@ -185,7 +183,6 @@ const Exercises = () => {
 
                 </div>
             </div>
-            {/* <span id="timer">{timeLeft}</span> */}
 
         </>
 

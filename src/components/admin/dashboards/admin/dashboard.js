@@ -265,7 +265,7 @@ const AdminDashboard = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="" wrap>
-                            Welcome: Admin
+                            Welcome: {user.role} {" "} {user.name}
                         </Typography>
                     </Toolbar>
                 </AppBar>

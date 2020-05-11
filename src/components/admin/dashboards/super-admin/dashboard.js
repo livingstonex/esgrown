@@ -220,7 +220,7 @@ const SuperAdminDashboard = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="" wrap>
-                            Welcome: Super Admin
+                            Welcome: {user.role} {" "} {user.name}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -251,7 +251,10 @@ const SuperAdminDashboard = () => {
                     </div>
                     <Divider />
                     <List>
-                        <div style={{ marginLeft: '15px' }}><img src={avatar} alt="Avatar" style={{ width: "50%" }} /></div><br />
+                        <div className="d-flex justify-content-center mt-4">
+                            <img src={avatar} alt="Avatar" style={{ width: "30%" }} />
+                        </div>
+                        <br />
                         {
                             <ListItem button onClick={setHomePage}>
                                 <ListItemIcon>
@@ -289,7 +292,7 @@ const SuperAdminDashboard = () => {
                         </Link>
                     </List>
                 </Drawer>
-                <main className={classes.content} style={{ background: "#D0CFCF",height:'800px' }}>
+                <main className={classes.content} style={{ background: "#D0CFCF", height: '800px' }}>
 
                     {
                         (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdatePrivileges /> : ""

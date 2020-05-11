@@ -14,7 +14,7 @@ const RMexercises = () => {
     const [spinner, setSpinner] = useState(true);
 
     useEffect(() => {
-        //get exercises then questions using exercise id
+        //get exercises then using exercise id
         axios.get(`http://localhost:5000/excercise/`)
             .then(res => {
                 if (res.data.length > 0) {
@@ -30,13 +30,28 @@ const RMexercises = () => {
     },[])
 
 
+    const refreshContentLog = () => {
 
+        //get exercises then using exercise id
+        axios.get(`http://localhost:5000/excercise/`)
+            .then(res => {
+                if (res.data.length > 0) {
+                    const rmEx = res.data.filter((ex) => {
+                        return ex.service == "RM"
+                    });
+                    setEx(rmEx);
+                    setSpinner(false);
+                }
+            })
+            .catch(err => console.log(err));
+    
+    }
     return (
         <>
             <div className="container">
                 <div className="row">
                     <RMexercisesLog title={title} ex={ex} spinner={spinner} />
-                    <RMexercisesNewContent service={service} title={NewContentTitle} />
+                    <RMexercisesNewContent service={service} title={NewContentTitle} refreshContentLog={refreshContentLog} />
                 </div>
         </div>
         </>

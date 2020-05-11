@@ -27,6 +27,9 @@ const servicecontentLMSchema = new Schema({
     admin_id: {
         type: String,
         required: true
+    },
+    user_class: {
+        type: String
     }
 
 }, {
