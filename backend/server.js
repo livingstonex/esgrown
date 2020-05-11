@@ -67,14 +67,6 @@ const socialStudiesRouter = require('./routes/tutor/junior/social_studies');
 
 
 
-
-
-
-
-
-//SUB_EAS Expose
-// const easSubGetRouter = require('./routes/subscriptioneas');
-
 app.use('/individuals', individualsRouter);
 app.use('/corporates', corporatesRouter);
 app.use('/subscriptioneas', subscriptioneasRouter);

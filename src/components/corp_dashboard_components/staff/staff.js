@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner, Dropdown, EditModal } from 'react-bootstrap';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import SerachBar from '../job/components/search';
+import SearchBar from '../job/components/search';
 import AddStaff from './components/add-staff';
+import './styles.css';
 
 
 
 const Staff = () => {
+
 
     const [user, setUser] = useState();
     const [show, setShow] = useState(false);
@@ -37,9 +39,9 @@ const Staff = () => {
                 <div className="container">
                     <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
 
-                        <div style={{ width: '500px', float: 'left' }}><SerachBar /></div>
+                        <div className="col-lg-8" ><SearchBar /></div>
 
-                        <div style={{ cursor: 'pointer', height: 'auto', float: 'right', marginLeft: '400px' }} onClick={() => setShow(!show)}>
+                        <div className="col-lg-4" style={{cursor:'pointer'}}  onClick={() => setShow(!show)}>
                             <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
                                 <AddCircleIcon fontSize="large" /> Add {user && user.corp_type === "school" ? "teacher" : "staff"}
                             </span>
@@ -49,11 +51,8 @@ const Staff = () => {
 
                 {/* header for the rows    */}
                 <div className="container">
-                    <div className="row ">
+                    <div className="row">
                         <div className="col d-flex d-inline-flex">
-                            <div className=" pl-3 d-flex flex-fill align-items-center">
-                                <p className="mb-0 text-color-2">Organization</p>
-                            </div>
 
                             <div className=" pl-3 d-flex flex-fill align-items-center">
                                 <p className="mb-0 text-color-2">Name</p>
@@ -70,20 +69,12 @@ const Staff = () => {
                             </div>
 
 
-                            <div className="d-flex flex-fill align-items-center">
-                                <p className="mb-0">Service</p>
-                            </div>
-
-                            <div className="d-flex flex-fill align-items-center">
-                                <p className="mb-0">TIC</p>
-                            </div>
                             <div className="d-flex align-items-center ml-auto">
-                                <p className="mb-0">tic</p>
+                                <p className="mb-0"></p>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
 
                 <div className="wrapper-list py-2 mt-2">
@@ -91,39 +82,28 @@ const Staff = () => {
                         <div className="row">
                             <div className="col d-flex justify-content-between">
 
-                                <div className="pr-2 d-flex flex-fill align-items-center">
-                                    <p className="ml-5 text-color-2">wwww</p>
+                                <div className="d-flex flex-fill align-items-center">
+                                    <p className="ml-2 text-color-2">Name</p>
+                                </div>
+
+                                <div className="d-flex flex-fill align-items-center">
+                                    <p className="ml-3 mb-0 text-capitalize">Email</p>
                                 </div>
 
                                 <div className="pr-2 d-flex flex-fill align-items-center">
-                                    <p className="mb-0 text-capitalize">wwww</p>
+                                    <p className="ml-3 mb-0 text-color-2">Phone</p>
                                 </div>
 
-                                <div className="pr-2 d-flex flex-fill align-items-center">
-                                    <p className="mb-0 text-color-2">wwww</p>
-                                </div>
-
-                                <div className="pr-2 d-flex flex-fill align-items-center">
-                                    <p className="mb-0">kkkk</p>
-                                </div>
-
-                                <div className="pr-2 d-flex flex-fill align-items-center">
-                                    <p className="mb-0">kkkk</p>
-                                </div>
-
-                                <div className="pr-2 d-flex flex-fill align-items-center">
-                                    <p className="mb-0">kkkk</p>
-                                </div>
-
-                                <div className="pl-4 d-flex align-items-center ml-auto">
-                                    <Dropdown drop="left">
+                                <div className="d-flex align-items-center ml-auto">
+                                    <Dropdown alignRight>
                                         <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
                                             ....
                                     </Dropdown.Toggle>
                                         <Dropdown.Menu>
-                                            <Dropdown.Item onClick={() => alert('Hello')}>Edit</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => alert('Hello')}>Delete</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => alert('Hello')}>Rate</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => alert('Hello')}>View Details</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => alert('Hello')}>Edit {user && user.corp_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => alert('Hello')}>Rate {user && user.corp_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => alert('Hello')}>Delete {user && user.corp_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </div>

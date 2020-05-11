@@ -275,7 +275,7 @@ export default function MiniDrawer() {
         <main className={classes.content} style={{ background: '#D0CFCF', height: 'auto' }}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Jobs /> : (page == 3) ? <Subscriptions /> : (page == 4) ? <CorpServices /> : (page == 5) ? <CorpExercises /> : (page === 6) ? <Staff /> : ""
+            (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff /> : ""
           }
         </main>
       </div>
