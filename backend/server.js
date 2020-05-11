@@ -18,30 +18,24 @@ app.use(bodyParser.urlencoded({ limit: "100mb", extended: true, parameterLimit: 
 //define your connection uri
 const uri = process.env.URI;
 
-<<<<<<< HEAD
+// connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
+// mongoose.connect(`mongodb://127.0.0.1:27017/test`,
+//     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 
-//connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
-mongoose.connect(`mongodb://127.0.0.1:27017/test`,
-    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 
-=======
->>>>>>> ff06374e2c6ed100e72bd38ebfd866bb365fd25b
 // connect to mongoDB using mongoose
 // mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
 //     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 //     .then(() => console.log("MongoDB successfully connected"))
 //     .catch(err => console.log(err));
 
-<<<<<<< HEAD
-
 // connect to mongoDB using mongoose
-mongoose.connect(`mongodb://127.0.0.1:27017/test`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+// mongoose.connect(`mongodb://127.0.0.1:27017/test`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 
-=======
+
 //connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
 mongoose.connect(`mongodb://127.0.0.1:27017/test`,
     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
->>>>>>> ff06374e2c6ed100e72bd38ebfd866bb365fd25b
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
 
@@ -67,7 +61,7 @@ const adminRouter = require('./routes/admin/admin');
 
 app.use('/individuals', individualsRouter);
 app.use('/corporates', corporatesRouter);
-app.use('/subscriptioneas', subscriptioneasRouter);
+app.use('/subscriptioneas', subscriptioneasRouter); 
 app.use('/subscriptionefa', subscriptionefaRouter);
 app.use('/subscriptionrm', subscriptionrmRouter);
 app.use('/subscriptionlm', subscriptionlmRouter);
