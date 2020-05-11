@@ -94,15 +94,15 @@ class EfaUpdateForm extends Component {
                             <FormGroup>
                                 <div className="row mt-3">
                                     <div className="col input-group">
-                                        <div class="input-group-prepend" style={{cursor:'pointer'}}>
-                                            <div class="input-group-text" onClick={() => this.setState({ LOE: !this.state.LOE })}>edit</div>
-                                        </div>
                                         <select className="form-control" name="levelOfEducation" value={this.state.levelOfEducation} disabled={this.state.LOE } required onChange={this.changeHandler}>
                                             <option>Level of Education</option>
                                             <option value="degree">Degree</option>
                                             <option value="masters">Masters</option>
                                             <option value="phd">Ph.D</option>
                                         </select>
+                                        <div class="input-group-prepend" style={{ cursor: 'pointer', background: 'lightgrey', border: 'none' }}>
+                                            <div class="input-group-text" onClick={() => this.setState({ LOE: !this.state.LOE })}>edit</div>
+                                        </div>
                                     </div>
                                 </div>
                             </FormGroup>
@@ -110,14 +110,15 @@ class EfaUpdateForm extends Component {
                             <FormGroup>
                                 <div className="row mt-3">
                                     <div className="col input-group">
-                                        <div class="input-group-prepend" style={{ cursor: 'pointer' }}>
-                                            <div class="input-group-text" onClick={() => this.setState({ NILE: !this.state.NILE })}>edit</div>
-                                        </div>
-                                        <select className="form-control" name="nextIntendedEductionLevel" disabled={this.state.NILE} required onChange={this.changeHandler} value={this.state.nextIntendedEductionLevel}>                                            <option>Next Intended Education Level</option>
+                                        <select className="form-control" name="nextIntendedEductionLevel" disabled={this.state.NILE} required onChange={this.changeHandler} value={this.state.nextIntendedEductionLevel}>
+                                            <option>Next Intended Education Level</option>
                                             <option value="degree">Degree</option>
                                             <option value="masters">Masters</option>
                                             <option value="phd">Ph.D</option>
                                         </select>
+                                        <div class="input-group-prepend" style={{ cursor: 'pointer', background: 'lightgrey', border: 'none' }}>
+                                            <div class="input-group-text" onClick={() => this.setState({ NILE: !this.state.NILE })}>edit</div>
+                                        </div>
                                     </div>
                                 </div>
                             </FormGroup>

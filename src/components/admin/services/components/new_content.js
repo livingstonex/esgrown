@@ -11,7 +11,8 @@ const NewContent = (props) => {
         'title',
         'content',
         'publish',
-        'publish_later'
+        'publish_later',
+        'user_class'
     )
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -59,10 +60,11 @@ const NewContent = (props) => {
         const submitData = {
             title: data.title,
             content: data.content,
-            is_published: data.publish == "YES" ? true : false,
-            date_to_publish: data.publish_later == undefined ? null : data.publish_later,
+            is_published: data.publish === "YES" ? true : false,
+            date_to_publish: data.publish_later === undefined ? null : data.publish_later,
             media: selectedFile,
-            admin_id: admin
+            admin_id: admin,
+            user_class: data.user_class
         }
 
 
@@ -82,7 +84,8 @@ const NewContent = (props) => {
             content: '',
             publish:'',
             publish_later: '',
-            content: ''
+            content: '',
+            user_class: ''
             })
 
     }
@@ -116,6 +119,17 @@ const NewContent = (props) => {
                             <div className="col">
                                 <label style={{ fontWeight: 'bold' }}>Publish later</label>
                                 <input type="date" name="publish_later" disabled={data.publish == "YES" ? true : false} value={data.publish_later} onChange={handleChange} className="form-control" />
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col">
+                                <label style={{ fontWeight: 'bold' }}>User Class</label>
+                                <select name="user_class" onChange={handleChange} className="form-control" required >
+                                    <option value="individual">Individual / Student</option>
+                                    <option value="teacher">Teacher</option>
+                                    <option value="company-staff">Company Staff</option>
+                                </select>
                             </div>
                         </div>
 

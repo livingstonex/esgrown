@@ -1,13 +1,13 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Row, Col, Card, Alert } from "react-bootstrap";
 
 
-export default class IndividualSignUp extends Component{
-    constructor(props){
+export default class IndividualSignUp extends Component {
+    constructor(props) {
         super(props);
 
         this.onChangeFullname = this.onChangeFullname.bind(this);
@@ -18,70 +18,92 @@ export default class IndividualSignUp extends Component{
         this.onChangeDOB = this.onChangeDOB.bind(this);
         this.onChangeCountry = this.onChangeCountry.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
+        this.onChangeCorpType = this.onChangeCorpType.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
+
+
         this.state = {
-            fullname : '',
-            email:'',
-            password:'',
-            gender:'',
-            phone:'',
+            fullname: '',
+            email: '',
+            password: '',
+            gender: '',
+            phone: '',
             dob: new Date(),
-            country:'',
-            state:'',
-            status:'individual',
+            country: '',
+            state: '',
+            status: 'individual',
+            corp_type: '',
+            corp_name: '',
+            show: 'none'
         }
     }
-   
-    onChangeFullname(e){
+
+    onChangeFullname(e) {
         this.setState({
-            fullname : e.target.value
+            fullname: e.target.value
         });
     }
 
-    onChangeEmail(e){
+    onChangeEmail(e) {
         this.setState({
             email: e.target.value
         });
     }
 
-    onChangePassword(e){
+    onChangePassword(e) {
         this.setState({
             password: e.target.value
         });
     }
 
-    onChangeGender(e){
+    onChangeGender(e) {
         this.setState({
             gender: e.target.value
         });
     }
 
-    onChangePhone(e){
+    onChangePhone(e) {
         this.setState({
             phone: e.target.value
         });
     }
 
-    onChangeDOB(date){
+    onChangeDOB(date) {
         this.setState({
             dob: date
         });
     }
 
-    onChangeCountry(e){
+    onChangeCountry(e) {
         this.setState({
             country: e.target.value
         });
     }
 
-    onChangeState(e){
+    onChangeState(e) {
         this.setState({
             state: e.target.value
         });
     }
+    onChangeCorpType(e) {
+        this.setState({
+            corp_type: e.target.value,
+            show: 'inline-block'
+        });
 
-    onSubmit(e){
+    }
+
+    onchangeCorpName = (e) => {
+        this.setState({
+            corp_name: e.target.value
+        })
+
+        console.log(this.state.corp_name)
+
+    }
+
+    onSubmit(e) {
         e.preventDefault();
 
         const individual = {
@@ -93,91 +115,96 @@ export default class IndividualSignUp extends Component{
             dob: this.state.dob,
             country: this.state.country,
             state: this.state.state,
-            status: this.state.status
+            status: this.state.status,
+            corp_type: this.state.corp_type ? this.state.corp_type : null,
+            corp_name: this.state.corp_name ? this.state.corp_name : null
         }
 
         axios.post('http://localhost:5000/individuals/check_email', individual)
             .then(res => {
-                if(res.data.length > 0){
+                if (res.data.length > 0) {
                     //display a flash message that user already exists
-                   alert("User Already Exists");
-                   this.setState({
-                    fullname : '',
-                    email:'',
-                    password:'',
-                    gender:'',
-                    phone:'',
-                    dob: new Date(),
-                    country:'',
-                    state:'',
-                });
-                }else{
-                    
+                    alert("User Already Exists");
+                    this.setState({
+                        fullname: '',
+                        email: '',
+                        password: '',
+                        gender: '',
+                        phone: '',
+                        dob: new Date(),
+                        country: '',
+                        state: '',
+                        corp_type: '',
+                        corp_name: '',
+                        show: 'none'
+                    });
+                } else {
+
                     axios.post('http://localhost:5000/individuals/add', individual)
-                            .then(res => {
-                                console.log("User Registration Successful: " + res.data.fullname);
-                                
-                                const Global_User = {
-                                    isLogged: true,
-                                    id: res.data._id,
-                                    name: res.data.fullname,
-                                    email: res.data.email,
-                                    gender: res.data.gender,
-                                    phone: res.data.phone,
-                                    dob: res.data.dob,
-                                    country: res.data.country,
-                                    state: res.data.state
-                                }
+                        .then(res => {
+                            console.log("User Registration Successful: " + res.data.fullname);
 
-                                
-                                //save user to session storage
-                                sessionStorage.setItem("key", JSON.stringify(Global_User));
-                                
-                                // const data = sessionStorage.getItem('key');
-                                // console.log(data);
+                            const Global_User = {
+                                isLogged: true,
+                                id: res.data._id,
+                                name: res.data.fullname,
+                                email: res.data.email,
+                                gender: res.data.gender,
+                                phone: res.data.phone,
+                                dob: res.data.dob,
+                                country: res.data.country,
+                                state: res.data.state,
+                                status:res.data.status,
+                                corp_name: res.data.corp_name,
+                                corp_type: res.data.corp_type
+                            }
 
-                                // window.location = "/individual_dashboard";
-                                window.location = "/frontier";
 
-                            })
-                            .catch(err => console.log("Error is: " + err));
+                            //save user to session storage
+                            sessionStorage.setItem("key", JSON.stringify(Global_User));
+
+                            // window.location = "/individual_dashboard";
+                            window.location = "/frontier";
+
+                        })
+                        .catch(err => console.log("Error is: " + err));
 
                     this.setState({
-                        fullname : '',
-                        email:'',
-                        password:'',
-                        gender:'',
-                        phone:'',
+                        fullname: '',
+                        email: '',
+                        password: '',
+                        gender: '',
+                        phone: '',
                         dob: new Date(),
-                        country:'',
-                        state:'',
+                        country: '',
+                        state: '',
                     });
                 }
             });
 
-       
+
     }
 
-    render(){
-        return(
-                <div className="container" >
-                    <br/>
-                    <h3 style={{'textAlign':'center', 'fontFamily':'gothic', 'color':'grey'}}>Create an Individual Account</h3>
-                    <Row>
-                        <Col className="col-lg-3 col-md-3 col-sm-1 col-1"></Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-10 col-10">
-                        <Card style={{'borderRadius':'5px'}}>
-                            <Card.Header as="h5"><br/><Link to="/"> <span className="oi oi-arrow-left"></span> </Link></Card.Header>
-                            <Card.Body style={{'opacity':'0.7',}}>
+    render() {
+        return (
+            <div className="container" >
+                <br />
+                <h3 style={{ 'textAlign': 'center', 'fontFamily': 'gothic', 'color': 'grey' }}>Create an Individual Account</h3>
+                <Row>
+                    <Col className="col-lg-3 col-md-3 col-sm-1 col-1"></Col>
+                    <Col className="col-lg-6 col-md-6 col-sm-10 col-10">
+                        <Card style={{ 'borderRadius': '5px' }}>
+                            <Card.Header as="h5"><br /><Link to="/"> <span className="oi oi-arrow-left"></span> </Link></Card.Header>
+                            <Card.Body style={{ 'opacity': '0.7', }}>
                                 <form onSubmit={this.onSubmit}>
                                     <label>Name</label>
                                     <div className="input-group">
-                                    <input className="form-control" required type="text" onChange={this.onChangeFullname} 
-                                    value={this.state.fullname} placeholder="Enter Fullname..."></input>
+                                        <input className="form-control" required type="text" onChange={this.onChangeFullname}
+                                            value={this.state.fullname} placeholder="Enter Fullname..."></input>
                                         {/* <input type="text" aria-label="First name" required className="form-control" placeholder="First Name..."/>
                                         <input type="text" aria-label="Last name" required className="form-control" placeholder="Last Name..."/> */}
                                     </div>
-                                    <br/>
+                                    <br />
                                     <div className="form-group">
                                         <label>Email:</label>
                                         <input className="form-control" required type="email" onChange={this.onChangeEmail} value={this.state.email} placeholder="Enter Email..."></input>
@@ -187,31 +214,51 @@ export default class IndividualSignUp extends Component{
                                         <input className="form-control" required type="password" onChange={this.onChangePassword} value={this.state.password} placeholder="Enter Password..."></input>
                                     </div>
                                     <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" required onChange={this.onChangeGender} value={this.state.gender}  >
+                                            <option selected="false">Select Gender...</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
                                     </div>
-                                    <select class="custom-select" id="inputGroupSelect01" required onChange={this.onChangeGender} value={this.state.gender}  >
-                                        <option selected="false">Select Gender...</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                    </div>
-                                   
+
                                     <div className="form-group">
-                                        <label>Date of Birth:</label> <br/>
-                                        <DatePicker selected={this.state.dob} onChange={this.onChangeDOB} required="true"/>
+                                        <label>Date of Birth:</label> <br />
+                                        <DatePicker selected={this.state.dob} onChange={this.onChangeDOB} required="true" />
                                     </div>
-                                  
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect01">Organization</label>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" required onChange={this.onChangeCorpType}>
+                                            <option selected="false">Where do you work</option>
+                                            <option value="school">School</option>
+                                            <option value="company">Company</option>
+                                        </select>
+                                        <span className="text-muted" style={{fontSize:'12px'}}>This will help us provide appropriate content to you</span>
+                                    </div>
+
+                                    <div className="row mt-3">
+                                        <div className="col" style={{ display: this.state.show }}>
+                                            <input className="form-control" type="text" onChange={this.onchangeCorpName} value={this.state.corp_name} placeholder={`Enter ${this.state.corp_type} name...`}></input>
+                                        </div>
+                                    </div>
+                                    <br />
+
+
                                     <Button className="btn btn-primary" type="submit" >Sign Up</Button>
-                                    <br/>
+                                    <br />
                                 </form>
                             </Card.Body>
                         </Card>
-                        <br/><br/>
-                        </Col>
-                        <Col className="col-lg-3 col-md-3 col-sm-1 col-1"></Col>
-                    </Row>
-                </div>
+                        <br /><br />
+                    </Col>
+                    <Col className="col-lg-3 col-md-3 col-sm-1 col-1"></Col>
+                </Row>
+            </div>
         );
     }
 }

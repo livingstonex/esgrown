@@ -1,42 +1,48 @@
 const mongoose = require('mongoose');
-const Schema =  mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const individualSchema = new Schema({
     fullname: {
         type: String,
         //required: true,
     },
-    email:{
+    email: {
         type: String,
         //required:true
     },
-    gender:{
+    gender: {
         type: String,
-       //required:true
+        //required:true
     },
-    phone:{
-        type:String,
+    phone: {
+        type: String,
         //required:false
     },
-    dob:{
-        type:Date,
+    dob: {
+        type: Date,
         //required:true,
     },
-    country:{
-        type:String,
+    country: {
+        type: String,
         //required:false
     },
-    state:{
-        type:String,
+    state: {
+        type: String,
         //required:false
     },
-    password:{
-        type:String,
+    password: {
+        type: String,
         //required:true
     },
-    status:{
-        type:String,
+    status: {
+        type: String,
         //required: true
+    },
+    corp_type: {
+        type: String,
+    },
+    corp_name: {
+        type: String
     },
     lastLogin: {
         type: Date,
@@ -44,7 +50,7 @@ const individualSchema = new Schema({
     }
 
 }, {
-    timestamps:true,
+    timestamps: true,
 });
 
 const Individual = mongoose.model('Individual', individualSchema);

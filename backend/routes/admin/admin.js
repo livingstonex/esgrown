@@ -15,9 +15,10 @@ router.route('/add').post((req, res) => {
     const password = bcrypt.hashSync(req.body.password, salt);
     const privilege = req.body.privilege;
     const role = req.body.role;
+    const tutor_level = req.body.tutor_level;
     const country = req.body.country;
 
-    const admin = new Admin({ password, email, privilege, role, name, username, country });
+    const admin = new Admin({ password, email, privilege, role, name, username, tutor_level, country });
 
     admin.save()
         .then(admin => res.json(admin))

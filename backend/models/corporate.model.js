@@ -33,6 +33,10 @@ const corporateSchema = new Schema({
     status:{
         type: String,
         required: true
+    },
+    corp_type: {
+        type: String,
+        required:true
     }
 
 }, {

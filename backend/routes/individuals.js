@@ -38,9 +38,11 @@ router.route('/add').post((req, res) => {
     const state = req.body.state;
     const password = hash;
     const status = req.body.status;
+    const corp_type = req.body.corp_type;
+    const corp_name = req.body.corp_name;
     const lastLogin = Date.parse(new Date());
 
-    const newIndividual = new Individual({fullname, email, phone, gender, dob, country, state, password, status,lastLogin});
+    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status,corp_type,corp_name,lastLogin});
 
     newIndividual.save()
         .then((individ) => res.json(individ))
