@@ -9,6 +9,4 @@ const generateId = () => {
     );
 }
 
-console.log(generateId())
-
 export default generateId;
