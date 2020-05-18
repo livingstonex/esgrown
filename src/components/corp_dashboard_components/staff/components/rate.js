@@ -4,8 +4,8 @@ import { Spinner, Modal, Form, Col, Row } from 'react-bootstrap';
 import toast from '../../../../util/toast';
 
 
-const Rate = ({ show, onHide, details,closeModal }) => {
-    
+const Rate = ({ show, onHide, details, closeModal }) => {
+
     const [user, setUser] = useState();
     const [rating, setRating] = useState();
 
@@ -35,31 +35,37 @@ const Rate = ({ show, onHide, details,closeModal }) => {
 
         const data = {
             org: user.name,
-            rating: {
-            name: details.fullname,
-            phone: details.phone,
-            pedagogy: rating.pedagogy,
-            class_control: rating.class_control,
-            p_s_relationship: rating.psr,
-            tic: details.tic
+            ratings: {
+                name: details.fullname,
+                personnel_id: details._id,
+                phone: details.phone,
+                pedagogy: rating.pedagogy,
+                class_control: rating.class_control,
+                p_s_relationship: rating.psr,
+                tic: details.tic
             }
         }
 
         axios.post(`http://localhost:5000/rate/${personnel}/add`, data)
             .then(res => {
-                toast(`${personnel} rating successful`, "success");
+                if (res.data === 1) {
+                    toast(`${personnel} has already been rated for the week`, "warn");
+                } else {
+                    toast(`${personnel} rating successful`, "success");
+                }
+                
                 closeModal();
-        })
-        .catch(err => toast(err, "error"))
+            })
+            .catch(err => toast(err, "error"))
 
 
     }
-console.log(details)
-    
+    console.log(details)
+
     return (
         <>
             <Modal show={show} onHide={onHide} centered style={{ marginTop: '50px' }}>
-                
+
                 <Modal.Body>
                     <div className="container" style={{ background: '#e9ecef' }} >
                         <div style={{ padding: '30px' }}>

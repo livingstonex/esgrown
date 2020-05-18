@@ -3,13 +3,6 @@ const router = require('express').Router();
 const RatingSchema = require('../../models/ratings/personnel-ratings.model');
 
 router.route(`/add`).post(async (req, res) => {
-    // const teacher_id = req.body.teacher_id;
-    // const name = req.body.name;
-    // const phone = req.body.phone;
-    // const pedagogy = req.body.pedagogy
-    // const class_control = req.body.class_control;
-    // const p_s_relationship = req.body.p_s_relationship;
-    // const tic = req.body.tic;
     const org = req.body.org;
     const personnel_ratings = req.body.ratings;
 
@@ -20,17 +13,12 @@ router.route(`/add`).post(async (req, res) => {
 
     const Rate = await db.model(org, RatingSchema);
 
-    // const newRating = new Rate({ personnel_ratings });
-
-    // const rated = await newRating.save();
-    // res.json(rated);
-
     // check if collection exist, if find is empty then collection does not exist and has no docs
     const all = await Rate.find();
 
     if (all.length < 1) {
 
-        const newRating = new Rate({ personnel_ratings});
+        const newRating = new Rate({ personnel_ratings });
 
         try {
             const rated = await newRating.save();
@@ -65,22 +53,24 @@ router.route(`/add`).post(async (req, res) => {
 
             res.json(rated);
         } else {
+            //find the id
+            Rate.find({ "personnel_ratings.personnel_id": req.body.ratings.personnel_id })
+                .then(doc => {
+                    if (doc.length > 0) {
+                        //already exist
+                        res.json(1)
 
-            Rate.find().sort({ createdAt: - 1 }).limit(1).update({$push:{personnel_ratings}})
-                .then(doc => res.json(doc)).catch(err => res.status(400).json(err))
+                    } else {
+                        //does not exist
+                        Rate.find().sort({ createdAt: - 1 }).limit(1).update({ $push: { personnel_ratings } })
+                            .then(() => res.json(2)).catch(err => res.status(400).json(err))
+                    }
+                }).catch(err => res.status(400).json(err))
 
-            // res.json(updated)
         }
 
 
-
-
-
     }
-
-
-
-    // console.log(all);
 
 
     /**
