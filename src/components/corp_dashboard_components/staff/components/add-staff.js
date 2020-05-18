@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import md5 from 'md5';
 import { Spinner, Modal } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import { Card, CardContent } from '@material-ui/core';
+import toast from '../../../../util/toast';
 
 
 
@@ -16,10 +18,6 @@ const AddStaff = ({ show, onHide, closeModal }) => {
         name: '',
         email: '',
         gender: '',
-        dob: '',
-        phone: '',
-        country: '',
-        state: '',
         password: '',
     });
 
@@ -40,6 +38,9 @@ const AddStaff = ({ show, onHide, closeModal }) => {
         setData({ ...data, [name]: value })
     };
 
+    const notify = (message, type) => toast(message, type);
+
+
     console.log(data)
 
 
@@ -48,47 +49,58 @@ const AddStaff = ({ show, onHide, closeModal }) => {
 
         setSpinner(true)
 
+        const tic = user.org_type === 'school' ? md5(data.email).substring(0, 8).toUpperCase() : null;
+
+
         const submitData = {
 
             fullname: data.name,
             email: data.email,
             password: data.password,
             gender: data.gender,
-            phone: data.phone,
-            dob: data.dob,
-            country: data.country,
-            state: data.state,
-            status: data.status,
-            corp_type: user.corp_type,
-            corp_name: user.corp_name
+            status: 'individual',
+            phone: null,
+            dob: new Date(),
+            country: null,
+            state: null,
+            org_type: user.org_type,
+            org_name: user.org_name,
+            org_id: user.id,
+            tic: tic
 
         }
+
 
         axios.post('http://localhost:5000/individuals/check_email', submitData)
             .then(res => {
                 if (res.data.length > 0) {
                     //display a flash message that user already exists
-                    alert("User Already Exists");
+                    notify("User already exists", "warn");
                     setData({
                         name: '',
                         email: '',
                         password: '',
-                        gender: '',
-                        phone: '',
-                        dob: '',
-                        country: '',
-                        state: '',
-
+                        gender: ''
                     });
+                    setSpinner(false);
+                } else {
+                    axios.post('http://localhost:5000/individuals/add', submitData)
+                        .then(res => {
+                            if (res.data) {
+                                notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} created successful`, 'success')
+                                setSpinner(false);
+                                closeModal();
+
+                            }
+                        })
+                        .catch(err => notify('An error occurred please try again', 'error'));
+
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => notify(err, 'error'));
 
-
-        closeModal();
-
-        //post job to server
     }
+
 
     return (
         <>
@@ -99,7 +111,7 @@ const AddStaff = ({ show, onHide, closeModal }) => {
 
                     <div className="row mt-3">
                         <div className="col">
-                            <label style={{ fontWeight: 'bold' }}>{user && user.corp_type === "school" ? "Teacher" : "Staff"} Full Name</label>
+                            <label style={{ fontWeight: 'bold' }}>{user && user.org_type === "school" ? "Teacher" : "Staff"} Full Name</label>
                             <input type="text" name="name" value={data.name} onChange={handleChange} placeholder="Name" className="form-control" required />
                         </div>
                     </div>
@@ -124,31 +136,6 @@ const AddStaff = ({ show, onHide, closeModal }) => {
 
                     <div className="row mt-3">
                         <div className="col">
-                            <label style={{ fontWeight: 'bold' }}>Date Of Birth</label>
-                            <input type="date" name="dob" value={data.dob} onChange={handleChange} className="form-control" required />
-                        </div>
-                    </div>
-
-                    <div className="row mt-3">
-                        <div className="col">
-                            <label style={{ fontWeight: 'bold' }}>Phone</label>
-                            <input type="number" name="phone" value={data.phone} onChange={handleChange} placeholder="Phone Number" className="form-control" required />
-                        </div>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col">
-                            <label style={{ fontWeight: 'bold' }}>Country</label>
-                            <input type="text" name="country" value={data.country} onChange={handleChange} placeholder="Country" className="form-control" required />
-                        </div>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col">
-                            <label style={{ fontWeight: 'bold' }}>State</label>
-                            <input type="text" name="country" value={data.state} onChange={handleChange} placeholder="State" className="form-control" required />
-                        </div>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col">
                             <label style={{ fontWeight: 'bold' }}>Password</label>
                             <input type="password" name="password" value={data.password} onChange={handleChange} placeholder="Password..." className="form-control" required />
                         </div>
@@ -163,7 +150,7 @@ const AddStaff = ({ show, onHide, closeModal }) => {
                                     style={{ background: '#21A5E7', color: 'white' }}
                                     onClick={createUser}
                                 >
-                                    {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : `Create ${user && user.corp_type === "school" ? "Teacher" : "Staff"}`}
+                                    {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : `Create ${user && user.org_type === "school" ? "Teacher" : "Staff"}`}
                                 </button>
                             </div>
                         </div>

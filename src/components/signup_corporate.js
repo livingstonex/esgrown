@@ -30,7 +30,7 @@ export default class IndividualSignUp extends Component{
             country:'',
             state:'',
             status: 'corporate',
-            corp_user_type: ''
+            org_type: ''
         }
     }
 
@@ -77,7 +77,7 @@ export default class IndividualSignUp extends Component{
     }
 
     onChangeType(e) {
-        this.setState({ corp_type: e.target.value });
+        this.setState({ org_type: e.target.value });
         console.log(e.target.value)
     }
 
@@ -94,7 +94,7 @@ export default class IndividualSignUp extends Component{
             country: this.state.country,
             state: this.state.state,
             status: this.state.status,
-            corp_type: this.state.corp_type
+            org_type: this.state.org_type
         }
 
 
@@ -124,7 +124,7 @@ export default class IndividualSignUp extends Component{
                                     country: res.data.country,
                                     state: res.data.state,
                                     status: res.data.status,
-                                    corp_type:res.data.corp_type
+                                    org_type:res.data.org_type
                                     }
                                     
                                     //Save the Global_CorpUser in sessionStorage after stringifying it

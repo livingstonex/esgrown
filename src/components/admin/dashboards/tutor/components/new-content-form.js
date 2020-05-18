@@ -57,9 +57,6 @@ const CreateForm = (props) => {
         const subject = props.title.toLowerCase();
         const level = user.tutor_level.toLowerCase();
 
-        console.log(level)
-        console.log(subject)
-
         axios.post(`http://localhost:5000/${level}/${subject}/add`, data)
             .then(res => {
                 if (res.data) {

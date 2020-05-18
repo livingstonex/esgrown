@@ -245,7 +245,7 @@ export default function MiniDrawer() {
 
             {
               <ListItem button onClick={setStaff}>
-                {user.corp_type === "school" ?
+                {user.org_type === "school" ?
                   <>
                     <ListItemIcon><SchoolIcon color="primary" /> </ListItemIcon>
                     <ListItemText primary={'Teachers'} />

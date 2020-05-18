@@ -20,7 +20,7 @@ const SubmitBtn = (props) => {
                         onClick={submitAns}
                         size="lg"
                     >
-                        submit Answere
+                        submit Answer
                         </Button>
                 </div>
             </div>

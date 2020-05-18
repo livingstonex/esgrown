@@ -3,8 +3,12 @@ const Schema =  mongoose.Schema;
 
 const corporateSchema = new Schema({
     org_name: {
-        // type: String,
-        // required: true,
+        type: String,
+        required: true,
+    },
+    org_type: {
+        type: String,
+        required: true
     },
     email:{
         type: String,
@@ -33,10 +37,6 @@ const corporateSchema = new Schema({
     status:{
         type: String,
         required: true
-    },
-    corp_type: {
-        type: String,
-        required:true
     }
 
 }, {

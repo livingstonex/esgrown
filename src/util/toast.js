@@ -6,6 +6,8 @@ toast.configure({
     position: "top-right",
     autoClose: 4000,
     hideProgressBar: true,
+    autoClose: 5000,
+    hideProgressBar: false,
     newestOnTop: false,
     closeOnClick: true,
     rtl: false,

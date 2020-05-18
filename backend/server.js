@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { initClientDbConnection } = require('./util/dbutil');
 
 
 require('dotenv').config();
@@ -37,8 +38,20 @@ const uri = process.env.URI;
 //connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
 mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+mongoose.connect(`mongodb://127.0.0.1:27017`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
+
+//here we assign connection object to the global js object
+global.clientConnection = initClientDbConnection();
+
+
+
+// //connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
+// mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
+//     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+//     .then(() => console.log("MongoDB successfully connected"))
+//     .catch(err => console.log(err));
 
 
 const individualsRouter = require('./routes/individuals');
@@ -73,6 +86,7 @@ const juniorGeneralKnowledgeRouter = require('./routes/tutor/junior/junior_gener
 const juniorHistoryRouter = require('./routes/tutor/junior/juniorhistory');
 const juniorMathsRouter = require('./routes/tutor/junior/junior_maths');
 const socialStudiesRouter = require('./routes/tutor/junior/social_studies');
+const teacherRating = require('./routes/ratings/teacher-ratings');
 
 
 
@@ -96,19 +110,19 @@ app.use('/corporatesubscriptions', corporateSubRouter);
 app.use('/senior/mathematics', mathsRouter);
 app.use('/senior/physics', physicsRouter);
 app.use('/senior/general-Knowledge', generalKnowledgeRouter);
-app.use('./senior/chemistry', chemistryRouter);
-app.use('./senior/biology', biologyRouter);
-app.use('./senior/geography', geographyRouter);
-app.use('./senior/economics', economicsRouter);
-app.use('./senior/accounting', accountingRouter);
-app.use('./senior/history', historyRouter);
-app.use('./junior/business-studies', businessStudiesRouter);
-app.use('./junior/integrated-science', integratedScienceRouter);
-app.use('./junior/general-knowledge', juniorGeneralKnowledgeRouter);
-app.use('./junior/history', juniorHistoryRouter);
-app.use('./junior/mathematics', juniorMathsRouter);
-app.use('./junior/social-studies', socialStudiesRouter);
-
+app.use('/senior/chemistry', chemistryRouter);
+app.use('/senior/biology', biologyRouter);
+app.use('/senior/geography', geographyRouter);
+app.use('/senior/economics', economicsRouter);
+app.use('/senior/accounting', accountingRouter);
+app.use('/senior/history', historyRouter);
+app.use('/junior/business-studies', businessStudiesRouter);
+app.use('/junior/integrated-science', integratedScienceRouter);
+app.use('/junior/general-knowledge', juniorGeneralKnowledgeRouter);
+app.use('/junior/history', juniorHistoryRouter);
+app.use('/junior/mathematics', juniorMathsRouter);
+app.use('/junior/social-studies', socialStudiesRouter);
+app.use('/rate/teacher', teacherRating);
 
 
 

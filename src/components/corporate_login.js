@@ -3,6 +3,7 @@ import { AuthContext } from "../AuthContext";
 import {Link} from "react-router-dom";
 import {Button, OverlayTrigger, Form, Container, Row, Col} from "react-bootstrap";
 import axios from "axios";
+import toast from '../util/toast';
 
 
 export default class CorporateLogin extends Component{
@@ -86,7 +87,7 @@ export default class CorporateLogin extends Component{
                                                     const cuser_country = res.data[0].country;
                                                     const cuser_state = res.data[0].state;
                                                     const cuser_status = res.data[0].status;
-                                                    const corp_type = res.data[0].corp_type
+                                                    const org_type = res.data[0].org_type
 
                                                     console.log(res.data[0]);
                                                     console.log(Corporate_User.password);
@@ -99,7 +100,8 @@ export default class CorporateLogin extends Component{
                                                         .then(res => {
                                                             console.log(res.data);
                                                             if (res.data == 1) {
-                                                                alert("Corporate Login Successfull");
+                                                                // alert("Corporate Login Successfull");
+                                                                toast("Corporate Login Successfull",'success')
                                                                 //uPDATE CONTEXT AUTH DATA HERE AND NAVIGATE TO THE DASHBOARD
                                                                 context.setUserAuthData(true);
 
@@ -114,7 +116,7 @@ export default class CorporateLogin extends Component{
                                                                     country: cuser_country,
                                                                     state: cuser_state,
                                                                     status: cuser_status,
-                                                                    corp_type: corp_type
+                                                                    org_type: org_type
 
                                                                 }
 
@@ -123,16 +125,18 @@ export default class CorporateLogin extends Component{
 
                                                                 window.location = "/frontier";
                                                             } else {
-                                                                alert("Password wrong, please try again");
+                                                                // alert("Password wrong, please try again");
+                                                                toast("Password wrong, please try again",'error')
                                                             }
                                                         })
-                                                        .catch(err => console.log("Error here is: " + err));
+                                                        .catch(error => toast(`Error is: "  ${error}`, 'error'));
                                                 } else {
-                                                    alert("Your email address is not correct");
+                                                    // alert("Your email address is not correct");
+                                                    toast("Your email address is not correct",'warn')
                                                 }
                                             })
-                                            .catch(error => { console.log("Error is: " + error) });
-
+                                            .catch(error => toast(`Error is: "  ${error}`, 'error'));
+                                                
 
                                         //Reset the textfields to show blank by emptying the state
                                         this.setState({

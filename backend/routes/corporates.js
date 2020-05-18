@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Corporate = require('../models/corporate.model');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 router.route('/').get((req, res) => {
     Corporate.find()
@@ -37,9 +38,9 @@ router.route('/add').post((req, res) => {
     const state = req.body.state;
     const password = hash;
     const status = req.body.status;
-    const corp_type = req.body.corp_type;
+    const org_type = req.body.org_type;
 
-    const newCorporate = new Corporate({ org_name, email, phone, doi, country, state, password, status, corp_type });
+    const newCorporate = new Corporate({ org_name, email, phone, doi, country, state, password, status, org_type });
 
     newCorporate.save()
         .then(corporate => res.json(corporate))
@@ -137,6 +138,7 @@ router.route(`/update/state/:id`).post((req, res) => {
         })
         .catch(err => res.status(400).json('Request Failed:  ' + err));
 });
+
 
 
 module.exports = router;

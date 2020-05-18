@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import md5 from 'md5';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,7 +23,6 @@ export default class IndividualSignUp extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
 
-
         this.state = {
             fullname: '',
             email: '',
@@ -33,8 +33,8 @@ export default class IndividualSignUp extends Component {
             country: '',
             state: '',
             status: 'individual',
-            corp_type: '',
-            corp_name: '',
+            org_type: '',
+            org_name: '',
             show: 'none'
         }
     }
@@ -88,7 +88,7 @@ export default class IndividualSignUp extends Component {
     }
     onChangeCorpType(e) {
         this.setState({
-            corp_type: e.target.value,
+            org_type: e.target.value,
             show: 'inline-block'
         });
 
@@ -96,16 +96,16 @@ export default class IndividualSignUp extends Component {
 
     onchangeCorpName = (e) => {
         this.setState({
-            corp_name: e.target.value
+            org_name: e.target.value
         })
-
-        console.log(this.state.corp_name)
 
     }
 
-    onSubmit(e) {
+    onSubmit(e){
         e.preventDefault();
 
+        const TIC = this.state.org_type === 'school' ? md5(this.state.email).substring(0, 8).toUpperCase() : null;
+        
         const individual = {
             fullname: this.state.fullname,
             email: this.state.email,
@@ -116,8 +116,9 @@ export default class IndividualSignUp extends Component {
             country: this.state.country,
             state: this.state.state,
             status: this.state.status,
-            corp_type: this.state.corp_type ? this.state.corp_type : null,
-            corp_name: this.state.corp_name ? this.state.corp_name : null
+            org_type: this.state.org_type ? this.state.org_type : null,
+            org_name: this.state.org_name ? this.state.org_name : null,
+            tic: TIC
         }
 
         axios.post('http://localhost:5000/individuals/check_email', individual)
@@ -134,8 +135,8 @@ export default class IndividualSignUp extends Component {
                         dob: new Date(),
                         country: '',
                         state: '',
-                        corp_type: '',
-                        corp_name: '',
+                        org_type: '',
+                        org_name: '',
                         show: 'none'
                     });
                 } else {
@@ -154,9 +155,9 @@ export default class IndividualSignUp extends Component {
                                 dob: res.data.dob,
                                 country: res.data.country,
                                 state: res.data.state,
-                                status:res.data.status,
-                                corp_name: res.data.corp_name,
-                                corp_type: res.data.corp_type
+                                status: res.data.status,
+                                org_name: res.data.org_name,
+                                org_type: res.data.org_type
                             }
 
 
@@ -238,18 +239,18 @@ export default class IndividualSignUp extends Component {
                                             <option value="school">School</option>
                                             <option value="company">Company</option>
                                         </select>
-                                        <span className="text-muted" style={{fontSize:'12px'}}>This will help us provide appropriate content to you</span>
+                                        <span className="text-muted" style={{ fontSize: '12px' }}>This will help us provide appropriate content to you</span>
                                     </div>
 
                                     <div className="row mt-3">
                                         <div className="col" style={{ display: this.state.show }}>
-                                            <input className="form-control" type="text" onChange={this.onchangeCorpName} value={this.state.corp_name} placeholder={`Enter ${this.state.corp_type} name...`}></input>
+                                            <input className="form-control" type="text" onChange={this.onchangeCorpName} value={this.state.org_name} placeholder={`Enter ${this.state.org_type} name...`}></input>
                                         </div>
                                     </div>
                                     <br />
 
 
-                                    <Button className="btn btn-primary" type="submit" >Sign Up</Button>
+                                    <Button className="btn btn-primary" type="submit">Sign Up</Button>
                                     <br />
                                 </form>
                             </Card.Body>

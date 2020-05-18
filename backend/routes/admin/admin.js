@@ -3,8 +3,6 @@ const bcrypt = require('bcryptjs');
 const Admin = require('../../models/admin/admin.model');
 
 
-
-
 //create country admin or admin
 router.route('/add').post((req, res) => {
     const salt = bcrypt.genSaltSync(10);

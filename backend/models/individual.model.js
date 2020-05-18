@@ -38,15 +38,20 @@ const individualSchema = new Schema({
         type: String,
         //required: true
     },
-    corp_type: {
+    org_type: {
         type: String,
     },
-    corp_name: {
+    org_name: {
         type: String
+    },
+    org_id: {
+        type: String
+    },
+    tic: {
+        type:String,
     },
     lastLogin: {
         type: Date,
-        required: true
     }
 
 }, {
