@@ -6,6 +6,8 @@ import SearchBar from '../job/components/search';
 import AddStaff from './components/add-staff';
 import StaffDetails from './components/details';
 import Rating from './components/rate';
+import Edit from './components/edit';
+import SchoolWeeks from './components/school-weeks';
 import toast from '../../../util/toast';
 import './styles.css';
 
@@ -18,10 +20,17 @@ const Staff = () => {
     const [show, setShow] = useState(false);
     const [staff, setStaff] = useState([]);
 
+    //modals
     const [showDetails, setShowDetails] = useState(false);
     const [showrating, setShowRating] = useState(false)
+    const [showEdit, setShowEdit] = useState(false);
+    const [schoolWeeksmodal, setSchoolWeeksModal] = useState(false);
+
+
     const [details, setDetails] = useState([]);
     const [spinner, setSpinner] = useState(true);
+    const [weeks, setWeeks] = useState();
+    const [check, setCheck] = useState([])
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
@@ -34,7 +43,34 @@ const Staff = () => {
                 }
             })
             .catch(err => console.log(err));
+
+        //check if this is the beginning of the term and get the total weeks for the term
+
+        axios.get(`http://localhost:5000/rate/teacher/check/furturs`)
+            .then(res => {
+                if (res.data.length === 0) {
+                    setSchoolWeeksModal(true)
+                } else {
+                    const lastDoc = res.data.reverse()[0];
+
+                    if (lastDoc.total_weeks === lastDoc.current_week) {
+                        setSchoolWeeksModal(true);
+                        toast("your Current Term has ended. Please start a new term", "info")
+                    }
+
+                }
+
+                setCheck(res.data.reverse()[0])
+            })
+            .catch(err => console.log(err));
+
     }, [])
+
+    const getSchoolWeeks = (w) => {
+        setWeeks(w);
+        setSchoolWeeksModal(false);
+    }
+    console.log(check);
 
     //close add modal and reload staff
     const closeModal = () => {
@@ -54,8 +90,7 @@ const Staff = () => {
         const id = e.target.getAttribute('data-id');
         const current = e.target.getAttribute('data-current');
 
-        const loadModal = current === "view" ? setShowDetails(true) : setShowRating(true)
-
+        const loadModal = () => current === "view" ? setShowDetails(true) : current === "rate" ? setShowRating(true) : current === "edit" ? setShowEdit(true) : current === "delete" ? "delete" : ""
 
         //get staff details from individuals
         axios.get(`http://localhost:5000/individuals/details/${id}`)
@@ -63,13 +98,13 @@ const Staff = () => {
                 if (res.data) {
                     setSpinner(false);
                     setDetails(res.data);
-                    console.log(res.data)
+                    loadModal()
                 }
-        })
-        .catch(() => toast('An error occurred while trying to locate staff.Please try again','error'))
+            })
+            .catch(() => toast('An error occurred while trying to locate staff.Please try again', 'error'))
     }
 
-  const  closeRating = () => {
+    const closeRating = () => {
         setShowRating(false)
     }
 
@@ -82,7 +117,7 @@ const Staff = () => {
 
                         <div className="col-lg-8" ><SearchBar /></div>
 
-                        <div className="col-lg-4" style={{cursor:'pointer'}}  onClick={() => setShow(!show)}>
+                        <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
                             <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
                                 <AddCircleIcon fontSize="large" /> Add {user && user.org_type === "school" ? "teacher" : "staff"}
                             </span>
@@ -144,9 +179,9 @@ const Staff = () => {
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="view">View Details</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => alert('Hello')}>Edit {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
+                                                            <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="edit">Edit {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="rate">Rate {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => alert('Hello')}>Delete {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => alert('Hello')} data-current="delete">Delete {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
                                                 </div>
@@ -159,7 +194,7 @@ const Staff = () => {
                     })
                 }
 
-                
+
             </div>
             <AddStaff show={show} onHide={() => setShow(!show)} closeModal={closeModal} />
             <StaffDetails
@@ -174,6 +209,20 @@ const Staff = () => {
                 details={details}
                 spinner={spinner}
                 closeModal={closeRating}
+                weeks={weeks}
+                check={check}
+            />
+            <Edit
+                show={showEdit}
+                onHide={() => setShowEdit(!showEdit)}
+                details={details}
+                spinner={spinner}
+                user={user}
+            />
+            <SchoolWeeks
+                show={schoolWeeksmodal}
+                onHide={() => setSchoolWeeksModal(!schoolWeeksmodal)}
+                getSchoolWeeks={getSchoolWeeks}
             />
         </>
     );

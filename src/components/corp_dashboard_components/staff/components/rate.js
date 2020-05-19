@@ -4,7 +4,7 @@ import { Spinner, Modal, Form, Col, Row } from 'react-bootstrap';
 import toast from '../../../../util/toast';
 
 
-const Rate = ({ show, onHide, details, closeModal }) => {
+const Rate = ({ show, onHide, details, closeModal, weeks, check }) => {
 
     const [user, setUser] = useState();
     const [rating, setRating] = useState();
@@ -35,6 +35,7 @@ const Rate = ({ show, onHide, details, closeModal }) => {
 
         const data = {
             org: user.name,
+            total_weeks: check ? check.total_weeks : weeks ,
             ratings: {
                 name: details.fullname,
                 personnel_id: details._id,

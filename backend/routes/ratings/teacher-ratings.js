@@ -2,8 +2,11 @@ const router = require('express').Router();
 
 const RatingSchema = require('../../models/ratings/personnel-ratings.model');
 
+
 router.route(`/add`).post(async (req, res) => {
     const org = req.body.org;
+    const total_weeks = req.body.total_weeks;
+    const current_week = req.body.current_week;
     const personnel_ratings = req.body.ratings;
 
 
@@ -18,7 +21,7 @@ router.route(`/add`).post(async (req, res) => {
 
     if (all.length < 1) {
 
-        const newRating = new Rate({ personnel_ratings });
+        const newRating = new Rate({ personnel_ratings, total_weeks,current_week: 1 });
 
         try {
             const rated = await newRating.save();
@@ -37,7 +40,7 @@ router.route(`/add`).post(async (req, res) => {
 
         const epocDate = Math.floor(new Date(lastCreatedAt).getTime());
 
-        //add 7 days to created the epocdate
+        //add 7 days to createdat to get the epocdate
         const days = 86400000 * 7;
 
         const newEpoc = epocDate + days;
@@ -47,7 +50,11 @@ router.route(`/add`).post(async (req, res) => {
 
         if (today > newEpoc) {
 
-            const newRating = new Rate({ personnel_ratings });
+            const newRating = new Rate({
+                personnel_ratings,
+                total_weeks: lastDoc.total_weeks,
+                current_week: lastDoc.current_week + 1
+            });
 
             const rated = await newRating.save();
 
@@ -57,11 +64,11 @@ router.route(`/add`).post(async (req, res) => {
             Rate.find({ "personnel_ratings.personnel_id": req.body.ratings.personnel_id })
                 .then(doc => {
                     if (doc.length > 0) {
-                        //already exist
+                        //has already been rated for the current week
                         res.json(1)
 
                     } else {
-                        //does not exist
+                        //has not been rated for the current week
                         Rate.find().sort({ createdAt: - 1 }).limit(1).update({ $push: { personnel_ratings } })
                             .then(() => res.json(2)).catch(err => res.status(400).json(err))
                     }
@@ -76,10 +83,25 @@ router.route(`/add`).post(async (req, res) => {
     /**
      * 1. check if collection exist
      * 2. if collection exist check number of docs. if equal to 0 create a new doc.
-     * if doc > 0 determine the last doc and ad new rating
+     * if doc > 0 determine the last doc and check if user has already been rated
+     * if user has been rated do nothing if not add new rating
      */
 
 
+
+})
+
+router.route(`/check/:school`).get(async (req, res) => {
+    
+    const org = req.params.school;
+
+    const dbConnection = await global.clientConnection;
+    const db = await dbConnection.useDb("ratings");
+    const Rate = await db.model(org, RatingSchema);
+
+    const result = await Rate.find();
+
+    res.json(result);
 
 })
 
