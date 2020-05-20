@@ -30,7 +30,8 @@ const Staff = () => {
     const [details, setDetails] = useState([]);
     const [spinner, setSpinner] = useState(true);
     const [weeks, setWeeks] = useState();
-    const [check, setCheck] = useState([])
+    const [lastDoc, setLastDoc] = useState([])
+    const [target, setTarget] = useState();
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
@@ -46,31 +47,23 @@ const Staff = () => {
 
         //check if this is the beginning of the term and get the total weeks for the term
 
-        axios.get(`http://localhost:5000/rate/teacher/check/furturs`)
+        axios.get(`http://localhost:5000/rate/teacher/check/ftures`)
             .then(res => {
-                if (res.data.length === 0) {
-                    setSchoolWeeksModal(true)
-                } else {
-                    const lastDoc = res.data.reverse()[0];
 
-                    if (lastDoc.total_weeks === lastDoc.current_week) {
-                        setSchoolWeeksModal(true);
-                        toast("your Current Term has ended. Please start a new term", "info")
-                    }
-
-                }
-
-                setCheck(res.data.reverse()[0])
+                setLastDoc(res.data.reverse()[0])
             })
             .catch(err => console.log(err));
 
     }, [])
 
+    //get the new school week and show rating modal
     const getSchoolWeeks = (w) => {
         setWeeks(w);
         setSchoolWeeksModal(false);
+        displayDetails(target)
+
     }
-    console.log(check);
+
 
     //close add modal and reload staff
     const closeModal = () => {
@@ -85,10 +78,37 @@ const Staff = () => {
             .catch(err => console.log(err));
     };
 
-    const getDetails = (e) => {
 
-        const id = e.target.getAttribute('data-id');
+    //get currently clicked staff
+    const getDetails = (e) => {
+        setTarget(e.currentTarget)
         const current = e.target.getAttribute('data-current');
+
+        if (current === 'rate') {
+            if (lastDoc === undefined) {
+                setTarget(e.currentTarget)
+                setSchoolWeeksModal(true)
+                toast("Please tell us how many weeks are in your calendar this term", "info");
+                return;
+
+            } else if (lastDoc.total_weeks === lastDoc.current_week) {
+                setTarget(e.currentTarget)
+                setSchoolWeeksModal(true);
+                toast("your Current Term has ended. Please start a new term", "info");
+                return;
+            }
+        }
+        
+        
+         displayDetails(target,e)
+
+    }
+    
+    //display modal based on selected action
+    const displayDetails = (target,e) => {
+
+        const id = e ? e.target.getAttribute('data-id') : target.getAttribute('data-id');
+        const current = e ? e.target.getAttribute('data-current') :target.getAttribute('data-current');
 
         const loadModal = () => current === "view" ? setShowDetails(true) : current === "rate" ? setShowRating(true) : current === "edit" ? setShowEdit(true) : current === "delete" ? "delete" : ""
 
@@ -102,7 +122,9 @@ const Staff = () => {
                 }
             })
             .catch(() => toast('An error occurred while trying to locate staff.Please try again', 'error'))
-    }
+    
+}
+
 
     const closeRating = () => {
         setShowRating(false)
@@ -126,27 +148,27 @@ const Staff = () => {
                 </div><br /><br />
 
                 {/* header for the rows    */}
-                <div className="container">
-                    <div className="row">
-                        <div className="col d-flex d-inline-flex">
+                {/* <div className="container"> */}
+                <div className="row">
+                    <div className="col d-flex d-inline-flex">
 
-                            <div className=" pl-3 d-flex flex-fill align-items-center">
-                                <p className="mb-0 text-color-2">Name</p>
-                            </div>
-
-
-                            <div className="d-flex flex-fill align-items-center">
-                                <p className="mb-0">Email</p>
-                            </div>
-
-
-                            <div className=" d-flex flex-fill align-items-center">
-                                <p className="mb-0">Phone</p>
-                            </div>
-
+                        <div className=" pl-3 d-flex flex-fill align-items-center">
+                            <p className="mb-0 text-color-2">Name</p>
                         </div>
+
+
+                        <div className="d-flex flex-fill align-items-center">
+                            <p className="mb-0">Email</p>
+                        </div>
+
+
+                        <div className=" d-flex flex-fill align-items-center">
+                            <p className="mb-0">Phone</p>
+                        </div>
+
                     </div>
                 </div>
+                {/* </div> */}
 
                 {
                     staff.map(st => {
@@ -210,7 +232,8 @@ const Staff = () => {
                 spinner={spinner}
                 closeModal={closeRating}
                 weeks={weeks}
-                check={check}
+                lastDoc={lastDoc}
+
             />
             <Edit
                 show={showEdit}

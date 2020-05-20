@@ -6,7 +6,6 @@ const RatingSchema = require('../../models/ratings/personnel-ratings.model');
 router.route(`/add`).post(async (req, res) => {
     const org = req.body.org;
     const total_weeks = req.body.total_weeks;
-    const current_week = req.body.current_week;
     const personnel_ratings = req.body.ratings;
 
 
@@ -20,7 +19,7 @@ router.route(`/add`).post(async (req, res) => {
     const all = await Rate.find();
 
     if (all.length < 1) {
-
+        //create first doc
         const newRating = new Rate({ personnel_ratings, total_weeks,current_week: 1 });
 
         try {
@@ -32,7 +31,7 @@ router.route(`/add`).post(async (req, res) => {
         }
 
     } else {
-
+        //locate the last doc and update
         const lastDoc = await Rate.find().sort({ createdAt: - 1 }).limit(1);
 
         const lastCreatedAt = lastDoc[0].createdAt.toDateString();
@@ -49,7 +48,8 @@ router.route(`/add`).post(async (req, res) => {
 
 
         if (today > newEpoc) {
-
+            
+            //create new week
             const newRating = new Rate({
                 personnel_ratings,
                 total_weeks: lastDoc.total_weeks,
@@ -106,5 +106,3 @@ router.route(`/check/:school`).get(async (req, res) => {
 })
 
 module.exports = router;
-
-

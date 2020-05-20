@@ -204,42 +204,44 @@ export default function MiniDrawer() {
           <List>
             {
               <ListItem button onClick={setActPage}>
-                <ListItemIcon>
+                <ListItemIcon> 
                   <SvgIcon color="primary">
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                   </SvgIcon>
                 </ListItemIcon>
-                <ListItemText primary={'Account'} />
+                
+                <ListItemText secondary={'Account'}/>
+                
               </ListItem>
             }
             {
               <ListItem button onClick={setProfilePage}>
                 <ListItemIcon><PersonIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Profile'} />
+                <ListItemText secondary={'Profile'} />
               </ListItem>
             }
             {
               <ListItem button onClick={setJobPage}>
                 <ListItemIcon><WorkIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Job Board'} />
+                <ListItemText secondary={'Job Board'} />
               </ListItem>
             }
             {
               <ListItem button onClick={setSubPage}>
                 <ListItemIcon><SubscriptionsIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Subscriptions'} />
+                <ListItemText secondary={'Subscriptions'} />
               </ListItem>
             }
             {
               <ListItem button onClick={setSrvPage}>
                 <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Services'} />
+                <ListItemText secondary={'Services'} />
               </ListItem>
             }
             {
               <ListItem button onClick={setExPage}>
                 <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
-                <ListItemText primary={'Exercises'} />
+                <ListItemText secondary={'Exercises'} />
               </ListItem>
             }
 
@@ -248,12 +250,12 @@ export default function MiniDrawer() {
                 {user.org_type === "school" ?
                   <>
                     <ListItemIcon><SchoolIcon color="primary" /> </ListItemIcon>
-                    <ListItemText primary={'Teachers'} />
+                    <ListItemText secondary={'Teachers'} />
                   </>
                   :
                   <>
                     <ListItemIcon><BusinessIcon color="primary" /> </ListItemIcon>
-                    <ListItemText primary={'Staff'} />
+                    <ListItemText secondary={'Staff'} />
                   </>
                 }
 

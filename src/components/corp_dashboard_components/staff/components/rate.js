@@ -4,7 +4,7 @@ import { Spinner, Modal, Form, Col, Row } from 'react-bootstrap';
 import toast from '../../../../util/toast';
 
 
-const Rate = ({ show, onHide, details, closeModal, weeks, check }) => {
+const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
 
     const [user, setUser] = useState();
     const [rating, setRating] = useState();
@@ -12,22 +12,13 @@ const Rate = ({ show, onHide, details, closeModal, weeks, check }) => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
+        
     }, []);
 
     const rate = event => {
         setRating({ ...rating, [event.target.name]: event.target.value });
     };
 
-    /**
-     * 0.chnge data structure.
-     * 1.prvent a user from being rated twice
-     * 2.prevent a school from rating max times
-     * 3. determine when a new week should begin
-     * 4.determine total documents in a collection
-     * 5.determine what collection to post to when a user is being rated
-     * 6.create a page to show rank teachers
-     * 7. adapt to companies
-     */
 
     const submitRating = () => {
 
@@ -35,7 +26,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, check }) => {
 
         const data = {
             org: user.name,
-            total_weeks: check ? check.total_weeks : weeks ,
+            total_weeks: lastDoc ? lastDoc.total_weeks : weeks ,
             ratings: {
                 name: details.fullname,
                 personnel_id: details._id,
