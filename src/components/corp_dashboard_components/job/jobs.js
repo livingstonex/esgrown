@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import SerachBar from './components/search';
+import SearchBar from './components/search';
 import CreateJob from './components/create-job';
 import Toast from '../../toast';
 
@@ -82,14 +83,12 @@ const Jobs = () => {
                 <div className="container">
                     <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
 
-                        <div style={{ width: '500px', float: 'left' }}><SerachBar /></div>
+                        <div className="col-lg-8" ><SearchBar /></div>
 
-                        <div style={{ cursor: 'pointer', height: 'auto', float: 'right', marginLeft: '400px' }} onClick={() => setShow(!show)}>
-                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>Add Jobs</span>
-
-                            <div style={{ float: 'right', width: '40px', height: '40px', background: '#3F51B5', borderRadius: '50%', fontSize: '40px', lineHeight: '50px', textAlign: 'center' }}>
-                                <span style={{ color: 'white', padding: '20px' }}>+</span>
-                            </div>
+                        <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
+                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
+                                <AddCircleIcon fontSize="large" /> Add Job
+                            </span>
                         </div>
                     </div>
                 </div><br />
