@@ -271,10 +271,11 @@ const handleSubmitState = (e)=>{
     return (
       <> 
         <div>
+          <br/>
           <div className="container">
-            <div className="row">
+            <div className="row justify-content-center">
               <div className="col-lg-3"></div>
-              <div className="col-lg-6" style={{}}>
+              <div className="col-lg-6 justify-content-center" style={{}}>
                 
                   <Avatar style={{'height':'150px', 'width':'150px', 'backgroundColor':'skyblue', 
                                   'opacity':'0.8', 'fontSize':'70px', 'fontFamily':'ariel'}}> 
@@ -283,9 +284,9 @@ const handleSubmitState = (e)=>{
                     <div style={{'fontFamily':'ariel', 'fontSize':'25px', 'fontStyle':'bold', }}>Profile</div>
                   </div>
                 <br/>
-                <ExpansionPanel expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                        <ExpansionPanel expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                           <ExpansionPanelSummary
-                            expandIcon={ <a></a> }
+                            expandIcon={ <a onClick={{}} className="btn btn-info btn-sm disabled" style={{'color':'white'}}>edit</a> }
                             aria-controls="panel1bh-content"
                             id="panel1bh-header"
                           >
@@ -293,12 +294,6 @@ const handleSubmitState = (e)=>{
                             
                             <Typography className={classes.secondaryHeading}>{user.name}</Typography>  
                           </ExpansionPanelSummary>
-                              {/* <Divider/>
-                              <ExpansionPanelDetails>
-                                <Typography>
-                                  {user.name}
-                                </Typography>
-                              </ExpansionPanelDetails> */} 
                         </ExpansionPanel>
 
                         <ExpansionPanel expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>

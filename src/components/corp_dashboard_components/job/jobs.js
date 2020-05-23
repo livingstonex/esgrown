@@ -78,25 +78,25 @@ const Jobs = () => {
 
     return (
         <>
+            <br/>
             <div className="container">
                 <div className="container">
-                    <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
-
+                    <div className="row justify-content-center" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
                         <div style={{ width: '500px', float: 'left' }}><SerachBar /></div>
 
                         <div style={{ cursor: 'pointer', height: 'auto', float: 'right', marginLeft: '400px' }} onClick={() => setShow(!show)}>
-                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>Add Jobs</span>
+                            <span style={{ float: 'right', marginLeft: '10px', marginBottom: '20px', marginTop:'10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>Add Jobs</span>
 
-                            <div style={{ float: 'right', width: '40px', height: '40px', background: '#3F51B5', borderRadius: '50%', fontSize: '40px', lineHeight: '50px', textAlign: 'center' }}>
+                            {/* <div style={{ float: 'right', width: '40px', height: '40px', background: '#3F51B5', borderRadius: '50%', fontSize: '40px', lineHeight: '50px', textAlign: 'center' }}>
                                 <span style={{ color: 'white', padding: '20px' }}>+</span>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div><br />
                 <div className="container">
                     <br /><br />
                     <div className="row" style={{ textAlign: 'center' }}>
-                        <div className="col col-lg-2 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Company Name</span></div>
+                        <div className="col col-lg-2 col-sm-6"><span  style={{ fontSize: "18px", fontWeight: "bold" }}>Company Name</span></div>
                         <div className="col col-lg-3 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Job Title</span></div>
                         <div className="col col-lg-2 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Start Date</span></div>
                         <div className="col col-lg-2 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>End Date</span></div>

@@ -55,7 +55,7 @@ const Subscription = () => {
     return (
         <>
             <div className="container">
-                <div className="row" >
+                <div className="row justify-content-center">
 
                     <div className="col col-lg-4 col-sm-6">
                         <br />

@@ -152,7 +152,7 @@ const Staff = () => {
                     staff.map(st => {
                         return (
                             <>
-                                <div className="wrapper-list py-2 mt-2">
+                                <div className="wrapper-list py-2 mt-2" style={{backgroundColor:'#f5f5f5'}}>
                                     <div className="container-fluid">
                                         <div className="row">
                                             <div className="col d-flex justify-content-between">
@@ -173,8 +173,8 @@ const Staff = () => {
                                                 </div>
 
                                                 <div className="d-flex align-items-center ml-auto">
-                                                    <Dropdown alignRight>
-                                                        <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
+                                                    <Dropdown alignRight color={'red'} style={{backgroundColor:'#f5f5f5'}}>
+                                                        <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder'}}>
                                                             ....
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
