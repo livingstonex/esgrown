@@ -20,7 +20,7 @@ export default function Form(props) {
 
     const [subPlan, setSubPlan] = useState("");
     const [amount, setAmount] = useState("");
-    const [button, setButton] = useState(0)
+    const [button, setButton] = useState(2)
 
     //SPINNER STATE
     const [spinner, setSpinner] = useState(false);

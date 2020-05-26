@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Spinner } from 'react-bootstrap';
 import PayStackButton from '../../../ind_dashboard_components/paystack/paystackpaymentbutton';
+import StaffModal from '../components/all-staff';
 
 
 
@@ -14,6 +15,9 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const [plan, setPlan] = useState();
     const [payModal, setPayModal] = useState(false);
     const [spinner, setSpinner] = useState(false)
+    const [staff, setStaff] = useState(false);
+    const [staffModal,setStaffModal] = useState(false)
+    
 
     const [state, setState] = useState({
         companyName: '',
@@ -42,6 +46,19 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
         setPlan(plan[0]);
     }
 
+    const getStaff = () => {
+        setStaffModal(true);
+        closeModal();
+    }
+
+    //get total amount * number of staff and sub
+    const closeStaffModal = (subamount) => {
+        setStaffModal(false);
+        setAmount(subamount);
+        setPayModal(true);
+    }
+
+    console.log(amount);
     const subscribe = () => {
         const subData = {
             company_id: user.id,
@@ -93,7 +110,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="container">
-                        <div className="row mt-3">
+                        {/* <div className="row mt-3">
                             <div className="col">
                                 <label style={{ fontWeight: 'bold' }}> Company Name</label>
                                 <input type="text" name="companyName" value={state.companyName} onChange={handleChange} placeholder="Company Name" className="form-control" required />
@@ -112,16 +129,16 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                                 <label style={{ fontWeight: 'bold' }}>Date of Incorporation</label>
                                 <input type="date" name="doi" value={state.doi} onChange={handleChange} placeholder="Date of Incorporation" className="form-control" required />
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="row mt-3">
                             <div className="col">
-                                <label style={{ fontWeight: 'bold' }}> Plan</label>
+                                <label style={{ fontWeight: 'bold' }}>Select A Plan</label>
                                 <select name="plan" className="form-control" onChange={onChangePlan} required>
                                     <option >Select a Plan</option>
-                                    <option value="PLN_hwug5s75tf2rcqu/280000">3 Months Plan</option>
-                                    <option value="PLN_072a7glz3tv6fzi/455000">6 Months Plan</option>
-                                    <option value="PLN_wma6tld3z1g2zef/797000">1 Year Plan</option>
+                                    <option value="PLN_hwug5s75tf2rcqu/280000">3 Months Plan - 2800</option>
+                                    <option value="PLN_072a7glz3tv6fzi/455000">6 Months Plan - 4550</option>
+                                    <option value="PLN_wma6tld3z1g2zef/797000">1 Year Plan  - 7970 </option>
                                 </select>
                             </div>
                         </div>
@@ -133,7 +150,9 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                                 type="submit"
                                 className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
                                 disabled={spinner}
-                                onClick={subscribe}
+                                // onClick={subscribe}
+                                onClick={getStaff}
+
                             >
                                 {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : "Proceed"}
                             </button>
@@ -151,6 +170,13 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                 email={state.email}
                 amount={amount}
                 plan={plan}
+            />
+
+            <StaffModal
+                show={staffModal}
+                onHide={() => setStaffModal(!staffModal)}
+                amount={amount}
+                closeStaffModal={closeStaffModal}
             />
         </>
     );

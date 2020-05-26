@@ -119,9 +119,9 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
                                 <label style={{ fontWeight: 'bold' }}> Plan</label>
                                 <select name="plan" className="form-control" onChange={onChangePlan} required>
                                     <option >Select a Plan</option>
-                                    <option value="PLN_hwug5s75tf2rcqu/280000">3 Months Plan</option>
-                                    <option value="PLN_072a7glz3tv6fzi/455000">6 Months Plan</option>
-                                    <option value="PLN_wma6tld3z1g2zef/797000">1 Year Plan</option>
+                                    <option value="PLN_hwug5s75tf2rcqu/280000">3 Months Plan 2800</option>
+                                    <option value="PLN_072a7glz3tv6fzi/455000">6 Months Plan 4550</option>
+                                    <option value="PLN_wma6tld3z1g2zef/797000">1 Year Plan   7970</option>
                                 </select>
                             </div>
                         </div>

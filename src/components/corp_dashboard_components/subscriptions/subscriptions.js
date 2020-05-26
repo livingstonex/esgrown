@@ -4,6 +4,7 @@ import { Card, CardActionArea, CardMedia, CardActions, CardContent, Typography }
 import RMSubForm from './rm/rm-sub-form';
 import LMSubForm from './lm/lm-sub-form';
 import UpdateForm from './components/update-form';
+import AllStaff from './components/all-staff';
 
 
 
@@ -15,47 +16,56 @@ const Subscription = () => {
     const [service, setService] = useState()
     const [rmDetails, setRMDetails] = useState()
     const [lmDetails, setLMDetails] = useState()
+    const [company, setCompany] = useState()
+
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const company = JSON.parse(sessionStorage.getItem('key'));
+        setCompany(company);
 
         axios.get(`http://localhost:5000/corporatesubscriptions/${company.id}`)
             .then(res => {
                 if (res.data.length > 0) {
-                    res.data.map(comp => { 
+                    res.data.map(comp => {
                         if (comp.service == "RM" && comp.sub_status === true) {
-                           return setRMDetails(comp);
+                            return setRMDetails(comp);
                         } else if (comp.service == "LM" && comp.sub_status === true) {
-                           return setLMDetails(comp);
+                            return setLMDetails(comp);
                         }
                     });
-            }
-        }).catch()
+                }
+            }).catch()
 
 
-     }, []);
+    }, []);
 
     const closeModal = () => {
         setlmform(false);
         setrmform(false);
         setUpdateModal(false);
+
     }
 
-    const getRMDetails = () => {
+    const getRMDetails = async () => {
 
         setService("RM");
         setUpdateModal(true)
     }
 
     const getLMdetails = () => {
+
         setService('LM')
         setUpdateModal(true)
     }
 
+
+
+
     return (
         <>
             <div className="container">
-                <div className="row" >
+                <div className="row justify-content-center">
 
                     <div className="col col-lg-4 col-sm-6">
                         <br />
@@ -81,19 +91,19 @@ const Subscription = () => {
                             <CardActions>
                                 {rmDetails ?
                                     <button
-                                    className="btn font-weight-bold mt-3 py-2 border-0"
-                                    style={{ background: '#97BA0C', color: 'white' }}
-                                    disabled={rmDetails}
-                                >
-                                    Subscribed
+                                        className="btn font-weight-bold mt-3 py-2 border-0"
+                                        style={{ background: '#97BA0C', color: 'white' }}
+                                        disabled={rmDetails}
+                                    >
+                                        Subscribed
                                 </button>
                                     :
-                                <button
-                                    className="btn font-weight-bold mt-3 py-2 border-0"
-                                    style={{ background: '#21A5E7', color: 'white' }}
-                                    onClick={() => setrmform(!rmform)}
-                                >
-                                    Subscribe
+                                    <button
+                                        className="btn font-weight-bold mt-3 py-2 border-0"
+                                        style={{ background: '#21A5E7', color: 'white' }}
+                                        onClick={() => setrmform(!rmform)}
+                                    >
+                                        Subscribe
                                 </button>}
                             </CardActions>
                         </Card>
@@ -123,19 +133,19 @@ const Subscription = () => {
                             <CardActions>
                                 {lmDetails ?
                                     <button
-                                    className="btn font-weight-bold mt-3 py-2 border-0"
-                                    style={{ background: '#97BA0C', color: 'white' }}
-                                    disabled={lmDetails}
-                                >
-                                    Subscribed
+                                        className="btn font-weight-bold mt-3 py-2 border-0"
+                                        style={{ background: '#97BA0C', color: 'white' }}
+                                        disabled={lmDetails}
+                                    >
+                                        Subscribed
                                 </button>
                                     :
-                                <button
-                                    className="btn font-weight-bold mt-3 py-2 border-0"
-                                    style={{ background: '#21A5E7', color: 'white' }}
-                                    onClick={() => setlmform(!lmform)}
-                                >
-                                    Subscribe
+                                    <button
+                                        className="btn font-weight-bold mt-3 py-2 border-0"
+                                        style={{ background: '#21A5E7', color: 'white' }}
+                                        onClick={() => setlmform(!lmform)}
+                                    >
+                                        Subscribe
                                 </button>}
                             </CardActions>
                         </Card>
@@ -151,6 +161,7 @@ const Subscription = () => {
                 closeModal={closeModal}
 
             />
+            <AllStaff show={show} onHide={() => setShow(!show)} company={company} closeModal={closeModal} />
         </>
     );
 }

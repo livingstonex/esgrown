@@ -45,11 +45,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   appBar: {
+    backgroundColor: '#53a6e7',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    // co
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -71,6 +73,7 @@ const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
   },
   drawerOpen: {
+    backgroundColor: '#f5f5f5',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -78,6 +81,7 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   drawerClose: {
+    backgroundColor: '#f5f5f5',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -115,7 +119,8 @@ export default function MiniDrawer() {
   useEffect(() => {
     const userr = JSON.parse(sessionStorage.getItem("key"));
     setUser(userr);
-  }, [])
+  }, []);
+
 
   //Functions to set setPage based on where the user clicks
   const setActPage = () => {
@@ -152,8 +157,8 @@ export default function MiniDrawer() {
 
   return (
     <>
-      <div className={classes.root}>
-        <CssBaseline />
+      <div style={{ backgroundColor: '#FFFFFF' }}>
+        {/* <CssBaseline /> */}
         <AppBar
           position="fixed"
           className={clsx(classes.appBar, {
@@ -191,7 +196,7 @@ export default function MiniDrawer() {
           }}
         >
           <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
-            <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
+            <div style={{ height: '100%', width: '25px', backgroundColor: '#53a6e7' }}></div>
             {/* Place Logo here */}
             <div style={{ marginLeft: '60px' }}>
               <img src={logo} width="80%" />
@@ -203,45 +208,117 @@ export default function MiniDrawer() {
           <Divider />
           <List>
             {
-              <ListItem button onClick={setActPage}>
-                <ListItemIcon> 
-                  <SvgIcon color="primary">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                  </SvgIcon>
-                </ListItemIcon>
-                
-                <ListItemText secondary={'Account'}/>
-                
-              </ListItem>
+              <span style={{ backgroundColor: 'red' }}>
+                <ListItem button onClick={setActPage}>
+                  <ListItemIcon>
+                    {
+                      page === 0 ?
+                        <><SvgIcon color="primary">
+                          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </SvgIcon>
+                        </>
+                        :
+                        <>
+                          <SvgIcon color="">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                          </SvgIcon>
+                        </>
+                    }
+
+                  </ListItemIcon>
+                  {
+                    page === 0 ?
+                      <><ListItemText primary={'Account'} /></>
+                      :
+                      <><ListItemText secondary={'Account'} /></>
+                  }
+                </ListItem>
+              </span>
             }
             {
               <ListItem button onClick={setProfilePage}>
-                <ListItemIcon><PersonIcon color="primary" /> </ListItemIcon>
-                <ListItemText secondary={'Profile'} />
+                <ListItemIcon>
+                  {
+                    page === 1 ? <><PersonIcon color="primary" /></>
+                      :
+                      <><PersonIcon color="" /></>
+                  }
+
+                </ListItemIcon>
+                {
+                  page === 1 ?
+                    <><ListItemText primary={'Profile'} /></>
+                    :
+                    <><ListItemText secondary={'Profile'} /></>
+                }
               </ListItem>
             }
             {
               <ListItem button onClick={setJobPage}>
-                <ListItemIcon><WorkIcon color="primary" /> </ListItemIcon>
-                <ListItemText secondary={'Job Board'} />
+                <ListItemIcon>
+                  {
+                    page === 2 ? <><WorkIcon color="primary" /></>
+                      :
+                      <> <WorkIcon color="" /> </>
+                  }
+                </ListItemIcon>
+                {
+                  page === 2 ?
+                    <><ListItemText primary={'Job Board'} /></>
+                    :
+                    <><ListItemText secondary={'Job Board'} /></>
+                }
               </ListItem>
             }
             {
               <ListItem button onClick={setSubPage}>
-                <ListItemIcon><SubscriptionsIcon color="primary" /> </ListItemIcon>
-                <ListItemText secondary={'Subscriptions'} />
+                <ListItemIcon>
+                  {
+                    page === 3 ? <> <SubscriptionsIcon color="primary" />  </>
+                      :
+                      <> <SubscriptionsIcon color="" />  </>
+                  }
+                </ListItemIcon>
+                {
+                  page === 3 ?
+                    <><ListItemText primary={'Subscription'} /></>
+                    :
+                    <><ListItemText secondary={'Subscription'} /></>
+                }
               </ListItem>
             }
             {
               <ListItem button onClick={setSrvPage}>
-                <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
-                <ListItemText secondary={'Services'} />
+                <ListItemIcon>
+                  {
+                    page === 4 ? <> <RoomServiceIcon color="primary" />   </>
+                      :
+                      <> <RoomServiceIcon color="" /></>
+                  }
+                </ListItemIcon>
+                {
+                  page === 4 ?
+                    <><ListItemText primary={'Services'} /></>
+                    :
+                    <><ListItemText secondary={'Services'} /></>
+                }
               </ListItem>
             }
             {
               <ListItem button onClick={setExPage}>
-                <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
-                <ListItemText secondary={'Exercises'} />
+                <ListItemIcon>
+                  {
+                    page === 5 ? <> <AssessmentIcon color="primary" /> </>
+                      :
+                      <> <AssessmentIcon color="" /> </>
+                  }
+                </ListItemIcon>
+                {
+                  page === 5 ?
+                    <><ListItemText primary={'Excercises'} /></>
+                    :
+                    <><ListItemText secondary={'Exercises'} /></>
+                }
               </ListItem>
             }
 
@@ -249,13 +326,35 @@ export default function MiniDrawer() {
               <ListItem button onClick={setStaff}>
                 {user.org_type === "school" ?
                   <>
-                    <ListItemIcon><SchoolIcon color="primary" /> </ListItemIcon>
-                    <ListItemText secondary={'Teachers'} />
+                    <ListItemIcon>
+                      {
+                        page === 6 ? <> <SchoolIcon color="primary" /> </>
+                          :
+                          <> <SchoolIcon color="" /> </>
+                      }
+                    </ListItemIcon>
+                    {
+                      page === 6 ?
+                        <><ListItemText primary={'Teachers'} /></>
+                        :
+                        <><ListItemText secondary={'Teachers'} /></>
+                    }
                   </>
                   :
                   <>
-                    <ListItemIcon><BusinessIcon color="primary" /> </ListItemIcon>
-                    <ListItemText secondary={'Staff'} />
+                    <ListItemIcon>
+                      {
+                        page === 6 ? <> <BusinessIcon color="primary" /> </>
+                          :
+                          <> <BusinessIcon color="primary" /> </>
+                      }
+                    </ListItemIcon>
+                    {
+                      page === 6 ?
+                        <><ListItemText primary={'Staff'} /></>
+                        :
+                        <><ListItemText secondary={'Staff'} /></>
+                    }
                   </>
                 }
 
@@ -267,19 +366,21 @@ export default function MiniDrawer() {
             <Link to="/logout" style={{ 'text-decoration': 'none' }}>
               {
                 <ListItem button onClick={{}}>
-                  <ListItemIcon><LogoutIcon color="primary" /> </ListItemIcon>
-                  <ListItemText primary={'Logout'} />
+                  <ListItemIcon>
+                    <LogoutIcon color="" />
+                  </ListItemIcon>
+                  <ListItemText secondary={'Logout'} />
                 </ListItem>
               }
             </Link>
           </List>
         </Drawer>
-        <main className={classes.content} style={{ background: '#D0CFCF', height: 'auto' }}>
+        {/* <main> */}
 
-          {
-            (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff /> : ""
-          }
-        </main>
+        {
+          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff /> : ""
+        }
+        {/* </main> */}
       </div>
     </>
   );

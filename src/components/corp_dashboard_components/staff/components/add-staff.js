@@ -10,7 +10,7 @@ import toast from '../../../../util/toast';
 
 
 
-const AddStaff = ({ show, onHide, closeModal }) => {
+const AddStaff = ({ show, onHide, closeModal, refreshStaff }) => {
 
 
 
@@ -46,7 +46,7 @@ const AddStaff = ({ show, onHide, closeModal }) => {
 
     //send data to server
     const createUser = () => {
-
+        
         setSpinner(true)
 
         const tic = user.org_type === 'school' ? md5(data.email).substring(0, 8).toUpperCase() : null;
@@ -87,7 +87,7 @@ const AddStaff = ({ show, onHide, closeModal }) => {
                     axios.post('http://localhost:5000/individuals/add', submitData)
                         .then(res => {
                             if (res.data) {
-                                notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} created successful`, 'success')
+                                notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} added successful`, 'success')
                                 setSpinner(false);
                                 closeModal();
 
@@ -98,6 +98,8 @@ const AddStaff = ({ show, onHide, closeModal }) => {
                 }
             })
             .catch(err => notify(err, 'error'));
+        
+        refreshStaff()
 
     }
 
@@ -150,7 +152,7 @@ const AddStaff = ({ show, onHide, closeModal }) => {
                                     style={{ background: '#21A5E7', color: 'white' }}
                                     onClick={createUser}
                                 >
-                                    {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : `Create ${user && user.org_type === "school" ? "Teacher" : "Staff"}`}
+                                    {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : `Add ${user && user.org_type === "school" ? "Teacher" : "Staff"}`}
                                 </button>
                             </div>
                         </div>

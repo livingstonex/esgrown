@@ -20,11 +20,13 @@ export default class IndividualSignUp extends Component{
         this.onChangeState = this.onChangeState.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeType = this.onChangeType.bind(this);
+        this.onChangePasswordConfirm = this.onChangePasswordConfirm.bind(this);
 
         this.state = {
             org_name:'',
             email:'',
-            password:'',
+            password: '',
+            confirmpassword: '',
             phone:'',
             doi: new Date(),
             country:'',
@@ -81,22 +83,28 @@ export default class IndividualSignUp extends Component{
         console.log(e.target.value)
     }
 
+    onChangePasswordConfirm(e) {
+
+        this.setState({ confirmpassword: e.target.value })
+    }
+
     
     onSubmit(e){
         e.preventDefault();
 
-        const corporate = {
-            org_name: this.state.org_name,
-            email: this.state.email,
-            password: this.state.password,
-            phone: this.state.phone,
-            doi: this.state.doi,
-            country: this.state.country,
-            state: this.state.state,
-            status: this.state.status,
-            org_type: this.state.org_type
-        }
-
+        if (this.state.confirmpassword === this.state.password) {
+            const corporate = {
+                org_name: this.state.org_name,
+                email: this.state.email,
+                password: this.state.password,
+                phone: this.state.phone,
+                doi: this.state.doi,
+                country: this.state.country,
+                state: this.state.state,
+                status: this.state.status,
+                org_type: this.state.org_type
+            }
+            
 
         axios.post('http://localhost:5000/corporates/check_corp_email', corporate)
             .then(res => {
@@ -148,6 +156,11 @@ export default class IndividualSignUp extends Component{
                     
                 }
             });
+
+        } else {
+            alert('Your passwords do not match');
+            return;
+        }
         
         
     }
@@ -179,12 +192,20 @@ export default class IndividualSignUp extends Component{
                                         <input className="form-control" required type="text" onChange={this.onChangeOrgname} value={this.state.org_name} placeholder="Enter name of Organization..."></input>
                                     </div>
                                     <div className="form-group">
+                                        <label>Country:</label>
+                                        <input className="form-control" required type="text" onChange={this.onChangeCountry} value={this.state.org_name} placeholder="Select Country..."></input>
+                                    </div>
+                                    <div className="form-group">
                                         <label>Email:</label>
                                         <input className="form-control" required type="email" onChange={this.onChangeEmail} value={this.state.email} placeholder="Enter Email..."></input>
                                     </div>
                                     <div className="form-group">
                                         <label>Password:</label>
                                         <input className="form-control" required type="password" onChange={this.onChangePassword} value={this.state.password} placeholder="Enter Password..."></input>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Confirm Password:</label>
+                                        <input className="form-control" required type="password" onChange={this.onChangePasswordConfirm} value={this.state.password} placeholder="Enter Password..."></input>
                                     </div>
                                     <div className="form-group">
                                         <label>Date of Incorporation:</label> <br/>

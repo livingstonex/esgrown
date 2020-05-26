@@ -79,16 +79,18 @@ const Jobs = () => {
 
     return (
         <>
+            <br />
             <div className="container">
                 <div className="container">
-                    <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
+                    <div className="row justify-content-center" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
+                        <div style={{ width: '500px', float: 'left' }}><SearchBar /></div>
 
-                        <div className="col-lg-8" ><SearchBar /></div>
+                        <div style={{ cursor: 'pointer', height: 'auto', float: 'right', marginLeft: '400px' }} onClick={() => setShow(!show)}>
+                            <span style={{ float: 'right', marginLeft: '10px', marginBottom: '20px', marginTop: '10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>Add Jobs</span>
 
-                        <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
-                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
-                                <AddCircleIcon fontSize="large" /> Add Job
-                            </span>
+                            {/* <div style={{ float: 'right', width: '40px', height: '40px', background: '#3F51B5', borderRadius: '50%', fontSize: '40px', lineHeight: '50px', textAlign: 'center' }}>
+                                <span style={{ color: 'white', padding: '20px' }}>+</span>
+                            </div> */}
                         </div>
                     </div>
                 </div><br />

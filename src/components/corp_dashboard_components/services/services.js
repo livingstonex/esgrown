@@ -49,7 +49,7 @@ const CorpServices = () => {
             {(page === 0) ?
                 <>
                 <div className="container">
-                    <div className="row" >
+                    <div className="row justify-content-center" >
                         {RMsrv.sub_status ?
                             <div className="col col-lg-4 col-sm-6">
                                 <br />

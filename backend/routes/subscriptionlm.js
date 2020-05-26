@@ -18,7 +18,7 @@ router.route('/add').post((req, res) => {
         .then((sub) => res.json(sub))
         .catch(err => res.status(400).json('Error: '+ err));
 
-}); 
+});
 
 
 

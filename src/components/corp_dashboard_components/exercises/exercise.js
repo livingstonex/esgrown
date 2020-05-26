@@ -60,7 +60,7 @@ const CorpExercise = () => {
         spinner ? <Spinner animation="grow" />  : (page === 0) ? 
         <>
                 <div className="container">
-                    <div className="row">
+                    <div className="row justify-content-center">
                         {RMSrv ? 
                         <div className="col col-lg-5 col-sm-6">
                             <br />
@@ -111,7 +111,7 @@ const CorpExercise = () => {
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
-                                <CardActions>x
+                                <CardActions>
                                 </CardActions>
                             </Card>
                         </div>
