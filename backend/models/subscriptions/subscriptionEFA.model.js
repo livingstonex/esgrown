@@ -10,6 +10,10 @@ const subscriptionEFASchema = new Schema({
         type: String,
         required: true
     },
+    sub_code: {
+        type: String,
+        required: false
+    },
     user_email:{
         type: String,
         required:true
@@ -39,10 +43,6 @@ const subscriptionEFASchema = new Schema({
         required: false
     },
     ref:{
-        type: String,
-        required: false
-    },
-    plan_code:{
         type: String,
         required: false
     }

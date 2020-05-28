@@ -7,8 +7,12 @@ const subscriptionEASSchema = new Schema({
         required: true
     },
     sub_status:{
-        type: Boolean,
+        type: String,
         required: true
+    },
+    sub_code: {
+        type: String,
+        required: false
     },
     user_email:{
         type: String,
@@ -24,21 +28,17 @@ const subscriptionEASSchema = new Schema({
     },
     levelofeducation:{
         type: String,
-        required: true
+        required: false
     },
     field_of_intended_study:{
         type: String,
-        required: true
+        required: false
     },
     tic:{
         type: String,
         required: false
     },
     ref:{
-        type: String,
-        required: false
-    },
-    plan_code:{
         type: String,
         required: false
     }

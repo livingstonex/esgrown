@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Individual = require('../models/individual.model');
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
 
 router.route('/').get((req, res) => {
     Individual.find()
@@ -42,9 +43,10 @@ router.route('/add').post((req, res) => {
     const org_name = req.body.org_name;
     const org_id = req.body.org_id;
     const tic = req.body.tic;
+    const sub_status = req.body.sub_status;
     const lastLogin = Date.parse(new Date());
 
-    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin });
+    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin,sub_status });
 
     newIndividual.save()
         .then((individ) => res.json(individ))
@@ -69,12 +71,42 @@ router.route('/login').post((req, res) => {
     const hash_password = req.body.hash_password;
     const normal_password = req.body.normal_password;
     const lastLogin = Date.parse(new Date());
+
+    Individual.find({ email: email }).then(ind => {
+        if (ind.sub_code !== '') {
+            axios.get(`https://api.paystack.co/subscription/SUB_a42gbxvmpsiq3ga`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+                .then(res => {
+                    ind.updateOne(
+                        { sub_status: res.data.data.status },
+                        { returnOriginal: false }
+                    ).then(res => {console.log(res) }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
+            
+        }
+        
+    })
+
+
+    //check sub status from paystack and update
+    // axios.get(`https://api.paystack.co/subscription`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" }})
+    //     .then(res => {
+    //         const client = res.data.data.filter(st => {
+    //             return st.customer.email === 'aatehilla@gmail.com'
+    //         })
+    //         const status = client[0].status;
+    //         const subCode = client[0].subscription_code;
+
+    //         console.log(client[0].status)
+    //     })
+    //     .catch(err => console.log(err));
+    // console.log(res.data.data[0].customer.email)
     try {
         const equal = bcrypt.compareSync(normal_password, hash_password);
         if (equal) {
             res.json(1);
             Individual.find({ email: email })
                 .then(res =>
+                    
                     res.updateOne({ lastLogin: lastLogin })
                         .then(res => res.json('LastLogin Updated: ' + res))
                         .catch(err => res.json('ERr: ' + err)),

@@ -118,7 +118,8 @@ export default class IndividualSignUp extends Component {
             status: this.state.status,
             org_type: this.state.org_type ? this.state.org_type : null,
             org_name: this.state.org_name ? this.state.org_name : null,
-            tic: TIC
+            tic: TIC,
+            sub_status:"InActive"
         }
 
         axios.post('http://localhost:5000/individuals/check_email', individual)

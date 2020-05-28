@@ -115,10 +115,16 @@ export default function Form(props) {
         console.log(res);
         setModalPayShow(false);
 
+        //make a call to https://api.paystack.co/subscription and get all subscription 
+        //and filter for email of current subscription and extract subscription code.
+        //update individual doc with the gotten data.
+
         const data = {
             ref: res.reference,
             sub_status: true,
-            plan_code: subPlan
+            plan_code: subPlan,
+            sub_code: '',
+            
         }
         //make axios call to update user reference
         axios.post(`http://localhost:5000/subscriptioneas/update/easref/${userId}`, data)
@@ -137,7 +143,7 @@ export default function Form(props) {
         <React.Fragment>
             <div className="ml-auto d-flex align-items-center">
                 <React.Fragment>
-                    {(button === 1) ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> : (button === 2) ? <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button> : ""}
+                    {(button === 1) ? <button className="btn btn-info btn-sm" disabled style={{ color: 'white', background: '#97ba0d', border: '#97ba0d' }}>Subscribed</button> : (button === 2) ? <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button> : <button className="btn btn-info btn-sm" onClick={() => setModalShow(true)}>Subscribe</button>}
                 </React.Fragment>
 
             </div>

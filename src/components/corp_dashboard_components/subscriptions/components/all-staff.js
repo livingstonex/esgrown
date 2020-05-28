@@ -18,14 +18,19 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
         const company = JSON.parse(sessionStorage.getItem('key'))
         setCompany(company);
 
-        // //make a request quest and get all company/school staff for subscription
+        // //make a request quest and get all company/school that are not subscribed for staff for subscription
         axios.get(`http://localhost:5000/individuals/staff/${company.id}`)
             .then(res => {
-                setCompanystaff(res.data);
+                const unsubscribedStaff = res.data.filter(staff => {
+                    return staff.sub_status === false;
+                })
+                setCompanystaff(unsubscribedStaff);
             })
             .catch(err => console.log(err));
 
     }, []);
+
+
 
     const refreshStaff = () => {
 

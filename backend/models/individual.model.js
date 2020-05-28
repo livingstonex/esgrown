@@ -47,6 +47,14 @@ const individualSchema = new Schema({
     org_id: {
         type: String
     },
+    sub_status: {
+        type: String,
+        required: true
+    },
+    sub_code: {
+        type: String,
+        required: false
+},
     tic: {
         type:String,
     },

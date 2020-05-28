@@ -191,7 +191,10 @@ export default class Home extends Component{
                                                                                 const user_state = res.data[0].state;
                                                                                 const user_status = res.data[0].status;
                                                                                 const lastLogin = res.data[0].lastLogin;
-                                                                                const org_type = res.data[0].org_type
+                                                                                const org_type = res.data[0].org_type;
+                                                                                const sub_status = res.data[0].sub_status;
+                                                                                const sub_code = res.data[0].sub_code;
+
 
                                                                                 //console.log(User.password);
                                                                                 const user_data = {
@@ -219,7 +222,8 @@ export default class Home extends Component{
                                                                                                 state: user_state,  
                                                                                                 status: user_status,
                                                                                                 lastLogin: lastLogin,
-                                                                                                org_type: org_type
+                                                                                                org_type: org_type,
+                                                                                                sub_status: sub_status
                                                                                                 }
                                                                                              
                                                                                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));

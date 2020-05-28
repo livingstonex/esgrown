@@ -6,9 +6,14 @@ const subscriptionRMSchema = new Schema({
         type: String,
         required: true
     },
-    sub_status:{
-        type: String,
+    sub_status: {
+    type: String,
+    required: true
     },
+    sub_code: {
+    type: String,
+    required: false
+},
     user_email:{
         type: String,
         required:true
@@ -30,10 +35,6 @@ const subscriptionRMSchema = new Schema({
         required: true
     },
     ref:{
-        type: String,
-        required: false
-    },
-    plan_code:{
         type: String,
         required: false
     }

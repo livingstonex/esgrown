@@ -16,29 +16,30 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const [payModal, setPayModal] = useState(false);
     const [spinner, setSpinner] = useState(false)
     const [staff, setStaff] = useState(false);
-    const [staffModal,setStaffModal] = useState(false)
+    const [staffModal, setStaffModal] = useState(false)
+    const [total, setTotal] = useState();
     
 
-    const [state, setState] = useState({
-        companyName: '',
-        email: '',
-        doi: ''
-    });
+    // const [state, setState] = useState({
+    //     companyName: '',
+    //     email: '',
+    //     doi: ''
+    // });
 
     useEffect(() => {
         const userr = JSON.parse(sessionStorage.getItem('key'));
         setUser(userr)
     }, []);
 
-    const handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+    // const handleChange = (e) => {
+    //     const name = e.target.name;
+    //     const value = e.target.value;
 
-        setState({
-            ...state,
-            [name]: value
-        })
-    }
+    //     setState({
+    //         ...state,
+    //         [name]: value
+    //     })
+    // }
 
     const onChangePlan = (e) => {
         const plan = e.target.value.split('/');
@@ -52,33 +53,33 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     }
 
     //get total amount * number of staff and sub
-    const closeStaffModal = (subamount) => {
+    const closeStaffModal = (plantotal) => {
         setStaffModal(false);
-        setAmount(subamount);
+        setTotal(plantotal);
         setPayModal(true);
+        // setState()
     }
 
-    console.log(amount);
-    const subscribe = () => {
-        const subData = {
-            company_id: user.id,
-            company_name: state.companyName,
-            doi: state.doi,
-            email: state.email,
-            service: "RM",
-            plan_code: plan ? plan : null
-        }
 
-        axios.post(`http://localhost:5000/corporatesubscriptions/add`, subData)
-            .then(res => {
-                if (res.data) {
-                    closeModal();
-                    setPayModal(true);
-                }
-            }).catch(err => console.log(err))
+    // const subscribe = () => {
+    //     const subData = {
+    //         company_id: user.id,
+    //         company_name: state.companyName,
+    //         doi: state.doi,
+    //         email: state.email,
+    //         service: "RM",
+    //         plan_code: plan ? plan : null
+    //     }
 
-    }
+    //     axios.post(`http://localhost:5000/corporatesubscriptions/add`, subData)
+    //         .then(res => {
+    //             if (res.data) {
+    //                 closeModal();
+    //                 setPayModal(true);
+    //             }
+    //         }).catch(err => console.log(err))
 
+    // }
 
 
     //payment functions
@@ -100,6 +101,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
             .catch(err => console.log(err));
     }
 
+    console.log(total);
 
 
     return (
@@ -167,8 +169,8 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                 onHide={() => setPayModal(false)}
                 close={close}
                 callback={onSuccess}
-                email={state.email}
-                amount={amount}
+                email={user ? user.email:""}
+                amount={total}
                 plan={plan}
             />
 

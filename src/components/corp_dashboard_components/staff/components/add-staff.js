@@ -10,7 +10,7 @@ import toast from '../../../../util/toast';
 
 
 
-const AddStaff = ({ show, onHide, closeModal, refreshStaff }) => {
+const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {} }) => {
 
 
 
@@ -39,9 +39,6 @@ const AddStaff = ({ show, onHide, closeModal, refreshStaff }) => {
     };
 
     const notify = (message, type) => toast(message, type);
-
-
-    console.log(data)
 
 
     //send data to server
@@ -73,9 +70,14 @@ const AddStaff = ({ show, onHide, closeModal, refreshStaff }) => {
 
         axios.post('http://localhost:5000/individuals/check_email', submitData)
             .then(res => {
-                if (res.data.length > 0) {
+                console.log(res.data.length);
+
+                if(res.data.length > 0) {
                     //display a flash message that user already exists
-                    notify("User already exists", "warn");
+                    notify("User with this email already exists", "warn");
+                    const addExistinUser = window.confirm("would you like to add this user as your staff");
+
+                    console.log(addExistinUser);
                     setData({
                         name: '',
                         email: '',
@@ -83,24 +85,23 @@ const AddStaff = ({ show, onHide, closeModal, refreshStaff }) => {
                         gender: ''
                     });
                     setSpinner(false);
-                } else {
+                };
+                if(res.data.length == 0) {
                     axios.post('http://localhost:5000/individuals/add', submitData)
                         .then(res => {
                             if (res.data) {
                                 notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} added successful`, 'success')
                                 setSpinner(false);
                                 closeModal();
-
+                                refreshStaff();
                             }
                         })
-                        .catch(err => notify('An error occurred please try again', 'error'));
+                        .catch(err => notify(err.message, 'error'));
 
-                }
+                };
             })
             .catch(err => notify(err, 'error'));
         
-        refreshStaff()
-
     }
 
 
