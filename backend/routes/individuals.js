@@ -61,6 +61,8 @@ router.route('/login_email').post((req, res) => {
     Individual.find({ email: req.body.email })
         .then(indi => {
             res.json(indi);
+            // console.log(indi);
+            
         })
         .catch(err => res.json("Error: " + err));
 });
@@ -86,27 +88,12 @@ router.route('/login').post((req, res) => {
         
     })
 
-
-    //check sub status from paystack and update
-    // axios.get(`https://api.paystack.co/subscription`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" }})
-    //     .then(res => {
-    //         const client = res.data.data.filter(st => {
-    //             return st.customer.email === 'aatehilla@gmail.com'
-    //         })
-    //         const status = client[0].status;
-    //         const subCode = client[0].subscription_code;
-
-    //         console.log(client[0].status)
-    //     })
-    //     .catch(err => console.log(err));
-    // console.log(res.data.data[0].customer.email)
     try {
         const equal = bcrypt.compareSync(normal_password, hash_password);
         if (equal) {
             res.json(1);
             Individual.find({ email: email })
                 .then(res =>
-                    
                     res.updateOne({ lastLogin: lastLogin })
                         .then(res => res.json('LastLogin Updated: ' + res))
                         .catch(err => res.json('ERr: ' + err)),
@@ -118,10 +105,27 @@ router.route('/login').post((req, res) => {
         res.json(error)
     }
 
-    // Individual.find({email:req.body.email})
-    //             .then(individual => res.json(individual))
-    //             .catch(error => {res.status(400).json("Error: " + error)});
 });
+
+// Test Login
+router.route('/login').post((req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    Individual.findOne({ email: email })
+        .then(res => {
+            if (bcrypt.compareSync(password, res.password)) {
+                res.json('Login Successful');
+                res.json(res);
+            } else {
+                res.json('Login Failed');
+                res.json(res);
+            }
+        })
+        .catch(err => res.status(400).json(err));
+
+});
+
 
 
 //------------- API Route for Individual Profile Update Data -------------------------

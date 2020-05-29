@@ -177,69 +177,70 @@ export default class Home extends Component{
                                                                 }
 
                                                                 //Make a post to the api route for login
-                                                                axios.post('http://localhost:5000/individuals/login_email', User)
-                                                                        .then(res => {
-                                                                            //console.log(res.data[0]._id);
-                                                                            if(res.data.length > 0){
-                                                                                const id = res.data[0]._id;
-                                                                                const user_name = res.data[0].fullname;
-                                                                                const user_email = res.data[0].email;
-                                                                                const user_phone = res.data[0].phone;
-                                                                                const user_gender = res.data[0].gender;
-                                                                                const user_dob = res.data[0].dob;
-                                                                                const user_country = res.data[0].country;
-                                                                                const user_state = res.data[0].state;
-                                                                                const user_status = res.data[0].status;
-                                                                                const lastLogin = res.data[0].lastLogin;
-                                                                                const org_type = res.data[0].org_type;
-                                                                                const sub_status = res.data[0].sub_status;
-                                                                                const sub_code = res.data[0].sub_code;
+                                                                // axios.post('http://localhost:5000/individuals/login_email', User)
+                                                                //         .then(res => {
+                                                                //             //console.log(res.data[0]._id);
+                                                                //             if(res.data.length > 0){
+                                                                //                 const id = res.data[0]._id;
+                                                                //                 const user_name = res.data[0].fullname;
+                                                                //                 const user_email = res.data[0].email;
+                                                                //                 const user_phone = res.data[0].phone;
+                                                                //                 const user_gender = res.data[0].gender;
+                                                                //                 const user_dob = res.data[0].dob;
+                                                                //                 const user_country = res.data[0].country;
+                                                                //                 const user_state = res.data[0].state;
+                                                                //                 const user_status = res.data[0].status;
+                                                                //                 const lastLogin = res.data[0].lastLogin;
+                                                                //                 const org_type = res.data[0].org_type;
+                                                                //                 const sub_status = res.data[0].sub_status;
+                                                                //                 const sub_code = res.data[0].sub_code;
 
 
-                                                                                //console.log(User.password);
-                                                                                const user_data = {
-                                                                                    email: res.data[0].email,
-                                                                                    hash_password:res.data[0].password,
-                                                                                    normal_password: User.password
-                                                                                }
-                                                                                axios.post('http://localhost:5000/individuals/login', user_data)
-                                                                                        .then(res => {
-                                                                                            if(res.data == 1){
-                                                                                                alert("Login Successfull");
+                                                                //                 //console.log(User.password);
+                                                                //                 const user_data = {
+                                                                //                     email: res.data[0].email,
+                                                                //                     hash_password:res.data[0].password,
+                                                                //                     normal_password: User.password
+                                                                //                 }
+                                                                //                 axios.post('http://localhost:5000/individuals/login', user_data)
+                                                                //                         .then(res => {
+                                                                //                             if(res.data == 1){
+                                                                //                                 alert("Login Successfull");
                                                                                                 
-                                                                                                //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
-                                                                                               context.setUserAuthData(true);
+                                                                //                                 //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
+                                                                //                                context.setUserAuthData(true);
                                                                                               
-                                                                                               const GlobalUser = {
-                                                                                                isLogged: true,
-                                                                                                id: id,
-                                                                                                email: user_email,
-                                                                                                name: user_name,  
-                                                                                                phone: user_phone,
-                                                                                                gender: user_gender,
-                                                                                                dos: user_dob,
-                                                                                                country: user_country,
-                                                                                                state: user_state,  
-                                                                                                status: user_status,
-                                                                                                lastLogin: lastLogin,
-                                                                                                org_type: org_type,
-                                                                                                sub_status: sub_status
-                                                                                                }
+                                                                //                                const GlobalUser = {
+                                                                //                                 isLogged: true,
+                                                                //                                 id: id,
+                                                                //                                 email: user_email,
+                                                                //                                 name: user_name,  
+                                                                //                                 phone: user_phone,
+                                                                //                                 gender: user_gender,
+                                                                //                                 dos: user_dob,
+                                                                //                                 country: user_country,
+                                                                //                                 state: user_state,  
+                                                                //                                 status: user_status,
+                                                                //                                 lastLogin: lastLogin,
+                                                                //                                 org_type: org_type,
+                                                                //                                 sub_status: sub_status
+                                                                //                                 }
                                                                                              
-                                                                                               sessionStorage.setItem("key", JSON.stringify(GlobalUser));
-                                                                                               console.log(JSON.parse(sessionStorage.getItem("key")) );
+                                                                //                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));
+                                                                //                                console.log(JSON.parse(sessionStorage.getItem("key")) );
 
-                                                                                               window.location = "/frontier";
-                                                                                            }else{
-                                                                                                alert("Password wrong, please try again");
-                                                                                            }
-                                                                                        })
-                                                                                        .catch(err => console.log("Error here is: "+err));
-                                                                            }else{
-                                                                                alert("Your email address is not correct");
-                                                                            }
-                                                                        })
-                                                                        .catch(error => {console.log("Error is: " + error)});
+                                                                //                                window.location = "/frontier";
+                                                                //                             }else{
+                                                                //                                 alert("Password wrong, please try again");
+                                                                //                             }
+                                                                //                         })
+                                                                //                         .catch(err => console.log("Error here is: "+err));
+                                                                //             }else{
+                                                                //                 alert("Your email address is not correct");
+                                                                                
+                                                                //             }
+                                                                //         })
+                                                                //         .catch(error => {console.log("Error is: " + error)});
                                                                         this.setState({
                                                                             email:'',
                                                                             password:''
