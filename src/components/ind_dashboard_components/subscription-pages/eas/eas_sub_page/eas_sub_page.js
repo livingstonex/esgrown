@@ -83,9 +83,9 @@ class EasUpdateForm extends Component {
     render() {
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === false ? '#e68723' : '#97ba0d';
+        const sub_statusColor = this.state.sub_status === 'active' ? '#97ba0d':'#e68723'  ;
 
-        const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID';
+        const buttonText = this.state.sub_status === 'active' ? 'PAID' : 'PAY';
 
 
         return (

@@ -203,8 +203,10 @@ export default class Home extends Component{
                                                                                     normal_password: User.password
                                                                                 }
                                                                                 axios.post('http://localhost:5000/individuals/login', user_data)
-                                                                                        .then(res => {
-                                                                                            if(res.data == 1){
+                                                                                    .then(res => {
+                                                                                        if (res.data !== 'failed') {
+                                                                                            console.log(res.data)
+
                                                                                                 alert("Login Successfull");
                                                                                                 
                                                                                                 //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
@@ -212,18 +214,18 @@ export default class Home extends Component{
                                                                                               
                                                                                                const GlobalUser = {
                                                                                                 isLogged: true,
-                                                                                                id: id,
-                                                                                                email: user_email,
-                                                                                                name: user_name,  
-                                                                                                phone: user_phone,
-                                                                                                gender: user_gender,
-                                                                                                dos: user_dob,
-                                                                                                country: user_country,
-                                                                                                state: user_state,  
-                                                                                                status: user_status,
-                                                                                                lastLogin: lastLogin,
-                                                                                                org_type: org_type,
-                                                                                                sub_status: sub_status
+                                                                                                id: res.data[0]._id,
+                                                                                                email: res.data[0].email,
+                                                                                                name: res.data[0].fullname,  
+                                                                                                phone: res.data[0].phone,
+                                                                                                gender: res.data[0].gender,
+                                                                                                dos: res.data[0].dob,
+                                                                                                country: res.data[0].country,
+                                                                                                state: res.data[0].state,  
+                                                                                                status: res.data[0].status,
+                                                                                                lastLogin: res.data[0].lastLogin,
+                                                                                                org_type: res.data[0].org_type,
+                                                                                                sub_status: res.data[0].sub_status
                                                                                                 }
                                                                                              
                                                                                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));

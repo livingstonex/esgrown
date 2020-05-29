@@ -124,15 +124,42 @@ export default function Form(props) {
         console.log(res);
         setModalPayShow(false);
 
-        const data = {
-            ref: res.reference,
-            sub_status: true,
-            plan_code: subPlan
-        }
-        //make axios call to update user reference
-        axios.post(`http://localhost:5000/subscriptionefa/update/efaref/${userId}`, data)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        //make a call to https://api.paystack.co/subscription and get all subscription 
+        //and filter for email of current subscription and extract subscription code.
+        //update individual doc with the gotten data.
+
+        axios.get(`https://api.paystack.co/subscription`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+            .then(res => {
+                const client = res.data.data.filter(st => {
+                    return st.customer.email === useremail
+                })
+
+                const data = {
+                    ref: res.reference,
+                    sub_status: client[0].status,
+                    sub_code: client[0].subscription_code
+                }
+
+                //update eas substatus
+                axios.post(`http://localhost:5000/subscriptionefa/update/easref/${userId}`, data)
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+
+
+                //update user details
+                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, data)
+                    .then(res => {
+                        const globalUser = JSON.parse(sessionStorage.getItem('key'));
+
+                        globalUser.sub_status = client[0].status;
+
+                        sessionStorage.setItem('key', JSON.stringify(globalUser));
+                        setButton(1)
+
+                    }).catch(err => console.log(err))
+
+            }).catch(err => console.log(err));
+
 
     }
 

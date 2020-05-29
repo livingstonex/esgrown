@@ -4,6 +4,7 @@ import { AuthContext } from "../AuthContext";
 import IndividualDashboard from "./individual_dashboard";
 import CorporateDashboard from "./corporate_dashboard";
 import AdminDashboard from './admin_dashboard';
+import toast from '../util/toast';
 
 
 
@@ -23,6 +24,9 @@ export default class Frontier extends Component {
 
         if (!(u.isLogged)) {
             window.location = "/"
+        }
+        if (u.sub_status === 'completed') {
+            toast('your subscription has expired. Please pay to continue to receive service','info')
         }
         console.log(u)
     }

@@ -132,10 +132,10 @@ export default class CorporateLogin extends Component{
                                                         .catch(error => toast(`Error is: "  ${error}`, 'error'));
                                                 } else {
                                                     // alert("Your email address is not correct");
-                                                    toast("Your email address is not correct",'warn')
+                                                    toast("Your email address is not incorrect",'warn')
                                                 }
                                             })
-                                            .catch(error => toast(`Error is: "  ${error}`, 'error'));
+                                            .catch(error => toast(`Error is:  ${error}`, 'error'));
                                                 
 
                                         //Reset the textfields to show blank by emptying the state

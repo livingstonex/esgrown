@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Spinner, Form, Button } from 'react-bootstrap';
-import AddStaff from '../../../corp_dashboard_components/staff/components/add-staff'
+import AddStaff from '../../../corp_dashboard_components/staff/components/add-staff';
+
 
 
 
@@ -11,25 +12,23 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
     const [company, setCompany] = useState()
     const [companystaff, setCompanystaff] = useState([])
     const [addStaff, setAddStaff] = useState(false);
-    // const [subscriptionTotal, setSubscriptionTotal] = useState();
 
 
     useEffect(() => { 
         const company = JSON.parse(sessionStorage.getItem('key'))
         setCompany(company);
 
-        // //make a request quest and get all company/school that are not subscribed for staff for subscription
+        // //make a request quest and get all company/school staff with sub inactive for subscription
         axios.get(`http://localhost:5000/individuals/staff/${company.id}`)
             .then(res => {
                 const unsubscribedStaff = res.data.filter(staff => {
-                    return staff.sub_status === false;
+                    return staff.sub_status === 'inactive';
                 })
                 setCompanystaff(unsubscribedStaff);
             })
             .catch(err => console.log(err));
 
     }, []);
-
 
 
     const refreshStaff = () => {
@@ -43,10 +42,11 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
 
     }
 
+
     return (
         <>
             <Modal show={show} onHide={onHide} centered>
-                <Modal.Header>
+                <Modal.Header >
                     <Modal.Title>Number of Staff: {companystaff.length}</Modal.Title>
                     <Modal.Title>
                         <button

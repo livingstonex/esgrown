@@ -10,9 +10,9 @@ router.route('/add').post((req, res) => {
     const highest_level_of_education = req.body.highest_level_of_education;
     const nature_of_work_business = req.body.nature_of_work_business;
     const ref = req.body.ref;
-    const plan_code = req.body.plan_code;
+    const sub_code = req.body.sub_code;
 
-    const newSubscriptionLM = new LM({user_id, sub_status, user_name, user_email, user_status, highest_level_of_education, nature_of_work_business, ref, plan_code});
+    const newSubscriptionLM = new LM({ user_id, sub_status, user_name, user_email, user_status, highest_level_of_education, nature_of_work_business, ref, sub_code});
 
     newSubscriptionLM.save()
         .then((sub) => res.json(sub))
@@ -54,7 +54,7 @@ router.route(`/update/lmref/:id`).post((req, res) => {
         {  
             ref: req.body.ref,
             sub_status: req.body.sub_status,
-            plan_code: req.body.plan_code
+            sub_code: req.body.sub_code
         }
         ).then(lm => res.json(lm))
                         .catch(err => res.json('Err: ' + err));

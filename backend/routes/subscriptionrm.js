@@ -10,9 +10,9 @@ router.route('/add').post((req, res) => {
     const highest_level_of_education = req.body.highest_level_of_education;
     const field_of_training = req.body.field_of_training;
     const ref = req.body.ref;
-    const plan_code = req.body.plan_code;
+    const sub_code = req.body.sub_code;
 
-    const newSubscriptionRM = new RM({user_id, sub_status, user_name, user_email, user_status, highest_level_of_education, field_of_training, ref, plan_code});
+    const newSubscriptionRM = new RM({user_id, sub_status, user_name, user_email, user_status, highest_level_of_education, field_of_training, ref, sub_code});
 
     newSubscriptionRM.save()
         .then((sub) => res.json(sub))
@@ -41,7 +41,7 @@ router.route(`/update/:id`).post((req, res) => {
                         {  
                         highest_level_of_education: req.body.highest_level_of_education,
                         field_of_training: req.body.field_of_training,
-                        plan_code: req.body.plan_code
+                        sub_code: req.body.sub_code
                         } 
                     ).then(rm => res.json(rm))
                     .catch(err => res.json('Err: ' + err));
@@ -56,7 +56,7 @@ router.route(`/update/rmref/:id`).post((req, res) => {
         {  
             ref: req.body.ref,
             sub_status: req.body.sub_status,
-            plan_code: req.body.plan_code
+            sub_code: req.body.sub_code
         }
         ).then(rm => res.json(rm))
                         .catch(err => res.json('Err: ' + err));

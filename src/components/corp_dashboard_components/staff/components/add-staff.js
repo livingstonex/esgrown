@@ -10,7 +10,7 @@ import toast from '../../../../util/toast';
 
 
 
-const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {} }) => {
+const AddStaff = ({ show, onHide, closeModal = () => { }, refreshStaff = () => { } }) => {
 
 
 
@@ -43,7 +43,7 @@ const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {}
 
     //send data to server
     const createUser = () => {
-        
+
         setSpinner(true)
 
         const tic = user.org_type === 'school' ? md5(data.email).substring(0, 8).toUpperCase() : null;
@@ -63,6 +63,7 @@ const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {}
             org_type: user.org_type,
             org_name: user.org_name,
             org_id: user.id,
+            sub_status: 'inactive',
             tic: tic
 
         }
@@ -70,14 +71,29 @@ const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {}
 
         axios.post('http://localhost:5000/individuals/check_email', submitData)
             .then(res => {
-                console.log(res.data.length);
 
-                if(res.data.length > 0) {
-                    //display a flash message that user already exists
-                    notify("User with this email already exists", "warn");
-                    const addExistinUser = window.confirm("would you like to add this user as your staff");
+                if (res.data.length > 0) {
 
-                    console.log(addExistinUser);
+                    if (res.data.org_name != null) {
+                        const addExistinUser = window.confirm("A user with this email already exist. Would you like to add this user as your staff");
+
+                        if (addExistinUser) {
+                            //get the details of the user with this email and populate the form field
+                            axios.post('http://localhost:5000/individuals/add', submitData)
+                                .then(res => {
+                                    if (res.data) {
+                                        notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} added successful`, 'success')
+                                        setSpinner(false);
+                                        closeModal();
+                                        refreshStaff();
+                                    }
+                                })
+                                .catch(err => notify(err.message, 'error'));
+                        } 
+                    }
+                    
+                        notify("User with this email already exists", "warn");
+
                     setData({
                         name: '',
                         email: '',
@@ -86,7 +102,7 @@ const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {}
                     });
                     setSpinner(false);
                 };
-                if(res.data.length == 0) {
+                if (res.data.length == 0) {
                     axios.post('http://localhost:5000/individuals/add', submitData)
                         .then(res => {
                             if (res.data) {
@@ -101,7 +117,7 @@ const AddStaff = ({ show, onHide, closeModal = () => {}, refreshStaff = () => {}
                 };
             })
             .catch(err => notify(err, 'error'));
-        
+
     }
 
 

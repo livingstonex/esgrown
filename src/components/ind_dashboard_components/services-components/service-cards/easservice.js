@@ -9,7 +9,7 @@ import axios from 'axios';
 const EASService = () => {
 
     const [spinner, setSpinner] = useState(true)
-    const [data, setData] = useState("")
+    const [data, setData] = useState([])
 
 
     //get data from api
@@ -19,21 +19,21 @@ const EASService = () => {
         axios.get(`http://localhost:5000/servicecontenteas/`)
             .then(res => {
 
-                if (user.status === "individual" && user.org_type === "school") {
+                if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
 
                     const teacherData = res.data.filter(d => {
                         return d.user_class === 'teacher'
                     })
                     setData(teacherData);
 
-                } else if (user.status === 'individual' && user.org_type === "company") {
+                } else if (user.status === 'individual' && user.org_type === "company" && user.sub_status === "active") {
 
                     const staffData = res.data.filter(d => {
                         return d.user_class === 'company-staff'
                     })
                     setData(staffData);
 
-                } else if (user.status === 'individual' && user.org_type === null) {
+                } else if (user.status === 'individual' && user.org_type === null ) {
 
                     const indiv = res.data.filter(d => {
                         return d.user_class === 'individual'

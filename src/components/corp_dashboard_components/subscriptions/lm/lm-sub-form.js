@@ -18,7 +18,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const [staff, setStaff] = useState(false);
     const [staffModal, setStaffModal] = useState(false)
     const [total, setTotal] = useState();
-    
+
 
     // const [state, setState] = useState({
     //     companyName: '',
@@ -91,14 +91,6 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const onSuccess = (res) => {
         setPayModal(false);
 
-        const data = {
-            ref: res.reference,
-        }
-
-        //make axios call an update ref and sub status
-        axios.post(`http://localhost:5000/corporatesubscriptions/update/ref/${user.id}`, data)
-            .then(res => alert('Your payment has been received'))
-            .catch(err => console.log(err));
     }
 
     console.log(total);
@@ -169,7 +161,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                 onHide={() => setPayModal(false)}
                 close={close}
                 callback={onSuccess}
-                email={user ? user.email:""}
+                email={user ? user.email : ""}
                 amount={total}
                 plan={plan}
             />

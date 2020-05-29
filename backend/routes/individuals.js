@@ -46,7 +46,7 @@ router.route('/add').post((req, res) => {
     const sub_status = req.body.sub_status;
     const lastLogin = Date.parse(new Date());
 
-    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin,sub_status });
+    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin, sub_status });
 
     newIndividual.save()
         .then((individ) => res.json(individ))
@@ -72,55 +72,47 @@ router.route('/login').post((req, res) => {
     const normal_password = req.body.normal_password;
     const lastLogin = Date.parse(new Date());
 
-    Individual.find({ email: email }).then(ind => {
-        if (ind.sub_code !== '') {
-            axios.get(`https://api.paystack.co/subscription/SUB_a42gbxvmpsiq3ga`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
-                .then(res => {
-                    ind.updateOne(
-                        { sub_status: res.data.data.status },
-                        { returnOriginal: false }
-                    ).then(res => {console.log(res) }).catch(err => console.log(err))
-                }).catch(err => console.log(err))
-            
-        }
-        
-    })
 
-
-    //check sub status from paystack and update
-    // axios.get(`https://api.paystack.co/subscription`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" }})
-    //     .then(res => {
-    //         const client = res.data.data.filter(st => {
-    //             return st.customer.email === 'aatehilla@gmail.com'
-    //         })
-    //         const status = client[0].status;
-    //         const subCode = client[0].subscription_code;
-
-    //         console.log(client[0].status)
-    //     })
-    //     .catch(err => console.log(err));
-    // console.log(res.data.data[0].customer.email)
     try {
         const equal = bcrypt.compareSync(normal_password, hash_password);
         if (equal) {
-            res.json(1);
             Individual.find({ email: email })
-                .then(res =>
-                    
-                    res.updateOne({ lastLogin: lastLogin })
-                        .then(res => res.json('LastLogin Updated: ' + res))
-                        .catch(err => res.json('ERr: ' + err)),
-                ).catch(err => res.json('Error: ' + err));
+                .then(ind => {
+                    if (ind.sub_code != null) {
+                        axios.get(`https://api.paystack.co/subscription/${ind.sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+                            .then(res => {
+                                ind.update(
+                                    { sub_status: res.data.data.status, lastLogin: lastLogin },
+                                    { returnOriginal: false }
+                                ).then(res => res.json(res)).catch(err => console.log(err))
+                            }).catch(err => console.log(err))
+                    } else {
+
+                        res.json(ind);
+
+                    }
+                })
+
         } else {
-            res.json(0);
+            res.json("failed");
         }
     } catch (error) {
         res.json(error)
     }
 
-    // Individual.find({email:req.body.email})
-    //             .then(individual => res.json(individual))
-    //             .catch(error => {res.status(400).json("Error: " + error)});
+});
+
+router.route(`/update/substatus/:id`).post((req, res) => {
+    Individual.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            ref: req.body.ref,
+            sub_status: req.body.sub_status,
+            sub_code: req.body.sub_code
+        }
+    ).then(es => res.json(es))
+        .catch(err => res.json('Err: ' + err));
+
 });
 
 
