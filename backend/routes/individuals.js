@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Individual = require('../models/individual.model');
+let Corporate = require('../models/corporate.model');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
 
@@ -46,7 +47,7 @@ router.route('/add').post((req, res) => {
     const sub_status = req.body.sub_status;
     const lastLogin = Date.parse(new Date());
 
-    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin,sub_status });
+    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin, sub_status });
 
     newIndividual.save()
         .then((individ) => res.json(individ))
@@ -55,76 +56,113 @@ router.route('/add').post((req, res) => {
 });
 
 
-//Check if Login Email exists
-router.route('/login_email').post((req, res) => {
+// Universal Login
+router.route('/login').post((req, res) => {
+    const email = req.body.email;
     const password = req.body.password;
+
+    // Individual Login
     Individual.find({ email: req.body.email })
-        .then(indi => {
-            res.json(indi);
-            // console.log(indi);
-            
-        })
-        .catch(err => res.json("Error: " + err));
-});
+        .then(ind => {
+            if(ind.length != 0){
+                if(bcrypt.compareSync(password, ind[0].password)){
+                    console.log("Password Correct");
+                    const lastLogin = Date.parse(new Date());
+                    // res.json(ind);
+                    if(ind[0].sub_code != null){
+                        axios.get(`https://api.paystack.co/subscription/${ind[0].sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+                                .then(res => {
+                                    console.log("paystack just responded")
+                                    ind.update(
+                                        { sub_status: res.data.data.status, lastLogin: lastLogin },
+                                        { returnOriginal: false }
+                                    ).then(update_res => {
+                                        console.log(update_res) 
+                                        console.log("Updated then, " + ind)
+                                        res.json(ind)
+                                    }).catch(err => console.log(err));
+                                }).catch(err => console.log(err));
+                    }else{
+                        res.json(ind);
+                    }
+                }else{
+                    // Password is wrong
+                    console.log("Password wrong");
+                    res.json([]);
+                }
 
-//Login Route
-router.route('/login').post((req, res) => {
-    const email = req.body.email;
-    const hash_password = req.body.hash_password;
-    const normal_password = req.body.normal_password;
-    const lastLogin = Date.parse(new Date());
+            }else{ 
+                // CORPORATE
+                // Make Login Check for Corporate too
+                Corporate.find({ email: req.body.email })
+                    .then(corp => {
+                        if(corp.length != 0){
+                            if(bcrypt.compareSync(password, corp[0].password)){
+                                console.log("Password Correct");
+                                const lastLogin = Date.parse(new Date());
+                                // res.json(ind);
+                                if(corp[0].sub_code != null){
+                                    axios.get(`https://api.paystack.co/subscription/${corp[0].sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+                                            .then(res => {
+                                                console.log("paystack just responded")
+                                                corp.update(
+                                                    { sub_status: res.data.data.status, lastLogin: lastLogin },
+                                                    { returnOriginal: false }
+                                                ).then(update_res => {
+                                                    console.log(update_res) 
+                                                    console.log("Updated then, " + corp)
+                                                    res.json(corp)
+                                                }).catch(err => console.log(err));
+                                            }).catch(err => console.log(err));
+                                }else{
+                                    res.json(corp);
+                                }
+                            }else{
+                                // Password is wrong
+                                console.log("Password wrong");
+                                res.json([]);
+                            }
 
-    Individual.find({ email: email }).then(ind => {
-        if (ind.sub_code !== '') {
-            axios.get(`https://api.paystack.co/subscription/SUB_a42gbxvmpsiq3ga`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
-                .then(res => {
-                    ind.updateOne(
-                        { sub_status: res.data.data.status },
-                        { returnOriginal: false }
-                    ).then(res => {console.log(res) }).catch(err => console.log(err))
-                }).catch(err => console.log(err))
-            
-        }
-        
-    })
+                        }else{ 
+                            // Email does not exist in the Two collections
+                            res.json([])
+                            // res.json(ind);
+                            // Make Login for Corporate too
 
-    try {
-        const equal = bcrypt.compareSync(normal_password, hash_password);
-        if (equal) {
-            res.json(1);
-            Individual.find({ email: email })
-                .then(res =>
-                    res.updateOne({ lastLogin: lastLogin })
-                        .then(res => res.json('LastLogin Updated: ' + res))
-                        .catch(err => res.json('ERr: ' + err)),
-                ).catch(err => res.json('Error: ' + err));
-        } else {
-            res.json(0);
-        }
-    } catch (error) {
-        res.json(error)
-    }
+                        }
+                    }).catch(err => {
+                        console.log("catch" + err);
+                        res.json(err);
+                    });
+ // Ending for Corporate ======================================
 
-});
-
-// Test Login
-router.route('/login').post((req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-
-    Individual.findOne({ email: email })
-        .then(res => {
-            if (bcrypt.compareSync(password, res.password)) {
-                res.json('Login Successful');
-                res.json(res);
-            } else {
-                res.json('Login Failed');
-                res.json(res);
             }
-        })
-        .catch(err => res.status(400).json(err));
+        }).catch(err => {
+            console.log("catch" + err);
+            res.json(err);
+        });
+});
+
+
+router.route(`/update/substatus/:id`).post((req, res) => {
+    Individual.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            ref: req.body.ref,
+            sub_status: req.body.sub_status,
+            sub_code: req.body.sub_code
+        }
+    ).then(es => res.json(es))
+        .catch(err => res.json('Err: ' + err));
 
 });
+
+
+
+
+
+
+
 
 
 
@@ -167,7 +205,7 @@ router.route(`/update/country/:id`).post((req, res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Request Failed:  ' + err));
-});
+}); 
 
 router.route(`/update/state/:id`).post((req, res) => {
     Individual.findById(req.params.id)

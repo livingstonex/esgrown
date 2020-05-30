@@ -7,7 +7,7 @@ toast.configure({
     autoClose: 4000,
     hideProgressBar: true,
     autoClose: 5000,
-    hideProgressBar: false,
+    hideProgressBar: true,
 
     newestOnTop: false,
     closeOnClick: true,

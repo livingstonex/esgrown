@@ -48,36 +48,6 @@ router.route('/add').post((req, res) => {
 });
 
 
-//Check if Login Email exists
-router.route('/login_corporate_email').post((req, res) => {
-    const password = req.body.password;
-    Corporate.find({ email: req.body.email })
-        .then(corpp => {
-            res.json(corpp);
-        })
-        .catch(err => res.json("Error: " + err));
-});
-
-//Login Route
-router.route('/login_corporate').post((req, res) => {
-    const email = req.body.email;
-    const hash_password = req.body.hash_password;
-    const normal_password = req.body.normal_password;
-
-    try {
-        const equal = bcrypt.compareSync(normal_password, hash_password);
-        if (equal) {
-            res.json(1);
-        } else {
-            res.json(0);
-        }
-    } catch (error) {
-        res.json(error)
-    }
-
-});
-
-
 //------------------------------- API Route for Corporate Profile Update ---------------------
 router.route('/update/:id').post((req, res) => {
     Corporate.findById(req.params.id)

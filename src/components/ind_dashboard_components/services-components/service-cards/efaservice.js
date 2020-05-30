@@ -9,15 +9,36 @@ import axios from 'axios';
 const EFASService = () => {
 
     const [spinner, setSpinner] = useState(true)
-    const [data, setData] = useState("")
+    const [data, setData] = useState([])
 
 
     //get data from api
     useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('key'));
+
         axios.get(`http://localhost:5000/servicecontentefa/`)
             .then(res => {
-                setData(res.data);
-                console.log(res.data)
+                if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
+
+                    const teacherData = res.data.filter(d => {
+                        return d.user_class === 'teacher'
+                    })
+                    setData(teacherData);
+
+                } else if (user.status === 'individual' && user.org_type === "company" && user.sub_status === "active") {
+
+                    const staffData = res.data.filter(d => {
+                        return d.user_class === 'company-staff'
+                    })
+                    setData(staffData);
+
+                } else if (user.status === 'individual' && user.org_type === null) {
+
+                    const indiv = res.data.filter(d => {
+                        return d.user_class === 'individual'
+                    })
+                    setData(indiv);
+                }
                 setSpinner(false);
             })
             .catch(err => console.log(err))

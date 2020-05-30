@@ -193,7 +193,7 @@ export default class IndividualSignUp extends Component{
                                     </div>
                                     <div className="form-group">
                                         <label>Country:</label>
-                                        <input className="form-control" required type="text" onChange={this.onChangeCountry} value={this.state.org_name} placeholder="Select Country..."></input>
+                                        <input className="form-control" required type="text" onChange={this.onChangeCountry} value={this.state.country} placeholder="Select Country..."></input>
                                     </div>
                                     <div className="form-group">
                                         <label>Email:</label>
@@ -205,7 +205,7 @@ export default class IndividualSignUp extends Component{
                                     </div>
                                     <div className="form-group">
                                         <label>Confirm Password:</label>
-                                        <input className="form-control" required type="password" onChange={this.onChangePasswordConfirm} value={this.state.password} placeholder="Enter Password..."></input>
+                                        <input className="form-control" required type="password" onChange={this.onChangePasswordConfirm} value={this.state.confirmpassword} placeholder="Enter Password..."></input>
                                     </div>
                                     <div className="form-group">
                                         <label>Date of Incorporation:</label> <br/>

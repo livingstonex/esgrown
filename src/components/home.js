@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {AuthContext} from "../AuthContext";
+import toast from '../util/toast';
 
 import {Container, Col, Row, Form, Button, Jumbotron, Popover, OverlayTrigger} from "react-bootstrap";
 
@@ -83,6 +84,10 @@ export default class Home extends Component{
         //     password:''
         // });
     }
+
+    notify(message, type){ 
+        return toast(message, type);
+    } 
     render(){
          //Styles
         const styles = {
@@ -154,7 +159,8 @@ export default class Home extends Component{
                                         <Col className="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12"  >
                                             <Container style={formStyle} >
                                                 <br/>
-                                                <label style={{'fontWeight':'bold'}}>Sign In to your Individual Account</label>
+                                                <br/>
+                                                <label style={{'fontWeight':'bold'}}>SignIn to your Account</label>
                                                 <Form >
                                                     <Form.Group controlId="formBasicEmail">
                                                         <Form.Label>Email address:</Form.Label>
@@ -168,101 +174,101 @@ export default class Home extends Component{
                                                         <Form.Control type="password" required placeholder="Password" onChange={this.onChangePassword} value={this.state.password} />
                                                     </Form.Group>
                                                 
-                                                        <Button  variant="primary" type="submit" onClick={
+                                                        <Button  variant="primary btn-sm" type="submit" onClick={
                                                             (e)=>{
                                                                 e.preventDefault();
                                                                 const User = {
                                                                     email: this.state.email,
                                                                     password: this.state.password
                                                                 }
-
+                                                                // console.log(User);
+                                                                // axios.post('http://localhost:5000/individuals/login', User)
+                                                                //     .then(res => {
+                                                                //         console.log("Then Running");
+                                                                //         console.log( res );
+                                                                //     }).catch(e => {
+                                                                //         console.log("Catch Running");
+                                                                //         console.log("Error:" + e);
+                                                                //     });
+                                                            // ==========================================
                                                                 //Make a post to the api route for login
-                                                                // axios.post('http://localhost:5000/individuals/login_email', User)
-                                                                //         .then(res => {
-                                                                //             //console.log(res.data[0]._id);
-                                                                //             if(res.data.length > 0){
-                                                                //                 const id = res.data[0]._id;
-                                                                //                 const user_name = res.data[0].fullname;
-                                                                //                 const user_email = res.data[0].email;
-                                                                //                 const user_phone = res.data[0].phone;
-                                                                //                 const user_gender = res.data[0].gender;
-                                                                //                 const user_dob = res.data[0].dob;
-                                                                //                 const user_country = res.data[0].country;
-                                                                //                 const user_state = res.data[0].state;
-                                                                //                 const user_status = res.data[0].status;
-                                                                //                 const lastLogin = res.data[0].lastLogin;
-                                                                //                 const org_type = res.data[0].org_type;
-                                                                //                 const sub_status = res.data[0].sub_status;
-                                                                //                 const sub_code = res.data[0].sub_code;
+                                                                axios.post('http://localhost:5000/individuals/login', User)
+                                                                .then(res => {
+                                                                    if(res.data.length > 0){
+                                                                        console.log("data found")
+                                                                        //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
+                                                                           context.setUserAuthData(true);
 
+                                                                           if(res.data[0].status == 'individual'){
+                                                                            // Register the individula user in session storage
+                                                                            const GlobalUser = {
+                                                                                isLogged: true,
+                                                                                id: res.data[0]._id,
+                                                                                email: res.data[0].email,
+                                                                                name: res.data[0].fullname,  
+                                                                                phone: res.data[0].phone,
+                                                                                gender: res.data[0].gender,
+                                                                                dos: res.data[0].dob,
+                                                                                country: res.data[0].country,
+                                                                                state: res.data[0].state,  
+                                                                                status: res.data[0].status,
+                                                                                lastLogin: res.data[0].lastLogin,
+                                                                                org_type: res.data[0].org_type,
+                                                                                sub_status: res.data[0].sub_status
+                                                                                }
 
-                                                                //                 //console.log(User.password);
-                                                                //                 const user_data = {
-                                                                //                     email: res.data[0].email,
-                                                                //                     hash_password:res.data[0].password,
-                                                                //                     normal_password: User.password
-                                                                //                 }
-                                                                //                 axios.post('http://localhost:5000/individuals/login', user_data)
-                                                                //                         .then(res => {
-                                                                //                             if(res.data == 1){
-                                                                //                                 alert("Login Successfull");
-                                                                                                
-                                                                //                                 //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
-                                                                //                                context.setUserAuthData(true);
-                                                                                              
-                                                                //                                const GlobalUser = {
-                                                                //                                 isLogged: true,
-                                                                //                                 id: id,
-                                                                //                                 email: user_email,
-                                                                //                                 name: user_name,  
-                                                                //                                 phone: user_phone,
-                                                                //                                 gender: user_gender,
-                                                                //                                 dos: user_dob,
-                                                                //                                 country: user_country,
-                                                                //                                 state: user_state,  
-                                                                //                                 status: user_status,
-                                                                //                                 lastLogin: lastLogin,
-                                                                //                                 org_type: org_type,
-                                                                //                                 sub_status: sub_status
-                                                                //                                 }
-                                                                                             
-                                                                //                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));
-                                                                //                                console.log(JSON.parse(sessionStorage.getItem("key")) );
+                                                                                // Save Individual data to session Storage
+                                                                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));
+                                                                                console.log(JSON.parse(sessionStorage.getItem("key")) );
+                                                                                    this.setState({
+                                                                                        email:'',
+                                                                                        password:''
+                                                                                        });
+                                                                                window.location = "/frontier";
+                                                                           }else{
+                                                                            // Register the Corporate User in Session storage
+                                                                            const Global_CorpUser = {
+                                                                                 isLogged: true,
+                                                                                 id: res.data[0]._id,
+                                                                                 name: res.data[0].org_name,
+                                                                                 email: res.data[0].email,
+                                                                                 phone: res.data[0].phone,
+                                                                                 doi: res.data[0].doi,
+                                                                                 country: res.data[0].country,
+                                                                                 state: res.data[0].state,
+                                                                                 tatus: res.data[0].status,
+                                                                                 org_type: res.data[0].org_type
+            
+                                                                            }
+                                                                                // Save Individual data to session Storage
+                                                                                sessionStorage.setItem("key", JSON.stringify(Global_CorpUser));
+                                                                                console.log(JSON.parse(sessionStorage.getItem("key")) );
+                                                                                    this.setState({
+                                                                                        email:'',
+                                                                                        password:''
+                                                                                        });
+                                                                                window.location = "/frontier";
+                                                                           }
+                                                                           
 
-                                                                //                                window.location = "/frontier";
-                                                                //                             }else{
-                                                                //                                 alert("Password wrong, please try again");
-                                                                //                             }
-                                                                //                         })
-                                                                //                         .catch(err => console.log("Error here is: "+err));
-                                                                //             }else{
-                                                                //                 alert("Your email address is not correct");
-                                                                                
-                                                                //             }
-                                                                //         })
-                                                                //         .catch(error => {console.log("Error is: " + error)});
-                                                                        this.setState({
-                                                                            email:'',
-                                                                            password:''
-                                                                        });
+                                                                            
+                                                                    }else{
+                                                                        console.log("data not found");
+                                                                        this.notify("Email or Password is wrong", "error");
+                                                                    }
+                                                                })
+                                                                .catch(err => console.log("Error here is: "+err));
+
+                                                                // =======================
                                                                 }
                                                             }>
                                                         Login
                                                         </Button>
-                                                        <br/>
-                                                        <Form.Text className="text-muted">
-                                                        Are you a Corporate body? Login here:
-                                                        </Form.Text>
-                                                        <Link to="/corporate_login">
-                                                            <Button className="btn btn-primary btn-sm" variant="primary" style={{ 'font-size':'14px'}}>
-                                                                Corporate Login
-                                                            </Button>
-                                                        </Link>
-                                                    <br/>
+                                                       <br/>
                                                     <label>Forgot password? <Link to="/forgotPassword">Reset</Link></label>
                                                     <br/>
                                                     <OverlayTrigger trigger="click" placement="left" overlay={popover}>
-                                                        <Button variant="primary btn-sm" >Create and Esgrown Account</Button>
+                                                        <Button variant="primary btn-sm" >Create an Esgrown Account</Button>
                                                     </OverlayTrigger>
                                                 </Form>
                                                 <br/>

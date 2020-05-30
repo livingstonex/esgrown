@@ -12,9 +12,9 @@ router.route('/add').post((req, res) => {
     const field_of_intended_study = req.body.field_of_intended_study;
     const tic = req.body.tic;  
     const ref = req.body.ref;
-    const plan_code = req.body.plan_code;
+    const sub_code = req.body.sub_code;
 
-    const newSubscriptionEFA = new EFA({user_id, sub_status, user_name, user_email, user_status, levelofeducation, next_intended_education_level, field_of_intended_study, tic, ref, plan_code});
+    const newSubscriptionEFA = new EFA({ user_id, sub_status, user_name, user_email, user_status, levelofeducation, next_intended_education_level, field_of_intended_study, tic, ref, sub_code});
 
     newSubscriptionEFA.save()
         .then((sub) => res.json(sub))
@@ -55,7 +55,7 @@ router.route(`/update/efaref/:id`).post((req, res) => {
         {  
             ref: req.body.ref,
             sub_status: req.body.sub_status,
-            plan_code: req.body.plan_code
+            sub_code: req.body.sub_code
         }
         ).then(efa => res.json(efa))
                         .catch(err => res.json('Err: ' + err));
