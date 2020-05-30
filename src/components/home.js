@@ -210,8 +210,8 @@ export default class Home extends Component{
                                                                                                 alert("Login Successfull");
                                                                                                 
                                                                                                 //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
-                                                                                               context.setUserAuthData(true);
-                                                                                              
+                                                                                            context.setUserAuthData(true);
+                                                                                            
                                                                                                const GlobalUser = {
                                                                                                 isLogged: true,
                                                                                                 id: res.data[0]._id,

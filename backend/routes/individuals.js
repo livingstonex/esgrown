@@ -66,41 +66,41 @@ router.route('/login_email').post((req, res) => {
 });
 
 //Login Route
-router.route('/login').post((req, res) => {
-    const email = req.body.email;
-    const hash_password = req.body.hash_password;
-    const normal_password = req.body.normal_password;
-    const lastLogin = Date.parse(new Date());
+// router.route('/login').post((req, res) => {
+//     const email = req.body.email;
+//     const hash_password = req.body.hash_password;
+//     const normal_password = req.body.normal_password;
+//     const lastLogin = Date.parse(new Date());
 
 
-    try {
-        const equal = bcrypt.compareSync(normal_password, hash_password);
-        if (equal) {
-            Individual.find({ email: email })
-                .then(ind => {
-                    if (ind.sub_code != null) {
-                        axios.get(`https://api.paystack.co/subscription/${ind.sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
-                            .then(res => {
-                                ind.update(
-                                    { sub_status: res.data.data.status, lastLogin: lastLogin },
-                                    { returnOriginal: false }
-                                ).then(res => res.json(res)).catch(err => console.log(err))
-                            }).catch(err => console.log(err))
-                    } else {
+//     try {
+//         const equal = bcrypt.compareSync(normal_password, hash_password);
+//         if (equal) {
+//             Individual.find({ email: email })
+//                 .then(ind => {
+//                     if (ind.sub_code != null) {
+//                         axios.get(`https://api.paystack.co/subscription/${ind.sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+//                             .then(res => {
+//                                 ind.update(
+//                                     { sub_status: res.data.data.status, lastLogin: lastLogin },
+//                                     { returnOriginal: false }
+//                                 ).then(res => res.json(res)).catch(err => console.log(err))
+//                             }).catch(err => console.log(err))
+//                     } else {
 
-                        res.json(ind);
+//                         res.json(ind);
 
-                    }
-                })
+//                     }
+//                 })
 
-        } else {
-            res.json("failed");
-        }
-    } catch (error) {
-        res.json(error)
-    }
+//         } else {
+//             res.json("failed");
+//         }
+//     } catch (error) {
+//         res.json(error)
+//     }
 
-});
+// });
 
 router.route(`/update/substatus/:id`).post((req, res) => {
     Individual.findOneAndUpdate(
