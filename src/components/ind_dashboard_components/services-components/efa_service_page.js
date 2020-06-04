@@ -12,14 +12,13 @@ const EFAServicePage = () => {
 
     useEffect(() => {
         //get logged in user details
-        const userData = JSON.parse(sessionStorage.getItem('key'));
+        const user = JSON.parse(sessionStorage.getItem('key'));
 
-        //make request to api to get sub status
-        axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
-            .then(res => {
-                res.data[0].sub_status ? setPageEFA(1) : setPageEFA(2)
-            })
-            .catch(err => console.log(err));
+        if (user.sub_status_efa === 'active') {
+            setPageEFA(1)
+        } else {
+            setPageEFA(2)
+        }
 
     });
 
@@ -27,7 +26,7 @@ const EFAServicePage = () => {
         <div className="container">
             <div className="row">
                 <div className="col col-lg-12 col-sm-10">
-                    {(pageEFA === 0) ? <Spinner as="span" animation="grow" role="status" aria-hidden="true" /> : (pageEFA === 1) ? <EFAService /> : (pageEFA === 2) ? <EFAVideoCard /> : ""}
+                    {(pageEFA === 1) ? <EFAService /> : (pageEFA === 2) ? <EFAVideoCard /> : ""}
                 </div>
             </div>
         </div>

@@ -12,14 +12,13 @@ const RMServicePage = () => {
 
     useEffect(() => {
         //get logged in user details
-        const userData = JSON.parse(sessionStorage.getItem('key'));
+        const user = JSON.parse(sessionStorage.getItem('key'));
 
-        //make request to api to get sub status
-        axios.get(`http://localhost:5000/subscriptionerm/${userData.id}`)
-            .then(res => {
-                res.data[0].sub_status ? setpageRM(1) : setpageRM(2)
-            })
-            .catch(err => console.log(err));
+        if (user.sub_status_lm === 'active') {
+            setpageRM(1)
+        } else {
+            setpageRM(2)
+        }
 
     });
 
