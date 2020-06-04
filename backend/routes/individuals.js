@@ -78,7 +78,7 @@ router.route('/login').post((req, res) => {
                                         { returnOriginal: false }
                                     ).then(update_res => {
                                         console.log(update_res) 
-                                        console.log("Updated then, " + ind)
+                                        console.log("Updated then, " + ind);
                                         res.json(ind)
                                     }).catch(err => console.log(err));
                                 }).catch(err => console.log(err));
@@ -134,7 +134,7 @@ router.route('/login').post((req, res) => {
                         console.log("catch" + err);
                         res.json(err);
                     });
- // Ending for Corporate ======================================
+        // Ending for Corporate ======================================
 
             }
         }).catch(err => {

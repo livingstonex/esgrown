@@ -1,5 +1,7 @@
 import React, {Component, useContext} from "react";
 import {Link} from "react-router-dom";
+import logo from "../img/esgrown.png";
+import {Image} from 'react-bootstrap';
 
 import {AuthContext} from '../AuthContext'
 
@@ -20,6 +22,9 @@ export default class Navbar extends Component{
   componentDidMount(){
     const i = JSON.parse(sessionStorage.getItem("key"));
     const c = JSON.parse(sessionStorage.getItem("corp_key"));
+
+    console.log(i);
+    // console.log(c);
 
     if(i){
       this.setState({
@@ -53,9 +58,15 @@ export default class Navbar extends Component{
           <AuthContext.Consumer>
                     {
                         (context) => (
-                                      <nav class="navbar navbar-expand-lg navbar-light bg-light static-top ">
+                          // navbar-light bg-light static-top
+                                      <nav class="navbar navbar-expand-lg" style={{background:'transparent'}}>
                                       <div class="container">
-                                        <a class="navbar-brand" href="/">Esgrown</a>
+                                        <div class="d-flex justify-content-center align-items-center" style={{backgroundColor:'', borderRadius:'50%', width:'70px', height:'70px',}}>
+                                          <img src={logo} width="55" height="55"/>
+                                        </div>
+                                        {/* <a class="navbar-brand" style={{backgroundColor:'white', borderRadius:'50%'}} href="/"><img src={logo} width="60%"/></a> */}
+                                        {/* <Image src={logo}  width="70" height="70"/> */}
+                                        {/* <p style={{color:'red'}}>Esgrown</p> */}
                                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                                               <span class="navbar-toggler-icon"></span>
                                             </button>
@@ -65,7 +76,7 @@ export default class Navbar extends Component{
                                             </li>
                                             <li className="nav-item">
                                             {
-                                              (this.state.isLogged == true)? "":<Link className="nav-link" to="/about">About</Link>
+                                              // (this.state.isLogged == true)? "":<Link className="nav-link" to="/about">About</Link>
                                             }                                      
                                             </li>                                         
                                             <li class="nav-item">

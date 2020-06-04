@@ -23,7 +23,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
         <Route path="/" exact component={Home} />
         <Route path="/corporate_login" exact component={SignIn} />
         <Route path="/signup_individual" exact component={SignUp_Individual} />

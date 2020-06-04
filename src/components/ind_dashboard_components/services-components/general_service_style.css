@@ -1,0 +1,31 @@
+.left_col{
+    background: linear-gradient(180deg, rgba(76, 85, 168, 0.36) 14.16%, rgba(255, 255, 255, 0) 100%), #C4C4C4;
+    height: 610px;
+}
+
+.center_col{
+    height: 610px;
+}
+
+.right_col{
+    background: linear-gradient(180deg, rgba(76, 85, 168, 0.36) 14.16%, rgba(255, 255, 255, 0) 100%), #C4C4C4;
+    height: 610px;
+}
+
+.scroll{
+    overflow-y:auto;
+    height: fit-content;
+}
+
+.scroll::-webkit-scrollbar {display: none;}
+
+.body-text{
+    height: fit-content;
+}
+
+.gen_card{
+    border-bottom: 1px solid white;
+    height: fit-content;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
