@@ -53,12 +53,31 @@ router.route(`/update/easref/:id`).post((req, res) => {
         { user_id: req.params.id },
         {
             ref: req.body.ref,
-            sub_status: req.body.sub_status,
-            sub_code: req.body.sub_code
+            sub_status_eas: req.body.sub_status_eas,
+            sub_code_eas: req.body.sub_code_eas
         }
     ).then(es => res.json(es))
         .catch(err => res.json('Err: ' + err));
 
 });
+
+router.route(`/getsubcode/:id`).get((req, res) => {
+    EAS.find({
+        user_id: req.params.id
+    }).then(sub => {
+        if (sub[0].sub_status === 'active') {
+            res.json(sub[0].sub_code)
+        } else {
+            res.json([])
+        }
+    }).catch(err => res.status(400).json(err))
+});
+
+router.route(`/update/substatus/:id`).post((req, res) => {
+    EAS.findOneAndUpdate(
+        { user_id: req.params.id },
+        { sub_status: req.body.sub_status }
+    ).then(sub => res.json(sub)).catch(err => res.status(400).json(err))
+})
 
 module.exports = router;

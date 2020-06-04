@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 import PayStackButton from '../paystack/paystackpaymentbutton';
 import { Modal, Spinner } from 'react-bootstrap';
 import axios from 'axios';
+import toast from '../../../util/toast';
+
 
 
 
@@ -127,8 +129,8 @@ export default function Form(props) {
 
             const data = {
                 ref: res.reference,
-                sub_status: client[0].status,
-                sub_code: client[0].subscription_code
+                sub_status_eas: client[0].status,
+                sub_code_eas: client[0].subscription_code
             }
 
             //update eas substatus

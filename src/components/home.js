@@ -228,93 +228,82 @@ export default class Home extends Component{
                                                                 }
                                                             // ==========================================
                                                                 //Make a post to the api route for login
-                                                                try {
-                                                                        this.setLoading();
-                                                                        axios.post('http://localhost:5000/individuals/login', User)
-                                                                            .then(res => {
-                                                                                if(res.data.length > 0){
-                                                                                    console.log("data found")
-                                                                                    //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
-                                                                                    context.setUserAuthData(true);
+                                                                axios.post('http://localhost:5000/individuals/login', User)
+                                                                    .then(res => {
+                                                                    if(res.data.length > 0){
+                                                                        console.log("data found")
+                                                                        //UPDATE COMPONENT USER STATE HERE AND NAVIGATE TO THE DASHBOARD                                              
+                                                                           context.setUserAuthData(true);
 
-                                                                                    if(res.data[0].status == 'individual'){
-                                                                                        // Register the individula user in session storage
-                                                                                        const GlobalUser = {
-                                                                                            isLogged: true,
-                                                                                            id: res.data[0]._id,
-                                                                                            email: res.data[0].email,
-                                                                                            name: res.data[0].fullname,  
-                                                                                            phone: res.data[0].phone,
-                                                                                            gender: res.data[0].gender,
-                                                                                            dos: res.data[0].dob,
-                                                                                            country: res.data[0].country,
-                                                                                            state: res.data[0].state,  
-                                                                                            status: res.data[0].status,
-                                                                                            lastLogin: res.data[0].lastLogin,
-                                                                                            org_type: res.data[0].org_type,
-                                                                                            sub_status: res.data[0].sub_status
-                                                                                            }
+                                                                           if(res.data[0].status == 'individual'){
+                                                                            // Register the individula user in session storage
+                                                                            const GlobalUser = {
+                                                                                isLogged: true,
+                                                                                id: res.data[0]._id,
+                                                                                email: res.data[0].email,
+                                                                                name: res.data[0].fullname,  
+                                                                                phone: res.data[0].phone,
+                                                                                gender: res.data[0].gender,
+                                                                                dos: res.data[0].dob,
+                                                                                country: res.data[0].country,
+                                                                                state: res.data[0].state,  
+                                                                                status: res.data[0].status,
+                                                                                lastLogin: res.data[0].lastLogin,
+                                                                                org_type: res.data[0].org_type,
+                                                                                sub_status_eas: res.data[0].sub_status_eas,
+                                                                                sub_status_efa: res.data[0].sub_status_efa,
+                                                                                sub_status_lm: res.data[0].sub_status_lm,
+                                                                                sub_status_rm: res.data[0].sub_status_rm,
+                                                                                sub_status_compt_mgt: res.data[0].sub_status_compt_mgt,
 
-                                                                                            // Save Individual data to session Storage
-                                                                                            sessionStorage.setItem("key", JSON.stringify(GlobalUser));
-                                                                                            console.log(JSON.parse(sessionStorage.getItem("key")) );
-                                                                                                this.setState({
-                                                                                                    email:'',
-                                                                                                    password:''
-                                                                                                    });
-                                                                                            window.location = "/frontier";
-                                                                                    }else{
-                                                                                        // Register the Corporate User in Session storage
-                                                                                        const Global_CorpUser = {
-                                                                                            isLogged: true,
-                                                                                            id: res.data[0]._id,
-                                                                                            name: res.data[0].org_name,
-                                                                                            email: res.data[0].email,
-                                                                                            phone: res.data[0].phone,
-                                                                                            doi: res.data[0].doi,
-                                                                                            country: res.data[0].country,
-                                                                                            state: res.data[0].state,
-                                                                                            tatus: res.data[0].status,
-                                                                                            org_type: res.data[0].org_type
-                        
-                                                                                        }
-                                                                                            // Save Individual data to session Storage
-                                                                                            sessionStorage.setItem("key", JSON.stringify(Global_CorpUser));
-                                                                                            console.log(JSON.parse(sessionStorage.getItem("key")) );
-                                                                                                this.setState({
-                                                                                                    email:'',
-                                                                                                    password:''
-                                                                                                    });
-                                                                                            window.location = "/frontier";
-                                                                                    }
-                                                                                    
-
-                                                                                        
-                                                                                }else{
-                                                                                    console.log("data not found");
-                                                                                    this.notify("Email or Password is wrong", "warn");
                                                                                 }
 
-                                                                                // Set Loading to false when there is a response
-                                                                                this.setState({
-                                                                                    loading: false
-                                                                                });
-                                                                            })
-                                                                            .catch(err => {
-                                                                                console.log("Error here is: "+err);
-                                                                                this.setState({
-                                                                                    loading: false
-                                                                                });
-                                                                            });
-                                                                                
-                                                                } catch (error) {
-                                                                    this.notify("Network Error", "error");
-                                                                    this.setState({
-                                                                        loading: false
-                                                                    });
-                                                                }
+                                                                                // Save Individual data to session Storage
+                                                                                sessionStorage.setItem("key", JSON.stringify(GlobalUser));
+                                                                                console.log(JSON.parse(sessionStorage.getItem("key")) );
+                                                                                    this.setState({
+                                                                                        email:'',
+                                                                                        password:''
+                                                                                        });
+                                                                                window.location = "/frontier";
+                                                                           }else{
+                                                                            // Register the Corporate User in Session storage
+                                                                            const Global_CorpUser = {
+                                                                                isLogged: true,
+                                                                                id: res.data[0]._id,
+                                                                                name: res.data[0].org_name,
+                                                                                email: res.data[0].email,
+                                                                                phone: res.data[0].phone,
+                                                                                doi: res.data[0].doi,
+                                                                                country: res.data[0].country,
+                                                                                state: res.data[0].state,
+                                                                                status: res.data[0].status,
+                                                                                org_type: res.data[0].org_type,
+                                                                                sub_status_rm:res.data[0].sub_status_rm
+            
+                                                                            }
+                                                                                // Save Individual data to session Storage
+                                                                                sessionStorage.setItem("key", JSON.stringify(Global_CorpUser));
+                                                                                console.log(JSON.parse(sessionStorage.getItem("key")) );
+                                                                                    this.setState({
+                                                                                        email:'',
+                                                                                        password:''
+                                                                                        });
+                                                                                window.location = "/frontier";
+                                                                           }
+                                                                           
+
+                                                                            
+                                                                    }else{
+                                                                        console.log("data not found");
+                                                                        this.notify("Email or Password is wrong", "error");
+                                                                    }
+                                                                })
+                                                                .catch(err => console.log("Error here is: "+err));
+
                                                                 // =======================
                                                                 }
+                                                                
                                                             }>
                                                            Login 
                                                            {this.loading ? <i className="fa fa-spinner fa-spin ml-2"></i> : ""}
@@ -339,12 +328,6 @@ export default class Home extends Component{
                                 
                                 {/* Bottom content */}                                
                                 <Slider {...settings} >
-                                    {/* <Card imageUrl="https://smallbusiness.findlaw.com/incorporation-and-legal-structures/corporate-structure-directors-to-shareholders/_jcr_content/pg/articleHeading/imageInLine.coreimg.jpeg"/>
-                                    <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                    <Card imageUrl="https://unity.trustradius.com/wp-content/uploads/2018/09/tech-in-school.jpg"/>
-                                    <Card imageUrl="https://cpimg.tistatic.com/05032834/b/4/Corporate-Staff-Uniform.jpg"/>
-                                    <Card imageUrl="https://flexxzone.fcmb.com/wp-content/uploads/2018/10/black-teacher-1.jpg"/>
-                                    <Card imageUrl="https://ewscripps.brightspotcdn.com/dims4/default/babb53a/2147483647/strip/true/crop/5484x3085+0+270/resize/1280x720!/quality/90/?url=https%3A%2F%2Fewscripps.brightspotcdn.com%2F5d%2F63%2Fe54bdb4845d59e6ede58f299dbd7%2Fap-196108200880.jpg"/> */}
                                     <div>
                                             <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
                                         </div>

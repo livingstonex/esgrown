@@ -8,7 +8,8 @@ const subscriptionEASSchema = new Schema({
     },
     sub_status:{
         type: String,
-        required: true
+        required: true,
+        default:'inactive'
     },
     sub_code: {
         type: String,

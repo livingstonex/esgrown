@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema =  mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const corporateSchema = new Schema({
     org_name: {
@@ -10,37 +10,44 @@ const corporateSchema = new Schema({
         type: String,
         required: true
     },
-    email:{
-        type: String,
-        required:true
-    },
-    phone:{
-        type:Number,
-        required:false
-    },
-    doi:{
-        type:Date,
-        required:true,
-    },
-    country:{
-        type:String,
-        required:false
-    },
-    state:{
-        type:String,
-        required:false
-    },
-    password:{
-        type:String,
-        required:true
-    },
-    status:{
+    email: {
         type: String,
         required: true
-    }
+    },
+    phone: {
+        type: Number,
+        required: false
+    },
+    doi: {
+        type: Date,
+        required: true,
+    },
+    country: {
+        type: String,
+        required: false
+    },
+    state: {
+        type: String,
+        required: false
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    sub_status_rm: {
+        type: String
+    },
+    sub_code_rm: {
+        type: String
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    
 
 }, {
-    timestamps:true,
+    timestamps: true,
 });
 
 const Corporate = mongoose.model('Corporate', corporateSchema);

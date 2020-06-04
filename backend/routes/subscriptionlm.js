@@ -57,8 +57,28 @@ router.route(`/update/lmref/:id`).post((req, res) => {
             sub_code: req.body.sub_code
         }
         ).then(lm => res.json(lm))
-                        .catch(err => res.json('Err: ' + err));
+        .catch(err => res.json('Err: ' + err));
 
 });
+
+
+router.route(`/getsubcode/:id`).get((req, res) => {
+    LM.find({
+        user_id: req.params.id
+    }).then(sub => {
+        if (sub[0].sub_status === 'active') {
+            res.json(sub[0].sub_code)
+        } else {
+            res.json([])
+        }
+    }).catch(err => res.status(400).json(err))
+});
+
+router.route(`/update/substatus/:id`).post((req, res) => {
+    LM.findOneAndUpdate(
+        { user_id: req.params.id },
+        { sub_status: req.body.sub_status }
+    ).then(sub => res.json(sub)).catch(err => res.status(400).json(err))
+})
 
 module.exports = router;

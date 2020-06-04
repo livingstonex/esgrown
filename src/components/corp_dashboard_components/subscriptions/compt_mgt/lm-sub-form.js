@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Spinner } from 'react-bootstrap';
 import PayStackButton from '../../../ind_dashboard_components/paystack/paystackpaymentbutton';
 import StaffModal from '../components/all-staff';
+import toast from '../../../../util/toast';
 
 
 
@@ -15,9 +16,10 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const [plan, setPlan] = useState();
     const [payModal, setPayModal] = useState(false);
     const [spinner, setSpinner] = useState(false)
-    const [staff, setStaff] = useState(false);
+    const [staff, setStaff] = useState([]);
     const [staffModal, setStaffModal] = useState(false)
     const [total, setTotal] = useState();
+    const [subPeriod, setSubPeriod] = useState();
 
 
     // const [state, setState] = useState({
@@ -29,25 +31,27 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     useEffect(() => {
         const userr = JSON.parse(sessionStorage.getItem('key'));
         setUser(userr)
+
+
+        axios.get(`http://localhost:5000/individuals/staff/${userr.id}`)
+            .then(res => {
+                const unsubscribedStaff = res.data.filter(staff => {
+                    return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed';
+                })
+                setStaff(unsubscribedStaff);
+            }).catch(err => console.log(err));
+
     }, []);
 
-    // const handleChange = (e) => {
-    //     const name = e.target.name;
-    //     const value = e.target.value;
-
-    //     setState({
-    //         ...state,
-    //         [name]: value
-    //     })
-    // }
 
     const onChangePlan = (e) => {
         const plan = e.target.value.split('/');
         setAmount(plan[1]);
         setPlan(plan[0]);
+
     }
 
-    const getStaff = () => {
+    const showStaff = () => {
         setStaffModal(true);
         closeModal();
     }
@@ -57,29 +61,8 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
         setStaffModal(false);
         setTotal(plantotal);
         setPayModal(true);
-        // setState()
+
     }
-
-
-    // const subscribe = () => {
-    //     const subData = {
-    //         company_id: user.id,
-    //         company_name: state.companyName,
-    //         doi: state.doi,
-    //         email: state.email,
-    //         service: "RM",
-    //         plan_code: plan ? plan : null
-    //     }
-
-    //     axios.post(`http://localhost:5000/corporatesubscriptions/add`, subData)
-    //         .then(res => {
-    //             if (res.data) {
-    //                 closeModal();
-    //                 setPayModal(true);
-    //             }
-    //         }).catch(err => console.log(err))
-
-    // }
 
 
     //payment functions
@@ -91,9 +74,38 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const onSuccess = (res) => {
         setPayModal(false);
 
+
+
+        const data = {
+            sub_status_compt_mgt: 'active',
+        }
+
+        console.log(staff)
+
+        //update substatus of paid staff
+        staff.map(st => {
+            axios.post(`http://localhost:5000/individuals/update/substatus/${st._id}`, data)
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err));
+
+            axios.post(`http://localhost:5000/competence/management/add`, {
+                user_id: st._id,
+                company_id: user.id,
+                org_type: user.org_type,
+                sub_status: 'active',
+                user_name: st.fullname,
+                user_email: st.email,
+                start_date: Date.now(),
+                end_date: (86400 * plan) + Date.now()
+
+            }).then(res => console.log(res.data))
+                .catch(err => console.log(err))
+        })
+
+        toast(`${staff.length}  subscriptions successful`, 'success');
     }
 
-    console.log(total);
+
 
 
     return (
@@ -130,9 +142,9 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                                 <label style={{ fontWeight: 'bold' }}>Select A Plan</label>
                                 <select name="plan" className="form-control" onChange={onChangePlan} required>
                                     <option >Select a Plan</option>
-                                    <option value="PLN_hwug5s75tf2rcqu/280000">3 Months Plan - 2800</option>
-                                    <option value="PLN_072a7glz3tv6fzi/455000">6 Months Plan - 4550</option>
-                                    <option value="PLN_wma6tld3z1g2zef/797000">1 Year Plan  - 7970 </option>
+                                    <option value="90/280000">3 Months Plan - 2800</option>
+                                    <option value="180/455000">6 Months Plan - 4550</option>
+                                    <option value="365/797000">1 Year Plan  - 7970 </option>
                                 </select>
                             </div>
                         </div>
@@ -145,7 +157,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                                 className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
                                 disabled={spinner}
                                 // onClick={subscribe}
-                                onClick={getStaff}
+                                onClick={showStaff}
 
                             >
                                 {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : "Proceed"}
@@ -163,7 +175,6 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                 callback={onSuccess}
                 email={user ? user.email : ""}
                 amount={total}
-                plan={plan}
             />
 
             <StaffModal

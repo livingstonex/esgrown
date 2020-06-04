@@ -50,9 +50,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
             })
             .catch(err => toast(err, "error"))
 
-
     }
-    console.log(details)
 
     return (
         <>

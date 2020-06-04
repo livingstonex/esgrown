@@ -40,7 +40,7 @@ router.route(`/add`).post(async (req, res) => {
         const epocDate = Math.floor(new Date(lastCreatedAt).getTime());
 
         //add 7 days to createdat to get the epocdate
-        const days = 86400000 * 7;
+        const days = (86400 * 7) + Date.now();
 
         const newEpoc = epocDate + days;
 

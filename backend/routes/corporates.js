@@ -109,6 +109,23 @@ router.route(`/update/state/:id`).post((req, res) => {
         .catch(err => res.status(400).json('Request Failed:  ' + err));
 });
 
+//update status after payment
+router.route(`/update/status/:id`).post((req, res) => { 
+    Corporate.findById(req.params.id)
+        .then(comp => {
+                comp.updateOne(
+                    {
+                        sub_status_rm:req.body.sub_status_rm,
+                        sub_code_rm:req.body.sub_code_rm
+                    }
+
+                ).then(res => res.json(res))
+                    .catch(err => res.json('failed to update company subscription status'))
+            }
+        )
+        .catch(err => res.status(400).json(err));
+});
+
 
 
 module.exports = router;
