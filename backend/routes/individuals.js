@@ -72,32 +72,7 @@ router.route('/login').post((req, res) => {
                 if (bcrypt.compareSync(password, ind[0].password)) {
                     console.log("Password Correct");
                     const lastLogin = Date.parse(new Date());
-                    // res.json(ind);
-                    // if (ind[0].sub_code != null) {
-                    //     axios.get(`https://api.paystack.co/subscription/${ind[0].sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
-                    //         .then(res => {
-                    //             console.log("paystack just responded")
-                    //             ind[0].updateOne(
-                    //                 { sub_status: res.data.data.status, lastLogin: lastLogin },
-                    //                 { returnOriginal: false }
-                    //             ).then(update_res => {
-                    //                 console.log(update_res)
-                    //                 console.log("Updated then, " + ind)
-                    //                 res.json(ind[0])
-                    //             }).catch(err => console.log(err));
-                    //         }).catch(err => console.log(err));
-                    // } else {
-                    //     //compare end date and today. if today is greater update sub status as completed else do nothing.
-                    //     if (ind[0].sub_code == null && ind[0].sub_status == 'active' && ind[0].status == 'individual') {
-                    //         const endDate = ind[0].end_date;
-                    //         const today = Date.now();
-                    //         if (today > endDate) {
-                    //             ind[0].updateOne({ sub_status: 'completed' }).then(updated => res.json(updated)).catch(err => console.log(err))
-                    //         }
-                    //     } else {
-                    //         res.json(ind);
-                    //     }
-                    // }?
+
                     res.json(ind);
                 } else {
                     // Password is wrong
