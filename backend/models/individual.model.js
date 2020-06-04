@@ -47,16 +47,27 @@ const individualSchema = new Schema({
     org_id: {
         type: String
     },
-    sub_status: {
+    sub_status_eas: {
         type: String,
-        required: true
+
     },
-    sub_code: {
+    sub_status_efa: {
         type: String,
-        required: false
-},
+
+    },
+    sub_status_lm: {
+        type: String,
+
+    },
+    sub_status_rm: {
+        type: String,
+
+    },
+    sub_status_compt_mgt: {
+        type: String
+    },
     tic: {
-        type:String,
+        type: String,
     },
     lastLogin: {
         type: Date,

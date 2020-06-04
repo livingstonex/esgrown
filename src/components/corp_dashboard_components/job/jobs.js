@@ -6,7 +6,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import SearchBar from './components/search';
 import CreateJob from './components/create-job';
-import Toast from '../../toast';
 
 
 
@@ -18,14 +17,6 @@ const Jobs = () => {
 
     const [show, setShow] = useState(false);
 
-    const [toast, setToast] = useState({
-        open: false,
-        vertical: 'top',
-        horizontal: 'right',
-    });
-
-
-    const { open, vertical, horizontal } = toast;
 
 
     useEffect(() => {
@@ -45,15 +36,11 @@ const Jobs = () => {
     }, []);
 
 
-    //close toast
-    const handleClose = () => {
-        setToast({ ...toast, open: false });
-    };
+
 
     //close jobs create modal and reload jobs
     const closeModal = () => {
         setShow(false);
-        setToast({ open: true, ...toast })
 
         axios.get(`http://localhost:5000/jobs`)
             .then(res => {
@@ -132,14 +119,6 @@ const Jobs = () => {
                 </div>
             </div>
             <CreateJob show={show} onHide={() => setShow(!show)} closeModal={closeModal} />
-            <Toast
-                body='job created successfully'
-                close={handleClose}
-                open={open}
-                vertical={vertical}
-                horizontal={horizontal}
-                type='success'
-            />
         </>
     );
 }

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Individual = require('../models/individual.model');
+let Corporate = require('../models/corporate.model');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
 
@@ -43,10 +44,14 @@ router.route('/add').post((req, res) => {
     const org_name = req.body.org_name;
     const org_id = req.body.org_id;
     const tic = req.body.tic;
-    const sub_status = req.body.sub_status;
+    const sub_status_eas = 'inactive';
+    const sub_status_efa = 'inactive';
+    const sub_status_lm = 'inactive';
+    const sub_status_rm = 'inactive';
+    const sub_status_compt_mgt = 'inactive';
     const lastLogin = Date.parse(new Date());
 
-    const newIndividual = new Individual({ fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin, sub_status });
+    const newIndividual = new Individual({fullname, email, phone, gender, dob, country, state, password, status, org_type, org_name, org_id, tic, lastLogin, sub_status_eas,sub_status_efa,sub_status_lm,sub_status_rm,sub_status_compt_mgt });
 
     newIndividual.save()
         .then((individ) => res.json(individ))
@@ -55,60 +60,108 @@ router.route('/add').post((req, res) => {
 });
 
 
-//Check if Login Email exists
-router.route('/login_email').post((req, res) => {
+// Universal Login
+router.route('/login').post((req, res) => {
+    const email = req.body.email;
     const password = req.body.password;
+
+    // Individual Login
     Individual.find({ email: req.body.email })
-        .then(indi => {
-            res.json(indi);
-        })
-        .catch(err => res.json("Error: " + err));
+        .then(ind => {
+            if (ind.length != 0) {
+                if (bcrypt.compareSync(password, ind[0].password)) {
+                    console.log("Password Correct");
+                    const lastLogin = Date.parse(new Date());
+                    // res.json(ind);
+                    // if (ind[0].sub_code != null) {
+                    //     axios.get(`https://api.paystack.co/subscription/${ind[0].sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+                    //         .then(res => {
+                    //             console.log("paystack just responded")
+                    //             ind[0].updateOne(
+                    //                 { sub_status: res.data.data.status, lastLogin: lastLogin },
+                    //                 { returnOriginal: false }
+                    //             ).then(update_res => {
+                    //                 console.log(update_res)
+                    //                 console.log("Updated then, " + ind)
+                    //                 res.json(ind[0])
+                    //             }).catch(err => console.log(err));
+                    //         }).catch(err => console.log(err));
+                    // } else {
+                    //     //compare end date and today. if today is greater update sub status as completed else do nothing.
+                    //     if (ind[0].sub_code == null && ind[0].sub_status == 'active' && ind[0].status == 'individual') {
+                    //         const endDate = ind[0].end_date;
+                    //         const today = Date.now();
+                    //         if (today > endDate) {
+                    //             ind[0].updateOne({ sub_status: 'completed' }).then(updated => res.json(updated)).catch(err => console.log(err))
+                    //         }
+                    //     } else {
+                    //         res.json(ind);
+                    //     }
+                    // }?
+                    res.json(ind);
+                } else {
+                    // Password is wrong
+                    console.log("Password wrong OYO");
+                    res.json([]);
+                }
+
+            } else {
+                // CORPORATE
+                // Make Login Check for Corporate too
+                Corporate.find({ email: req.body.email })
+                    .then(corp => {
+                        if (corp.length != 0) {
+                            if (bcrypt.compareSync(password, corp[0].password)) {
+                                console.log("Password Correct");
+                                const lastLogin = Date.parse(new Date());
+                                // res.json(ind);
+                                if (corp[0].sub_code_rm != null) {
+                                    axios.get(`https://api.paystack.co/subscription/${corp[0].sub_code_rm}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+                                        .then(paystack => {
+                                            console.log("paystack just responded now")
+                                            corp[0].update(
+                                                { sub_status_rm: paystack.data.data.status, lastLogin: lastLogin },
+                                                { returnOriginal: false }
+                                            ).then(update_res => {
+                                                console.log("Updated then, " + corp)
+                                                res.json(corp)
+                                            }).catch(err => console.log(err));
+                                        }).catch(err => console.log(err));
+                                } else {
+                                    res.json(corp);
+                                }
+                            } else {
+                                // Password is wrong
+                                console.log("Password wrong");
+                                res.json([]);
+                            }
+
+                        } else {
+                            // Email does not exist in the Two collections
+                            res.json([])
+                            // res.json(ind);
+                            // Make Login for Corporate too
+
+                        }
+                    }).catch(err => {
+                        console.log("catch" + err);
+                        res.json(err);
+                    });
+                // Ending for Corporate ======================================
+
+            }
+        }).catch(err => {
+            console.log("catch" + err);
+            res.json(err);
+        });
 });
 
-//Login Route
-// router.route('/login').post((req, res) => {
-//     const email = req.body.email;
-//     const hash_password = req.body.hash_password;
-//     const normal_password = req.body.normal_password;
-//     const lastLogin = Date.parse(new Date());
-
-
-//     try {
-//         const equal = bcrypt.compareSync(normal_password, hash_password);
-//         if (equal) {
-//             Individual.find({ email: email })
-//                 .then(ind => {
-//                     if (ind.sub_code != null) {
-//                         axios.get(`https://api.paystack.co/subscription/${ind.sub_code}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
-//                             .then(res => {
-//                                 ind.update(
-//                                     { sub_status: res.data.data.status, lastLogin: lastLogin },
-//                                     { returnOriginal: false }
-//                                 ).then(res => res.json(res)).catch(err => console.log(err))
-//                             }).catch(err => console.log(err))
-//                     } else {
-
-//                         res.json(ind);
-
-//                     }
-//                 })
-
-//         } else {
-//             res.json("failed");
-//         }
-//     } catch (error) {
-//         res.json(error)
-//     }
-
-// });
 
 router.route(`/update/substatus/:id`).post((req, res) => {
     Individual.findOneAndUpdate(
         { _id: req.params.id },
         {
-            ref: req.body.ref,
-            sub_status: req.body.sub_status,
-            sub_code: req.body.sub_code
+            sub_status_compt_mgt: req.body.sub_status_compt_mgt,
         }
     ).then(es => res.json(es))
         .catch(err => res.json('Err: ' + err));

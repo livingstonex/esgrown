@@ -26,19 +26,19 @@ const UpdateCorp = ({ show, onHide, closeModal, service }) => {
 
         axios.get(`http://localhost:5000/corporatesubscriptions/${user.id}`)
             .then(res => {
-                if (res.data.length > 0) {
-                    const data = res.data.filter(r => {
-                        return r.service === service;
-                    })
+                // if (res.data.length > 0) {
+                //     const data = res.data.filter(r => {
+                //         return r.service === service;
+                //     })
 
-                    setEmail(data[0].email)
-                    setUpdateData(data);
+                    setEmail(res.data.email)
+                    setUpdateData(res.data);
                     setSpinner(false)
 
-                }
+                // }
 
             }).catch(err => console.log(err))
-    }, [service]);
+    }, []);
 
 
 

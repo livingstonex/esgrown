@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardActionArea, CardMedia, CardActions, CardContent, Typography } from '@material-ui/core';
 import RMSubForm from './rm/rm-sub-form';
-import LMSubForm from './lm/lm-sub-form';
+import LMSubForm from './compt_mgt/lm-sub-form';
 import UpdateForm from './components/update-form';
 import AllStaff from './components/all-staff';
 
@@ -14,7 +14,7 @@ const Subscription = () => {
     const [rmform, setrmform] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
     const [service, setService] = useState()
-    const [rmDetails, setRMDetails] = useState()
+    const [rmSub, setRMSub] = useState('')
     const [lmDetails, setLMDetails] = useState()
     const [company, setCompany] = useState()
 
@@ -24,30 +24,30 @@ const Subscription = () => {
         const company = JSON.parse(sessionStorage.getItem('key'));
         setCompany(company);
 
-        axios.get(`http://localhost:5000/corporatesubscriptions/${company.id}`)
-            .then(res => {
-                if (res.data.length > 0) {
-                    res.data.map(comp => {
-                        if (comp.service == "RM" && comp.sub_status === true) {
-                            return setRMDetails(comp);
-                        } else if (comp.service == "LM" && comp.sub_status === true) {
-                            return setLMDetails(comp);
-                        }
-                    });
-                }
-            }).catch()
+        setRMSub(company.sub_status_rm)
+
+        // axios.get(`http://localhost:5000/corporatesubscriptions/${company.id}`)
+        //     .then(res => {
+        //         if (res.data.length > 0) {
+        //             if(res.data.sub_status_rm === 'active')
+        //                 setRMDetails(true);
+        //         }
+        //     }).catch(err => console.log(err))
 
 
     }, []);
 
-    const closeModal = () => {
+    const closeModal = (status = false) => {
         setlmform(false);
         setrmform(false);
         setUpdateModal(false);
+        if (status === 'active') {
+            setRMSub('active')
+        }
 
     }
 
-    const getRMDetails = async () => {
+    const getRMDetails = () => {
 
         setService("RM");
         setUpdateModal(true)
@@ -89,20 +89,20 @@ const Subscription = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                {rmDetails ?
+                                {rmSub === 'active' ?
                                     <button
-                                        className="btn font-weight-bold mt-3 py-2 border-0"
+                                        className="btn mt-3 py-2 border-0"
                                         style={{ background: '#97BA0C', color: 'white' }}
-                                        disabled={rmDetails}
+                                        disabled
                                     >
                                         Subscribed
                                 </button>
                                     :
-                                    <button
-                                        className="btn font-weight-bold mt-3 py-2 border-0"
-                                        style={{ background: '#21A5E7', color: 'white' }}
-                                        onClick={() => setrmform(!rmform)}
-                                    >
+                                <button
+                                    className="btn mt-3 py-2 border-0"
+                                    style={{ background: '#21A5E7', color: 'white' }}
+                                    onClick={() => setrmform(!rmform)}
+                                >
                                         Subscribe
                                 </button>}
                             </CardActions>

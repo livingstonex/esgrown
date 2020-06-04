@@ -47,7 +47,7 @@ const EditStaff = ({ show, onHide, details, spinner, user }) => {
                                     <div className="row mt-3">
                                         <div className="col">
                                             <label style={{ fontWeight: 'bold' }}>SignUp Date</label>
-                                            <input type="text" value={new Date(details.createdAt).toDateString()} className="form-control" required />
+                                            <input type="text" disabled value={new Date(details.createdAt).toDateString()} className="form-control" required />
                                         </div>
                                     </div>
 
@@ -55,7 +55,7 @@ const EditStaff = ({ show, onHide, details, spinner, user }) => {
                                 <div className="row">
                                     <div className="col">
                                         <button
-                                            className="btn mb-2 w-100 border-0"
+                                            className="btn mb-2 mt-3 w-100 border-0"
                                             style={{ background: '#21A5E7', color: 'white' }}
                                         >
                                             Update

@@ -72,12 +72,16 @@ const Exercises = () => {
 
         //lm sub status
         const userData = JSON.parse(sessionStorage.getItem('key'))
-        
+
         console.log(userData.id)
 
         axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
             .then(res => {
-                setLMSubStatus(res.data[0].sub_status)
+
+                    console.log(res.data)
+                    setLMSubStatus(res.data[0].sub_status)
+
+                
             })
             .catch(err => console.log(err));
 
@@ -117,7 +121,7 @@ const Exercises = () => {
                                     Recruitment Management
                                         <hr />
                                 </Typography>
-                                {spinner ? <Spinner animation="grow" /> : RMSubStatus === "true" ? RMExercise.map(r => {
+                                {spinner ? <Spinner animation="grow" /> : RMSubStatus === "active" ? RMExercise.map(r => {
                                     return (
                                         <ul>
                                             <li className={`ui floating message`} data-service="RM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
@@ -154,7 +158,7 @@ const Exercises = () => {
                                     Recruitment Management
                                         <hr />
                                 </Typography>
-                                {spinner ? <Spinner animation="grow" /> : LMSubStatus === "true" ? LMExercise.map(r => {
+                                {spinner ? <Spinner animation="grow" /> : LMSubStatus === "active" ? LMExercise.map(r => {
                                     return (
                                         <ul>
                                             <li className={`ui floating message`} data-service="LM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>

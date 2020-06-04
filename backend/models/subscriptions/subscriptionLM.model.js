@@ -8,7 +8,7 @@ const subscriptionLMSchema = new Schema({
     },
     sub_status: {
         type: String,
-        required: true
+        default: 'inactive'
     },
     sub_code: {
         type: String,

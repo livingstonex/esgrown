@@ -61,7 +61,26 @@ router.route(`/update/rmref/:id`).post((req, res) => {
         ).then(rm => res.json(rm))
                         .catch(err => res.json('Err: ' + err));
 
-
 });
+
+
+router.route(`/getsubcode/:id`).get((req, res) => {
+    RM.find({
+        user_id: req.params.id
+    }).then(sub => {
+        if (sub[0].sub_status === 'active') {
+            res.json(sub[0].sub_code)
+        } else {
+            res.json([])
+        }
+    }).catch(err => res.status(400).json(err))
+});
+
+router.route(`/update/substatus/:id`).post((req, res) => {
+    RM.findOneAndUpdate(
+        { user_id: req.params.id },
+        { sub_status: req.body.sub_status }
+    ).then(sub => res.json(sub)).catch(err => res.status(400).json(err))
+})
 
 module.exports = router;

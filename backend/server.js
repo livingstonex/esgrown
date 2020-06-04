@@ -31,11 +31,11 @@ const uri = process.env.URI;
 //     .then(() => console.log("MongoDB successfully connected"))
 //     .catch(err => console.log(err));
 
-// connect to mongoDB using mongoose
-mongoose.connect(`mongodb://127.0.0.1:27017/test`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+//connect to mongoDB using mongoose
+mongoose.connect(`mongodb://127.0.0.1:27017`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 
 
-//connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
+// connect to mongoDB using mongoose : Online connection String: `mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`
 // mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`,
 //     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 // mongoose.connect(`mongodb+srv://larnapp:larnapp@cluster0-w4hmf.mongodb.net/test?retryWrites=true&w=majority`, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
@@ -87,6 +87,7 @@ const juniorHistoryRouter = require('./routes/tutor/junior/juniorhistory');
 const juniorMathsRouter = require('./routes/tutor/junior/junior_maths');
 const socialStudiesRouter = require('./routes/tutor/junior/social_studies');
 const teacherRating = require('./routes/ratings/teacher-ratings');
+const comptMgtRoute = require('./routes/corporate/competence/compt_mgt');
 
 
 
@@ -123,6 +124,7 @@ app.use('/junior/history', juniorHistoryRouter);
 app.use('/junior/mathematics', juniorMathsRouter);
 app.use('/junior/social-studies', socialStudiesRouter);
 app.use('/rate/teacher', teacherRating);
+app.use('/competence/management', comptMgtRoute);
 
 
 

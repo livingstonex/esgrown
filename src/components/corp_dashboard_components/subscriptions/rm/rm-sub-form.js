@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Spinner } from 'react-bootstrap';
 import PayStackButton from '../../../ind_dashboard_components/paystack/paystackpaymentbutton';
+import toast from '../../../../util/toast';
 
 
 
@@ -43,25 +44,25 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
     }
 
     const subscribe = () => {
+
         const subData = {
             company_id: user.id,
-            company_name: state.companyName,
-            doi: state.doi,
-            email: state.email,
-            service: "RM",
-            plan_code: plan ? plan : null
+            company_name: user.name,
+            email: user.email
         }
 
+        // console.log(subData);
         axios.post(`http://localhost:5000/corporatesubscriptions/add`, subData)
             .then(res => {
                 if (res.data) {
                     closeModal();
                     setPayModal(true);
                 }
-            }).catch(err => console.log(err))
+            }).catch(err => {
+                console.log(err)
+            })
 
     }
-
 
 
     //payment functions
@@ -70,17 +71,43 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
         setPayModal(false)
     }
 
-    const onSuccess = (res) => {
+    const onSuccess = async (response) => {
         setPayModal(false);
+        
 
-        const data = {
-            ref: res.reference,
-        }
 
-        //make axios call an update ref and sub status
-        axios.post(`http://localhost:5000/corporatesubscriptions/update/ref/${user.id}`, data)
-            .then(res => alert('Your payment has been received'))
+
+        axios.get(`https://api.paystack.co/subscription`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+            .then(res => {
+                // console.log(res.data)
+                const client = res.data.data.filter(st => {
+                    return st.customer.email === user.email
+                })
+
+
+                const data = {
+                    sub_status_rm: client[0].status,
+                    sub_code_rm: client[0].subscription_code,
+                    ref: response.reference
+                }
+
+                axios.post(`http://localhost:5000/corporatesubscriptions/update/ref/${user.id}`, data)
+                    .then(res => {
+                        let lS = JSON.parse(sessionStorage.getItem('key'));
+                        lS.sub_status_rm = client[0].status;
+
+                        sessionStorage.setItem('key', JSON.stringify(lS));
+                        toast(res.data, 'success')
+                        closeModal('active');
+                    })
+                    .catch(err => console.log(err));
+
+                axios.post(`http://localhost:5000/corporates/update/status/${user.id}`, data)
+                    .then(res => console.log(res.data)).catch(err => console.log(err))
+
+            })
             .catch(err => console.log(err));
+
     }
 
 
@@ -96,23 +123,23 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
                         <div className="row mt-3">
                             <div className="col">
                                 <label style={{ fontWeight: 'bold' }}> Company Name</label>
-                                <input type="text" name="companyName" value={state.companyName} onChange={handleChange} placeholder="Company Name" className="form-control" required />
+                                <input type="text" name="companyName" value={user ? user.name : ""} onChange={handleChange} placeholder="Company Name" className="form-control" required />
                             </div>
                         </div>
 
                         <div className="row mt-3">
                             <div className="col">
                                 <label style={{ fontWeight: 'bold' }}> Official Email</label>
-                                <input type="email" name="email" value={state.email} onChange={handleChange} placeholder="Official Email" className="form-control" required />
+                                <input type="email" name="email" value={user ? user.email : ""} onChange={handleChange} placeholder="Official Email" className="form-control" required />
                             </div>
                         </div>
 
-                        <div className="row mt-3">
+                        {/* <div className="row mt-3">
                             <div className="col">
                                 <label style={{ fontWeight: 'bold' }}>Date of Incorporation</label>
-                                <input type="date" name="doi" value={state.doi} onChange={handleChange} placeholder="Date of Incorporation" className="form-control" required />
+                                <input type="date" name="doi" value={user ? user.doi:""} onChange={handleChange} placeholder="Date of Incorporation" className="form-control" required />
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="row mt-3">
                             <div className="col">
@@ -130,7 +157,6 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
                     <div className="row mt-3">
                         <div className="col">
                             <button
-                                type="submit"
                                 className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
                                 disabled={spinner}
                                 onClick={subscribe}
@@ -148,7 +174,7 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
                 onHide={() => setPayModal(false)}
                 close={close}
                 callback={onSuccess}
-                email={state.email}
+                email={user ? user.email : ""}
                 amount={amount}
                 plan={plan}
             />

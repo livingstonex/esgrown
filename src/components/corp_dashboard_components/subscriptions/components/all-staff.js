@@ -22,7 +22,7 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
         axios.get(`http://localhost:5000/individuals/staff/${company.id}`)
             .then(res => {
                 const unsubscribedStaff = res.data.filter(staff => {
-                    return staff.sub_status === 'inactive';
+                    return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed' ;
                 })
                 setCompanystaff(unsubscribedStaff);
             })

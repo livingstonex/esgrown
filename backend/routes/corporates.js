@@ -48,35 +48,6 @@ router.route('/add').post((req, res) => {
 });
 
 
-//Check if Login Email exists
-// router.route('/login_corporate_email').post((req, res) => {
-//     const password = req.body.password;
-//     Corporate.find({ email: req.body.email })
-//         .then(corpp => {
-//             res.json(corpp);
-//         })
-//         .catch(err => res.json("Error: " + err));
-// });
-
-// //Login Route
-// router.route('/login_corporate').post((req, res) => {
-//     const email = req.body.email;
-//     const hash_password = req.body.hash_password;
-//     const normal_password = req.body.normal_password;
-
-//     try {
-//         const equal = bcrypt.compareSync(normal_password, hash_password);
-//         if (equal) {
-//             res.json(1);
-//         } else {
-//             res.json(0);
-//         }
-//     } catch (error) {
-//         res.json(error)
-//     }
-
-// });
-
 //------------------------------- API Route for Corporate Profile Update ---------------------
 router.route('/update/:id').post((req, res) => {
     Corporate.findById(req.params.id)
@@ -136,6 +107,23 @@ router.route(`/update/state/:id`).post((req, res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Request Failed:  ' + err));
+});
+
+//update status after payment
+router.route(`/update/status/:id`).post((req, res) => { 
+    Corporate.findById(req.params.id)
+        .then(comp => {
+                comp.updateOne(
+                    {
+                        sub_status_rm:req.body.sub_status_rm,
+                        sub_code_rm:req.body.sub_code_rm
+                    }
+
+                ).then(res => res.json(res))
+                    .catch(err => res.json('failed to update company subscription status'))
+            }
+        )
+        .catch(err => res.status(400).json(err));
 });
 
 

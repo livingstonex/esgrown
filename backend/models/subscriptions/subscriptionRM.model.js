@@ -8,7 +8,7 @@ const subscriptionRMSchema = new Schema({
     },
     sub_status: {
     type: String,
-    required: true
+    default: 'inactive'
     },
     sub_code: {
     type: String,
@@ -28,11 +28,11 @@ const subscriptionRMSchema = new Schema({
     }, 
     highest_level_of_education:{
         type: String,
-        required: true
+        required: false
     },
     field_of_training:{
         type:String,
-        required: true
+        required: false
     },
     ref:{
         type: String,

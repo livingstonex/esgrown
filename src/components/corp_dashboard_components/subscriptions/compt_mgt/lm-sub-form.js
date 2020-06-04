@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Spinner } from 'react-bootstrap';
 import PayStackButton from '../../../ind_dashboard_components/paystack/paystackpaymentbutton';
 import StaffModal from '../components/all-staff';
+import toast from '../../../../util/toast';
 
 
 
@@ -35,7 +36,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
         axios.get(`http://localhost:5000/individuals/staff/${userr.id}`)
             .then(res => {
                 const unsubscribedStaff = res.data.filter(staff => {
-                    return staff.sub_status === 'inactive';
+                    return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed';
                 })
                 setStaff(unsubscribedStaff);
             }).catch(err => console.log(err));
@@ -76,20 +77,32 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
 
 
         const data = {
-            ref: res.reference,
-            sub_status: 'active',
-            start_data: Date.now(),
-            end_date: 86400000 * plan
+            sub_status_compt_mgt: 'active',
         }
+
+        console.log(staff)
 
         //update substatus of paid staff
         staff.map(st => {
-            axios.post(`http://localhost:5000/individuals/update/substatus/${st._id}`,data)
+            axios.post(`http://localhost:5000/individuals/update/substatus/${st._id}`, data)
                 .then(res => console.log(res.data))
                 .catch(err => console.log(err));
+
+            axios.post(`http://localhost:5000/competence/management/add`, {
+                user_id: st._id,
+                company_id: user.id,
+                org_type: user.org_type,
+                sub_status: 'active',
+                user_name: st.fullname,
+                user_email: st.email,
+                start_date: Date.now(),
+                end_date: (86400 * plan) + Date.now()
+
+            }).then(res => console.log(res.data))
+                .catch(err => console.log(err))
         })
 
-
+        toast(`${staff.length}  subscriptions successful`, 'success');
     }
 
 

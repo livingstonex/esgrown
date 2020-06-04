@@ -10,25 +10,15 @@ const CorpSubSchema = new Schema({
         type: String,
         required: true
     },
-    doi: {
-        type: Date,
-        required: true
-    },
     email: {
         type: String,
         required: true
     },
-    service: {
+    sub_code_rm: {
         type: String,
-        required: true
     },
-    plan_code: {
+    sub_status_rm: {
         type: String,
-        required: true
-    },
-    sub_status: {
-        type: Boolean,
-
     },
     ref: {
         type: String,
