@@ -18,7 +18,7 @@ const EFASService = () => {
 
         axios.get(`http://localhost:5000/servicecontentefa/`)
             .then(res => {
-                if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
+                if (user.status === "individual" && user.org_type === "school" && user.sub_status_efa === "active") {
 
                     const teacherData = res.data.filter(d => {
                         return d.user_class === 'teacher'

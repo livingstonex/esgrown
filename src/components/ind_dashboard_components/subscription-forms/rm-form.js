@@ -87,17 +87,25 @@ export default function Form(props) {
         setUserId(userId);
 
         //get sub status for user
-        axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
-            .then(res => {
-                if (res.data[0].ref != null) {
-                    // setSubStatus(res.data[0].sub_status);
-                    setButton(1);
-                } else {
-                    setButton(2);
-                }
+        // axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
+        //     .then(res => {
+        //         if (res.data[0].ref != null) {
+        //             // setSubStatus(res.data[0].sub_status);
+        //             setButton(1);
+        //         } else {
+        //             setButton(2);
+        //         }
 
-            })
-            .catch(err => console.log(err))
+        //     })
+        //     .catch(err => console.log(err))
+        if (userData.sub_status_rm === 'active') {
+
+            setSubStatus(userData.sub_status_rm);
+            setButton(1);
+
+        } else {
+            setButton(2);
+        }
 
     }, [])
 
@@ -106,17 +114,42 @@ export default function Form(props) {
         console.log(res);
         setModalPayShow(false);
 
-        const data = {
-            ref: res.reference,
-            sub_status: true,
-            plan_code: subPlan
-        }
+        //make a call to https://api.paystack.co/subscription and get all subscription 
+        //and filter for email of current subscription and extract subscription code.
+        //update individual doc with the gotten data.
 
-        console.log(data);
-        //make axios call to update user reference
-        axios.post(`http://localhost:5000/subscriptionrm/update/rmref/${userId}`, data)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        axios.get(`https://api.paystack.co/subscription`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
+            .then(res => {
+                const client = res.data.data.filter(st => {
+                    return st.customer.email === useremail
+                })
+
+                const data = {
+                    ref: res.reference,
+                    sub_status: client[0].status,
+                    sub_code: client[0].subscription_code
+                }
+
+                //update eas substatus
+                axios.post(`http://localhost:5000/subscriptionrm/update/rmref/${userId}`, data)
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+
+
+                //update user details
+                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, { sub_status_rm: client[0].status, })
+                    .then(res => {
+                        const globalUser = JSON.parse(sessionStorage.getItem('key'));
+
+                        globalUser.sub_status_rm = client[0].status;
+
+                        sessionStorage.setItem('key', JSON.stringify(globalUser));
+                        setButton(1)
+
+                    }).catch(err => console.log(err))
+
+            }).catch(err => console.log(err));
+
 
     }
 

@@ -5,9 +5,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import SearchBar from '../job/components/search';
 import AddStaff from './components/add-staff';
 import StaffDetails from './components/details';
-import Rating from './components/rate';
+import Rating from './components/teacher-rateing';
 import Edit from './components/edit';
 import SchoolWeeks from './components/school-weeks';
+import CompanyStaffRating from './components/staff-rating';
 import toast from '../../../util/toast';
 import './styles.css';
 
@@ -33,6 +34,14 @@ const Staff = () => {
     const [lastDoc, setLastDoc] = useState([])
     const [target, setTarget] = useState();
 
+
+    const [ratecompany, setRateCompany] = useState(false);
+
+
+
+
+
+
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user);
@@ -47,7 +56,7 @@ const Staff = () => {
 
         //check if this is the beginning of the term and get the total weeks for the term
 
-        axios.get(`http://localhost:5000/rate/teacher/check/ftures`)
+        axios.get(`http://localhost:5000/rate/teacher/check/${user.org_name}`)
             .then(res => {
 
                 setLastDoc(res.data.reverse()[0])
@@ -84,24 +93,40 @@ const Staff = () => {
         setTarget(e.currentTarget)
         const current = e.target.getAttribute('data-current');
 
-        if (current === 'rate') {
-            if (lastDoc === undefined) {
-                setTarget(e.currentTarget)
-                setSchoolWeeksModal(true)
-                toast("Please tell us how many weeks are in your calendar this term", "info");
-                return;
 
-            } else if (lastDoc.total_weeks === lastDoc.current_week) {
-                setTarget(e.currentTarget)
-                setSchoolWeeksModal(true);
-                toast("your Current Term has ended. Please start a new term", "info");
-                return;
+        //show company rating modal
+        if (current === 'rate' && user.org_type === 'company') {
+
+            const id = e.target.getAttribute('data-id');
+
+            const staffDetails = staff.filter(st => {
+              return st._id === id
+            })
+            
+            setDetails(staffDetails[0]);
+            setRateCompany(true)
+
+            
+        } else {
+
+            if (current === 'rate') {
+                if (lastDoc === undefined) {
+                    setTarget(e.currentTarget)
+                    setSchoolWeeksModal(true)
+                    toast("Please tell us how many weeks are in your calendar this term", "info");
+                    return;
+
+                } else if (lastDoc.total_weeks === lastDoc.current_week) {
+                    setTarget(e.currentTarget)
+                    setSchoolWeeksModal(true);
+                    toast("your Current Term has ended. Please start a new term", "info");
+                    return;
+                }
             }
+        
+        
+            displayDetails(target, e)
         }
-        
-        
-         displayDetails(target,e)
-
     }
     
     //display modal based on selected action
@@ -129,6 +154,7 @@ const Staff = () => {
     const closeRating = () => {
         setShowRating(false)
     }
+    console.log(details)
 
     return (
         <>
@@ -233,7 +259,6 @@ const Staff = () => {
                 closeModal={closeRating}
                 weeks={weeks}
                 lastDoc={lastDoc}
-
             />
             <Edit
                 show={showEdit}
@@ -246,6 +271,11 @@ const Staff = () => {
                 show={schoolWeeksmodal}
                 onHide={() => setSchoolWeeksModal(!schoolWeeksmodal)}
                 getSchoolWeeks={getSchoolWeeks}
+            />
+            <CompanyStaffRating
+                show={ratecompany}
+                onHide={() => setRateCompany(!ratecompany)}
+                details={details}
             />
         </>
     );

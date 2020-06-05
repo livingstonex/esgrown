@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardActionArea, CardMedia, CardActions, CardContent, Typography } from '@material-ui/core';
 import RMSubForm from './rm/rm-sub-form';
-import LMSubForm from './compt_mgt/lm-sub-form';
+import PMSubForm from './compt_mgt/lm-sub-form';
 import UpdateForm from './components/update-form';
 import AllStaff from './components/all-staff';
 
@@ -10,7 +10,7 @@ import AllStaff from './components/all-staff';
 
 const Subscription = () => {
 
-    const [lmform, setlmform] = useState(false);
+    const [pmForm, setPMForm] = useState(false);
     const [rmform, setrmform] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
     const [service, setService] = useState()
@@ -38,7 +38,7 @@ const Subscription = () => {
     }, []);
 
     const closeModal = (status = false) => {
-        setlmform(false);
+        setPMForm(false);
         setrmform(false);
         setUpdateModal(false);
         if (status === 'active') {
@@ -143,7 +143,7 @@ const Subscription = () => {
                                     <button
                                         className="btn font-weight-bold mt-3 py-2 border-0"
                                         style={{ background: '#21A5E7', color: 'white' }}
-                                        onClick={() => setlmform(!lmform)}
+                                        onClick={() => setPMForm(!pmForm)}
                                     >
                                         Subscribe
                                 </button>}
@@ -152,7 +152,7 @@ const Subscription = () => {
                     </div>
                 </div>
             </div>
-            <LMSubForm show={lmform} onHide={() => setlmform(!lmform)} closeModal={closeModal} />
+            <PMSubForm show={pmForm} onHide={() => setPMForm(!pmForm)} closeModal={closeModal} />
             <RMSubForm show={rmform} onHide={() => setrmform(!rmform)} closeModal={closeModal} />
             <UpdateForm
                 show={updateModal}

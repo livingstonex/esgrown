@@ -36,17 +36,26 @@ export default function Form(props) {
         setUserId(userId);
 
         //get sub status for user
-        axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
-            .then(res => {
-                if (res.data[0].ref != null) {
-                    // setSubStatus(res.data[0].sub_status);
-                    setButton(1);
-                }else{
-                    setButton(2);
-                }
+        // axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
+        //     .then(res => {
+        //         if (res.data[0].ref != null) {
+        //             // setSubStatus(res.data[0].sub_status);
+        //             setButton(1);
+        //         }else{
+        //             setButton(2);
+        //         }
 
-            })
-            .catch(err => console.log(err))
+        //     })
+        //     .catch(err => console.log(err))
+
+        if (userData.sub_status_efa === 'active') {
+
+            setSubStatus(userData.sub_status_efa);
+            setButton(1);
+
+        } else {
+            setButton(2);
+        }
 
     }, [])
 
@@ -141,17 +150,17 @@ export default function Form(props) {
                 }
 
                 //update eas substatus
-                axios.post(`http://localhost:5000/subscriptionefa/update/easref/${userId}`, data)
+                axios.post(`http://localhost:5000/subscriptionefa/update/efaref/${userId}`, data)
                     .then(res => console.log(res))
                     .catch(err => console.log(err))
 
 
                 //update user details
-                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, data)
+                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, { sub_status_efa: client[0].status,})
                     .then(res => {
                         const globalUser = JSON.parse(sessionStorage.getItem('key'));
 
-                        globalUser.sub_status = client[0].status;
+                        globalUser.sub_status_efa = client[0].status;
 
                         sessionStorage.setItem('key', JSON.stringify(globalUser));
                         setButton(1)

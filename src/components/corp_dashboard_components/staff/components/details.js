@@ -14,6 +14,7 @@ const StaffDetails = ({ details, spinner, show, onHide }) => {
     }, []);
 
     const lastlogin = details.length > 0 ? details.createdAt.split('T')[0] : "";
+    
     console.log(lastlogin)
     return (
         <>

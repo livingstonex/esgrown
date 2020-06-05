@@ -30,10 +30,17 @@ router.route(`/getuser/:id`).get((req, res) => {
             { user_id: req.params.id },
             { sub_status: 'active' }
         ]
-    }).then(user => res.json({
-        "end_date": user.end_date,
-        "start_date": user.start_date
-    })).catch(err => res.status(400).json(err))
+    }).then(user => {
+        if (user !== null) {
+            res.json({
+                "end_date": user.end_date,
+                "start_date": user.start_date
+            })
+        } else {
+            res.json([])
+        }
+
+    }).catch(err => res.status(400).json(err))
 });
 
 router.route(`/update/substatus/:id`).post((req, res) => {

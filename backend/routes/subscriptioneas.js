@@ -53,8 +53,8 @@ router.route(`/update/easref/:id`).post((req, res) => {
         { user_id: req.params.id },
         {
             ref: req.body.ref,
-            sub_status_eas: req.body.sub_status_eas,
-            sub_code_eas: req.body.sub_code_eas
+            sub_status: req.body.sub_status,
+            sub_code: req.body.sub_code
         }
     ).then(es => res.json(es))
         .catch(err => res.json('Err: ' + err));
