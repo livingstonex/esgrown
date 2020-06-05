@@ -1,5 +1,6 @@
 .left_col{
-    background: linear-gradient(180deg, rgba(76, 85, 168, 0.36) 14.16%, rgba(255, 255, 255, 0) 100%), #C4C4C4;
+    /* background: linear-gradient(180deg, rgba(76, 85, 168, 0.36) 14.16%, rgba(255, 255, 255, 0) 100%), #C4C4C4; */
+    background-color: #f5f5f5;
     height: 610px;
 }
 
@@ -8,7 +9,8 @@
 }
 
 .right_col{
-    background: linear-gradient(180deg, rgba(76, 85, 168, 0.36) 14.16%, rgba(255, 255, 255, 0) 100%), #C4C4C4;
+    /* background: linear-gradient(180deg, rgba(76, 85, 168, 0.36) 14.16%, rgba(255, 255, 255, 0) 100%), #C4C4C4; */
+    background-color: #f5f5f5;
     height: 610px;
 }
 
@@ -17,15 +19,16 @@
     height: fit-content;
 }
 
-.scroll::-webkit-scrollbar {display: none;}
+/* .scroll::-webkit-scrollbar {display: none;} */
 
 .body-text{
     height: fit-content;
 }
 
 .gen_card{
-    border-bottom: 1px solid white;
+    border: 1px solid white;
     height: fit-content;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
+    border-radius: 6px;
+    /* box-shadow: 0px, 0px, 5px, 5px rgba(0, 0, 0, 0.15); */
+    /* background-color: #FFFFFF; */
+} 

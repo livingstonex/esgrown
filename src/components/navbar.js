@@ -62,7 +62,7 @@ export default class Navbar extends Component{
                                       <nav class="navbar navbar-expand-lg" style={{background:'transparent'}}>
                                       <div class="container">
                                         <div class="d-flex justify-content-center align-items-center" style={{backgroundColor:'', borderRadius:'50%', width:'70px', height:'70px',}}>
-                                          <img src={logo} width="55" height="55"/>
+                                          <img src={logo}  height="65"/>
                                         </div>
                                         {/* <a class="navbar-brand" style={{backgroundColor:'white', borderRadius:'50%'}} href="/"><img src={logo} width="60%"/></a> */}
                                         {/* <Image src={logo}  width="70" height="70"/> */}

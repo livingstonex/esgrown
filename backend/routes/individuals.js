@@ -133,13 +133,58 @@ router.route('/login').post((req, res) => {
 
 
 router.route(`/update/substatus/:id`).post((req, res) => {
-    Individual.findOneAndUpdate(
-        { _id: req.params.id },
-        {
-            sub_status_compt_mgt: req.body.sub_status_compt_mgt,
-        }
-    ).then(es => res.json(es))
-        .catch(err => res.json('Err: ' + err));
+
+    if (req.body.sub_status_eas != null) {
+        Individual.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                sub_status_eas: req.body.sub_status_eas,
+            }
+        ).then(es => res.json(es))
+            .catch(err => res.json('Err: ' + err));
+    }
+
+    if (req.body.sub_status_efa != null) {
+        Individual.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                sub_status_efa: req.body.sub_status_efa,
+            }
+        ).then(es => res.json(es))
+            .catch(err => res.json('Err: ' + err));
+    }
+
+    if (req.body.sub_status_lm != null) {
+        Individual.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                sub_status_lm: req.body.sub_status_lm,
+            }
+        ).then(es => res.json(es))
+            .catch(err => res.json('Err: ' + err));
+        
+    }
+
+    if (req.body.sub_status_rm != null) {
+        Individual.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                sub_status_rm: req.body.sub_status_rm
+            }
+        ).then(es => res.json(es))
+            .catch(err => res.json('Err: ' + err));
+        
+    }
+    
+    if (req.body.sub_status_compt_mgt != null) {
+        Individual.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                sub_status_compt_mgt: req.body.sub_status_compt_mgt
+            }
+        ).then(es => res.json(es))
+            .catch(err => res.json('Err: ' + err));
+    }   
 
 });
 

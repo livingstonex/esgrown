@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
+import GenServiceCard from './gen_service_card';
 
 
 
@@ -47,41 +48,49 @@ const EFASService = () => {
 
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col col-lg-12 col-sm-6" style={{ width: '100%', height: 500, boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', background: '#ffffff', padding: '20px', borderRadius: '10px', overflow: 'scroll' }}>
-                    <div className="">
-                        <div>
-                            {spinner ? <Spinner animation="grow" /> : data.map((data) => {
+        // <div className="container">
+        //     <div className="row">
+        //         <div className="col col-lg-12 col-sm-6" style={{ width: '100%', height: 500, boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', background: '#ffffff', padding: '20px', borderRadius: '10px', overflow: 'scroll' }}>
+        //             <div className="">
+        //                 <div>
+        //                     {spinner ? <Spinner animation="grow" /> : data.map((data) => {
 
-                                return (
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-md-12" style={{width:'100%'}}>
-                                                <div className="card" style={{ fontFamily: 'Roboto,sans-serif', boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', marginBottom: '10px' }}>
-                                                    <div className="card-content" style={{ padding: '10px' }}>
-                                                        {/* <img className="img-responsive"
-                                                            src="http://lorempixel.com/555/300/sports"
-                                                            alt="placeholder"
-                                                            style={{ width: '100%' }} /> */}
-                                                        {
-                                                            data.media ? data.media.split('/')[0] === "data:image" ? <img src={data.media} style={{ width: '100%' }} /> : <video src={data.media} controls style={{ width: '100%' }}></video> : ''
-                                                        }
-                                                        <h6>{data.title}</h6>
-                                                        <p>{data.body}</p>
-                                                    </div>
-                                                </div>
+        //                         return (
+        //                             <div className="container">
+        //                                 <div className="row">
+        //                                     <div className="col-md-12" style={{width:'100%'}}>
+        //                                         <div className="card" style={{ fontFamily: 'Roboto,sans-serif', boxShadow: '0px 0px 5px 5px rgba(0,0,0,0.15)', marginBottom: '10px' }}>
+        //                                             <div className="card-content" style={{ padding: '10px' }}>
+        //                                                 {/* <img className="img-responsive"
+        //                                                     src="http://lorempixel.com/555/300/sports"
+        //                                                     alt="placeholder"
+        //                                                     style={{ width: '100%' }} /> */}
+        //                                                 {
+        //                                                     data.media ? data.media.split('/')[0] === "data:image" ? <img src={data.media} style={{ width: '100%' }} /> : <video src={data.media} controls style={{ width: '100%' }}></video> : ''
+        //                                                 }
+        //                                                 <h6>{data.title}</h6>
+        //                                                 <p>{data.body}</p>
+        //                                             </div>
+        //                                         </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        //                                     </div>
+        //                                 </div>
+        //                             </div>
+        //                         )
+        //                     })}
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // </div>
+        <React.fragment>
+            {
+                spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
+                        return (
+                            <GenServiceCard data={data}/>
+                        )})
+            }
+        </React.fragment>
     );
 }
 
