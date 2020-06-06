@@ -67,7 +67,7 @@ const Jobs = () => {
     return (
         <>
             <br />
-            <div className="container">
+            <div className="container" style={{marginTop:'60px'}}>
                 <div className="container">
                     <div className="row justify-content-center" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
                         <div style={{ width: '500px', float: 'left' }}><SearchBar /></div>

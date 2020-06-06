@@ -132,15 +132,15 @@ const Staff = () => {
 
     return (
         <>
-            <div className="container">
+            <div className="container" style={{marginTop:"70px"}}>
 
                 <div className="container">
-                    <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
+                    <div className="row d-flex align-items-center justify-content-center" style={{ background: '#C4C4C4', }}>
 
                         <div className="col-lg-8" ><SearchBar /></div>
 
                         <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
-                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', marginBottom: '20px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
+                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
                                 <AddCircleIcon fontSize="large" /> Add {user && user.org_type === "school" ? "teacher" : "staff"}
                             </span>
                         </div>

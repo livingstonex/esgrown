@@ -67,7 +67,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
     return (
         <>
 
-            <Modal show={show} onHide={onHide} centered>
+            <Modal show={show} onHide={onHide} centered style={{marginTop:'60px', marginBottom:'70px'}}>
 
                 <div className="container">
                     <div className="row mt-3">
@@ -108,14 +108,14 @@ const CteateJob = ({ show, onHide, closeModal }) => {
                     <div className="row mt-3">
                         <div className="col">
                             <label style={{ fontWeight: 'bold' }}>Job Description</label>
-                            <textarea type="text" name="desc" rows="5" value={jobsData.desc} onChange={handleChange} placeholder="Job Description" className="form-control" required ></textarea>
+                            <textarea type="text" name="desc" rows="3" value={jobsData.desc} onChange={handleChange} placeholder="Job Description" className="form-control" required ></textarea>
                         </div>
                     </div>
                     <Modal.Footer>
-                        <div className="row mt-3">
+                        <div className="row mt-2 mb-4">
                             <div className="col">
                                 <button
-                                    className="btn mt-3 w-100 border-0"
+                                    className="btn w-100 border-0"
                                     style={{ background: '#21A5E7', color: 'white' }}
                                     onClick={createJob}
                                 >
@@ -125,8 +125,9 @@ const CteateJob = ({ show, onHide, closeModal }) => {
                         </div>
                     </Modal.Footer>
                 </div>
-
             </Modal>
+            <br/>
+            <br/>
         </>
     );
 }
