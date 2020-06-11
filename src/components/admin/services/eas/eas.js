@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EASlog from '../components/content_log';
-import EASnewContent from '../components/new_content';
+import EASnewContent from './newcontent';
 
 
 
@@ -24,6 +24,8 @@ const EAS = () => {
                     setEaslog(res.data);
                     setSpinner(false)
 
+                } else {
+                    setSpinner(false)
                 }
             }).catch(err => alert('oops ' + err))
     },[])

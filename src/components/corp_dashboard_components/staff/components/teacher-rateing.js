@@ -22,7 +22,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
 
     const submitRating = () => {
 
-        const personnel = user.org_type === "school" ? "teacher" : "staff";
+
 
         const data = {
             org: user.name,
@@ -38,12 +38,12 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
             }
         }
 
-        axios.post(`http://localhost:5000/rate/${personnel}/add`, data)
+        axios.post(`http://localhost:5000/rate/teacher/add`, data)
             .then(res => {
                 if (res.data === 1) {
-                    toast(`${personnel} has already been rated for the week`, "warn");
+                    toast(`teacher has already been rated for the week`, "warn");
                 } else {
-                    toast(`${personnel} rating successful`, "success");
+                    toast(`teacher rating successful`, "success");
                 }
                 
                 closeModal();

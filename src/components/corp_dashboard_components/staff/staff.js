@@ -11,6 +11,7 @@ import SchoolWeeks from './components/school-weeks';
 import CompanyStaffRating from './components/staff-rating';
 import toast from '../../../util/toast';
 import './styles.css';
+import DeleteStaff from './components/delete';
 
 
 
@@ -33,14 +34,10 @@ const Staff = () => {
     const [weeks, setWeeks] = useState();
     const [lastDoc, setLastDoc] = useState([])
     const [target, setTarget] = useState();
+    const [showDelete, setShowDelete] = useState(false)
 
 
     const [ratecompany, setRateCompany] = useState(false);
-
-
-
-
-
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
@@ -77,6 +74,7 @@ const Staff = () => {
     //close add modal and reload staff
     const closeModal = () => {
         setShow(false);
+        setShowEdit(false)
 
         axios.get(`http://localhost:5000/individuals/staff/${user.id}`)
             .then(res => {
@@ -100,13 +98,13 @@ const Staff = () => {
             const id = e.target.getAttribute('data-id');
 
             const staffDetails = staff.filter(st => {
-              return st._id === id
+                return st._id === id
             })
-            
+
             setDetails(staffDetails[0]);
             setRateCompany(true)
 
-            
+
         } else {
 
             if (current === 'rate') {
@@ -123,36 +121,30 @@ const Staff = () => {
                     return;
                 }
             }
-        
-        
+
+
             displayDetails(target, e)
         }
     }
-    
+
     //display modal based on selected action
-    const displayDetails = (target,e) => {
+    const displayDetails = (target, e) => {
 
         const id = e ? e.target.getAttribute('data-id') : target.getAttribute('data-id');
-        const current = e ? e.target.getAttribute('data-current') :target.getAttribute('data-current');
+        const current = e ? e.target.getAttribute('data-current') : target.getAttribute('data-current');
 
-        const loadModal = () => current === "view" ? setShowDetails(true) : current === "rate" ? setShowRating(true) : current === "edit" ? setShowEdit(true) : current === "delete" ? "delete" : ""
+        const loadModal = () => current === "view" ? setShowDetails(true) : current === "rate" ? setShowRating(true) : current === "edit" ? setShowEdit(true) : current === "delete" ? setShowDelete(true) : ""
 
-        //get staff details from individuals
-        axios.get(`http://localhost:5000/individuals/details/${id}`)
-            .then(res => {
-                if (res.data) {
-                    setSpinner(false);
-                    setDetails(res.data);
-                    loadModal()
-                }
-            })
-            .catch(() => toast('An error occurred while trying to locate staff.Please try again', 'error'))
-    
-}
-
+        const staffDetails = staff.filter(st => {
+            return st._id === id
+        })
+        setDetails(staffDetails[0]);
+        loadModal();
+    }
 
     const closeRating = () => {
         setShowRating(false)
+        setRateCompany(false)
     }
     console.log(details)
 
@@ -200,7 +192,7 @@ const Staff = () => {
                     staff.map(st => {
                         return (
                             <>
-                                <div className="wrapper-list py-2 mt-2" style={{backgroundColor:'#f5f5f5'}}>
+                                <div className="wrapper-list py-2 mt-2" style={{ backgroundColor: '#f5f5f5' }}>
                                     <div className="container-fluid">
                                         <div className="row">
                                             <div className="col d-flex justify-content-between">
@@ -221,15 +213,15 @@ const Staff = () => {
                                                 </div>
 
                                                 <div className="d-flex align-items-center ml-auto">
-                                                    <Dropdown alignRight color={'red'} style={{backgroundColor:'#f5f5f5'}}>
-                                                        <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder'}}>
+                                                    <Dropdown alignRight color={'red'} style={{ backgroundColor: '#f5f5f5' }}>
+                                                        <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
                                                             ....
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="view">View Details</Dropdown.Item>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="edit">Edit {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="rate">Rate {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => alert('Hello')} data-current="delete">Delete {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
+                                                            <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="delete">Delete {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
                                                 </div>
@@ -263,9 +255,10 @@ const Staff = () => {
             <Edit
                 show={showEdit}
                 onHide={() => setShowEdit(!showEdit)}
-                details={details}
+                id={details._id}
                 spinner={spinner}
                 user={user}
+                closeModal={closeModal}
             />
             <SchoolWeeks
                 show={schoolWeeksmodal}
@@ -276,7 +269,15 @@ const Staff = () => {
                 show={ratecompany}
                 onHide={() => setRateCompany(!ratecompany)}
                 details={details}
+                closeModal={closeRating}
             />
+            <DeleteStaff
+                show={showDelete}
+                onHide={() => setShowDelete(!showDelete)}
+                details={details}
+                user={user}
+            />
+            
         </>
     );
 }

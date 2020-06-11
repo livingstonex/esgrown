@@ -6,6 +6,10 @@ const JobSchema = new Schema({
         type: String,
         required: true
     },
+    company_id: {
+        type: String,
+       required:true 
+    },
     jobs: {
         type: Array,
         required: true

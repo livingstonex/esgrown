@@ -5,6 +5,7 @@ import NavBar from './navbar';
 import Profile from './ind_dashboard_components/main-pages/profile';
 import Account from './ind_dashboard_components/main-pages/account';
 import Subscription from './ind_dashboard_components/main-pages/subscription';
+import {logout} from './logot';
 // import Services from './ind_dashboard_components/main-pages/services';
 
 import clsx from 'clsx';
@@ -119,7 +120,8 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    paddingTop: theme.spacing(6),
+    // paddingBottom: theme.spacing(0),
   },
 }));
 
@@ -756,14 +758,12 @@ export default function MiniDrawer() {
           </List>
           <Divider />
           <List>
-            <Link to="/logout" style={{ 'text-decoration': 'none' }}>
               {
-                <ListItem button onClick={{}}>
-                  <ListItemIcon><LogoutIcon color="p" /> </ListItemIcon>
+                <ListItem button onClick={()=>logout()}>
+                  <ListItemIcon><LogoutIcon color="p" />  </ListItemIcon>
                   <ListItemText secondary={'Logout'} />
                 </ListItem>
               }
-            </Link>
           </List>
         </Drawer>
         <main className={classes.content}>

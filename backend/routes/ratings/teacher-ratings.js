@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const RatingSchema = require('../../models/ratings/personnel-ratings.model');
+const RatingSchema = require('../../models/ratings/teacher-ratings.model');
 
 
 router.route(`/add`).post(async (req, res) => {
@@ -16,16 +16,15 @@ router.route(`/add`).post(async (req, res) => {
     const Rate = await db.model(org, RatingSchema);
 
     // check if collection exist, if find is empty then collection does not exist and has no docs
-    const all = await Rate.find();
+    const allDocs = await Rate.find();
 
-    if (all.length < 1) {
+    if (allDocs.length === 0) {
         //create first doc
-        const newRating = new Rate({ personnel_ratings, total_weeks,current_week: 1 });
+        const newRating = new Rate({ personnel_ratings, total_weeks, current_week: 1 });
 
         try {
             const rated = await newRating.save();
             res.json(rated);
-
         } catch (e) {
             res.status(400).json(e)
         }
@@ -40,7 +39,7 @@ router.route(`/add`).post(async (req, res) => {
         const epocDate = Math.floor(new Date(lastCreatedAt).getTime());
 
         //add 7 days to createdat to get the epocdate
-        const days = (86400 * 7) + Date.now();
+        const days = 86400 * 7;
 
         const newEpoc = epocDate + days;
 
@@ -48,7 +47,7 @@ router.route(`/add`).post(async (req, res) => {
 
 
         if (today > newEpoc) {
-            
+
             //create new week
             const newRating = new Rate({
                 personnel_ratings,
@@ -61,18 +60,26 @@ router.route(`/add`).post(async (req, res) => {
             res.json(rated);
         } else {
             //find the id
-            Rate.find({ "personnel_ratings.personnel_id": req.body.ratings.personnel_id })
-                .then(doc => {
-                    if (doc.length > 0) {
-                        //has already been rated for the current week
-                        res.json(1)
+            const rte = await Rate.find().sort({ createdAt: - 1 }).limit(1);
 
-                    } else {
-                        //has not been rated for the current week
-                        Rate.find().sort({ createdAt: - 1 }).limit(1).update({ $push: { personnel_ratings } })
-                            .then(() => res.json(2)).catch(err => res.status(400).json(err))
+            const rStaff = rte[0].staff_ratings.filter(st => {
+                return st.staff_id === req.body.personnel_ratings.personnel_id
+            })
+
+            if (rStaff.length !== 0) {
+                //has already been rated for the current week
+                res.json(1)
+            } else {
+
+                try {
+                    const appendNew = await Rate.find().sort({ createdAt: - 1 }).limit(1).updateOne({ $push: { personnel_ratings } });
+                    if (appendNew) {
+                        res.json(2);
                     }
-                }).catch(err => res.status(400).json(err))
+                } catch (e) {
+                    res.status(400).json(e)
+                }
+            }
 
         }
 
@@ -92,7 +99,7 @@ router.route(`/add`).post(async (req, res) => {
 })
 
 router.route(`/check/:school`).get(async (req, res) => {
-    
+
     const org = req.params.school;
 
     const dbConnection = await global.clientConnection;

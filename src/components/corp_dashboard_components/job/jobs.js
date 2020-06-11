@@ -6,6 +6,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import SearchBar from './components/search';
 import CreateJob from './components/create-job';
+import toast from '../../../util/toast';
+
 
 
 
@@ -16,19 +18,22 @@ const Jobs = () => {
     const [spinner, setSpinner] = useState(true);
 
     const [show, setShow] = useState(false);
+    const [user, setUser] = useState();
 
 
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
-
+        setUser(user)
         //get all jobs
-        axios.get(`http://localhost:5000/jobs`)
+        axios.get(`http://localhost:5000/jobs/${user.id}`)
             .then(res => {
-                if (res.data.length > 0) {
+                if (res.data.length !== 0) {
                     setJobs(res.data);
                     setSpinner(false);
-
+                } else {
+                    setSpinner(false);
+                    toast("No company jobs found. Add one", "info")
                 }
             })
             .catch(err => console.log(err));
@@ -42,12 +47,11 @@ const Jobs = () => {
     const closeModal = () => {
         setShow(false);
 
-        axios.get(`http://localhost:5000/jobs`)
+        axios.get(`http://localhost:5000/jobs/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     setJobs(res.data);
                     setSpinner(false);
-
                 }
             })
             .catch(err => console.log(err));
@@ -84,7 +88,6 @@ const Jobs = () => {
                 <div className="container">
                     <br /><br />
                     <div className="row" style={{ textAlign: 'center' }}>
-                        <div className="col col-lg-2 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Company Name</span></div>
                         <div className="col col-lg-3 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Job Title</span></div>
                         <div className="col col-lg-2 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Start Date</span></div>
                         <div className="col col-lg-2 col-sm-6"><span style={{ fontSize: "18px", fontWeight: "bold" }}>End Date</span></div>
@@ -98,7 +101,6 @@ const Jobs = () => {
                                     return (
                                         <>
                                             <div className="row" key={index} style={{ height: '50px', background: "#FFFFFF", borderRadius: '5px', lineHeight: '48px', marginBottom: '15px', textAlign: 'center' }}>
-                                                <div className="col col-lg-2 col-sm-6" >{job.company_name}</div>
                                                 <div className="col col-lg-3 col-sm-6" style={{ textAlign: 'center' }}>{j.title}</div>
                                                 <div className="col col-lg-2 col-sm-6" >{j.start_date}</div>
                                                 <div className="col col-lg-2 col-sm-6" >{j.dead_line}</div>

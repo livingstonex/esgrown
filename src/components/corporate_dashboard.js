@@ -35,6 +35,7 @@ import Subscriptions from './corp_dashboard_components/subscriptions/subscriptio
 import CorpServices from './corp_dashboard_components/services/services';
 import CorpExercises from './corp_dashboard_components/exercises/exercise';
 import Staff from './corp_dashboard_components/staff/staff';
+import {logout} from './logot';
 
 
 
@@ -363,16 +364,14 @@ export default function MiniDrawer() {
           </List>
           <Divider />
           <List>
-            <Link to="/logout" style={{ 'text-decoration': 'none' }}>
               {
-                <ListItem button onClick={{}}>
+                <ListItem button onClick={ ()=>logout()}>
                   <ListItemIcon>
                     <LogoutIcon color="" />
                   </ListItemIcon>
                   <ListItemText secondary={'Logout'} />
                 </ListItem>
               }
-            </Link>
           </List>
         </Drawer>
         {/* <main> */}

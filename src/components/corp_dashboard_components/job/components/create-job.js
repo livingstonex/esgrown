@@ -16,6 +16,13 @@ const CteateJob = ({ show, onHide, closeModal }) => {
 
     const [spinner, setSpinner] = useState(false);
 
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('key'));
+        setUser(user)
+    },[])
+
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -38,7 +45,8 @@ const CteateJob = ({ show, onHide, closeModal }) => {
 
         const submitData = {
             company_name: companyName,
-            jobs: jobsData
+            jobs: jobsData,
+            company_id: user.id
         }
 
         //post job to server

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Modal } from 'react-bootstrap';
+import toast from '../../../../util/toast';
 
 
 
-const StaffRating = ({ show, onHide, details }) => {
+
+const StaffRating = ({ show, onHide, details, closeModal }) => {
 
     const [rating, setRating] = useState();
     const [user, setUser] = useState();
@@ -18,6 +21,37 @@ const StaffRating = ({ show, onHide, details }) => {
     const rate = event => {
         setRating({ ...rating, [event.target.name]: event.target.value });
     };
+
+    const submitRating = async () => {
+
+        const data = {
+            org: user.name,
+            staff_ratings: {
+                staff_id: details._id,
+                staff_name: details.fullname,
+                staff_email:details.email,
+                staff_phone: details.phone,
+                civility: rating.civility,
+                professionalism: rating.professionalism,
+                performance: rating.performance
+            }
+        }
+
+        try {
+            const res = await axios.post(`http://localhost:5000/rate/staff/add`, data);
+
+            console.log(res.data);
+            toast(res.data,'success')
+            closeModal()
+
+        } catch (e) {
+            console.log(e)
+            toast("there was an error rating your staff, please try again", 'warn');
+            closeModal()
+        }
+
+    }
+
 
     return (
         <>
@@ -37,7 +71,7 @@ const StaffRating = ({ show, onHide, details }) => {
 
                             <div className="container">
                                 <div className="d-flex justify-content-around">
-                                    <p className="mt-3" style={{textAlign:'justify'}}>Performance:</p>
+                                    <p className="mt-3" style={{ textAlign: 'justify' }}>Performance:</p>
                                     <div className="col">
                                         <div className="d-flex align-items-center">
                                             <p className="mt-3 mr-2">1</p> <input type="radio" onChange={rate} name="psr" value="1" />
@@ -137,6 +171,7 @@ const StaffRating = ({ show, onHide, details }) => {
                         <button
                             className="btn mt-3 w-100 border-0"
                             style={{ background: '#21A5E7', color: 'white' }}
+                            onClick={submitRating}
 
                         >
                             Submit Rating

@@ -46,7 +46,7 @@ import Home from './components/home';
 const CountryAdminDashboard = () => {
 
 
-    const drawerWidth = 260;
+    const drawerWidth = 210;
 
     const useStyles = makeStyles(theme => ({
         root: {
@@ -289,7 +289,7 @@ const CountryAdminDashboard = () => {
                         {
                             <ListItem button onClick={setUpdatePage}>
                                 <ListItemIcon><UpdateIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Update Admin Privileges'} />
+                                <ListItemText primary={'Update Privileges'} />
                             </ListItem>
                         }
 

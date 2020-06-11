@@ -172,6 +172,7 @@ router.route(`/update/substatus/:id`).post((req, res) => {
             .catch(err => res.json('Err: ' + err));
         
     }
+    
     if (req.body.sub_status_compt_mgt != null) {
         Individual.findOneAndUpdate(
             { _id: req.params.id },
@@ -241,6 +242,17 @@ router.route(`/staff/:id`).get((req, res) => {
     Individual.find({ org_id: req.params.id })
         .then(cmp => res.json(cmp))
         .catch(err => res.status(400).json(err));
+});
+router.route(`/staff/update/:id`).post((req, res) => { 
+
+    Individual.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            fullname: req.body.fullname,
+            email: req.body.email
+        }
+    ).then(update => res.json(update))
+        .catch(err => res.status(400).json(err))
 });
 
 router.route(`/details/:id`).get((req, res) => {

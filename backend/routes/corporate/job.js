@@ -5,9 +5,10 @@ const JOB = require('../../models/corporate/job.model');
 //======================== Add new company with jobs ====================
 router.route(`/add`).post((req, res) => {
     const company_name = req.body.company_name;
+    const company_id = req.body.company_id;
     const jobs = req.body.jobs;
 
-    const job = new JOB({ company_name, jobs })
+    const job = new JOB({ company_name, jobs, company_id })
 
     job.save()
         .then(job => res.json(job))
@@ -15,10 +16,10 @@ router.route(`/add`).post((req, res) => {
 });
 
 
-//====================== get all companies and jobs ===================================
+//====================== get all companies jobs ===================================
 
-router.route(`/`).get((req, res) => {
-    JOB.find()
+router.route(`/:id`).get((req, res) => {
+    JOB.find({company_id: req.params.id})
         .then(jobs => res.json(jobs))
         .catch(err => res.status(400).json(err));
 });
