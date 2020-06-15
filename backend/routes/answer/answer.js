@@ -31,7 +31,7 @@ router.route('/corpid/excerciseid', (res, req) => {
     const corp_id = req.body.corp_id;
     const excercise_id = res.body.excercise_id;
 
-    Answer.find({corp_id: corp_id, excercise_id: excercise_id})
+    Answer.find({$and: [{corp_id: corp_id}, {excercise_id: excercise_id}]})
             .then(answers => res.json(answers))
             .catch(err => res.status(400).json('Error: ' + err));
 })

@@ -25,6 +25,16 @@ router.route(`/`).get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// =========================== Get Excercises by Company Id ==================
+
+router.route('/corpid', (res, req) => {
+    const corp_id = req.body.corp_id;
+
+    EX.find({corp_id: corp_id})
+        .then(ex => res.json(ex))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 
 // ============================= Get update based on user last login ===============================

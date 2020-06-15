@@ -92,6 +92,7 @@ const comptMgtRoute = require('./routes/corporate/competence/compt_mgt');
 
 
 
+
 app.use('/individuals', individualsRouter);
 app.use('/corporates', corporatesRouter);
 app.use('/subscriptioneas', subscriptioneasRouter);
