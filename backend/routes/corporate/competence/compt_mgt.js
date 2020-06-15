@@ -31,7 +31,7 @@ router.route(`/getuser/:id`).get((req, res) => {
             { sub_status: 'active' }
         ]
     }).then(user => {
-        if (user !== null) {
+        if (user != null) {
             res.json({
                 "end_date": user.end_date,
                 "start_date": user.start_date

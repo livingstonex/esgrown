@@ -11,6 +11,7 @@ const EASService = () => {
 
     const [spinner, setSpinner] = useState(true)
     const [data, setData] = useState([])
+    const [chunk, setChunk] = useState();
 
 
     //get data from api

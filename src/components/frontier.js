@@ -111,6 +111,10 @@ export default class Frontier extends Component {
                             axios.post(`http://localhost:5000/competence/management/update/substatus/${u.id}`, { sub_status: 'completed' })
                                 .then(sta => console.log(sta.data))
                                 .catch(err => console.log(err));
+                            
+                            //update the individuals' doc
+                            axios.post(`http://localhost:5000/individuals/update/substatus/${u.id}`, { sub_status_compt_mgt: 'completed' })
+                                .then(() => console.log("updated")).catch(err => console.log(err))
                         }
                         console.log(res.data)
                     }

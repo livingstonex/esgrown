@@ -72,8 +72,7 @@ router.route('/login').post((req, res) => {
                 if (bcrypt.compareSync(password, ind[0].password)) {
                     console.log("Password Correct");
                     const lastLogin = Date.parse(new Date());
-
-                    res.json(ind);
+                    ind[0].updateOne({ lastLogin }).then(() => res.json(ind)).catch(err => console.log(err))
                 } else {
                     // Password is wrong
                     console.log("Password wrong OYO");
@@ -94,7 +93,7 @@ router.route('/login').post((req, res) => {
                                     axios.get(`https://api.paystack.co/subscription/${corp[0].sub_code_rm}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
                                         .then(paystack => {
                                             console.log("paystack just responded now")
-                                            corp[0].update(
+                                            corp[0].updateOne(
                                                 { sub_status_rm: paystack.data.data.status, lastLogin: lastLogin },
                                                 { returnOriginal: false }
                                             ).then(update_res => {

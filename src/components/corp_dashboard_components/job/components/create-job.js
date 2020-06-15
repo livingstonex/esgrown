@@ -44,7 +44,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         setSpinner(true)
 
         const submitData = {
-            company_name: companyName,
+            company_name: user.name,
             jobs: jobsData,
             company_id: user.id
         }
@@ -66,6 +66,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
             email: '',
             start_date: '',
             dead_line: '',
+            erd:'',
             desc: ''
 
         });
@@ -78,12 +79,12 @@ const CteateJob = ({ show, onHide, closeModal }) => {
             <Modal show={show} onHide={onHide} centered>
 
                 <div className="container">
-                    <div className="row mt-3">
+                    {/* <div className="row mt-3">
                         <div className="col">
                             <label style={{ fontWeight: 'bold' }}> Company Name</label>
                             <input type="text" name="companyName" value={companyName} onChange={setCompany} placeholder="Company Name" className="form-control" required />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="row mt-3">
                         <div className="col">
@@ -102,14 +103,21 @@ const CteateJob = ({ show, onHide, closeModal }) => {
                     <div className="row mt-3">
                         <div className="col">
                             <label style={{ fontWeight: 'bold' }}>Start Date</label>
-                            <input type="date" name="start_date" value={jobsData.startDate} onChange={handleChange} placeholder="Exercise Title" className="form-control" required />
+                            <input type="date" name="start_date" value={jobsData.startDate} onChange={handleChange} placeholder="when applications begin" className="form-control" required />
                         </div>
                     </div>
 
                     <div className="row mt-3">
                         <div className="col">
                             <label style={{ fontWeight: 'bold' }}>Dead Line</label>
-                            <input type="date" name="dead_line" value={jobsData.endDate} onChange={handleChange} placeholder="Exercise Title" className="form-control" required />
+                            <input type="date" name="dead_line" value={jobsData.dead_line} onChange={handleChange} placeholder="Dead line" className="form-control" required />
+                        </div>
+                    </div>
+
+                    <div className="row mt-3">
+                        <div className="col">
+                            <label style={{ fontWeight: 'bold' }}>Expected Resumption Date </label>
+                            <input type="date" name="erd" value={jobsData.erd} onChange={handleChange} placeholder="ERD" className="form-control" required />
                         </div>
                     </div>
 
