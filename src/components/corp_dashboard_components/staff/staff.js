@@ -13,7 +13,7 @@ import './styles.css';
 
 
 
-const Staff = () => {
+const Staff = ({ex_rankingpage}) => {
 
 
     const [user, setUser] = useState();
@@ -135,14 +135,17 @@ const Staff = () => {
             <div className="container" style={{marginTop:"70px"}}>
 
                 <div className="container">
-                    <div className="row d-flex align-items-center justify-content-center" style={{ background: '#C4C4C4', }}>
+                    <div className="row d-flex align-items-center justify-content-center" style={{ background: '#C4C4C4', padding:'10px'}}>
 
                         <div className="col-lg-8" ><SearchBar /></div>
 
-                        <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
-                            <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>
-                                <AddCircleIcon fontSize="large" /> Add {user && user.org_type === "school" ? "teacher" : "staff"}
-                            </span>
+                        <div className="col-lg-4" style={{ cursor: 'pointer' }} >
+                            {/* <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}> */}
+                                <div className="d-flex justify-content-between">
+                                <div className="btn" style={{background:'#53a6e7'}} onClick={ex_rankingpage}>Excercise Ranking</div>
+                                <div onClick={() => setShow(!show)}><AddCircleIcon fontSize="large" /> Add {user && user.org_type === "school" ? "teacher" : "staff"}</div>
+                                </div>
+                            {/* </span> */}
                         </div>
                     </div>
                 </div><br /><br />

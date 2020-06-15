@@ -132,7 +132,7 @@ const UpdatePrivileges = () => {
             {
                 spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
                     :
-                    <div className="container">
+                    <div className="container mt-5">
                         <div className="row">
 
                             {admins.map(ad => {

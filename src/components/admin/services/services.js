@@ -21,7 +21,7 @@ import EAS from './eas/eas';
 import EFA from './efa/efa';
 import RM from './rm/rm';
 import LM from './lm/lm';
-
+import FOS_Modal from './components/f_study_modal';
 
 // function TabPanel(props) {
 //     const { children, value, index, ...other } = props;
@@ -62,7 +62,7 @@ import LM from './lm/lm';
 
 
 
-export default function Services() {
+export default function Services({role}) {
 
 
     const [page, setPage] = useState(0);
@@ -84,7 +84,7 @@ export default function Services() {
     return (
         <>
             {
-                (page == 0) ? <div className="container">
+                (page == 0) ? <div className="container mt-5">
                 <div className="row">
                     <div className="col col-lg-3 col-sm-6">
                         <br />
@@ -110,8 +110,11 @@ export default function Services() {
 
                             </CardActionArea>
                             <CardActions>
-
+                                
                             </CardActions>
+                            <div className="d-flex justify-content-center mb-2">
+                                { (role == "Country Admin") ? <FOS_Modal/> : "" }
+                            </div>
                         </Card>
                     </div>
                     <div className="col col-lg-3 col-sm-6">
@@ -193,6 +196,11 @@ export default function Services() {
                         </Card>
                     </div>
                 </div>
+
+                <div className="row d-flex justify-content-center mt-5" style={{background:'#e9e9e9', width:'100%', padding:'10px'}}>
+                   
+                </div>
+                
             </div> : (page == 1)? <EAS />: (page == 2) ? <EFA />: (page == 3) ? <RM /> : (page == 4) ? <LM /> : "" }
             
         </>

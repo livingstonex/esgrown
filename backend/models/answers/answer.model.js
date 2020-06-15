@@ -10,6 +10,10 @@ const answerSchema = new Schema({
         type: String,
         required:true
     },
+    corp_id: {
+        type: String,
+        required:true
+    },
     service: {
         type: String,
         required:true
