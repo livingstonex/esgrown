@@ -39,6 +39,9 @@ import PeopleIcon from '@material-ui/icons/People';
 import CreateAdmin from './components/create-country-admin';
 import UpdatePrivileges from './components/update-privileges';
 import Home from './components/home';
+// Sub pages for home
+import AllAdmins from './components/all-admin';
+import Activities from './components/activity';
 
 
 
@@ -171,6 +174,14 @@ const SuperAdminDashboard = () => {
         setPage(0);
     }
 
+    // Set state functions for Sub pages
+    const setAdmins = () => {
+        setPage(3);
+    }
+    const setActivityPage = () => {
+        setPage(4);
+    }
+
 
     //Drawer Open and  Close Functions
     const handleDrawerOpen = () => {
@@ -243,7 +254,7 @@ const SuperAdminDashboard = () => {
                         <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
                         {/* Place Logo here */}
                         <div style={{ marginLeft: '60px' }}>
-                            <img src={logo} width="80%" alt="" />
+                            <img src={logo} width="60%" alt="" />
                         </div>
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -269,7 +280,7 @@ const SuperAdminDashboard = () => {
                         {
                             <ListItem button onClick={setCreatePage}>
                                 <ListItemIcon><AssessmentIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Create Country Admin'} style={{ fontSize: '15px', textAlign: 'center' }} />
+                                <ListItemText primary={'Create Country Admin'} style={{ fontSize: '12px', textAlign: 'center' }} />
                             </ListItem>
                         }
                         {
@@ -295,7 +306,7 @@ const SuperAdminDashboard = () => {
                 <main className={classes.content} style={{ background: "#D0CFCF", height: '800px' }}>
 
                     {
-                        (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdatePrivileges /> : ""
+                        (page === 0) ? <Home admin={setAdmins} activity={setActivityPage}/> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdatePrivileges /> : (page === 3) ? <AllAdmins /> : (page === 4) ? <Activities /> : ""
                     }
                 </main>
             </div>

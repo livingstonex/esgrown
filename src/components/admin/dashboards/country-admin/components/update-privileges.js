@@ -142,20 +142,25 @@ const UpdatePrivileges = () => {
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);
-                    setSpinner(false)
+                    setSpinner(false);
 
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                setSpinner(false);
+            })
     }, []);
 
 
     return (
         <>
             {
-                spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                spinner ? <div className="d-flex justify-content-center mt-4"><h5 style={{fontFamily:'quicksand', color:'grey'}}>No Admin Found, Trying to find...</h5></div>
+                // <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
                     :
-                    <div className="container">
+                    <div className="container mt-5">
+                        <div className="d-flex justify-content-center"><h5 style={{fontFamily:'quicksand', color:'grey'}}>Update Admins Privileges</h5></div>
                         <div className="row">
 
                             {admins.map(ad => {

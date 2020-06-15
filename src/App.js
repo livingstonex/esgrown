@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar";
 import Home from "./components/home";
@@ -23,7 +23,6 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        {/* <Navbar /> */}
         <Route path="/" exact component={Home} />
         <Route path="/corporate_login" exact component={SignIn} />
         <Route path="/signup_individual" exact component={SignUp_Individual} />

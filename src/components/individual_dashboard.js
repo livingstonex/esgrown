@@ -610,7 +610,7 @@ export default function MiniDrawer() {
           }}
         >
           <div className={classes.toolbar} style={{ marginLeft: '-10px' }}>
-            <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
+            <div style={{ height: '100%', width: '25px', backgroundColor: '#53a6e7' }}></div>
             {/* Place Logo here */}
             <div style={{ marginLeft: '60px' }}>
               <img src={logo} width="80%" />
@@ -650,9 +650,9 @@ export default function MiniDrawer() {
                     page === 1 ? <> <PersonIcon color="primary" /> </> : <> <PersonIcon color=""/> </>
                   }
                 </ListItemIcon>
-                {
-                  page === 1 ? <> <ListItemText primary={'Profile'}/> </> : <> <ListItemText secondary={'Profile'}/> </>
-                }
+                  {
+                    page === 1 ? <> <ListItemText primary={'Profile'}/> </> : <> <ListItemText secondary={'Profile'}/> </>
+                  }
               </ListItem>
             }
             {
