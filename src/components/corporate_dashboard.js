@@ -381,7 +381,7 @@ export default function MiniDrawer() {
         {/* <main> */}
 
         {
-          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff ex_rankingpage={setExRanking}/> : (page === 7) ? <ExcerciseRanking page={setExRanking}/> : ""
+          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff ex_rankingpage={setExRanking}/> : (page === 7) ? <ExcerciseRanking /> : ""
         }
         {/* </main> */}
       </div>

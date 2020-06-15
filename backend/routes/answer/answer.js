@@ -17,6 +17,7 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get all individuals answers to excercises by company id [i.e Get list of all answers of individuals who took excercise by company id]
 router.route('/corpid', (res, req) => {
     const corp_id = req.body.corp_id;
 
@@ -25,7 +26,15 @@ router.route('/corpid', (res, req) => {
             .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get list of all individuals who took a particular excercise, by company.
+router.route('/corpid/excerciseid', (res, req) => {
+    const corp_id = req.body.corp_id;
+    const excercise_id = res.body.excercise_id;
 
+    Answer.find({corp_id: corp_id, excercise_id: excercise_id})
+            .then(answers => res.json(answers))
+            .catch(err => res.status(400).json('Error: ' + err));
+})
 
 //============================= Get Individual's EAS Sub Details ===========================
 
