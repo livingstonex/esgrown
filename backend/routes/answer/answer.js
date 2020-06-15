@@ -4,18 +4,27 @@ let Answer = require('../../models/answers/answer.model');
 router.route('/add').post((req, res) => {
     const user_id = req.body.user_id;
     const excercise_id = req.body.excercise_id;
+    const corp_id = req.body.corp_id;
     const service = req.body.service;
     const name = req.body.name;
     const email = req.body.email;
     const answers = req.body.answers; 
 
-    const newAns = new Answer({ user_id, excercise_id, service, name, email, answers });
+    const newAns = new Answer({ user_id, excercise_id, corp_id, service, name, email, answers });
 
     newAns.save()
         .then((sub) => res.json(sub))
         .catch(err => res.status(400).json('Error: ' + err));
-
 });
+
+router.route('/corpid', (res, req) => {
+    const corp_id = req.body.corp_id;
+
+    Answer.find({corp_id: corp_id})
+            .then(people => res.json(people))
+            .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 
 //============================= Get Individual's EAS Sub Details ===========================

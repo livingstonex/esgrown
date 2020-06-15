@@ -31,32 +31,6 @@ export default class Home extends Component{
         }
     }
 
-    // componentDidMount(){
-    //     // Run jquery to load the slider
-    //     $(document).ready(function(){
-    //         $('.customer-logos').slick({
-    //             slidesToShow: 6,
-    //             slidesToScroll: 1,
-    //             autoplay: true,
-    //             autoplaySpeed: 1500,
-    //             arrows: false,
-    //             dots: false,
-    //             pauseOnHover: false,
-    //             responsive: [{
-    //                 breakpoint: 768,
-    //                 settings: {
-    //                     slidesToShow: 4
-    //                 }
-    //             }, {
-    //                 breakpoint: 520,
-    //                 settings: {
-    //                     slidesToShow: 3
-    //                 }
-    //             }]
-    //         });
-    //     });
-    // }
-
     onChangeEmail(e){
         this.setState({
             email: e.target.value
@@ -319,15 +293,35 @@ export default class Home extends Component{
                                             </Container>
                                         </Col>
                                     </Row>
-                                    
-                                    <br/>
-                                    <br/>
+                                   
                                     </Container>
-                                {/* </div> */}
                                 </div>
+                                <Container>
+                                    <Slider {...settings}>
+                                            <div>
+                                                <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
+                                            </div>
+                                            <div>
+                                                <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
+                                            </div>
+                                            <div>
+                                                <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
+                                            </div>
+                                            <div>
+                                                <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
+                                            </div>
+                                            <div>
+                                                <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
+                                            </div>
+                                            <div>
+                                                <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
+                                        </div> 
+                                    </Slider>
+                              </Container>
                                 
-                                {/* Bottom content */}                                
-                                <Slider {...settings} >
+                                {/* Bottom content */}
+                                {/* <div style={{background:'red'}}>                                
+                                <Slider {...settings} style={{width:'100%',}}>
                                     <div>
                                             <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
                                         </div>
@@ -347,6 +341,7 @@ export default class Home extends Component{
                                             <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
                                     </div> 
                                 </Slider>
+                                </div> */}
                             </div>
                         )
                     }
@@ -354,55 +349,3 @@ export default class Home extends Component{
         );
     }
 }
-
-                            {/* <div className="slider" style={{width:'100%'}}>
-                                    <div className="d-flex justify-content-center">
-                                        <div className="col-lg-4">
-                                            <div className="d-flex justify-content-start align-items-center">
-                                                <i className="fa fa-chevron-left"></i>
-                                                <Card imageUrl="https://smallbusiness.findlaw.com/incorporation-and-legal-structures/corporate-structure-directors-to-shareholders/_jcr_content/pg/articleHeading/imageInLine.coreimg.jpeg"/>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4"><Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/></div>
-                                        <div className="col-lg-4">
-                                            <div className="d-flex justify-content-start align-items-center">
-                                                <Card imageUrl="https://unity.trustradius.com/wp-content/uploads/2018/09/tech-in-school.jpg"/>
-                                                <i className="fa fa-chevron-right"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-
-                                {/* <div class="container">
-                                    <section class="customer-logos slider">
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/luxury-letter-e-logo-design_1017-8903.jpg"/></div>
-                                        <div class="slide"><img src="http://www.webcoderskull.com/img/logo.png"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/3d-box-logo_1103-876.jpg"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/blue-tech-logo_1103-822.jpg"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/colors-curl-logo-template_23-2147536125.jpg"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/abstract-cross-logo_23-2147536124.jpg"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/football-logo-background_1195-244.jpg"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/background-of-spots-halftone_1035-3847.jpg"/></div>
-                                        <div class="slide"><img src="https://image.freepik.com/free-vector/retro-label-on-rustic-background_82147503374.jpg"/></div>
-                                    </section>
-                                </div> */}
-
-
-                                 {/* <div>
-                                            <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                        </div>
-                                        <div>
-                                            <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                        </div>
-                                        <div>
-                                            <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                        </div>
-                                        <div>
-                                            <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                        </div>
-                                        <div>
-                                            <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                        </div>
-                                        <div>
-                                            <Card imageUrl="https://www.unhcr.org/thumb1/5a1e75d74.jpg"/>
-                                        </div> */}

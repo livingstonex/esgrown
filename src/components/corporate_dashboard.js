@@ -35,6 +35,7 @@ import Subscriptions from './corp_dashboard_components/subscriptions/subscriptio
 import CorpServices from './corp_dashboard_components/services/services';
 import CorpExercises from './corp_dashboard_components/exercises/exercise';
 import Staff from './corp_dashboard_components/staff/staff';
+import ExcerciseRanking from './corp_dashboard_components/staff/excercise_rankings';
 import {logout} from './logot';
 
 
@@ -145,6 +146,9 @@ export default function MiniDrawer() {
   }
   const setStaff = () => {
     setPage(6)
+  }
+  const setExRanking = () => {
+    setPage(7)
   }
 
   //Drawer Open and  Close Functions
@@ -377,7 +381,7 @@ export default function MiniDrawer() {
         {/* <main> */}
 
         {
-          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff /> : ""
+          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff ex_rankingpage={setExRanking}/> : (page === 7) ? <ExcerciseRanking page={setExRanking}/> : ""
         }
         {/* </main> */}
       </div>

@@ -216,7 +216,8 @@ export default function Form(props) {
                             <div className="col">
                                 <select className="form-control" required onChange={onChangeNIEL}>
                                     <option>Next Intended Education Level</option>
-                                    <option value="degree">Degree</option>
+                                    <option value="secondary school">Secondary School</option>
+                                    <option value="undergraduate">Undergraduate</option>
                                     <option value="masters">Masters</option>
                                     <option value="phd">Ph.D</option>
                                 </select>

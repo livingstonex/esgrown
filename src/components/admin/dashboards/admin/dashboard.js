@@ -49,8 +49,6 @@ import RMService from '../../services/rm/rm';
 
 
 const AdminDashboard = () => {
-
-
     const drawerWidth = 230;
 
     const useStyles = makeStyles(theme => ({
@@ -286,8 +284,8 @@ const AdminDashboard = () => {
                 >
                     <div className={classes.toolbar} style={{ marginLeft: '-10px'}}>
                         <div style={{ height: '100%', width: '25px', backgroundColor: '#3F51b5' }}></div>
-                        <div style={{ marginLeft: '60px' }}>
-                            <img src={logo} width="80%" alt="" />
+                        <div style={{ marginLeft: '70px' }}>
+                            <img src={logo} width="70%" alt="" />
                         </div>
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -295,7 +293,7 @@ const AdminDashboard = () => {
                     </div>
                     <Divider />
                     <List style={{ background: '#e9e9e9'}}>
-                        <div style={{ marginLeft: '15px' }}><img src={avatar} alt="Avatar" style={{ width: "50%" }} /></div><br />
+                        <div className="d-flex justify-content-center"><img src={avatar} alt="Avatar" style={{ width: "30%" }} /></div><br />
                     </List>
                     <Divider />
 
@@ -394,7 +392,7 @@ const AdminDashboard = () => {
                         <Link to="/logout" style={{ 'text-decoration': 'none' }}>
                             {
                                 <ListItem button onClick={{}}>
-                                    <ListItemIcon><LogoutIcon color="primary" /> </ListItemIcon>
+                                    <ListItemIcon><LogoutIcon color="primary" ></LogoutIcon> </ListItemIcon>
                                     <ListItemText primary={'Logout'} />
                                 </ListItem>
                             }
@@ -403,7 +401,6 @@ const AdminDashboard = () => {
                 </Drawer>
 
                 <main className={classes.content} style={{ background: "#D0CFCF", height: '800px' }}>
-
                     {
                         (page == 0) ? "HOME" : (page == 1) ? <EASService /> : (page == 2) ? <EFAService /> : (page == 3) ? <LMService /> : (page == 4) ? <RMService /> : (page == 5) ? <LMExercise /> : (page == 6) ? <RMExercise /> : (page == 7) ? <Exercises /> : (page == 8) ? <Services /> : ""
                     }

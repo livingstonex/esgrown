@@ -6,8 +6,9 @@ router.route('/add').post((req, res) => {
     const service = req.body.service;
     const duration = req.body.duration;
     const admin_id = req.body.admin_id;
+    const corp_id = req.body.corp_id;
 
-    const newEX = new EX({ title, service, duration, admin_id });
+    const newEX = new EX({ title, service, duration, admin_id, corp_id });
 
     newEX.save()
         .then((sub) => res.json(sub))

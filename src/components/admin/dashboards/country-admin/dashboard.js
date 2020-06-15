@@ -24,6 +24,7 @@ import LogoutIcon from '@material-ui/icons/Lock';
 import RoomServiceIcon from '@material-ui/icons/RoomService';
 import logo from '../../../../img/esgrown.png';
 import avatar from '../../../../img/boy.svg';
+import HomeIcon from '@material-ui/icons/Home';
 
 
 //Dropdown import setup
@@ -37,7 +38,9 @@ import UpdateAdminPrivilege from './components/update-privileges';
 import Exercises from '../../exercises/exercises';
 import Services from '../../services/services';
 import Home from './components/home';
-
+// Sub Pages for Home
+import AllAdmins from './components/all-admins';
+import Activities from './components/activity';
 
 
 
@@ -171,6 +174,14 @@ const CountryAdminDashboard = () => {
         setPage(4)
     }
 
+    // Sub Pages
+    const setAdmins = () => {
+        setPage(5);
+    }
+    const setActivityPage = () => {
+        setPage(6);
+    }
+
 
     //get logged in user
     useEffect(() => {
@@ -272,18 +283,26 @@ const CountryAdminDashboard = () => {
                         {
                             <ListItem button onClick={setHomePage}>
                                 <ListItemIcon>
-                                    <SvgIcon color="primary">
-                                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                                    </SvgIcon>
+                                    {
+                                        page === 0 ? <> <HomeIcon color="primary" /> </> : <> <HomeIcon color=""/> </>
+                                    }
                                 </ListItemIcon>
-                                <ListItemText primary={'Home'} />
+                                    {
+                                        page === 0 ? <> <ListItemText primary={'Home'}/> </> : <> <ListItemText secondary={'Home'}/> </>
+                                    }
                             </ListItem>
                         }
 
                         {
                             <ListItem button onClick={setCreateAdminPage}>
-                                <ListItemIcon><AddBoxIcon color="primary" /> </ListItemIcon>
-                                <ListItemText primary={'Create Admin'} />
+                                <ListItemIcon>
+                                    {
+                                        page === 1 ? <> <AddBoxIcon color="primary"/> </> : <> <AddBoxIcon color="" /> </>
+                                    }
+                                </ListItemIcon>
+                                    {
+                                        page === 1 ? <> <ListItemText primary={'Create Admin'} /> </> : <> <ListItemText secondary={'Create Admine'}/> </>
+                                    }
                             </ListItem>
                         }
                         {
@@ -297,8 +316,16 @@ const CountryAdminDashboard = () => {
                             exercise
                                 ?
                                 <ListItem button onClick={setExercisePage}>
-                                    <ListItemIcon> <ExposureIcon color="primary" /> </ListItemIcon>
-                                    <ListItemText primary={'Create Exercises'} />
+                                    {/* <ListItemIcon> <ExposureIcon color="primary" /> </ListItemIcon> */}
+                                    <ListItemIcon> 
+                                        {
+                                            page === 3 ? <> <ExposureIcon color="primary" /> </> : <> <ExposureIcon color=""/> </>
+                                        }
+                                    </ListItemIcon>
+                                    {/* <ListItemText primary={'Create Exercises'} /> */}
+                                        {
+                                            page === 3 ? <> <ListItemText primary={'Create Exercises'} /> </> : <> <ListItemText secondary={'Create Exercises'}/> </>
+                                        }
                                 </ListItem>
                                 :
                                 ""
@@ -308,8 +335,16 @@ const CountryAdminDashboard = () => {
                             services
                                 ?
                                 <ListItem button onClick={setServicePage}>
-                                    <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon>
-                                    <ListItemText primary={'Create Services'} />
+                                    {/* <ListItemIcon><RoomServiceIcon color="primary" /> </ListItemIcon> */}
+                                    <ListItemIcon>
+                                        {
+                                            page === 3 ? <> <RoomServiceIcon color="primary"/> </> : <> <RoomServiceIcon color=""/> </>
+                                        }
+                                    </ListItemIcon>
+                                    {/* <ListItemText primary={'Create Services'} /> */}
+                                        {
+                                            page === 3 ? <> <ListItemText primary={'Create Services'} /> </> : <> <ListItemText secondary={'Create Services'}/> </>
+                                        }
                                 </ListItem>
                                 :
                                 ""
@@ -331,7 +366,7 @@ const CountryAdminDashboard = () => {
                 <main className={classes.content} style={{ background: "#D0CFCF", height: 'auto' }}>
 
                     {
-                        (page === 0) ? <Home /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdateAdminPrivilege /> : (page == 3) ? <Services /> : (page == 4) ? <Exercises /> : ""
+                        (page === 0) ? <Home admin={setAdmins} activities={setActivityPage} /> : (page === 1) ? <CreateAdmin /> : (page === 2) ? <UpdateAdminPrivilege /> : (page == 3) ? <Services role={user.role}/> : (page == 4) ? <Exercises /> : (page == 5) ? <AllAdmins /> : (page == 6) ? <Activities /> : ""
                     }
                 </main>
             </div>

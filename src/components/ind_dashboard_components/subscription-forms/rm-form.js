@@ -195,7 +195,16 @@ export default function Form(props) {
                         {/* Field of Training */}
                         <div className="row mt-3">
                             <div className="col">
-                                <select className="form-control" onChange={onChangeFT}>
+                                <input
+                                    label=""
+                                    type="text"
+                                    value={FT}
+                                    onChange={onChangeFT}
+                                    placeholder="Field of Training"
+                                    required
+                                    className="form-control"
+                                />
+                                {/* <select className="form-control" onChange={onChangeFT}>
                                     <option> Select Field of Training</option>
                                     <option value="VR">Virtual Reality</option>
                                     <option value="Data Science">Data Science</option>
@@ -203,7 +212,7 @@ export default function Form(props) {
                                     <option value="Medicine">Medicine</option>
                                     <option value="AI">Artificial Intelligence</option>
                                     <option value="Robotics">Robotics</option>
-                                </select>
+                                </select> */}
                             </div>
                         </div>
 

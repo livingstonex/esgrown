@@ -34,9 +34,9 @@ const Home = () => {
             {
                 spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
                     :
-                    <div className="container">
+                    <div className="container mt-5">
+                        <div className="d-flex justify-content-center"><h5 style={{fontFamily:'quicksand', color:'grey'}}>All Admins</h5></div>
                         <div className="row">
-
                             {admins.map(ad => {
                                 return (
 

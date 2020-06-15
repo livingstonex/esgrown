@@ -16,6 +16,7 @@ const UpdateModal = (props) => {
             onHide={hide}
             aria-labelledby="example-custom-modal-styling-title"
             centered
+            style={{marginTop:'50px', marginBottom:'50px'}}
             >
                 <Modal.Body style={{ background: '#E1E1E1' }}>
                     <div className="row mt-3">
