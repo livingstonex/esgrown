@@ -13,16 +13,6 @@ import toast from '../../../util/toast';
 
 
 const Jobs = () => {
-
-    const [jobs, setJobs] = useState([]);
-    const [spinner, setSpinner] = useState(true);
-
-    const [show, setShow] = useState(false);
-    const [user, setUser] = useState();
-    const [editData, setEditData] = useState();
-
-
-
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
@@ -38,11 +28,16 @@ const Jobs = () => {
                 }
             })
             .catch(err => console.log(err));
-
     }, []);
 
+    const [jobs, setJobs] = useState([]);
+    const [spinner, setSpinner] = useState(true);
 
+    const [show, setShow] = useState(false);
+    const [user, setUser] = useState();
+    const [editData, setEditData] = useState();
 
+    console.log(jobs);
 
     //close jobs create modal and reload jobs
     const closeModal = () => {
@@ -53,6 +48,7 @@ const Jobs = () => {
                 if (res.data.length > 0) {
                     setJobs(res.data);
                     setSpinner(false);
+                    console.log(res.data)
                 }
             })
             .catch(err => console.log(err));

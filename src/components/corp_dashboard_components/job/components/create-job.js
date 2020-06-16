@@ -10,7 +10,22 @@ import { Card, CardContent } from '@material-ui/core';
 
 const CteateJob = ({ show, onHide, closeModal }) => {
 
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('key'));
+        setUser(user)
+        const job = md5(user.email).substring(0, 10);
+        setJobsData({title: '',
+        email: '',
+        start_date: '',
+        dead_line: '',
+        erd: '',
+        desc: '',
+        job_id: job});
+        console.log(job)
+    },[])
 
+    const [user, setUser] = useState();
+    const [jobID, setJobID] = useState('');
     const [companyName, setCompanyName] = useState('');
 
     const [jobsData, setJobsData] = useState({
@@ -20,17 +35,13 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         dead_line: '',
         erd: '',
         desc: '',
-        job_id: md5(jobsData.email).substring(0, 10)
+        job_id: jobID
     });
 
     const [spinner, setSpinner] = useState(false);
+    console.log(jobsData)
+    
 
-    const [user, setUser] = useState()
-
-    useEffect(() => {
-        const user = JSON.parse(sessionStorage.getItem('key'));
-        setUser(user)
-    },[])
 
 
     const handleChange = (e) => {
