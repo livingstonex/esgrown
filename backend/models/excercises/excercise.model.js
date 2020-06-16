@@ -21,6 +21,10 @@ const excerciseSchema = new Schema({
     corp_id: {
         type: String,
         required:false
+    },
+    job_id: {
+        type: String,
+        required: true
     }
 
 }, {
