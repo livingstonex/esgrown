@@ -41,9 +41,9 @@ const CteateJob = ({ show, onHide, closeModal }) => {
     };
 
 
-    const setCompany = (e) => {
-        setCompanyName(e.target.value);
-    };
+    // const setCompany = (e) => {
+    //     setCompanyName(e.target.value);
+    // };
 
 
     //send data to server
