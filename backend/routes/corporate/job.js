@@ -18,7 +18,7 @@ router.route(`/add`).post((req, res) => {
 
 //====================== get all companies jobs ===================================
 
-router.route(`/:id`).get((req, res) => {
+router.route(`/:companyid`).get((req, res) => {
     JOB.find({company_id: req.params.id})
         .then(jobs => res.json(jobs))
         .catch(err => res.status(400).json(err));

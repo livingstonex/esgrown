@@ -70,7 +70,10 @@ class QuestionsComponent extends Component {
     setStart = () => {
         this.setState({ page: 2 })
         // this.startTimer()
+    }
 
+    setPage = () => {
+        this.setState({page: 3})
     }
 
     handelUserAns = (e) => {
@@ -132,12 +135,13 @@ class QuestionsComponent extends Component {
         const userData = JSON.parse(sessionStorage.getItem('key'));
         const { name, email } = userData;
 
-        const { exerciseId, service, corpExerciseOwner } = this.props;
+        const { exerciseId, service, corpExerciseOwner, jobID } = this.props;
 
         const data = {
             user_id: userData.id,
             corp_id: corpExerciseOwner,
             excercise_id: exerciseId,
+            job_id: jobID,
             service: service,
             name: name,
             email: email,
@@ -164,11 +168,8 @@ class QuestionsComponent extends Component {
         return (
             <>
                 {
-                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} countDown={this.state.currentCount} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
+                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={this.props.duration} setPage={this.setPage} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
                 }
-
-
-
             </>
         );
 

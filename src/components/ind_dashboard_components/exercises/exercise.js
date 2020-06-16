@@ -31,6 +31,7 @@ const Exercises = () => {
     const [qspinner, setQSpinner] = useState(true);
     const [user, setUser] = useState();
     const [corpExerciseOwner, setCorpExerciseOwner] = useState();
+    const [JobID, setJobID] = useState()
 
 
 
@@ -42,7 +43,7 @@ const Exercises = () => {
         //rm exercises
         axios.get(`http://localhost:5000/excercise`)
             .then(res => {
-
+                console.log(res.data)
                 const rm = res.data.filter((r) => {
                     return r.service === "RM"
                 })
@@ -55,6 +56,7 @@ const Exercises = () => {
                 setLMExercise(lm)
                 setSpinner(false)
                 setCorpExerciseOwner(res.data.corp_id);
+                setJobID(res.data.job_id)
             })
             .catch(err => console.log(err));
 
@@ -74,7 +76,7 @@ const Exercises = () => {
 
 
     }, []);
-
+    // console.log(corpExerciseOwner);
 
     //check service the user is subscribed to 
     useEffect(() => {
@@ -137,7 +139,7 @@ const Exercises = () => {
                     </div>
                     {displayQuestions && currentService == 'RM' ?
                         <div style={{ marginBottom: '200px', marginTop: '50px' }}>
-                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} />
+                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID}/>
                         </div>
                         : ''}
 
@@ -174,7 +176,7 @@ const Exercises = () => {
                     </div>
                     {displayQuestions && currentService == 'LM' ?
                         <div style={{ marginBottom: '200px', marginTop: '50px' }}>
-                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner}  />
+                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID}  />
                         </div>
                         : ''}
 
