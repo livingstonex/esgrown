@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import md5 from 'md5';
+import JobIdFunc from '../../../../gen_job_id';
 import { Spinner, Modal } from 'react-bootstrap';
 import { Card, CardContent } from '@material-ui/core';
 
@@ -11,6 +11,22 @@ import { Card, CardContent } from '@material-ui/core';
 const CteateJob = ({ show, onHide, closeModal }) => {
 
 
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('key'));
+        setUser(user);
+        const id = JobIdFunc();
+        setJobsData({
+            title: '',
+            email: '',
+            start_date: '',
+            dead_line: '',
+            erd: '',
+            desc: '',
+            job_id: id
+        })
+
+    }, [])
+
     const [companyName, setCompanyName] = useState('');
 
     const [jobsData, setJobsData] = useState({
@@ -20,17 +36,12 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         dead_line: '',
         erd: '',
         desc: '',
-        job_id: md5(jobsData.email).substring(0, 10)
+        job_id: ''
     });
 
     const [spinner, setSpinner] = useState(false);
 
     const [user, setUser] = useState()
-
-    useEffect(() => {
-        const user = JSON.parse(sessionStorage.getItem('key'));
-        setUser(user)
-    },[])
 
 
     const handleChange = (e) => {
@@ -39,7 +50,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
 
         setJobsData({ ...jobsData, [name]: value })
     };
-
+console.log(jobsData.job_id)
 
     // const setCompany = (e) => {
     //     setCompanyName(e.target.value);

@@ -16,7 +16,7 @@ router.route('/add').post((req, res) => {
 
 });
 
-router.route(`/:id`).post((req, res) => {
+router.route(`/:id`).get((req, res) => {
     Question.find(
         {excercise_id: req.params.id},   
     ).then((question) => {

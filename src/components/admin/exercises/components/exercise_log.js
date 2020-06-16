@@ -6,9 +6,8 @@ import { Spinner, Accordion, Button, Card } from 'react-bootstrap';
 
 
 
-const ExercisesLog = (props) => {
+const ExercisesLog = ({ ex, spinner, title }) => {
 
-    const { ex, spinner } = props;
     const [ques, setQues] = useState([]);
     const [quesSpinner, setQuesSpinner] = useState(false)
 
@@ -17,7 +16,7 @@ const ExercisesLog = (props) => {
         const id = e.target.id;
         setQuesSpinner(true)
 
-        axios.post(`http://localhost:5000/question/${id}`)
+        axios.get(`http://localhost:5000/question/${id}`)
             .then(res => {
                 setQues(res.data)
                 setQuesSpinner(false)
@@ -31,7 +30,7 @@ const ExercisesLog = (props) => {
     return (
         <>
             <Card style={{ padding: '5px', height: '800px', overflow: 'scroll', marginRight: '20px' }} className="col col-lg-5 col-sm-6">
-                <h6 style={{ textAlign: 'center' }}>{props.title}</h6>
+                <h6 style={{ textAlign: 'center' }}>{title}</h6>
                 {spinner ? <Spinner animation="grow" /> :
                     <Accordion defaultActiveKey="0">
                         {ex.map(data => {

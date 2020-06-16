@@ -62,6 +62,7 @@ export default class Frontier extends Component {
         }
 
         if (u.sub_status_rm === 'active') {
+            //also check for subscriptin for the corp user ie make a call to corporatesubscriptions and check for rm
             axios.get(`http://localhost:5000/subscriptionrm/getsubcode/${u.id}`)
                 .then(subcode => {
                     if (subcode.data !== null) {

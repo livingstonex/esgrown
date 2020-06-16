@@ -33,7 +33,7 @@ const RMexercises = () => {
     return (
         <>
             <div className="container">
-                <div className="row">
+                <div className="d-flex justify-content-around" style={{ marginTop: '100px' }}>
                     <RMexercisesLog title={title} ex={ex} spinner={spinner} />
                     <RMexercisesNewContent service={service} title={NewContentTitle} />
                 </div>

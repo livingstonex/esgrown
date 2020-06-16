@@ -27,17 +27,24 @@ const NewExercises = (props) => {
     const [score, setScore] = useState('');
     const [totalQ, setTotalQ] = useState(0);
 
-    //admin createing this exercise
+    //admin creating this exercise
     const [admin, setAdmin] = useState();
+    const [corpId, setCorpId] = useState();
+    const [jobId, setJobId] = useState('');
+
+    // List of all jobs returned from api
+    const [jobs, setJobs] = useState([]);
 
 
     //get logged in Admin
-    useEffect(() => { 
+    useEffect(() => {
         const admin = JSON.parse(sessionStorage.getItem("key"));
-        setAdmin(admin.id)
+
+        admin.status == 'corporate' ? setCorpId(admin.id) : setAdmin(admin.id);
+        getAllJobs(admin.id);
     }, []);
 
-
+    // console.log(jobs)
     // question functions
     const handleOptions = (e) => {
 
@@ -58,7 +65,7 @@ const NewExercises = (props) => {
 
     const createQuestion = () => {
 
-        if (ans !== "" && options !== "" && score !== "" && question !== "") {
+
             setSpinner(true);
 
             const splitOptions = options.split(',');
@@ -85,8 +92,8 @@ const NewExercises = (props) => {
 
                     //get number of questions and display
                     axios.post(`http://localhost:5000/question/${res.data.excercise_id}`)
-                    .then(res => setTotalQ(res.data.length))
-                    .catch(err => console.log(err))
+                        .then(res => setTotalQ(res.data.length))
+                        .catch(err => console.log(err))
 
                 })
                 .catch(err => console.log(err));
@@ -94,7 +101,7 @@ const NewExercises = (props) => {
             console.log(questionData);
 
 
-        }
+
 
     }
 
@@ -119,18 +126,26 @@ const NewExercises = (props) => {
             title: extitle,
             duration: exduration,
             service: props.service,
-            admin_id: admin
+            admin_id: admin ? admin : null,
+            corp_id: corpId ? corpId : null,
+            job_id: jobId
         }
 
-        if (extitle == "") {
-            return
+        // if (extitle == "") {
+        //     return
 
-        } else if (exduration == "") {
-            return
+        // }
+        // if (exduration == "") {
+        //     return
 
-        } else {
+        // }
+        // if (jobId == "") {
+        //     alert('you need to choose a job')
+        //     return;
 
-            setSpinner(true);
+        // } 
+    
+        setSpinner(true);
 
             axios.post(exUrl, exData)
                 .then(res => {
@@ -143,7 +158,6 @@ const NewExercises = (props) => {
                 .catch(err => {
                     alert('oops ' + err);
                 })
-        }
 
         console.log(exData)
 
@@ -155,6 +169,12 @@ const NewExercises = (props) => {
     }
     const setQuesForm = () => {
         setPage(2)
+    }
+
+    // onChange Job
+    const onChangeJob = (e) => {
+        const job_id = e.target.value;
+        setJobId(job_id);
     }
 
     return (
@@ -178,6 +198,16 @@ const NewExercises = (props) => {
                             </>
                             : (page == 1) ?
                                 <>
+                                    {/* jobs dropdown */}
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <label style={{ fontWeight: 'bold' }}>Select Job</label>
+                                            <select onChange={onChangeJob} className="form-control text-small">
+                                                <option>Select Job this exercise is for</option>
+                                                {mapJobs()}
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div className="row mt-3">
                                         <div className="col">
                                             <label style={{ fontWeight: 'bold' }}>Exercise Title</label>
@@ -257,6 +287,29 @@ const NewExercises = (props) => {
 
         </>
     );
+
+    // Get all jobs by corpid
+    function getAllJobs(corpid) {
+        try {
+            axios.get(`http://localhost:5000/jobs/${corpid}`)
+                .then(jobs => {
+                    // console.log(jobs.data[0].jobs);
+                    setJobs(jobs.data[0].jobs);
+                })
+                .catch(err => console.log('Error: ' + err));
+        } catch (error) {
+
+        }
+    }
+
+    // Map through all the jobs
+    function mapJobs() {
+        return jobs.map(item => (
+            <option value={item.job_id}>{item.title}</option>
+        ))
+    }
+
+
 }
 
 export default NewExercises;
