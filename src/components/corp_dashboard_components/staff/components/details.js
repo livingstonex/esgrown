@@ -3,28 +3,27 @@ import { Modal, Spinner } from 'react-bootstrap';
 
 
 
-const StaffDetails = ({ details, spinner, show, onHide }) => {
+const StaffDetails = ({ details,show, onHide }) => {
 
     const [user, setUser] = useState();
 
-    useEffect(() => { 
+    useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user);
 
     }, []);
 
-    const lastlogin = details.length > 0 ? details.createdAt.split('T')[0] : "";
-    console.log(lastlogin)
+    // const lastlogin = details.length > 0 ? details.createdAt.split('T')[0] : "";
+
+    console.log(details)
     return (
         <>
             <Modal show={show} onHide={onHide} centered>
                 {/* <Modal.Title style={{fontSize:'15px',paddingLeft:'14px'}}></Modal.Title> */}
-                {
-                    spinner ? <Spinner animation="grow" /> :
                         <>
                             <div className="container" style={{ background: '#e9ecef' }} >
                                 <div style={{ padding: '50px' }}>
-                                <div className="row col" style={{fontSize:'17px'}}>{user && user.org_type === "school" ? "Teacher" : "Staff"} Details</div>
+                                    <div className="row col" style={{ fontSize: '17px' }}>{user && user.org_type === "school" ? "Teacher" : "Staff"} Details</div>
 
                                     <div className="row mt-3">
                                         <div className="col">
@@ -47,12 +46,15 @@ const StaffDetails = ({ details, spinner, show, onHide }) => {
                                         </div>
                                     </div>
 
-                                    <div className="row mt-3">
-                                        <div className="col">
-                                            <label style={{ fontWeight: 'bold' }}>Teacher Identification Code</label>
-                                            <input type="text" disabled value={details.tic} className="form-control" required />
+                                    {details.tic ?
+                                        <div className="row mt-3">
+                                            <div className="col">
+                                                <label style={{ fontWeight: 'bold' }}>Teacher Identification Code</label>
+                                                <input type="text" disabled value={details.tic} className="form-control" required />
+                                            </div>
                                         </div>
-                                    </div>
+                                        : ""
+                                    }
 
                                     <div className="row mt-3">
                                         <div className="col">
@@ -72,7 +74,6 @@ const StaffDetails = ({ details, spinner, show, onHide }) => {
                                 </div>
                             </div>
                         </>
-                }
             </Modal>
         </>
     );

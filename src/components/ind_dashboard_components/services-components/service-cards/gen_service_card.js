@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import '../general_service_style.css';
 
-export default function GenServiceCard({data}){
+export default function GenServiceCard({ data }) {
+ 
     return(
         <React.Fragment>
             <div className="gen_card mb-5 mt-3 pt-3" style={{width:'95%', background:'#FFFFFF', boxShadow: '5px, 5px, 10px, 10px rgba(0, 0, 0, 0.15)'}}>
                 <div className="d-flex justify-content-center" style={{height:'7%'}}>
-                    <p className="pt-3" style={{fontFamily:'quicksand', fontSize:'14px', fontWeight:'bold', textAlign:'center'}}>{data.title}</p>
+                    <p className="pt-3" style={{ fontFamily: 'quicksand', fontSize: '14px', fontWeight: 'bold', textAlign: 'center' }}>{data.title} {data.id}</p>
                 </div>
                 <div className="pr-3 pl-3"  style={{width:'100%', height:'50%', background:''}}>
                     {/* <img height="40%" width="100%" src="https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F191120053137-03-milky-way-images-australia.jpg"/> */}

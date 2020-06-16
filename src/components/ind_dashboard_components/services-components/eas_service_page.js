@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import EASVideoCard from './cards/eascard';
+import EASVideoCard from './videocards/eascard';
 import EASService from './service-cards/easservice';
 import "./general_service_style.css";
 import GenService from './service-cards/gen_service_card';

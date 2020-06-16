@@ -11,44 +11,55 @@ const EASService = () => {
 
     const [spinner, setSpinner] = useState(true)
     const [data, setData] = useState([])
+    let [counter, setCounter] = useState(1)
+    const [chunk, setChunk] = useState([]);
 
+    const chunkify = (arr, size) => {
+        let currentChunk
+        if (counter == 1) {
+            currentChunk = arr.slice(0, size);
+            setSpinner(false);
+            return currentChunk
+        } else {
+            currentChunk = arr.slice(counter, counter += size);
+            setSpinner(false);
+            return currentChunk
 
+        }
+    }
+
+    const loadMore = () => {
+        setCounter(counter + 1);
+        setChunk(chunkify(data, 3));
+    }
     //get data from api
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
 
-        axios.get(`http://localhost:5000/servicecontenteas/`)
+        axios.get(`https://jsonplaceholder.typicode.com/posts`)
             .then(res => {
+                console.log(res.data)
+                setData(res.data)
+                setChunk(chunkify(res.data, 3));
 
-                if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
+            }).catch(err => console.log(err));
 
-                    const teacherData = res.data.filter(d => {
-                        return d.user_class === 'teacher'
-                    })
-                    setData(teacherData);
+        // axios.get(`http://localhost:5000/servicecontenteas/`)
+        //     .then(res => {
 
-                } else if (user.status === 'individual' && user.org_type === "company" && user.sub_status === "active") {
+        //         if (user.sub_status_eas === 'active') {
+        //             // get user level of education
+        //             //make a call to the intended study api and get all stored intended study
+        //             // if user level of education == res.data.level of edu && intended study == res.data.intended study
+        //             // setData(res.data.subjects)
+                        //when he clicks on any of the subjects, make an api call to get content for each subject
+        //         }
 
-                    const staffData = res.data.filter(d => {
-                        return d.user_class === 'company-staff'
-                    })
-                    setData(staffData);
 
-                } else if (user.status === 'individual' && user.org_type === null ) {
-
-                    const indiv = res.data.filter(d => {
-                        return d.user_class === 'individual'
-                    })
-                    setData(indiv);
-                }
-
-                setSpinner(false);
-            })
-            .catch(err => console.log(err))
+        //         setSpinner(false);
+        //     })
+        //     .catch(err => console.log(err))
     }, []);
-
-    // const reversed = Object.assign([], data).reverse();
-
 
     return (
         // <div className="container">
@@ -85,11 +96,17 @@ const EASService = () => {
         // </div>
         <React.Fragment>
             {
-                spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
+                spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div>
+                    :
+                    chunk.map((data) => {
                         return (
-                            <GenServiceCard data={data}/>
-                        )})
+                            <GenServiceCard data={data} />
+                        )
+                    })
             }
+            <div className="d-flex justify-content-center" style={{ cursor: 'pointer' }}>
+                <span onClick={loadMore}> MORE...</span>
+            </div>
         </React.Fragment>
     );
 }

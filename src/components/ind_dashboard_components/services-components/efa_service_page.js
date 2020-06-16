@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import EFAVideoCard from './cards/efacard';
+import EFAVideoCard from './videocards/efacard';
 import EFAService from './service-cards/efaservice';
 
 

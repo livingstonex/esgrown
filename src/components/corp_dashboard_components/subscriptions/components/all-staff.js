@@ -12,6 +12,8 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
     const [company, setCompany] = useState()
     const [companystaff, setCompanystaff] = useState([])
     const [addStaff, setAddStaff] = useState(false);
+    const [Btn, setBtn] = useState(false);
+
 
 
     useEffect(() => { 
@@ -25,6 +27,11 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
                     return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed' ;
                 })
                 setCompanystaff(unsubscribedStaff);
+                if (unsubscribedStaff.length === 0) {
+                    setBtn(true)
+                } else {
+                    setBtn(false)
+                }
             })
             .catch(err => console.log(err));
 
@@ -35,7 +42,15 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
 
         axios.get(`http://localhost:5000/individuals/staff/${company.id}`)
             .then(res => {
-                setCompanystaff(res.data);
+                const unsubscribedStaff = res.data.filter(staff => {
+                    return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed';
+                })
+                setCompanystaff(unsubscribedStaff);
+                if (unsubscribedStaff.length === 0) {
+                    setBtn(true)
+                } else {
+                    setBtn(false)
+                }
             })
             .catch(err => console.log(err));
             setAddStaff(false)
@@ -92,6 +107,7 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
                                 className="btn font-weight-light mt-3 mb-3 py-2 w-100 border-0"
                                 style={{ background: '#53A6E7', color: 'white' }}
                                 onClick={() => closeStaffModal((amount * companystaff.length))}
+                                disabled={Btn}
 
                             >
                                 {/* {spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : "Proceed"} */}

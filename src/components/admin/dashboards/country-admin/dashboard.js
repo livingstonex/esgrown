@@ -49,7 +49,7 @@ import Activities from './components/activity';
 const CountryAdminDashboard = () => {
 
 
-    const drawerWidth = 260;
+    const drawerWidth = 210;
 
     const useStyles = makeStyles(theme => ({
         root: {
@@ -307,14 +307,8 @@ const CountryAdminDashboard = () => {
                         }
                         {
                             <ListItem button onClick={setUpdatePage}>
-                                <ListItemIcon>
-                                    {
-                                        page === 2 ? <> <UpdateIcon color="primary" /> </> : <> <UpdateIcon color=""/> </>
-                                    }
-                                </ListItemIcon>
-                                    {
-                                        page === 2 ? <> <ListItemText primary={'Update Admin Privileges'} /> </> : <> <ListItemText secondary={'Update Admin Privileges'}/> </>
-                                    }
+                                <ListItemIcon><UpdateIcon color="primary" /> </ListItemIcon>
+                                <ListItemText primary={'Update Privileges'} />
                             </ListItem>
                         }
 

@@ -22,10 +22,29 @@ router.route('/add').post((req, res) => {
 
 });
 
-router.route('/').get((req, res) => {
-    EFAS.find({ is_published: true }).sort({ createdAt: -1 })
-        .then(efa => res.json(efa))
-        .catch(err => res.status(400).json('Error ' + err))
+router.route(`/`).get(async (req, res) => {
+
+    try {
+        const pub = await EFAS.find({ is_published: false });
+
+        pub.map(async upd => {
+            if (Date.now() >= upd.date_to_publish) {
+
+                await upd.updateOne({ is_published: true, date_to_publish: null });
+            }
+
+            try {
+                const fnd = await EFAS.find({ is_published: true }).sort({ createdAt: -1 });
+
+                res.json(fnd);
+            } catch (e) {
+                res.status(400).json(e)
+            }
+        });
+
+    } catch (e) {
+
+    }
 });
 
 router.route('/notification').post((req, res) => {

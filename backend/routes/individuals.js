@@ -72,8 +72,7 @@ router.route('/login').post((req, res) => {
                 if (bcrypt.compareSync(password, ind[0].password)) {
                     console.log("Password Correct");
                     const lastLogin = Date.parse(new Date());
-
-                    res.json(ind);
+                    ind[0].updateOne({ lastLogin }).then(() => res.json(ind)).catch(err => console.log(err))
                 } else {
                     // Password is wrong
                     console.log("Password wrong OYO");
@@ -94,7 +93,7 @@ router.route('/login').post((req, res) => {
                                     axios.get(`https://api.paystack.co/subscription/${corp[0].sub_code_rm}`, { headers: { "Authorization": "Bearer sk_test_19f4c12e4e018a9f742e1723d42c9c8e509800b4" } })
                                         .then(paystack => {
                                             console.log("paystack just responded now")
-                                            corp[0].update(
+                                            corp[0].updateOne(
                                                 { sub_status_rm: paystack.data.data.status, lastLogin: lastLogin },
                                                 { returnOriginal: false }
                                             ).then(update_res => {
@@ -143,7 +142,6 @@ router.route(`/update/substatus/:id`).post((req, res) => {
         ).then(es => res.json(es))
             .catch(err => res.json('Err: ' + err));
     }
-
     if (req.body.sub_status_efa != null) {
         Individual.findOneAndUpdate(
             { _id: req.params.id },
@@ -153,7 +151,6 @@ router.route(`/update/substatus/:id`).post((req, res) => {
         ).then(es => res.json(es))
             .catch(err => res.json('Err: ' + err));
     }
-
     if (req.body.sub_status_lm != null) {
         Individual.findOneAndUpdate(
             { _id: req.params.id },
@@ -164,7 +161,6 @@ router.route(`/update/substatus/:id`).post((req, res) => {
             .catch(err => res.json('Err: ' + err));
         
     }
-
     if (req.body.sub_status_rm != null) {
         Individual.findOneAndUpdate(
             { _id: req.params.id },
@@ -246,9 +242,20 @@ router.route(`/staff/:id`).get((req, res) => {
         .then(cmp => res.json(cmp))
         .catch(err => res.status(400).json(err));
 });
+router.route(`/staff/update/:id`).post((req, res) => { 
+
+    Individual.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            fullname: req.body.fullname,
+            email: req.body.email
+        }
+    ).then(update => res.json(update))
+        .catch(err => res.status(400).json(err))
+});
 
 router.route(`/details/:id`).get((req, res) => {
-    Individual.findById(req.params.id, { password: 0 })
+    Individual.find({ org_id:req.params.id}, { password: 0 })
         .then(ind => res.json(ind))
         .catch(err => res.status(400).json(err));
 })

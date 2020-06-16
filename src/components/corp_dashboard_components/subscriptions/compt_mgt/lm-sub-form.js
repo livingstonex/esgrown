@@ -20,6 +20,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
     const [staffModal, setStaffModal] = useState(false)
     const [total, setTotal] = useState();
     const [subPeriod, setSubPeriod] = useState();
+    const [Btn, setBtn] = useState(true);
 
 
     // const [state, setState] = useState({
@@ -48,6 +49,13 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
         const plan = e.target.value.split('/');
         setAmount(plan[1]);
         setPlan(plan[0]);
+        if (Boolean(e.target.value)) {
+            setBtn(false)
+        } else {
+            setBtn(true)
+
+        }
+
 
     }
 
@@ -141,7 +149,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                             <div className="col">
                                 <label style={{ fontWeight: 'bold' }}>Select A Plan</label>
                                 <select name="plan" className="form-control" onChange={onChangePlan} required>
-                                    <option >Select a Plan</option>
+                                    <option value="">Select a Plan</option>
                                     <option value="90/280000">3 Months Plan - 2800</option>
                                     <option value="180/455000">6 Months Plan - 4550</option>
                                     <option value="365/797000">1 Year Plan  - 7970 </option>
@@ -155,8 +163,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
                             <button
                                 type="submit"
                                 className="btn font-weight-light btn-primary mt-3 py-2 w-100 border-0"
-                                disabled={spinner}
-                                // onClick={subscribe}
+                                disabled={Btn}
                                 onClick={showStaff}
 
                             >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import LMlog from '../components/content_log';
-import LMnewContent from '../components/new_content';
+import LMnewContent from './newcontent';
 
 
 
@@ -24,7 +24,8 @@ const LM = () => {
                 if (res.data.length > 0) {
                     setLmlog(res.data);
                     setSpinner(false)
-
+                } else {
+                    setSpinner(false)
                 }
             }).catch(err => alert('oops ' + err))
     }, [])

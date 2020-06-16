@@ -33,7 +33,7 @@ const subscriptionEASSchema = new Schema({
     },
     field_of_intended_study:{
         type: String,
-        required: false
+        required: true
     },
     tic:{
         type: String,

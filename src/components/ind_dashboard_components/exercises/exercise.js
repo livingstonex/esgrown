@@ -29,6 +29,9 @@ const Exercises = () => {
     const [exerciseId, setExerciseId] = useState('');
     const [currentService, setCurrentService] = useState('')
     const [qspinner, setQSpinner] = useState(true);
+    const [user, setUser] = useState();
+    const [corpExerciseOwner, setCorpExerciseOwner] = useState();
+    const [JobID, setJobID] = useState()
 
 
 
@@ -40,59 +43,51 @@ const Exercises = () => {
         //rm exercises
         axios.get(`http://localhost:5000/excercise`)
             .then(res => {
-
+                console.log(res.data)
                 const rm = res.data.filter((r) => {
                     return r.service === "RM"
                 })
+
+                const lm = res.data.filter(l => {
+                    return l.service === 'LM'
+                })
+
                 setRMExercise(rm)
+                setLMExercise(lm)
                 setSpinner(false)
+                setCorpExerciseOwner(res.data.corp_id);
+                setJobID(res.data.job_id)
             })
             .catch(err => console.log(err));
 
 
-        //lm exercise
-        axios.get(`http://localhost:5000/excercise`)
-            .then(res => {
+        // //lm exercise
+        // axios.get(`http://localhost:5000/excercise`)
+        //     .then(res => {
 
-                const lm = res.data.filter((r) => {
-                    return r.service === "LM"
-                })
-                setLMExercise(lm)
-                setSpinner(false)
-            })
-            .catch(err => console.log(err))
+        //         const lm = res.data.filter((r) => {
+        //             return r.service === "LM"
+        //         })
+        //         setLMExercise(lm)
+        //         setSpinner(false)
+        //     })
+        //     .catch(err => console.log(err))
 
 
 
     }, []);
-
+    // console.log(corpExerciseOwner);
 
     //check service the user is subscribed to 
     useEffect(() => {
 
         //lm sub status
         const userData = JSON.parse(sessionStorage.getItem('key'))
+        setUser(userData);
 
-        console.log(userData.id)
+        setLMSubStatus(userData.sub_status_lm);
 
-        axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
-            .then(res => {
-
-                    console.log(res.data)
-                    setLMSubStatus(res.data[0].sub_status)
-
-                
-            })
-            .catch(err => console.log(err));
-
-        //rm sub status
-        axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
-            .then(res => {
-                console.log('RM ' + res.data[0].sub_status)
-
-                setRMSubStatus(res.data[0].sub_status);
-            })
-            .catch(err => console.log(err))
+        setRMSubStatus(userData.sub_status_rm);
 
 
     }, [])
@@ -100,13 +95,13 @@ const Exercises = () => {
     const getQuestions = (e) => {
 
         const id = e.target.id;
+
         setExerciseId(id)
         setCurrentService(e.target.getAttribute('data-service'));
         setDuration(e.target.getAttribute('data-duration'));
         setDisplayQuestions(true)
 
     }
-
 
     return (
         <>
@@ -118,13 +113,13 @@ const Exercises = () => {
 
                             <CardContent>
                                 <Typography gutterBottom variant="" component="h5">
-                                    Recruitment Management
-                                        <hr />
+                                    Recruitment Management - {""} {user && user.sub_status_rm == 'active' ? <span style={{ color: 'green' }}>{RMSubStatus}</span> : <span style={{ color: 'red' }}>{RMSubStatus}</span>}
+                                    <hr />
                                 </Typography>
                                 {spinner ? <Spinner animation="grow" /> : RMSubStatus === "active" ? RMExercise.map(r => {
                                     return (
                                         <ul>
-                                            <li className={`ui floating message`} data-service="RM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
+                                            <li className={`ui floating message`} data-service="RM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'italic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
                                         </ul>
                                     );
                                 }) : RMExercise.map(r => {
@@ -144,7 +139,7 @@ const Exercises = () => {
                     </div>
                     {displayQuestions && currentService == 'RM' ?
                         <div style={{ marginBottom: '200px', marginTop: '50px' }}>
-                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} />
+                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID}/>
                         </div>
                         : ''}
 
@@ -155,13 +150,13 @@ const Exercises = () => {
 
                             <CardContent>
                                 <Typography gutterBottom variant="" component="h5">
-                                    Recruitment Management
-                                        <hr />
+                                    Leadership Management - {""} {user && user.sub_status_lm == 'active' ? <span style={{ color: 'green' }}>{LMSubStatus}</span> : <span style={{ color: 'red' }}>{LMSubStatus}</span>}
+                                    <hr />
                                 </Typography>
                                 {spinner ? <Spinner animation="grow" /> : LMSubStatus === "active" ? LMExercise.map(r => {
                                     return (
                                         <ul>
-                                            <li className={`ui floating message`} data-service="LM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'itallic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
+                                            <li className={`ui floating message`} data-service="LM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'italic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
                                         </ul>
                                     );
                                 }) : LMExercise.map(r => {
@@ -181,7 +176,7 @@ const Exercises = () => {
                     </div>
                     {displayQuestions && currentService == 'LM' ?
                         <div style={{ marginBottom: '200px', marginTop: '50px' }}>
-                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} />
+                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID}  />
                         </div>
                         : ''}
 

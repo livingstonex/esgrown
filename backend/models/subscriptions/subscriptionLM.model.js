@@ -32,7 +32,7 @@ const subscriptionLMSchema = new Schema({
     },
     nature_of_work_business: {
         type: String,
-        required: true
+        required: false
     }
 }, {
     timestamps: true,

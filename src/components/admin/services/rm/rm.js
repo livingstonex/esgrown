@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import RMlog from '../components/content_log';
-import RMnewContent from '../components/new_content';
+import RMnewContent from './newcontent';
 
 
 
@@ -24,7 +24,8 @@ const RM = () => {
                 if (res.data.length > 0) {
                     setRmlog(res.data);
                     setSpinner(false)
-
+                } else {
+                    setSpinner(false)
                 }
             }).catch(err => alert('oops' + err))
     }, [])

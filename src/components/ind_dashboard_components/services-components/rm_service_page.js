@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import RMVideoCard from './cards/rmcard';
+import RMVideoCard from './videocards/rmcard';
 import RMService from './service-cards/rmservice';
 
 

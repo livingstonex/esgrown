@@ -20,10 +20,29 @@ router.route('/add').post((req, res) => {
 
 });
 
-router.route('/').get((req, res) => {
-    RMS.find({ is_published: true }).sort({ createdAt: -1 })
-        .then(rm => res.json(rm))
-        .catch(err => res.status(400).json('Error ' + err))
+router.route(`/`).get(async (req, res) => {
+
+    try {
+        const pub = await RMS.find({ is_published: false });
+
+        pub.map(async upd => {
+            if (Date.now() >= upd.date_to_publish) {
+
+                await upd.updateOne({ is_published: true, date_to_publish: null });
+            }
+
+            try {
+                const fnd = await RMS.find({ is_published: true }).sort({ createdAt: -1 });
+
+                res.json(fnd);
+            } catch (e) {
+                res.status(400).json(e)
+            }
+        });
+
+    } catch (e) {
+
+    }
 });
 
 router.route('/notification').post((req, res) => {

@@ -5,7 +5,7 @@ import NavBar from './navbar';
 import Profile from './ind_dashboard_components/main-pages/profile';
 import Account from './ind_dashboard_components/main-pages/account';
 import Subscription from './ind_dashboard_components/main-pages/subscription';
-import {logout} from './logot';
+import { logout } from './logot';
 // import Services from './ind_dashboard_components/main-pages/services';
 
 import clsx from 'clsx';
@@ -31,8 +31,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import LogoutIcon from '@material-ui/icons/Lock';
 import Badge from '@material-ui/core/Badge';
-// import popover from '@material-ui/core/Popover/Popover';
-import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import logo from '../img/esgrown.png';
 import avatar from '../img/boy.svg';
 import bell from '../img/bell.svg';
@@ -42,6 +41,7 @@ import EASServicePage from './ind_dashboard_components/services-components/eas_s
 import EFAServicePage from './ind_dashboard_components/services-components/efa_service_page';
 import LMServicePage from './ind_dashboard_components/services-components/lm_service_page';
 import RMServicePage from './ind_dashboard_components/services-components/rm_service_page';
+import CompetenceMgt from './ind_dashboard_components/services-components/compt-mgt-service';
 
 //Exercise page
 import Exercises from './ind_dashboard_components/exercises/exercise';
@@ -341,7 +341,7 @@ export default function MiniDrawer() {
 
 
   }, [])
-
+  console.log(new Date(1591219434900).toDateString())
 
   let total;
   if (count == true) {
@@ -470,6 +470,11 @@ export default function MiniDrawer() {
 
   }
 
+  const setComptMgtPage = () => {
+    setPage(11)
+    handleClose();
+  }
+
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -502,7 +507,7 @@ export default function MiniDrawer() {
 
   return (
     <>
-      <div className={classes.root}>y
+      <div className={classes.root}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -539,7 +544,7 @@ export default function MiniDrawer() {
                     <a class="dropdown-item" href="">update1</a>
                     <a class="dropdown-item" href="">update2</a>
                     <a class="dropdown-item" href="">update3</a>
-                    <a class="dropdown-item" href="">update4</a>  
+                    <a class="dropdown-item" href="">update4</a>
 
                     {easNotification.map(eas => {
                       return (
@@ -625,21 +630,21 @@ export default function MiniDrawer() {
               <ListItem button onClick={setActPage}>
                 <ListItemIcon>
                   {
-                    page === 0 ? 
-                    <>
-                      <SvgIcon color="primary">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                      </SvgIcon>
-                    </> :
-                    <>
-                      <SvgIcon color="">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                      </SvgIcon>
-                    </>
+                    page === 0 ?
+                      <>
+                        <SvgIcon color="primary">
+                          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </SvgIcon>
+                      </> :
+                      <>
+                        <SvgIcon color="">
+                          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </SvgIcon>
+                      </>
                   }
                 </ListItemIcon>
                 {
-                  page == 0 ? <> <ListItemText primary={'Account'}/> </> : <> <ListItemText secondary={'Account'}/> </>
+                  page == 0 ? <> <ListItemText primary={'Account'} /> </> : <> <ListItemText secondary={'Account'} /> </>
                 }
               </ListItem>
             }
@@ -647,24 +652,24 @@ export default function MiniDrawer() {
               <ListItem button onClick={setProfilePage}>
                 <ListItemIcon>
                   {
-                    page === 1 ? <> <PersonIcon color="primary" /> </> : <> <PersonIcon color=""/> </>
+                    page === 1 ? <> <PersonIcon color="primary" /> </> : <> <PersonIcon color="" /> </>
                   }
                 </ListItemIcon>
-                  {
-                    page === 1 ? <> <ListItemText primary={'Profile'}/> </> : <> <ListItemText secondary={'Profile'}/> </>
-                  }
+                {
+                  page === 1 ? <> <ListItemText primary={'Profile'} /> </> : <> <ListItemText secondary={'Profile'} /> </>
+                }
               </ListItem>
             }
             {
               <ListItem button onClick={setSubPage}>
                 <ListItemIcon>
                   {
-                    page === 2 ? <> <SubscriptionIcon color="primary"/> </> : <> <SubscriptionIcon color=""/> </>
+                    page === 2 ? <> <SubscriptionIcon color="primary" /> </> : <> <SubscriptionIcon color="" /> </>
                   }
                 </ListItemIcon>
-                  {
-                    page === 2 ? <> <ListItemText primary={'Subscription'}/> </> : <> <ListItemText secondary={'Subscription'}/> </>
-                  }
+                {
+                  page === 2 ? <> <ListItemText primary={'Subscription'} /> </> : <> <ListItemText secondary={'Subscription'} /> </>
+                }
               </ListItem>
             }
             {
@@ -681,11 +686,11 @@ export default function MiniDrawer() {
                 >
                   <ListItemIcon>
                     {
-                      page === 3 ? <> <ServicesIcon color="primary"/> </> : <> <ServicesIcon color=""/> </>
+                      page === 3 ? <> <ServicesIcon color="primary" /> </> : <> <ServicesIcon color="" /> </>
                     }
                   </ListItemIcon>
                   {
-                    page === 3 ? <> <ListItemText primary={'Services'}/> </> : <> <ListItemText secondary={'Services'}/> </>
+                    page === 3 ? <> <ListItemText primary={'Services'} /> </> : <> <ListItemText secondary={'Services'} /> </>
                   }
                 </ListItem>
 
@@ -700,44 +705,54 @@ export default function MiniDrawer() {
                   <StyledMenuItem onClick={setEasServicePage}>
                     <ListItemIcon>
                       {
-                        page === 3 ? <> <EduIcon fontSize="small" color="primary"/> </> : <> <EduIcon fontSize="small" color=""/> </>
+                        page === 3 ? <> <EduIcon fontSize="small" color="primary" /> </> : <> <EduIcon fontSize="small" color="" /> </>
                       }
                     </ListItemIcon>
                     {
-                    page === 3 ? <> <ListItemText primary={'EAS Services'}/> </> : <> <ListItemText secondary={'EAS Services'}/> </>
+                      page === 3 ? <> <ListItemText primary={'EAS Services'} /> </> : <> <ListItemText secondary={'EAS Services'} /> </>
                     }
                   </StyledMenuItem>
 
                   <StyledMenuItem onClick={setEfaServicePage}>
                     <ListItemIcon>
                       {
-                        page === 4 ? <> <MoneyIcon fontSize="small" color="primary"/> </> : <> <MoneyIcon fontSize="small" color=""/> </>
+                        page === 4 ? <> <MoneyIcon fontSize="small" color="primary" /> </> : <> <MoneyIcon fontSize="small" color="" /> </>
                       }
                     </ListItemIcon>
                     {
-                    page === 4 ? <> <ListItemText primary={'EFA Services'}/> </> : <> <ListItemText secondary={'EFA Services'}/> </>
+                      page === 4 ? <> <ListItemText primary={'EFA Services'} /> </> : <> <ListItemText secondary={'EFA Services'} /> </>
                     }
                   </StyledMenuItem>
 
                   <StyledMenuItem onClick={setRmServicePage}>
                     <ListItemIcon>
                       {
-                        page === 5 ? <> <PeopleIcon fontSize="small" color="primary"/> </> : <> <PeopleIcon fontSize="small" color=""/> </>
+                        page === 5 ? <> <PeopleIcon fontSize="small" color="primary" /> </> : <> <PeopleIcon fontSize="small" color="" /> </>
                       }
                     </ListItemIcon>
                     {
-                      page === 5 ? <> <ListItemText primary={'RM Services'}/> </> : <> <ListItemText secondary={'RM Services'}/> </>
+                      page === 5 ? <> <ListItemText primary={'RM Services'} /> </> : <> <ListItemText secondary={'RM Services'} /> </>
                     }
                   </StyledMenuItem>
 
                   <StyledMenuItem onClick={setLmServicePage}>
                     <ListItemIcon>
                       {
-                        page === 6 ? <> <PersoIcon fontSize="small" color="primary"/> </> : <> <PersoIcon fontSize="small" color=""/> </>
+                        page === 6 ? <> <PersoIcon fontSize="small" color="primary" /> </> : <> <PersoIcon fontSize="small" color="" /> </>
                       }
                     </ListItemIcon>
                     {
-                      page === 6 ? <> <ListItemText primary={'LM Services'}/> </> : <> <ListItemText secondary={'LM Services'}/> </>
+                      page === 6 ? <> <ListItemText primary={'LM Services'} /> </> : <> <ListItemText secondary={'LM Services'} /> </>
+                    }
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={setComptMgtPage}>
+                    <ListItemIcon>
+                      {
+                        page === 11 ? <> <PeopleIcon fontSize="small" color="primary" /> </> : <> <PeopleIcon fontSize="small" color="" /> </>
+                      }
+                    </ListItemIcon>
+                    {
+                      page === 11 ? <> <ListItemText primary={'Competence Mgt Services'} /> </> : <> <ListItemText secondary={'Competence Mgt Services'} /> </>
                     }
                   </StyledMenuItem>
 
@@ -747,30 +762,30 @@ export default function MiniDrawer() {
             {
               <ListItem button onClick={setExercisePage}>
                 <ListItemIcon>
-                    {
-                      page === 7 ? <> <AssessmentIcon color="primary"/> </> : <> <AssessmentIcon color=""/> </>
-                    }
+                  {
+                    page === 7 ? <> <AssessmentIcon color="primary" /> </> : <> <AssessmentIcon color="" /> </>
+                  }
                 </ListItemIcon>
-                    {
-                      page === 7 ? <> <ListItemText primary={'Exercises'}/> </> : <> <ListItemText secondary={'Exercises'}/> </>
-                    }
+                {
+                  page === 7 ? <> <ListItemText primary={'Exercises'} /> </> : <> <ListItemText secondary={'Exercises'} /> </>
+                }
               </ListItem>
             }
           </List>
           <Divider />
           <List>
-              {
-                <ListItem button onClick={()=>logout()}>
-                  <ListItemIcon><LogoutIcon color="p" />  </ListItemIcon>
-                  <ListItemText secondary={'Logout'} />
-                </ListItem>
-              }
+            {
+              <ListItem button onClick={() => logout()}>
+                <ListItemIcon><LogoutIcon color="p" />  </ListItemIcon>
+                <ListItemText secondary={'Logout'} />
+              </ListItem>
+            }
           </List>
         </Drawer>
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises /> : ''}
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises /> : (page == 11) ? <CompetenceMgt /> : ""}
         </main>
       </div>
     </>

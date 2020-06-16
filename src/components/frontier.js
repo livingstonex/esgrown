@@ -39,7 +39,7 @@ export default class Frontier extends Component {
                                 let ls = JSON.parse(sessionStorage.getItem('key'));
                                 ls.sub_status_eas = res.data.data.status;
                                 sessionStorage.setItem('key', JSON.stringify(ls));
-                            })
+                            }).catch(err => console.log(err))
                     }
                 }).catch(err => console.log(err));
         }
@@ -99,20 +99,25 @@ export default class Frontier extends Component {
         if (u.sub_status_compt_mgt === 'active') {
             axios.get(`http://localhost:5000/competence/management/getuser/${u.id}`)
                 .then(res => {
-                    const today = Date.now();
-                    const endDate = res.data.end_date;
-                    if (today > endDate) {
+                    if (res.data !== null) {
+                        const today = Date.now();
+                        const endDate = res.data.end_date;
+                        if (today > endDate) {
 
-                        let ls = JSON.parse(sessionStorage.getItem('key'));
-                        ls.sub_status_compt_mgt = 'completed';
-                        sessionStorage.setItem('key', JSON.stringify(ls));
+                            let ls = JSON.parse(sessionStorage.getItem('key'));
+                            ls.sub_status_compt_mgt = 'completed';
+                            sessionStorage.setItem('key', JSON.stringify(ls));
 
-
-                        axios.post(`http://localjost:5000/competence/management/substatus/${u.id}`, { sub_status: 'completed' })
-                            .then(status => console.log(status))
-                            .catch(err => console.log(err));
+                            axios.post(`http://localhost:5000/competence/management/update/substatus/${u.id}`, { sub_status: 'completed' })
+                                .then(sta => console.log(sta.data))
+                                .catch(err => console.log(err));
+                            
+                            //update the individuals' doc
+                            axios.post(`http://localhost:5000/individuals/update/substatus/${u.id}`, { sub_status_compt_mgt: 'completed' })
+                                .then(() => console.log("updated")).catch(err => console.log(err))
+                        }
+                        console.log(res.data)
                     }
-                    console.log(res.data)
                 }).catch(err => console.log(err))
         }
 

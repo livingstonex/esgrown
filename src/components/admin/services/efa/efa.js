@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EFAlog from '../components/content_log';
-import EFAnewContent from '../components/new_content';
+import EFAnewContent from '../eas/newcontent';
 
 
 
@@ -24,7 +24,8 @@ const EAS = () => {
                 if (res.data.length > 0) {
                     setEfalog(res.data);
                     setSpinner(false)
-
+                } else {
+                    setSpinner(false)
                 }
             }).catch(err => alert('oops ' + err))
     }, [])

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import md5 from 'md5';
 import { Spinner, Modal } from 'react-bootstrap';
 import { Card, CardContent } from '@material-ui/core';
 
@@ -12,9 +13,24 @@ const CteateJob = ({ show, onHide, closeModal }) => {
 
     const [companyName, setCompanyName] = useState('');
 
-    const [jobsData, setJobsData] = useState([]);
+    const [jobsData, setJobsData] = useState({
+        title: '',
+        email: '',
+        start_date: '',
+        dead_line: '',
+        erd: '',
+        desc: '',
+        job_id: md5(jobsData.email).substring(0, 10)
+    });
 
     const [spinner, setSpinner] = useState(false);
+
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('key'));
+        setUser(user)
+    },[])
 
 
     const handleChange = (e) => {
@@ -23,7 +39,6 @@ const CteateJob = ({ show, onHide, closeModal }) => {
 
         setJobsData({ ...jobsData, [name]: value })
     };
-
 
 
     const setCompany = (e) => {
@@ -37,8 +52,9 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         setSpinner(true)
 
         const submitData = {
-            company_name: companyName,
-            jobs: jobsData
+            company_name: user.name,
+            jobs: jobsData,
+            company_id: user.id
         }
 
         //post job to server
@@ -58,6 +74,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
             email: '',
             start_date: '',
             dead_line: '',
+            erd:'',
             desc: ''
 
         });
@@ -70,12 +87,11 @@ const CteateJob = ({ show, onHide, closeModal }) => {
             <Modal show={show} onHide={onHide} centered style={{marginTop:'60px', marginBottom:'70px'}}>
 
                 <div className="container">
-                    <div className="row mt-3">
+                    {/* <div className="row mt-3">
                         <div className="col">
-                            <label style={{ fontWeight: 'bold' }}> Company Name</label>
-                            <input type="text" name="companyName" value={companyName} onChange={setCompany} placeholder="Company Name" className="form-control" required />
+                            <input type="hidden" name="jobId" value={jobsData.jobId} placeholder="Company Name" className="form-control" required />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="row mt-3">
                         <div className="col">
@@ -94,14 +110,21 @@ const CteateJob = ({ show, onHide, closeModal }) => {
                     <div className="row mt-3">
                         <div className="col">
                             <label style={{ fontWeight: 'bold' }}>Start Date</label>
-                            <input type="date" name="start_date" value={jobsData.startDate} onChange={handleChange} placeholder="Exercise Title" className="form-control" required />
+                            <input type="date" name="start_date" value={jobsData.startDate} onChange={handleChange} placeholder="when applications begin" className="form-control" required />
                         </div>
                     </div>
 
                     <div className="row mt-3">
                         <div className="col">
                             <label style={{ fontWeight: 'bold' }}>Dead Line</label>
-                            <input type="date" name="dead_line" value={jobsData.endDate} onChange={handleChange} placeholder="Exercise Title" className="form-control" required />
+                            <input type="date" name="dead_line" value={jobsData.dead_line} onChange={handleChange} placeholder="Dead line" className="form-control" required />
+                        </div>
+                    </div>
+
+                    <div className="row mt-3">
+                        <div className="col">
+                            <label style={{ fontWeight: 'bold' }}>Expected Resumption Date </label>
+                            <input type="date" name="erd" value={jobsData.erd} onChange={handleChange} placeholder="ERD" className="form-control" required />
                         </div>
                     </div>
 
