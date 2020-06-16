@@ -100,25 +100,21 @@ const Jobs = () => {
                                 return job.jobs.map((j, index) => {
                                     return (
                                         <>
-                                            <div className="row d-flex justify-content-space-around" key={index} style={{ height: '50px', background: "#FFFFFF", borderRadius: '5px', lineHeight: '48px', marginBottom: '15px', textAlign: 'center',boxSizing:'border-box' }}>
-                                                <div className="col col-xs-2" style={{ textAlign: 'center' }}>{j.title}</div>
-                                                <div className="col col-xs-2" >{j.start_date}</div>
-                                                <div className="col col-xs-2" >{j.dead_line}</div>
-                                                <div className="col col-xs-2" >{j.erd}</div>
-                                                <div className="col col-xs-2 ">
-
-                                                    <div className="d-flex align-items-center ml-auto">
-                                                        <Dropdown>
-                                                            <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
-                                                                ....
-                                                        </Dropdown.Toggle>
-                                                            <Dropdown.Menu>
-                                                                <Dropdown.Item data-index={index} data-id={j.title} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
-                                                                <Dropdown.Item data-index={index} data-id={j._id} onClick={deleteJob} ><DeleteIcon style={{ color: 'brown' }} /> Delete</Dropdown.Item>
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
-                                                    </div>
-
+                                            <div className="d-flex justify-content-space-around" key={index} style={{ height: '50px', background: "silver", borderRadius: '5px', lineHeight: '48px', marginBottom: '15px', textAlign: 'center',boxSizing:'border-box' }}>
+                                                <div className="col" style={{ textAlign: 'center' }}>{j.title}</div>
+                                                <div className="col" >{j.start_date}</div>
+                                                <div className="col" >{j.dead_line}</div>
+                                                <div className="col" >{j.erd}</div>
+                                                <div className="col ">
+                                                    <Dropdown className="ml-3">
+                                                        <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
+                                                            ....
+                                                    </Dropdown.Toggle>
+                                                        <Dropdown.Menu>
+                                                            <Dropdown.Item data-index={index} data-id={j.title} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
+                                                            <Dropdown.Item data-index={index} data-id={j._id} onClick={deleteJob} ><DeleteIcon style={{ color: 'brown' }} /> Delete</Dropdown.Item>
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
                                                 </div>
                                             </div>
                                         </>

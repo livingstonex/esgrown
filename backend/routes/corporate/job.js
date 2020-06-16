@@ -8,11 +8,24 @@ router.route(`/add`).post((req, res) => {
     const company_id = req.body.company_id;
     const jobs = req.body.jobs;
 
-    const job = new JOB({ company_name, company_id, jobs })
+    JOB.find({ company_id }).then(corp => {
 
-    job.save()
-        .then(job => res.json(job))
-        .catch(err => res.status(400).json(err))
+        if (corp == 0) {
+            //not found
+            const job = new JOB({ company_name, jobs, company_id })
+            job.save()
+                .then(job => res.json(job))
+                .catch(err => res.status(400).json(err))
+        } else {
+            //found
+            corp[0].jobs = corp[0].jobs.concat(jobs);
+            corp[0].save().then(job => res.json(job))
+                .catch(err => res.status(400).json(err))
+        }
+        
+    }
+        
+    ).catch(err => res.status(400).json(err))
 });
 
 
@@ -26,7 +39,7 @@ router.route(`/`).get((req, res) => {
 
 // get all jobs by company_id
 router.route(`/:companyid`).get((req, res) => {
-    JOB.find({company_id: req.params.id})
+    JOB.find({company_id: req.params.companyid})
         .then(jobs => res.json(jobs))
         .catch(err => res.status(400).json(err));
 });
@@ -35,17 +48,18 @@ router.route(`/:companyid`).get((req, res) => {
 
 //======================= add new available job to an existing company with jobs ======================
 
-router.route(`/new-job/:id`).post((req, res) => {
+// router.route(`/new-job/:id`).post((req, res) => {
 
-    JOB.findById(req.params.id)
-        .then(job => {
-            job.jobs = job.jobs.concat(req.body.jobs);
+//     JOB.findById(req.params.id)
+//         .then(job => {
 
-            job.save().then(job => res.json(job))
-                .catch(err => res.status(400).json(err))
-        })
-        .catch(err => res.status(400).json(err));
-});
+//             job.jobs = job.jobs.concat(req.body.jobs);
+
+//             job.save().then(job => res.json(job))
+//                 .catch(err => res.status(400).json(err))
+//         })
+//         .catch(err => res.status(400).json(err));
+// });
 
 
 

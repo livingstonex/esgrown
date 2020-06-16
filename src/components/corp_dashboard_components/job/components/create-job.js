@@ -3,6 +3,7 @@ import axios from 'axios';
 import md5 from 'md5';
 import { Spinner, Modal } from 'react-bootstrap';
 import { Card, CardContent } from '@material-ui/core';
+import JobIdFunc from '../../../../gen_job_id';
 
 
 
@@ -13,7 +14,8 @@ const CteateJob = ({ show, onHide, closeModal }) => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
-        const job = md5(user.email).substring(0, 10);
+
+        const job = JobIdFunc();
         setJobsData({title: '',
         email: '',
         start_date: '',
@@ -21,6 +23,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         erd: '',
         desc: '',
         job_id: job});
+        
         console.log(job)
     },[])
 
@@ -52,9 +55,9 @@ const CteateJob = ({ show, onHide, closeModal }) => {
     };
 
 
-    const setCompany = (e) => {
-        setCompanyName(e.target.value);
-    };
+    // const setCompany = (e) => {
+    //     setCompanyName(e.target.value);
+    // };
 
 
     //send data to server
