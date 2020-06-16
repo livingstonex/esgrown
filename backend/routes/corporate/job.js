@@ -8,7 +8,7 @@ router.route(`/add`).post((req, res) => {
     const company_id = req.body.company_id;
     const jobs = req.body.jobs;
 
-    const job = new JOB({ company_name, jobs, company_id })
+    const job = new JOB({ company_name, company_id, jobs })
 
     job.save()
         .then(job => res.json(job))
@@ -16,14 +16,20 @@ router.route(`/add`).post((req, res) => {
 });
 
 
-//====================== get all companies jobs ===================================
+//====================== get all companies and jobs ===================================
 
+router.route(`/`).get((req, res) => {
+    JOB.find()
+        .then(jobs => res.json(jobs))
+        .catch(err => res.status(400).json(err));
+});
+
+// get all jobs by company_id
 router.route(`/:companyid`).get((req, res) => {
     JOB.find({company_id: req.params.id})
         .then(jobs => res.json(jobs))
         .catch(err => res.status(400).json(err));
 });
-
 
 
 
