@@ -10,6 +10,7 @@ const ExercisesLog = ({ ex, spinner, title }) => {
 
     const [ques, setQues] = useState([]);
     const [quesSpinner, setQuesSpinner] = useState(false)
+    
 
     const getQuestions = (e) => {
 

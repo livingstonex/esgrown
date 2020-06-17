@@ -12,30 +12,43 @@ const RMexercises = () => {
 
     const [ex, setEx] = useState([]);
     const [spinner, setSpinner] = useState(true);
+    const [user, setUser] = useState('');
 
     useEffect(() => {
         const comp = JSON.parse(sessionStorage.getItem('key'));
+        setUser(comp);
         //get exercises then questions using exercise id
-        axios.get(`http://localhost:5000/excercise/activity/${comp.id}`)
+        axios.get(`http://localhost:5000/excercise/${comp.id}`)
             .then(res => {
                 if (res.data) {
-                    const rmEx = res.data.filter(ex => {
-                        return ex.service === "RM"
-                    });
-                    setEx(rmEx);
+                    setEx(res.data);
                     setSpinner(false);
                 }
             })
             .catch(err => console.log(err));
 
     }, [])
+
+    const refreshContentLog = () => {
+
+        //get exercises then using exercise id
+        axios.get(`http://localhost:5000/excercise/${user.id}`)
+            .then(res => {
+                if (res.data.length > 0) {
+                    setEx(res.data);
+                    setSpinner(false);
+                }
+            })
+            .catch(err => console.log(err));
+
+    }
     
     return (
         <>
             <div className="container">
                 <div className="d-flex justify-content-around" style={{ marginTop: '100px' }}>
                     <RMexercisesLog title={title} ex={ex} spinner={spinner} />
-                    <RMexercisesNewContent service={service} title={NewContentTitle} />
+                    <RMexercisesNewContent service={service} title={NewContentTitle} refreshContentLog={refreshContentLog} />
                 </div>
             </div>
         </>

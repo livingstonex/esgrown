@@ -71,6 +71,10 @@ const individualSchema = new Schema({
     },
     lastLogin: {
         type: Date,
+    },
+    jobs: {
+        type: Array,
+        required:false
     }
 
 }, {

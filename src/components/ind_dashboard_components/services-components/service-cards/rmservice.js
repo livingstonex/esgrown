@@ -1,46 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
-import GenServiceCard from  './gen_service_card';
+import GenServiceCard from './gen_service_card';
+import { getAllByDisplayValue } from '@testing-library/react';
 
 
 
 
 const RMService = () => {
 
-    const [spinner, setSpinner] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
+    const [user, setUser] = useState('');
+    const [jobs, setJobs] = useState([]);
+    const [page, setPage] = useState(0);
+
 
 
     //get data from api
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
-        axios.get(`http://localhost:5000/servicecontentrm/`)
-            .then(res => {
-                if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
+        setUser(user);
+        console.log(user)
 
-                    const teacherData = res.data.filter(d => {
-                        return d.user_class === 'teacher'
-                    })
-                    setData(teacherData);
+        if (user.sub_status_rm === 'active') {
+            setJobs(user.jobs);
+        }
+            
 
-                } else if (user.status === 'individual' && user.org_type === "company" && user.sub_status === "active") {
+        // axios.get(`http://localhost:5000/servicecontentrm/`)
+        //     .then(res => {
+        //         if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
 
-                    const staffData = res.data.filter(d => {
-                        return d.user_class === 'company-staff'
-                    })
-                    setData(staffData);
+        //             const teacherData = res.data.filter(d => {
+        //                 return d.user_class === 'teacher'
+        //             })
+        //             setData(teacherData);
 
-                } else if (user.status === 'individual' && user.org_type === null) {
+        //         } else if (user.status === 'individual' && user.org_type === "company" && user.sub_status === "active") {
 
-                    const indiv = res.data.filter(d => {
-                        return d.user_class === 'individual'
-                    })
-                    setData(indiv);
-                }
-                setSpinner(false);
-            })
-            .catch(err => console.log(err))
+        //             const staffData = res.data.filter(d => {
+        //                 return d.user_class === 'company-staff'
+        //             })
+        //             setData(staffData);
+
+        //         } else if (user.status === 'individual' && user.org_type === null) {
+
+        //             const indiv = res.data.filter(d => {
+        //                 return d.user_class === 'individual'
+        //             })
+        //             setData(indiv);
+        //         }
+        //         setSpinner(false);
+        //     })
+        //     .catch(err => console.log(err))
     }, []);
 
 
@@ -79,15 +99,64 @@ const RMService = () => {
         //     </div>
         // </div>
 
-        <React.fragment>
+        <div>
             {
-                spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
+                // spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
+                //         return (
+                //             <GenServiceCard data={data}/>
+                //         )})
+                (page === 0) ? 
+                (jobs.length === 0) ? <p>you have not applied for any jobs yet</p>
+                    :
+                    jobs.map(item => {              
                         return (
-                            <GenServiceCard data={data}/>
-                        )})
+                            <Card className="mt-5" style={{width:'50%'}}>
+                                <CardActionArea>
+                                    <CardContent >
+                                        <Typography gutterBottom variant="" component="p">
+                                            {item.job_title}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            <div className="btn btn-info bt-sm" onClick={getContent(item.job_id)} disabled={loading}>View Content {loading ? <i className="fa fa-spinner fa-spin"></i>:"" }</div>
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions>
+                                </CardActions>
+                            </Card>
+                        );
+                    }) : 
+                    (page === 1) ? 
+                        <GenServiceCard data={data} goBack={goBack()}/>
+                        : 'default empty'
+                
             }
-        </React.fragment>
+        </div>
+
     );
+
+    function getContent(id) {
+        // get contents from rm service content endpoint, based on job id
+        try {
+            setLoading(true);
+            axios.get(`http://localhost:5000/corpservicecontent/${id}`)
+                .then(res => { 
+                    setLoading(false);
+                    setData(res.data);
+                    setPage(1)
+                })
+                .catch(err => {
+                    console.log(err);
+                    setLoading(false);
+                })
+        } catch (error) {
+            
+        }
+    }
+
+    function goBack() {
+        setPage(0);
+    }
 }
 
 export default RMService;

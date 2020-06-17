@@ -33,6 +33,7 @@ const RMexercises = () => {
 
     },[])
 
+    console.log(ex)
 
     const refreshContentLog = () => {
 
@@ -40,9 +41,9 @@ const RMexercises = () => {
         axios.get(`http://localhost:5000/excercise/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
-                    // const rmEx = res.data.filter((ex) => {
-                    //     return ex.service == "RM"
-                    // });
+                    const rmEx = res.data.filter((ex) => {
+                        return ex.service == "RM"
+                    });
                     setEx(res.data);
                     setSpinner(false);
                 }

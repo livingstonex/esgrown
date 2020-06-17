@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import toast from '../../../../util/toast';
 
 
-const JobsModal = (props) => {
-
-    const { show, onHide } = props;
+const JobsModal = ({ show, onHide, closeModal}) => {
 
     const [data, setData] = useState([]);
     const [disabled, setDisabled] = useState(false)
     const [user, setUser] = useState();
-    const [] = useState([]);
+    const [jobID, setJobID] = useState('');
+    const [deadline, setDeadLine] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         //get user
@@ -43,23 +44,17 @@ const JobsModal = (props) => {
     const [displayJobs, setDisplayJobs] = useState('')
     const [desc, setDesc] = useState('')
 
-    const [companiesAppliedTo, setCompaniesAppliedTo] = useState([])
-    const [jobsAppliedfor, setJobsAppliedfor] = useState([])
-
-
-    // if (onHide) {
-    //     setCompaniesAppliedTo('');
-    //     setJobsAppliedfor('');
-    // }
+    const [companiesAppliedTo, setCompaniesAppliedTo] = useState('')
+    const [jobTitle, setJobTitle] = useState('')
 
 
     const toggleJobs = (e) => {
 
-        setCompaniesAppliedTo(companiesAppliedTo.concat(e.target.value));
+        setCompaniesAppliedTo(e.target.value);
+
         data.map((job) => {
             if (job.company_name == e.target.value) {
                 setDisplayJobs(job.jobs)
-
             }
         }
 
@@ -68,50 +63,62 @@ const JobsModal = (props) => {
     }
 
 
-
     const postToServer = () => {
-
-        if (companiesAppliedTo.length < 1) {
-            alert("you need to apply to at least one company")
-            return
-        } else if (jobsAppliedfor.length > 2) {
-            alert("You can only apply to a max of two jobs")
-            setJobsAppliedfor('')
-            return
-        }
 
         const postData = {
             applicant_id: user.id,
             applicant_name: user.name,
             applicant_email: user.email,
-            companies_applied_to: companiesAppliedTo,
-            jobs_applied_for: jobsAppliedfor
+            jobs_applied_for: {
+                company: companiesAppliedTo,
+                job_title: jobTitle,
+                job_id: jobID,
+                deadline: deadline
+            } ,
+            
+            
         }
 
-        console.log(postData)
+        try {
+            setLoading(true)
+            axios.post(`http://localhost:5000/applications/add`, postData)
+                .then(res => {
+                    console.log(res.data.msg);
+                    console.log(res.data);
+                    setLoading(false);
+                    toast(res.data.msg, 'info')
+                    closeModal();
 
-        // axios.post(`http://localhost:5000/applications/add`, postData)
-        //     .then(res => {
-        //         if (res.data.length > 0) {
-        //             alert("Job applied for successfully")
-        //         }
-        //     })
-        //     .catch(err => console.log(err));
+                })
+                .catch(err => {
+                    setLoading(false)
+                    console.log(err)
+                });
+            
+        }catch(e){}
 
-        setCompaniesAppliedTo('')
-        setJobsAppliedfor('')
+        
     }
 
 
 
     const getDesc = (e) => {
 
+        // job.title / job.job_id / job.dead_line
+        const splitedValue = e.target.value.split('/');
 
-        setJobsAppliedfor(jobsAppliedfor.concat(e.target.value))
+        const title = splitedValue[0];
+        const jobid = splitedValue[1];
+        const deadline = splitedValue[2];
 
-        displayJobs.map((job) => {
-            if (job.title == e.target.value) {
-                setDesc(job.description)
+        setJobID(jobid);
+        setDeadLine(deadline);
+
+        setJobTitle(title);
+
+        displayJobs.map(job => {
+            if (job.title == title) {
+                setDesc(job.desc)
             }
         })
     }
@@ -137,7 +144,7 @@ const JobsModal = (props) => {
                         <Form.Control as="select" onChange={getDesc} disabled={disabled}>
                             <option>what would you like to work as</option>
                             {displayJobs ? displayJobs.map((job) => {
-                                return <option value={job.title}>{job.title}</option>
+                                return <option value={`${job.title}/${job.job_id}/${job.dead_line}`}>{job.title}</option>
                             }) : ""}
                         </Form.Control>
                     </div>
@@ -149,8 +156,8 @@ const JobsModal = (props) => {
                             disabled={disabled}
                         />
                     </div>
-                    <Button size="sm" style={{ background: '#21a5e7', border: '#21a5e7' }} block onClick={postToServer}>
-                        {disabled ? "You have applied for max Jobs already" : "Apply"}
+                    <Button size="sm" style={{ background: '#21a5e7', border: '#21a5e7' }} block onClick={postToServer} disabled={loading}>
+                        Apply {loading ? <i className="fa fa-spinner fa-spin"></i> : ""}
                     </Button>
                 </div>
             </Modal.Body>
@@ -158,11 +165,11 @@ const JobsModal = (props) => {
                 <small>Note: you can only add a maximum of two jobs</small>
             </Modal.Footer>
             <Modal.Footer style={{ background: '#dbdee0', width: '550px' }}>
-                {
-                    jobsAppliedfor.length > 0 ?
+                {/* {
+                    jobTitle.length > 0 ?
                         <>
                             Current Jobs: <br />
-                            {jobsAppliedfor.map(j => {
+                            {jobTitle.map(j => {
                                 return (
                                     <>
                                         <span style={{ textAlign: 'left' }}>{j}</span>
@@ -170,7 +177,7 @@ const JobsModal = (props) => {
                                 );
                             })}
                         </>
-                        : ""}
+                        : ""} */}
             </Modal.Footer>
         </Modal>
     );

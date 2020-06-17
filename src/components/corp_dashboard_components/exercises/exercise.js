@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 
 import LMExercises from './lm/lm';
 import RMExercises from './rm/rm';
-import { set } from 'mongoose';
 
 
 

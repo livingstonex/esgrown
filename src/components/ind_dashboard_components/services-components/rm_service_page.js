@@ -14,7 +14,7 @@ const RMServicePage = () => {
         //get logged in user details
         const user = JSON.parse(sessionStorage.getItem('key'));
 
-        if (user.sub_status_lm === 'active') {
+        if (user.sub_status_rm === 'active') {
             setpageRM(1)
         } else {
             setpageRM(2)

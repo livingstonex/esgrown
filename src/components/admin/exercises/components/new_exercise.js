@@ -6,7 +6,7 @@ import { set } from 'mongoose';
 
 
 
-const NewExercises = (props) => {
+const NewExercises = ({ service, refreshContentLog, title}) => {
 
     const exUrl = `http://localhost:5000/excercise/add`;
 
@@ -44,7 +44,7 @@ const NewExercises = (props) => {
         getAllJobs(admin.id);
     }, []);
 
-    // console.log(jobs)
+
     // question functions
     const handleOptions = (e) => {
 
@@ -99,11 +99,9 @@ const NewExercises = (props) => {
                 .catch(err => console.log(err));
 
             console.log(questionData);
-
-
-
-
     }
+
+
 
     //exercise functions
     const handleExTitle = (e) => {
@@ -125,7 +123,7 @@ const NewExercises = (props) => {
         const exData = {
             title: extitle,
             duration: exduration,
-            service: props.service,
+            service: service,
             admin_id: admin ? admin : null,
             corp_id: corpId ? corpId : null,
             job_id: jobId
@@ -152,7 +150,7 @@ const NewExercises = (props) => {
                     setExId(res.data._id);
                     setSpinner(false);
                     setPage(2)
-                    props.refreshContentLog();
+                    refreshContentLog();
                     console.log(res.data)
                 })
                 .catch(err => {
@@ -181,7 +179,7 @@ const NewExercises = (props) => {
         <>
             <Card className="col col-lg-6 col-sm-6" style={{ overflow: 'scroll' }}>
                 <CardContent>
-                    <h6 style={{ textAlign: 'center' }}>{props.title}</h6>
+                    <h6 style={{ textAlign: 'center' }}>{title}</h6>
                     <hr />
 
                     {

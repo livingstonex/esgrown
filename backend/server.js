@@ -91,6 +91,7 @@ const teacherRating = require('./routes/ratings/teacher-ratings');
 const staffRating = require('./routes/ratings/staff-rating');
 const comptMgtRoute = require('./routes/corporate/competence/compt_mgt');
 const comptMgtService = require('./routes/service-content/servicecontent-compt-mgt');
+const CorpServiceContent = require('./routes/corp_service_content/corp_service_content');
 
 
 
@@ -131,6 +132,7 @@ app.use('/rate/teacher', teacherRating);
 app.use('/rate/staff', staffRating);
 app.use('/competence/management', comptMgtRoute);
 app.use('/competence/service', comptMgtService);
+app.use('/corpservicecontent', CorpServiceContent);
 
 
 
