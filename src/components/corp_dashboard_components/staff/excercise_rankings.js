@@ -36,6 +36,7 @@ export default function ExcerciseRankings({page}){
                 <div className="d-flex justify-content-center mt-4">
                     {/* Render Ranks here */}
                     { spinner ? <i className="fa fa-spinner fa-spin mt-5"></i> : ""}
+                    { rankCard() }
                 </div>
             </div>
         </React.Fragment>
