@@ -36,6 +36,7 @@ import CorpServices from './corp_dashboard_components/services/services';
 import CorpExercises from './corp_dashboard_components/exercises/exercise';
 import Staff from './corp_dashboard_components/staff/staff';
 import ExcerciseRanking from './corp_dashboard_components/staff/excercise_rankings';
+import ContentCreationPage from './corp_dashboard_components/services/content_rm/rm_content';
 import {logout} from './logot';
 
 
@@ -150,6 +151,9 @@ export default function MiniDrawer() {
   const setExRanking = () => {
     setPage(7)
   }
+  const setContentCreation = () => {
+    setPage(8)
+  }
 
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
@@ -259,23 +263,6 @@ export default function MiniDrawer() {
               </ListItem>
             }
             {
-              <ListItem button onClick={setJobPage}>
-                <ListItemIcon>
-                  {
-                    page === 2 ? <><WorkIcon color="primary" /></>
-                      :
-                      <> <WorkIcon color="" /> </>
-                  }
-                </ListItemIcon>
-                {
-                  page === 2 ?
-                    <><ListItemText primary={'Job Board'} /></>
-                    :
-                    <><ListItemText secondary={'Job Board'} /></>
-                }
-              </ListItem>
-            }
-            {
               <ListItem button onClick={setSubPage}>
                 <ListItemIcon>
                   {
@@ -381,7 +368,7 @@ export default function MiniDrawer() {
         {/* <main> */}
 
         {
-          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff ex_rankingpage={setExRanking}/> : (page === 7) ? <ExcerciseRanking /> : ""
+          (page === 0) ? <Account /> : (page === 1) ? <Profile /> : (page === 2) ? <Jobs contentCreation={setContentCreation} /> : (page === 3) ? <Subscriptions /> : (page === 4) ? <CorpServices job={setJobPage} /> : (page === 5) ? <CorpExercises /> : (page === 6) ? <Staff ex_rankingpage={setExRanking} /> : (page === 7) ? <ExcerciseRanking /> : (page === 8) ? <ContentCreationPage /> : ""
         }
         {/* </main> */}
       </div>

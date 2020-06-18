@@ -23,7 +23,11 @@ const CorpservicecontentRMSchema = new Schema({
         type: String,
         required: true
     },
-    deadline: {
+    job_title: {
+        type: String,
+        required:true
+    },
+    job_deadline: {
         type: String,
         required:true
     }

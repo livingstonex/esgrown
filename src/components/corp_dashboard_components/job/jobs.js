@@ -12,7 +12,7 @@ import toast from '../../../util/toast';
 
 
 
-const Jobs = () => {
+const Jobs = ({ contentCreation }) => {
 
     const [jobs, setJobs] = useState([]);
     const [spinner, setSpinner] = useState(true);
@@ -76,15 +76,16 @@ const Jobs = () => {
 
     return (
         <>
-            <br /><br />
-            <br />
-            <div className="container" style={{ marginTop: '60px' }}>
+            <div className="container" style={{ marginTop: '70px' }}>
                 <div className="container">
                     <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
                         <div className="col-lg-8"><SearchBar /></div>
 
-                        <div className="col-lg-4 d-flex justify-content-end" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
-                            <span style={{ marginTop: '10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}>Add Jobs</span>
+                        <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className="btn" style={{ background: '#53a6e7' }} onClick={contentCreation}>Create content</div>
+                                <div style={{fontSize: '16px', fontWeight: 'bolder' }}> <AddCircleIcon fontSize="large" />  Add Jobs</div>
+                            </div>
                         </div>
                     </div>
                 </div><br />
@@ -104,21 +105,21 @@ const Jobs = () => {
                                 return job.jobs.map((j, index) => {
                                     return (
                                         <>
-                                            <div className=" d-flex justify-content-space-around" key={index} style={{ height: '50px', background: "#FFFFFF", borderRadius: '5px', lineHeight: '48px', marginBottom: '15px', textAlign: 'center', boxSizing: 'border-box' }}>
-                                                <div className="col" style={{ textAlign: 'center' }}>{j.title}</div>
+                                            <div className=" d-flex justify-content-center align-items-center" key={index} style={{ height: '50px', background: "silver", borderRadius: '5px',  marginBottom: '15px', textAlign: 'center', }}>
+                                                <div className="col" style={{ textAlign: 'center', fontSize:'10px' }}>{j.title}</div>
                                                 <div className="col" >{j.start_date}</div>
                                                 <div className="col" >{j.dead_line}</div>
                                                 <div className="col" >{j.erd}</div>
                                                 <div className="col">
-                                                        <Dropdown className="ml-3">
-                                                            <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
-                                                                ....
+                                                    <Dropdown className="ml-3">
+                                                        <Dropdown.Toggle id="dropdown-basic" style={{ color: 'black', fontWeight: 'bolder' }}>
+                                                            ....
                                                         </Dropdown.Toggle>
-                                                            <Dropdown.Menu>
-                                                                <Dropdown.Item data-index={index} data-id={j.title} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
-                                                                <Dropdown.Item data-index={index} data-id={j._id} onClick={deleteJob} ><DeleteIcon style={{ color: 'brown' }} /> Delete</Dropdown.Item>
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
+                                                        <Dropdown.Menu>
+                                                            <Dropdown.Item data-index={index} data-id={j.title} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
+                                                            <Dropdown.Item data-index={index} data-id={j._id} onClick={deleteJob} ><DeleteIcon style={{ color: 'brown' }} /> Delete</Dropdown.Item>
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
                                                 </div>
                                             </div>
                                         </>
