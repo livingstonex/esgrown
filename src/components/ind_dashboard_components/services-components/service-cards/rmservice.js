@@ -128,7 +128,7 @@ const RMService = () => {
                     }) : 
                     (page === 1) ? 
                         <GenServiceCard data={data} goBack={goBack()}/>
-                        : 'default empty'
+                        :'default empty'
                 
             }
         </div>
