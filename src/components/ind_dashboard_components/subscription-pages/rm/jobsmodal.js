@@ -17,6 +17,7 @@ const JobsModal = ({ show, onHide, closeModal}) => {
         //get user
         const user = JSON.parse(sessionStorage.getItem('key'))
         setUser(user)
+        console.log(user)
 
         //make api call to get all jobs and set in state
         axios.get(`http://localhost:5000/jobs`)
@@ -83,19 +84,27 @@ const JobsModal = ({ show, onHide, closeModal}) => {
             setLoading(true)
             axios.post(`http://localhost:5000/applications/add`, postData)
                 .then(res => {
-                    console.log(res.data.msg);
-                    console.log(res.data);
                     setLoading(false);
                     toast(res.data.msg, 'info')
                     closeModal();
 
+                    const user = JSON.parse(sessionStorage.getItem('key'));
+
+                    user.jobs = [{
+                        job_title: jobTitle,
+                        job_id: jobID
+                    }]
+
+                    sessionStorage.setItem('key', JSON.stringify(user));
                 })
                 .catch(err => {
                     setLoading(false)
                     console.log(err)
                 });
             
-        }catch(e){}
+        } catch (e) {
+            console.log(e)
+        }
 
         
     }

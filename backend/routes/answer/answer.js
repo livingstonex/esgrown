@@ -18,8 +18,8 @@ router.route('/add').post((req, res) => {
 });
 
 // Get all individuals answers to excercises by company id [i.e Get list of all answers of individuals who took excercise by company id]
-router.route('/corpid', (res, req) => {
-    const corp_id = req.body.corp_id;
+router.route('/:corpid', (res, req) => {
+    const corp_id = req.params.corpid;
 
     Answer.find({corp_id: corp_id})
             .then(people => res.json(people))
@@ -47,7 +47,7 @@ router.route(`/:id`).get((req, res) => {
 
 
 
-router.route('/check').post((req, res) => {
+router.route(`/check`).post((req, res) => {
     const userid = req.body.user_id;
     const ex_id = req.body.ex_id;
 
@@ -56,8 +56,7 @@ router.route('/check').post((req, res) => {
             { excercise_id: ex_id },
             { user_id: userid}
         ]
-    })
-        .then(ans => res.json(ans))
+    }).then(ans => res.json(ans))
         .catch(err => res.status(400).json('Error ' + err))
 });
 

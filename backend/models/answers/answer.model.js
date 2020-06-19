@@ -14,6 +14,10 @@ const answerSchema = new Schema({
         type: String,
         required:true
     },
+    job_id: {
+        type: String,
+        required:false
+    },
     service: {
         type: String,
         required:true

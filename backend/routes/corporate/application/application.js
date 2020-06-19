@@ -24,7 +24,7 @@ router.route(`/add`).post((req, res) => {
                         IND.findOne({ _id: applicant_id })
                             .then(ind => {
                                 ind.updateOne({ $push: { jobs: { 'job_title': jobs_applied_for.job_title, 'job_id': jobs_applied_for.job_id } } })
-                                    .then(updated => res.json({ "msg": "job added succesfuly1", "data": app, "updated data": updated }))
+                                    .then(updated => res.json({ "msg": "job added succesfuly1", "data": app, "updated_data": updated }))
                                     .catch(err => res.status(400).json("update catch" + err));
                             })
                             .catch(err => res.status(400).json("ind catch" + err));

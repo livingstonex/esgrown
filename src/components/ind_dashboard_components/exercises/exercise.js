@@ -4,13 +4,14 @@ import { Card, CardActionArea, Typography, CardContent, CardActions } from '@mat
 import { Spinner } from 'react-bootstrap';
 import QuestionComponentRM from './questionscomponent';
 import QuestionComponentLM from './questionscomponent';
+import toast  from '../../../util/toast';
 
 
 
 
 
 
-const Exercises = () => {
+const Exercises = ({ setRmExercisePage }) => {
 
 
 
@@ -31,8 +32,8 @@ const Exercises = () => {
     const [qspinner, setQSpinner] = useState(true);
     const [user, setUser] = useState();
     const [corpExerciseOwner, setCorpExerciseOwner] = useState();
-    const [JobID, setJobID] = useState()
-
+    const [exId, setExId] = useState([])
+    const [disabled, setDisabled] = useState(false)
 
 
 
@@ -40,38 +41,59 @@ const Exercises = () => {
     //get all exercises and filter for rm and lm
     useEffect(() => {
 
-        //rm exercises
+        const user = JSON.parse(sessionStorage.getItem('key'));
+
+        if (user.sub_status_rm === 'active' && user.jobs.length != 0) {
+
+            user.jobs.map(item => {
+                axios.get(`http://localhost:5000/excercise/rm/${item.job_id}`)
+                    .then(res => {
+                        if (res.data.length !== 0) {
+                            setExId(res.data)
+                        }
+                    }).catch(err => console.log(err))
+            });
+
+
+
+        }
+
+        
+
+
+        // //rm exercises
+        // axios.get(`http://localhost:5000/excercise/rm/`)
+        //     .then(res => {
+        //         console.log(res.data)
+
+        //         // const rm = res.data.filter((r) => {
+        //         //     return r.service === "RM"
+        //         // })
+
+        //         // const lm = res.data.filter(l => {
+        //         //     return l.service === 'LM'
+        //         // })
+
+        //         // setRMExercise(rm)
+        //         // setLMExercise(lm)
+        //         // setSpinner(false)
+        //         // setCorpExerciseOwner(res.data.corp_id);
+        //         // setJobID(res.data.job_id)
+        //     })
+        //     .catch(err => console.log(err));
+
+
+        //lm exercise
         axios.get(`http://localhost:5000/excercise`)
             .then(res => {
-                console.log(res.data)
-                const rm = res.data.filter((r) => {
-                    return r.service === "RM"
-                })
 
-                const lm = res.data.filter(l => {
-                    return l.service === 'LM'
+                const lm = res.data.filter((r) => {
+                    return r.service === "LM"
                 })
-
-                setRMExercise(rm)
                 setLMExercise(lm)
                 setSpinner(false)
-                setCorpExerciseOwner(res.data.corp_id);
-                setJobID(res.data.job_id)
             })
-            .catch(err => console.log(err));
-
-
-        // //lm exercise
-        // axios.get(`http://localhost:5000/excercise`)
-        //     .then(res => {
-
-        //         const lm = res.data.filter((r) => {
-        //             return r.service === "LM"
-        //         })
-        //         setLMExercise(lm)
-        //         setSpinner(false)
-        //     })
-        //     .catch(err => console.log(err))
+            .catch(err => console.log(err))
 
 
 
@@ -102,6 +124,7 @@ const Exercises = () => {
         setDisplayQuestions(true)
 
     }
+ 
 
     return (
         <>
@@ -113,22 +136,13 @@ const Exercises = () => {
 
                             <CardContent>
                                 <Typography gutterBottom variant="" component="h5">
-                                    Recruitment Management - {""} {user && user.sub_status_rm == 'active' ? <span style={{ color: 'green' }}>{RMSubStatus}</span> : <span style={{ color: 'red' }}>{RMSubStatus}</span>}
+                                    Recruitment Management - {""} {user && user.sub_status_rm === 'active' ? <span style={{ color: 'green' }}>{RMSubStatus}</span> : <span style={{ color: 'red' }}>{RMSubStatus}</span>}
                                     <hr />
                                 </Typography>
-                                {spinner ? <Spinner animation="grow" /> : RMSubStatus === "active" ? RMExercise.map(r => {
-                                    return (
-                                        <ul>
-                                            <li className={`ui floating message`} data-service="RM" data-duration={r.duration} onClick={getQuestions} id={r._id} style={{ cursor: 'pointer', fontSize: '18px', fontStyle: 'italic' }}>{r.title}<br /><small>Duration: {r.duration} minutes</small></li>
-                                        </ul>
-                                    );
-                                }) : RMExercise.map(r => {
-                                    return (
-                                        <ul>
-                                            <li id={r._id} style={{ cursor: 'pointer' }}>{r.title}</li>
-                                        </ul>
-                                    );
-                                })}
+                                {/* map through jobs and display cards  */}
+                                <div className="d-flex justify-content-around">
+                                    { mapJobs() }
+                                </div>
                             </CardContent>
 
 
@@ -137,11 +151,11 @@ const Exercises = () => {
                             </CardActions>
                         </Card>
                     </div>
-                    {displayQuestions && currentService == 'RM' ?
+                    {/* {displayQuestions && currentService == 'RM' ?
                         <div style={{ marginBottom: '200px', marginTop: '50px' }}>
-                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID}/>
+                            <QuestionComponentRM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID} />
                         </div>
-                        : ''}
+                        : ''} */}
 
 
                     <div className="col col-lg-12 col-sm-6">
@@ -176,7 +190,7 @@ const Exercises = () => {
                     </div>
                     {displayQuestions && currentService == 'LM' ?
                         <div style={{ marginBottom: '200px', marginTop: '50px' }}>
-                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} jobID={JobID}  />
+                            <QuestionComponentLM duration={duration} exerciseId={exerciseId} service={currentService} corpExerciseOwner={corpExerciseOwner} />
                         </div>
                         : ''}
 
@@ -186,6 +200,27 @@ const Exercises = () => {
         </>
 
     );
+
+    function mapJobs() {
+        return exId.map(item => (
+                    <Card className="mt-5" style={{ width: '35%' }}>
+                        <CardActionArea>
+                            <CardContent >
+                                <Typography gutterBottom variant="" component="p">
+                                    {item.title}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                            <div className="btn btn-info bt-sm" onClick={() => setRmExercisePage(item)} disabled={{}} >Take Exercise </div>
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                        </CardActions>
+                    </Card>
+                ));
+    }
+
+
 
 }
 export default Exercises;

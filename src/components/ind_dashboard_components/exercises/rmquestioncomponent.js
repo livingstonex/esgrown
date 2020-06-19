@@ -4,6 +4,7 @@ import { Spinner } from 'react-bootstrap';
 import Quiz from './quiz';
 import SubmitBtn from './submitbtn';
 import StartBtn from './startbtn';
+import { toast } from 'react-toastify';
 
 
 
@@ -13,7 +14,7 @@ let userAnswer = [];
 class QuestionsComponent extends Component {
     //userAnswer = [];
     constructor(props) {
-
+        
         super(props);
 
         this.state = {
@@ -22,9 +23,12 @@ class QuestionsComponent extends Component {
             userAns: [],
             page: 1,
             spinner: true,
+            disabled: false,
+            exTaken:false
         }
 
     }
+
 
 
     // timer() {
@@ -42,25 +46,45 @@ class QuestionsComponent extends Component {
     //     setInterval(this.timer.bind(this), 1000);
     // }
 
+    checkIfUserHasTakenEx(user, exid) {
+    //check if user has taken this exercise b4
+    axios.post(`http://localhost:5000/answer/check`, {
+        user_id: user,
+        ex_id: exid
+    }).then(res => {
+        if (res.data.length > 0) {
+            this.setState({exTaken:true});
+            toast('Our records show you have taken this exercise before', 'warn')
+        }
+    }).catch(err => console.log(err))
+}
+
+
     componentDidMount() {
+
+        const user = JSON.parse(sessionStorage.getItem('key'));
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
-
-
-        //get questions
-        axios.post(`http://localhost:5000/question/${this.props.exerciseId}`)
+        axios.get(`http://localhost:5000/question/${this.props.exercise._id}`)
             .then(res => {
+                console.log(res.data)
                 if (res.data.length > 0) {
                     this.setState({
                         question: res.data,
                         spinner: false
                     })
                 }
+                if (res.data.length === 0) {
+                    this.setState({disabled:true});
+                    toast('sorry, no exercise yet!', 'info')
+                }
             })
             .catch(err => console.log(err));
-
+        
         if (this.state.spinner == false) {
             this.setState({ page: 1 })
         }
+
+        this.checkIfUserHasTakenEx(user.id, this.props.exercise._id)
     }
 
     componentWillUnmount() {
@@ -74,7 +98,7 @@ class QuestionsComponent extends Component {
     }
 
     setPage = () => {
-        this.setState({page: 3})
+        this.setState({ page: 3 })
     }
 
     handelUserAns = (e) => {
@@ -136,13 +160,14 @@ class QuestionsComponent extends Component {
         const userData = JSON.parse(sessionStorage.getItem('key'));
         const { name, email } = userData;
 
-        const { exerciseId, service, corpExerciseOwner } = this.props;
+        const { _id, service, corp_id, job_id, duration } = this.props.exercise;
+
 
         const data = {
             user_id: userData.id,
-            corp_id: corpExerciseOwner,
-            excercise_id: exerciseId,
-            // job_id: jobID,
+            corp_id: corp_id,
+            excercise_id: _id,
+            job_id: job_id,
             service: service,
             name: name,
             email: email,
@@ -164,12 +189,13 @@ class QuestionsComponent extends Component {
     render() {
 
         const { question, spinner } = this.state
+        const { duration } = this.props.exercise;
 
 
         return (
             <>
                 {
-                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={this.props.duration} setPage={this.setPage} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
+                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken}/> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
                 }
             </>
         );

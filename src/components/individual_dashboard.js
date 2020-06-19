@@ -59,6 +59,8 @@ import PersoIcon from '@material-ui/icons/Person';
 import EduIcon from '@material-ui/icons/CastForEducation';
 import PeopleIcon from '@material-ui/icons/People';
 
+import QuestionComponent from './ind_dashboard_components/exercises/rmquestioncomponent';
+
 
 
 const drawerWidth = 200;
@@ -177,6 +179,8 @@ export default function MiniDrawer() {
   const [rmNotification, setRmNotification] = useState([])
   const [exNotification, setExNotification] = useState([])
   const [count, setCount] = useState(true);
+
+  const [RMEx, setRMEx] = useState({});
 
 
   //get all notifications from api
@@ -459,12 +463,13 @@ export default function MiniDrawer() {
     handleClose();
 
   }
-  const setLmExercisePage = () => {
-    setPage(9);
-    handleClose();
+  // const setLmExercisePage = () => {
+  //   setPage(9);
+  //   handleClose();
 
-  }
-  const setRmExercisePage = () => {
+  // }
+  const setRmExercisePage = (exercise) => {
+    setRMEx(exercise)
     setPage(10);
     handleClose();
 
@@ -474,6 +479,8 @@ export default function MiniDrawer() {
     setPage(11)
     handleClose();
   }
+
+  
 
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
@@ -785,7 +792,7 @@ export default function MiniDrawer() {
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises /> : (page == 11) ? <CompetenceMgt /> : ""}
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises setRmExercisePage={setRmExercisePage} /> : (page == 11) ? <CompetenceMgt /> : (page === 10) ? <QuestionComponent exercise={RMEx}/> : ""}
         </main>
       </div>
     </>

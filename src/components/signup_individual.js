@@ -119,11 +119,11 @@ export default class IndividualSignUp extends Component {
             org_type: this.state.org_type ? this.state.org_type : null,
             org_name: this.state.org_name ? this.state.org_name : null,
             tic: TIC,
-            // sub_status_eas: "inactive",
-            // sub_status_efa:"inactive",
-            // sub_status_lm:"inactive",
-            // sub_status_rm:"inactive",
-            // sub_status_compt_mgt: "inactive"
+            sub_status_eas: "inactive",
+            sub_status_efa:"inactive",
+            sub_status_lm:"inactive",
+            sub_status_rm:"inactive",
+            sub_status_compt_mgt: "inactive"
         }
 
         axios.post('http://localhost:5000/individuals/check_email', individual)
@@ -162,7 +162,8 @@ export default class IndividualSignUp extends Component {
                                 state: res.data.state,
                                 status: res.data.status,
                                 org_name: res.data.org_name,
-                                org_type: res.data.org_type
+                                org_type: res.data.org_type,
+                                jobs:res.data.jobs
 
                             }
 

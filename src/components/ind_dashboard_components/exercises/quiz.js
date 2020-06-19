@@ -96,7 +96,7 @@ const Quiz = (props) => {
                                             id="submit"
                                         >
                                             submit Ans
-                        </Button>
+                                        </Button>
                                     </Paper>
                                 ) : ""}
                             </Card.Body>
