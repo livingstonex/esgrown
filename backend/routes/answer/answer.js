@@ -8,33 +8,44 @@ router.route('/add').post((req, res) => {
     const service = req.body.service;
     const name = req.body.name;
     const email = req.body.email;
-    const answers = req.body.answers; 
+    const answers = req.body.answers;
+    const job_id = req.body.job_id;
 
-    const newAns = new Answer({ user_id, excercise_id, corp_id, service, name, email, answers });
+    const newAns = new Answer({ user_id, excercise_id, corp_id, service, name, email, answers,job_id });
 
     newAns.save()
         .then((sub) => res.json(sub))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// Get all individuals answers to excercises by company id [i.e Get list of all answers of individuals who took excercise by company id]
-router.route('/:corpid', (res, req) => {
-    const corp_id = req.params.corpid;
+// Get all answers by job_id
+router.route(`/job/:jobid`).get((req, res) => { 
+    const job_id = req.params.jobid;
 
-    Answer.find({corp_id: corp_id})
-            .then(people => res.json(people))
-            .catch(err => res.status(400).json('Error: ' + err));
+    Answer.find({ job_id: job_id })
+        .then(ans => res.json(ans))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get all individuals answers to excercises by company id [i.e Get list of all answers of individuals who took excercise by company id]
+router.route('/:corpid').get((req, res) => { 
+    const corp_id = req.params.corpid;
+
+    Answer.find({ corp_id: corp_id })
+        .then(people => res.json(people))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+ 
+
 // Get list of all individuals who took a particular excercise, by company.
-router.route('/corpid/excerciseid', (res, req) => {
+router.route('/corpid/excerciseid').get((req, res) => { 
     const corp_id = req.body.corp_id;
     const excercise_id = res.body.excercise_id;
 
-    Answer.find({$and: [{corp_id: corp_id}, {excercise_id: excercise_id}]})
-            .then(answers => res.json(answers))
-            .catch(err => res.status(400).json('Error: ' + err));
-})
+    Answer.find({ $and: [{ corp_id: corp_id }, { excercise_id: excercise_id }] })
+        .then(answers => res.json(answers))
+        .catch(err => res.status(400).json('Error: ' + err));
+ });
 
 //============================= Get Individual's EAS Sub Details ===========================
 

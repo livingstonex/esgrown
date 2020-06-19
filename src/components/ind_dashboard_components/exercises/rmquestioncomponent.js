@@ -24,7 +24,8 @@ class QuestionsComponent extends Component {
             page: 1,
             spinner: true,
             disabled: false,
-            exTaken:false
+            exTaken: false,
+            userName: ''
         }
 
     }
@@ -63,6 +64,7 @@ class QuestionsComponent extends Component {
     componentDidMount() {
 
         const user = JSON.parse(sessionStorage.getItem('key'));
+        this.setState({userName: user.name})
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
         axios.get(`http://localhost:5000/question/${this.props.exercise._id}`)
             .then(res => {
@@ -122,7 +124,8 @@ class QuestionsComponent extends Component {
                     userAnswer.push({
                         question: q,
                         ans: a,
-                        userScore
+                        userScore,
+                        name:this.state.userName
                     })
                 } else {
                     userAnswer.splice(userAnswer.findIndex(item => item.question === q), 1)
@@ -130,7 +133,8 @@ class QuestionsComponent extends Component {
                         {
                             question: q,
                             ans: a,
-                            userScore
+                            userScore,
+                            name: this.state.userName
 
                         }
                     )
@@ -139,7 +143,8 @@ class QuestionsComponent extends Component {
                 userAnswer.push({
                     question: q,
                     ans: a,
-                    userScore
+                    userScore,
+                    name: this.state.userName
 
                 })
 
@@ -162,12 +167,14 @@ class QuestionsComponent extends Component {
 
         const { _id, service, corp_id, job_id, duration } = this.props.exercise;
 
+        console.log(this.props.exercise);
+
 
         const data = {
             user_id: userData.id,
             corp_id: corp_id,
             excercise_id: _id,
-            job_id: job_id,
+            job_id: this.props.exercise.job_id,
             service: service,
             name: name,
             email: email,

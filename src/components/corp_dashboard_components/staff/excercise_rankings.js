@@ -4,14 +4,20 @@ import axios from 'axios';
 export default function ExcerciseRankings({ page }) {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
-        getAnswers(user.id);
+        getJobs(user.id);
+        
     }, []);
-    const [exId, setExId] = useState("");
+    // const [jobId, setJobId] = useState("");
     const [data, setData] = useState([]);
+    const [jobs, setJobs] = useState([]);
 
-    const onChangeExId = (e) => {
-        setExId(e.target.value);
+    const onChangeJob = (e) => {
+        // setJobId(e.target.value);
+        // Use the Job Id to make a call to get all answers
+        const job_id = e.target.value;
+        getAnswers(job_id);
     }
+    console.log(data);
     return (
         <React.Fragment >
             <div className="container">
@@ -20,11 +26,9 @@ export default function ExcerciseRankings({ page }) {
                 </div>
 
                 <div className="d-flex justify-content-center">
-                    <select className="form-control text-small" onChange={onChangeExId} style={{ width: '50%' }}>
+                    <select className="form-control text-small" onChange={onChangeJob} style={{ width: '50%' }}>
                         <option value="null">Select the jobs to view Rankings</option>
-                        <option>Job 1</option>
-                        <option>Job 2</option>
-                        <option>Job 3</option>
+                        { mapAllJobs() }
                     </select>
                 </div>
                 <div className="d-flex justify-content-center mt-4">
@@ -43,14 +47,29 @@ export default function ExcerciseRankings({ page }) {
             <div> 57% <div className="btn btn-info btn-sm ml-3">Induct</div></div>
         </div>
     }
-
+      
     // Get all answers by corp_id
-    function getAnswers(id) {
+    function getAnswers(jobId) {
+
         try {
-            axios.get(`http://localhost:5000/answer/${id}`)
+            axios.get(`http://localhost:5000/answer/job/${jobId}`)
                 .then(res => {
                     console.log(res.data);
-                    setData(res.data);
+
+                    if (res.data.length > 0) {
+
+                         res.data.map(item => {
+                            // Map to get scores from answers
+                            item.answers.map(item => {
+                                setData(item)
+                            })
+                            // return obj;
+                        });
+
+                        // 
+                    }
+                    // setData(res.data);
+                    
                 })
                 .catch(err => {
                     console.log(err);
@@ -58,5 +77,29 @@ export default function ExcerciseRankings({ page }) {
         } catch (error) {
             console.log(error);
         }
+    }
+
+        
+    // Get all jobs by corp_id
+    function getJobs(corpid) {
+        try {
+            axios.get(`http://localhost:5000/jobs/${corpid}`)
+                .then(res => {
+                    // console.log(res.data[0]);
+                    setJobs(res.data[0].jobs);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } catch (error) {
+            
+        }
+    }
+
+    // map jobs function
+    function mapAllJobs() {
+        return jobs.map(item => (
+            <option value={item.job_id}>{item.title}</option>
+        ))
     }
 }

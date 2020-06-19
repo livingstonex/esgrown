@@ -30,7 +30,7 @@ router.route(`/add`).post((req, res) => {
 });
 
 
-//====================== get all companies jobs ===================================
+//====================== get all jobs by company ===================================
 
 router.route(`/:companyid`).get((req, res) => {
     JOB.find({ company_id: req.params.companyid })
