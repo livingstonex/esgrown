@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepContent from '@material-ui/core/StepContent';
@@ -9,19 +9,22 @@ import TimerComponent from './timer';
 import { Card } from 'react-bootstrap';
 
 
-const Quiz = (props) => {
+const Quiz = ({ question, handelUserAns, submitAns, duration, setPage, maxScore }) => {
+
+    useEffect(() => {
+        maxScore(question)
+
+    }, [maxScore,question])
 
     const [activeStep, setActiveStep] = useState(0);
 
 
-    const finished = () => {
-        console.log('finished')
-    }
+
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
+
     };
 
-    const { question, handelUserAns, submitAns, duration, setPage } = props;
 
     return (
         <>
@@ -47,8 +50,8 @@ const Quiz = (props) => {
                         <Card style={{ width: '100%' }}>
                             <Card.Body>
                                 <Stepper activeStep={activeStep}>
-                                    {question ? question.map((q) => (
-                                        <Step key={q.question}>
+                                    {question ? question.map((q) => {
+                                        return <Step key={q.question}>
                                             <StepContent style={{ fontSize: '20px' }}>{q.question}</StepContent>
                                             <StepContent>
                                                 <input type="hidden" value={q.question} />
@@ -82,7 +85,9 @@ const Quiz = (props) => {
                                                 </div>
                                             </StepContent>
                                         </Step>
-                                    )) : ""}
+                                    }
+  
+                                    ) : ""}
                                 </Stepper>
                                 {activeStep === question ? question.length && (
                                     <Paper square elevation={0} className="">

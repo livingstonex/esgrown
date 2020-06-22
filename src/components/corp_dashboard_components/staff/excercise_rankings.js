@@ -10,6 +10,9 @@ export default function ExcerciseRankings({ page }) {
     // const [jobId, setJobId] = useState("");
     const [data, setData] = useState([]);
     const [jobs, setJobs] = useState([]);
+    const [rank, setRank] = useState([]);
+
+    let ranking = []
 
     const onChangeJob = (e) => {
         // setJobId(e.target.value);
@@ -17,7 +20,7 @@ export default function ExcerciseRankings({ page }) {
         const job_id = e.target.value;
         getAnswers(job_id);
     }
-    console.log(data);
+    console.log(rank);
     return (
         <React.Fragment >
             <div className="container">
@@ -32,8 +35,11 @@ export default function ExcerciseRankings({ page }) {
                     </select>
                 </div>
                 <div className="d-flex justify-content-center mt-4">
-                    {/* Render Ranks here */}
-                    {rankCard()}
+                    <div className="container align-self-center">
+                        {/* Render Ranks here */}
+                        {rankCard()}
+                    </div>
+                    
                 </div>
             </div>
         </React.Fragment>
@@ -42,13 +48,15 @@ export default function ExcerciseRankings({ page }) {
     // Rank Card Function
 
     function rankCard() {
-        return <div style={{ height: '50px', width: '80%', background: 'silver', }} className="d-flex justify-content-around align-items-center">
-            <div>John Okafor</div>
-            <div> 57% <div className="btn btn-info btn-sm ml-3">Induct</div></div>
-        </div>
+        return rank.map(item => (
+            <div style={{ height: '50px', width: '80%', background: 'silver', }} className="d-flex justify-content-around align-items-center mb-3">
+                <div>{item.name}</div>
+                <div> {item.percentage}% <div className="btn btn-info btn-sm ml-3">Induct</div></div>
+            </div>
+        ));
     }
       
-    // Get all answers by corp_id
+    // Get all answers by job_id
     function getAnswers(jobId) {
 
         try {
@@ -59,17 +67,23 @@ export default function ExcerciseRankings({ page }) {
                     if (res.data.length > 0) {
 
                          res.data.map(item => {
-                            // Map to get scores from answers
-                            item.answers.map(item => {
-                                setData(item)
-                            })
-                            // return obj;
+                            //  Calculate percentage
+                             const percentage = (item.total_scored / item.max_score) * 100;
+                             
+                            //  Define object to hold individuls percentage and name
+                             const obj = {
+                                 name: item.name,
+                                 percentage: Math.floor(percentage),
+                             };
+                            //  setRank(rank.concat(obj))
+                             ranking.push(obj);
                         });
 
-                        // 
+                             setRank(ranking)
+
                     }
                     // setData(res.data);
-                    
+                        
                 })
                 .catch(err => {
                     console.log(err);

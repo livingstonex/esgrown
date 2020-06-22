@@ -14,18 +14,22 @@ let userAnswer = [];
 class QuestionsComponent extends Component {
     //userAnswer = [];
     constructor(props) {
-        
+
         super(props);
 
         this.state = {
-            currentCount: this.props.duration + 1,
+            currentCount: this.props.duration,
             activeStep: 0,
             userAns: [],
             page: 1,
             spinner: true,
             disabled: false,
             exTaken: false,
-            userName: ''
+            userName: '',
+            submitting: false,
+            showScoreModal: false,
+            max_score: 0
+
         }
 
     }
@@ -47,24 +51,25 @@ class QuestionsComponent extends Component {
     //     setInterval(this.timer.bind(this), 1000);
     // }
 
-    checkIfUserHasTakenEx(user, exid) {
+
     //check if user has taken this exercise b4
-    axios.post(`http://localhost:5000/answer/check`, {
-        user_id: user,
-        ex_id: exid
-    }).then(res => {
-        if (res.data.length > 0) {
-            this.setState({exTaken:true});
-            toast('Our records show you have taken this exercise before', 'warn')
-        }
-    }).catch(err => console.log(err))
-}
+    checkIfUserHasTakenEx(user, exid) {
+        axios.post(`http://localhost:5000/answer/check`, {
+            user_id: user,
+            ex_id: exid
+        }).then(res => {
+            if (res.data.length > 0) {
+                this.setState({ exTaken: true });
+                toast('Our records show you have taken this exercise in the past', 'warn')
+            }
+        }).catch(err => console.log(err))
+    }
 
 
     componentDidMount() {
 
         const user = JSON.parse(sessionStorage.getItem('key'));
-        this.setState({userName: user.name})
+        this.setState({ userName: user.name })
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
         axios.get(`http://localhost:5000/question/${this.props.exercise._id}`)
             .then(res => {
@@ -76,12 +81,12 @@ class QuestionsComponent extends Component {
                     })
                 }
                 if (res.data.length === 0) {
-                    this.setState({disabled:true});
+                    this.setState({ disabled: true });
                     toast('sorry, no exercise yet!', 'info')
                 }
             })
             .catch(err => console.log(err));
-        
+
         if (this.state.spinner == false) {
             this.setState({ page: 1 })
         }
@@ -103,39 +108,47 @@ class QuestionsComponent extends Component {
         this.setState({ page: 3 })
     }
 
+    maxScore = (question) => {
+        const getMaxScore = question.reduce((a, b) => {
+            return a + b.score
+        }, 0)
+        this.setState({ max_score: getMaxScore })
+    }
+
     handelUserAns = (e) => {
         //check if user ans is correct ie user ans should be equal to question correct ans. if correct user score is equal to quetion.score else 0. add user score to the posted object
         if (e.target.type == 'radio') {
-            const q = e.target.parentNode.parentNode.parentNode.firstChild.value;
-            const a = e.target.value;
-            const score = e.target.getAttribute('data-score');
-            const correctAns = e.target.getAttribute('data-ans')
+            const q = e.target.parentNode.parentNode.parentNode.firstChild.value.toLowerCase();
+            const a = e.target.value.toLowerCase();
+            const score = parseInt(e.target.getAttribute('data-score'));
+            const correctAns = e.target.getAttribute('data-ans').toLowerCase()
             let userScore;
 
             if (a === correctAns) {
                 userScore = score
             } else {
-                userScore = 0;
+                userScore = parseInt(0);
             }
 
+
+
             if (userAnswer.length > 0) {
+                //prevent submission of the same question with different answers
                 const fnd = userAnswer.find(x => x.question == q);
                 if (!fnd) {
                     userAnswer.push({
                         question: q,
                         ans: a,
-                        userScore,
-                        name:this.state.userName
+                        userScore
                     })
                 } else {
-                    userAnswer.splice(userAnswer.findIndex(item => item.question === q), 1)
+                    userAnswer.splice(userAnswer.findIndex(item => item.question === q), 1);
+
                     userAnswer.push(
                         {
                             question: q,
                             ans: a,
-                            userScore,
-                            name: this.state.userName
-
+                            userScore
                         }
                     )
                 }
@@ -143,8 +156,7 @@ class QuestionsComponent extends Component {
                 userAnswer.push({
                     question: q,
                     ans: a,
-                    userScore,
-                    name: this.state.userName
+                    userScore
 
                 })
 
@@ -167,7 +179,11 @@ class QuestionsComponent extends Component {
 
         const { _id, service, corp_id, job_id, duration } = this.props.exercise;
 
-        console.log(this.props.exercise);
+
+        //get user total score
+        const total = this.state.userAns.reduce((a, b) => {
+            return a + b.userScore ;
+        }, 0)
 
 
         const data = {
@@ -178,31 +194,45 @@ class QuestionsComponent extends Component {
             service: service,
             name: name,
             email: email,
-            answers: this.state.userAns
+            total_scored: total,
+            answers: this.state.userAns,
+            max_score: this.state.max_score
 
         }
 
-        //send to db
-        axios.post(`http://localhost:5000/answer/add`, data)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        // send to db
+        try {
+            this.setState({submitting: true})
+            axios.post(`http://localhost:5000/answer/add`, data)
+                .then(res => {
+                    this.setState({ submitting: false })
+                    this.setState({ showScoreModal: true })
+
+                })
+                .catch(err => console.log(err))
+            //
+            
+        } catch (error) {
+            
+        }
 
 
         this.setState({ page: 0 })
 
     }
 
-
     render() {
 
         const { question, spinner } = this.state
         const { duration } = this.props.exercise;
 
+        console.log(this.state.max_score)
+
 
         return (
             <>
                 {
-                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken}/> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
+                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} maxScore={this.maxScore}/> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
                 }
             </>
         );

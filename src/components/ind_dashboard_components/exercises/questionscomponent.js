@@ -87,7 +87,7 @@ class QuestionsComponent extends Component {
             let userScore;
 
             if (a === correctAns) {
-                userScore = score
+                userScore = parseInt(score)
             } else {
                 userScore = 0;
             }

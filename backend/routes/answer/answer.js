@@ -10,8 +10,10 @@ router.route('/add').post((req, res) => {
     const email = req.body.email;
     const answers = req.body.answers;
     const job_id = req.body.job_id;
+    const total_scored = req.body.total_scored;
+    const max_score = req.body.max_score;
 
-    const newAns = new Answer({ user_id, excercise_id, corp_id, service, name, email, answers,job_id });
+    const newAns = new Answer({ user_id, excercise_id, corp_id, service, name, email, answers, job_id, total_scored, max_score });
 
     newAns.save()
         .then((sub) => res.json(sub))
@@ -70,6 +72,7 @@ router.route(`/check`).post((req, res) => {
     }).then(ans => res.json(ans))
         .catch(err => res.status(400).json('Error ' + err))
 });
+
 
 
 
