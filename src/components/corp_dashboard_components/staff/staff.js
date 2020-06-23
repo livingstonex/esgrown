@@ -146,7 +146,9 @@ const Staff = ({ex_rankingpage}) => {
         setShowRating(false)
         setRateCompany(false)
     }
-    console.log(details)
+    console.log(staff)
+
+    // const status_color = 
 
     return (
         <>
@@ -160,8 +162,9 @@ const Staff = ({ex_rankingpage}) => {
                         <div className="col-lg-4" style={{ cursor: 'pointer' }} >
                             {/* <span style={{ float: 'right', lineHeight: '50px', marginLeft: '10px', color: '#3F51B5', fontSize: '16px', fontWeight: 'bolder' }}> */}
                                 <div className="d-flex justify-content-between">
-                                <div className="btn" style={{background:'#53a6e7'}} onClick={ex_rankingpage}>Excercise Ranking</div>
-                                <div onClick={() => setShow(!show)}><AddCircleIcon fontSize="large" /> Add {user && user.org_type === "school" ? "teacher" : "staff"}</div>
+                                <div className="btn" style={{ background: 'lightgrey' }} onClick={ex_rankingpage}>Excercise Ranking</div>
+                                <div className="btn" style={{ background: 'lightgrey' }} onClick={() => setShow(!show)}>Add {user && user.org_type === "school" ? "teacher" : "staff"}</div>
+                                {/* <div onClick={() => setShow(!show)}><AddCircleIcon fontSize="large" /> Add {user && user.org_type === "school" ? "teacher" : "staff"}</div> */}
                                 </div>
                             {/* </span> */}
                         </div>
@@ -185,6 +188,9 @@ const Staff = ({ex_rankingpage}) => {
 
                         <div className=" d-flex flex-fill align-items-center">
                             <p className="mb-0">Phone</p>
+                        </div>
+                        <div className=" d-flex flex-fill align-items-center">
+                            <p className="mb-0">Status</p>
                         </div>
 
                     </div>
@@ -211,8 +217,10 @@ const Staff = ({ex_rankingpage}) => {
                                                 <div className="pr-2 d-flex flex-fill align-items-center">
                                                     <p className="ml-3 mb-0 text-color-2">{st.phone}</p>
                                                 </div>
+                                                
                                                 <div className="pr-2 d-flex flex-fill align-items-center">
-                                                    <p className="ml-3 mb-0 text-color-2">{st.tic}</p>
+                                                    {st.sub_status_compt_mgt == 'active' ? <p className="ml-3 mb-0 text-color-2 badge badge-success">{st.sub_status_compt_mgt}</p> : st.sub_status_compt_mgt == 'inactive' ? <p className="ml-3 mb-0 text-color-2 badge badge-danger">{st.sub_status_compt_mgt}</p> :<p className="ml-3 mb-0 text-color-2 badge badge-info">{st.sub_status_compt_mgt}</p>}
+                                                    
                                                 </div>
 
                                                 <div className="d-flex align-items-center ml-auto">
@@ -223,7 +231,7 @@ const Staff = ({ex_rankingpage}) => {
                                                         <Dropdown.Menu>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="view">View Details</Dropdown.Item>
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="edit">Edit {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
-                                                            <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="rate">Rate {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
+                                                            {st.sub_status_compt_mgt =='active' ? <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="rate">Rate {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item> : <Dropdown.Item disabled>Rate {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>}
                                                             <Dropdown.Item onClick={getDetails} data-id={st._id} data-current="delete">Delete {user && user.org_type === "school" ? "teacher" : "staff"}</Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>

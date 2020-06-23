@@ -5,7 +5,7 @@ export default function ExcerciseRankings({ page }) {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         getJobs(user.id);
-        
+
     }, []);
     // const [jobId, setJobId] = useState("");
     const [data, setData] = useState([]);
@@ -31,15 +31,14 @@ export default function ExcerciseRankings({ page }) {
                 <div className="d-flex justify-content-center">
                     <select className="form-control text-small" onChange={onChangeJob} style={{ width: '50%' }}>
                         <option value="null">Select the jobs to view Rankings</option>
-                        { mapAllJobs() }
+                        {mapAllJobs()}
                     </select>
                 </div>
-                <div className="d-flex justify-content-center mt-4">
-                    <div className="container align-self-center">
-                        {/* Render Ranks here */}
-                        {rankCard()}
-                    </div>
-                    
+            </div>
+            <div className="col">
+                <div className="flex-column justify-content-center align-items-center mt-4">
+                    {/* Render Ranks here */}
+                    {rankCard()}
                 </div>
             </div>
         </React.Fragment>
@@ -49,13 +48,13 @@ export default function ExcerciseRankings({ page }) {
 
     function rankCard() {
         return rank.map(item => (
-            <div style={{ height: '50px', width: '80%', background: 'silver', }} className="d-flex justify-content-around align-items-center mb-3">
+            <div style={{ height: '50px', width: '60%', background: 'silver', }} className="d-flex justify-content-around align-items-center mb-3">
                 <div>{item.name}</div>
                 <div> {item.percentage}% <div className="btn btn-info btn-sm ml-3">Induct</div></div>
             </div>
         ));
     }
-      
+
     // Get all answers by job_id
     function getAnswers(jobId) {
 
@@ -66,24 +65,24 @@ export default function ExcerciseRankings({ page }) {
 
                     if (res.data.length > 0) {
 
-                         res.data.map(item => {
+                        res.data.map(item => {
                             //  Calculate percentage
-                             const percentage = (item.total_scored / item.max_score) * 100;
-                             
+                            const percentage = (item.total_scored / item.max_score) * 100;
+
                             //  Define object to hold individuls percentage and name
-                             const obj = {
-                                 name: item.name,
-                                 percentage: Math.floor(percentage),
-                             };
+                            const obj = {
+                                name: item.name,
+                                percentage: Math.floor(percentage),
+                            };
                             //  setRank(rank.concat(obj))
-                             ranking.push(obj);
+                            ranking.push(obj);
                         });
 
-                             setRank(ranking)
+                        setRank(ranking)
 
                     }
                     // setData(res.data);
-                        
+
                 })
                 .catch(err => {
                     console.log(err);
@@ -93,7 +92,7 @@ export default function ExcerciseRankings({ page }) {
         }
     }
 
-        
+
     // Get all jobs by corp_id
     function getJobs(corpid) {
         try {
@@ -106,7 +105,7 @@ export default function ExcerciseRankings({ page }) {
                     console.log(err);
                 });
         } catch (error) {
-            
+
         }
     }
 

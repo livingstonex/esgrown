@@ -12,7 +12,7 @@ import toast from '../../../util/toast';
 
 
 
-const Jobs = ({ contentCreation }) => {
+const Jobs = ({ contentCreation, exerciseCreation }) => {
 
     const [jobs, setJobs] = useState([]);
     const [spinner, setSpinner] = useState(true);
@@ -79,12 +79,14 @@ const Jobs = ({ contentCreation }) => {
             <div className="container" style={{ marginTop: '70px' }}>
                 <div className="container">
                     <div className="row" style={{ background: '#C4C4C4', height: '60px', paddingBottom: '20px', paddingTop: '10px', paddingLeft: '40px' }}>
-                        <div className="col-lg-8"><SearchBar /></div>
+                        <div className="col-lg-6"><SearchBar /></div>
 
-                        <div className="col-lg-4" style={{ cursor: 'pointer' }} onClick={() => setShow(!show)}>
+                        <div className="col-lg-6" style={{ cursor: 'pointer' }} >
                             <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn" style={{ background: '#53a6e7' }} onClick={contentCreation}>Create content</div>
-                                <div style={{fontSize: '16px', fontWeight: 'bolder' }}> <AddCircleIcon fontSize="large" />  Add Jobs</div>
+                                <div className="btn" style={{ background: 'lightgrey',color:'white' }} onClick={contentCreation}>Create content</div>
+                                <div className="btn" style={{ background: 'lightgrey', color: 'white' }} onClick={exerciseCreation}>Create Exercises</div>
+                                <div className="btn" style={{ background: 'lightgrey',color:'white' }} onClick={() => setShow(!show)}>Add Jobs</div>
+                                {/* <div style={{ fontSize: '16px', fontWeight: 'bolder' }} onClick={() => setShow(!show)}> <AddCircleIcon fontSize="large" />  Add Jobs</div> */}
                             </div>
                         </div>
                     </div>

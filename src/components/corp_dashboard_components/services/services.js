@@ -6,7 +6,7 @@ import Img from '../../../img/recruitment.png';
 
 
 
-const CorpServices = ({ job}) => {
+const CorpServices = ({ job, staff}) => {
 
     const [LMsrv, setLMsrv] = useState([]);
     const [RMsrv, setRMsrv] = useState([]);
@@ -68,7 +68,7 @@ const CorpServices = ({ job}) => {
                             image="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSlDxYMQX6TQvAHVADOD5FEsrrV6iqAguLxYIVRZ6Y42B-5tV1R"
                             title="Contemplative Reptile"
                         />
-                        <CardContent onClick={{}}>
+                                <CardContent onClick={staff}>
                             <Typography gutterBottom variant="" component="h5">
                                 Corporate Leadership <br /> Management
                     </Typography>
