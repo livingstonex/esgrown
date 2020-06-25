@@ -44,7 +44,23 @@ export default function ExcerciseRankings({ page }) {
         </React.Fragment>
     );
 
-    // Rank Card Function
+    // Get all jobs by company id
+    function getJobs(id){
+        try {
+            axios.get(`http://localhost:5000/jobs/${id}`)
+                .then(res => {
+                    if (res.data.length !== 0) {
+                        setJobs(res.data[0].jobs);
+                        console.log(res.data[0].jobs)
+                    } else {
+                        console.log("no data")
+                    }
+                })
+                .catch(err => console.log(err));
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     function rankCard() {
         return rank.map(item => (
@@ -94,20 +110,20 @@ export default function ExcerciseRankings({ page }) {
 
 
     // Get all jobs by corp_id
-    function getJobs(corpid) {
-        try {
-            axios.get(`http://localhost:5000/jobs/${corpid}`)
-                .then(res => {
-                    // console.log(res.data[0]);
-                    setJobs(res.data[0].jobs);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        } catch (error) {
+    // function getJobs(corpid) {
+    //     try {
+    //         axios.get(`http://localhost:5000/jobs/${corpid}`)
+    //             .then(res => {
+    //                 // console.log(res.data[0]);
+    //                 setJobs(res.data[0].jobs);
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //             });
+    //     } catch (error) {
 
-        }
-    }
+    //     }
+    // }
 
     // map jobs function
     function mapAllJobs() {
@@ -115,4 +131,23 @@ export default function ExcerciseRankings({ page }) {
             <option value={item.job_id}>{item.title}</option>
         ))
     }
+
+
+
+    // Get all excercises that carry the Job id
+    // function getAnswersByJob(corpid, jobid){
+    //     try {
+    //         setSpinner(true);
+    //         axios.get(`http://localhost:5000/answer/${corpid}/${jobid}`)
+    //                 .then(answers => { 
+    //                     setSpinner(false);
+    //                     setAnswers(answers.data);
+    //                 })
+    //                 .catch(err => console.log(err));
+    //     } catch (error) {
+            
+    //     }
+    // }
+
+
 }

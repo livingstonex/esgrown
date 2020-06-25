@@ -38,11 +38,11 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                 }
             })
             .catch(err => console.log(err));
-
     }, []);
 
 
 
+    console.log(jobs);
 
     //close jobs create modal and reload jobs
     const closeModal = () => {
@@ -53,6 +53,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                 if (res.data.length > 0) {
                     setJobs(res.data);
                     setSpinner(false);
+                    console.log(res.data)
                 }
             })
             .catch(err => console.log(err));

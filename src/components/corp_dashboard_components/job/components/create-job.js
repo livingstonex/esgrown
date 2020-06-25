@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import JobIdFunc from '../../../../gen_job_id';
 import { Spinner, Modal } from 'react-bootstrap';
 import { Card, CardContent } from '@material-ui/core';
+import JobIdFunc from '../../../../gen_job_id';
 
 
 
 
 
-const CteateJob = ({ show, onHide, closeModal }) => {
+const CreateJob = ({ show, onHide, closeModal }) => {
 
 
     useEffect(() => {
@@ -40,6 +40,8 @@ const CteateJob = ({ show, onHide, closeModal }) => {
     });
 
     const [spinner, setSpinner] = useState(false);
+    console.log(jobsData)
+    
 
     const [user, setUser] = useState()
 
@@ -165,4 +167,4 @@ console.log(jobsData.job_id)
         </>
     );
 }
-export default CteateJob;
+export default CreateJob;

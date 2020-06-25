@@ -1,10 +1,10 @@
 import React from 'react';
 import '../comp.scss';
 
-export default function Pills({text}) {
+export default function Pills({text, pop}) {
     return(
         <React.Fragment>
-            <div className="pill ml-2 mr-2 mb-2">{text} <p style={{color:'red'}}>X</p></div>
+            <div className="pill ml-2 pl-2 mr-2">{text} <i style={{color:'red', cursor:'pointer'}} className="mt-2 mr-2 cursor" onClick={()=>pop(text)}>X</i></div>
         </React.Fragment>
     );
 }

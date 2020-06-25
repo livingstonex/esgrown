@@ -10,7 +10,6 @@ router.route(`/add`).post((req, res) => {
 
     JOB.find({ company_id }).then(corp => {
 
-
         if (corp == 0) {
             //not found
             const job = new JOB({ company_name, jobs, company_id })
@@ -30,7 +29,7 @@ router.route(`/add`).post((req, res) => {
 });
 
 
-//====================== get all jobs by company ===================================
+//====================== get all companies and jobs ===================================
 
 router.route(`/:companyid`).get((req, res) => {
     JOB.find({ company_id: req.params.companyid })
