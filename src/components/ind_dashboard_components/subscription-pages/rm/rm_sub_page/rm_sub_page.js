@@ -42,14 +42,24 @@ class RmUpdateForm extends Component {
 
         this.setState({ user_id: userData.id });
 
-        axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
-            .then(response => this.setState({
-                highestlevelOfEducation: response.data[0].highest_level_of_education,
-                intendedStudy: response.data[0].field_of_training,
-                sub_status: response.data[0].sub_status
-            }))
-            .catch(err => console.log(err))
+        if (userData.sub_status_rm == 'active') {
+            this.setState({sub_status: 'active'})
+        }
 
+        console.log(userData);
+
+        // axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
+        //     .then(response => this.setState({
+        //         highestlevelOfEducation: response.data[0].highest_level_of_education,
+        //         intendedStudy: response.data[0].field_of_training,
+        //         sub_status: response.data[0].sub_status
+        //     }))
+        //     .catch(err => console.log(err))
+
+    }
+
+    closeModal = () => {
+        this.setState({jobsModal: false})
     }
 
 
@@ -68,9 +78,9 @@ class RmUpdateForm extends Component {
 
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === false ? '#e68723' : '#97ba0d';
+        const sub_statusColor = this.state.sub_status === 'active' ? '#97ba0d' : '#e68723';
 
-        const buttonText = this.state.sub_status === false ? 'PAY' : 'PAID'
+        const buttonText = this.state.sub_status === 'active' ? 'PAID' : 'PAY';
 
         return (
 
@@ -105,10 +115,15 @@ class RmUpdateForm extends Component {
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
                         {' '}{''}
                         <Button className="btn btn-sm btn-info" onClick={this.handleUpdate}>Update</Button>
-                        <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal})}>Add Job </button>
+                        {
+                            this.state.sub_status == 'active' ?
+                            <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal })}>Add Job </button>
+                                : ""
+                        }
+                        
                     </ModalFooter>
                 </Modal>
-                <JobsModal onHide={() => this.setState({ jobsModal: false })} show={this.state.jobsModal} />
+                <JobsModal onHide={() => this.setState({ jobsModal: false })} show={this.state.jobsModal} closeModal={() => this.closeModal()} />
             </div >
         )
     }

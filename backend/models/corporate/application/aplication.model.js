@@ -14,10 +14,6 @@ const ApplicationSchema = new Schema({
         type: String,
         required: true
     },
-    companies_applied_to: {
-        type: Array,
-        required: true
-    },
     jobs_applied_for: {
         type: Array,
         required: true

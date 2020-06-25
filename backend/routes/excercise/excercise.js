@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let EX = require('../../models/excercises/excercise.model');
+const { json } = require('express');
 
 router.route('/add').post((req, res) => {
     const title = req.body.title;
@@ -9,8 +10,8 @@ router.route('/add').post((req, res) => {
     const corp_id = req.body.corp_id;
     const job_id = req.body.job_id;
 
-    const newEX = new EX({ title, service, duration, admin_id, corp_id, job_id });
- 
+    const newEX = new EX({ title, service, duration, admin_id, corp_id, job_id});
+
     newEX.save()
         .then((sub) => res.json(sub))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -28,12 +29,11 @@ router.route(`/`).get((req, res) => {
 
 // =========================== Get Excercises by Company Id ==================
 
-router.route('/:corpid').get((req, res) => {
-    const corp_id = req.params.corpid;
+router.route(`/:corpid`).get((req, res) => { 
 
-    EX.find({corp_id: corp_id})
+    EX.find({ corp_id: req.params.corpid })
         .then(ex => res.json(ex))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => json.status(400).json(err))
 });
 
 

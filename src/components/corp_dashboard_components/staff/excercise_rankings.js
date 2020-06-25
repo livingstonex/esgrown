@@ -30,13 +30,13 @@ export default function ExcerciseRankings({page}){
                 <div className="d-flex justify-content-center">
                     <select className="form-control text-small" onChange={onChangeJob} style={{width:'50%'}}>
                         <option value="null">Select the jobs to view Rankings</option>
-                        { jobMap() }
+                        { jobMap() } 
                     </select>
                 </div>
                 <div className="d-flex justify-content-center mt-4">
                     {/* Render Ranks here */}
                     { spinner ? <i className="fa fa-spinner fa-spin mt-5"></i> : ""}
-                    { rankCard() }
+                    { rankCard() }  
                 </div>
             </div>
         </React.Fragment>

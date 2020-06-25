@@ -22,44 +22,24 @@ router.route(`/add`).post((req, res) => {
             corp[0].save().then(job => res.json(job))
                 .catch(err => res.status(400).json(err))
         }
-        
+
     }
-        
+
     ).catch(err => res.status(400).json(err))
 });
 
 
 //====================== get all companies and jobs ===================================
 
-router.route(`/`).get((req, res) => {
-    JOB.find()
-        .then(jobs => res.json(jobs))
-        .catch(err => res.status(400).json(err));
-});
-
-// get all jobs by company_id
 router.route(`/:companyid`).get((req, res) => {
-    JOB.find({company_id: req.params.companyid})
+    JOB.find({ company_id: req.params.companyid })
         .then(jobs => res.json(jobs))
         .catch(err => res.status(400).json(err));
 });
 
-
-
-//======================= add new available job to an existing company with jobs ======================
-
-// router.route(`/new-job/:id`).post((req, res) => {
-
-//     JOB.findById(req.params.id)
-//         .then(job => {
-
-//             job.jobs = job.jobs.concat(req.body.jobs);
-
-//             job.save().then(job => res.json(job))
-//                 .catch(err => res.status(400).json(err))
-//         })
-//         .catch(err => res.status(400).json(err));
-// });
+router.route(`/`).get((req, res) => { 
+    JOB.find().then(jobs => res.json(jobs)).catch(err => res.status(400).json(err))
+});
 
 
 

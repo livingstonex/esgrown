@@ -223,8 +223,8 @@ export default function Form(props) {
                             <div className="col">
                                 <select className="form-control" required onChange={onChangePlan}>
                                     <option>Select Subscription Plan</option>
-                                    <option value="PLN_txgxcy2nqdqofkd/460000">Biannual (six Months)</option>
-                                    <option value="PLN_d14bmlqitn9yce4/785000">Annual (one Year)</option>
+                                    <option value="PLN_txgxcy2nqdqofkd/460000">Biannual (six Months) 4600</option>
+                                    <option value="PLN_d14bmlqitn9yce4/785000">Annual (one Year) 7850</option>
                                 </select>
                             </div>
                         </div>

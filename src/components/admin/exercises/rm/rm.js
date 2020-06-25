@@ -12,34 +12,39 @@ const RMexercises = () => {
 
     const [ex, setEx] = useState([]);
     const [spinner, setSpinner] = useState(true);
+    const [user, setUser] = useState('');
 
     useEffect(() => {
-        //get exercises then using exercise id
-        axios.get(`http://localhost:5000/excercise/`)
+        const user = JSON.parse(sessionStorage.getItem('key'));
+        setUser(user)
+        //get exercises using corp id
+        axios.get(`http://localhost:5000/excercise/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
-                    const rmEx = res.data.filter((ex) => {
-                        return ex.service == "RM"
-                    });
-                    setEx(rmEx);
+                    // const rmEx = res.data.filter((ex) => {
+                    //     return ex.service == "RM"
+                    // });
+                    setEx(res.data);
                     setSpinner(false);
                 }
+                console.log(res.data)
             })
             .catch(err => console.log(err));
 
     },[])
 
+    console.log(ex)
 
     const refreshContentLog = () => {
 
         //get exercises then using exercise id
-        axios.get(`http://localhost:5000/excercise/`)
+        axios.get(`http://localhost:5000/excercise/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     const rmEx = res.data.filter((ex) => {
                         return ex.service == "RM"
                     });
-                    setEx(rmEx);
+                    setEx(res.data);
                     setSpinner(false);
                 }
             })

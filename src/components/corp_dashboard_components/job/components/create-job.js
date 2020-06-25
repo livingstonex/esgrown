@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import md5 from 'md5';
 import { Spinner, Modal } from 'react-bootstrap';
 import { Card, CardContent } from '@material-ui/core';
 import JobIdFunc from '../../../../gen_job_id';
@@ -9,26 +8,25 @@ import JobIdFunc from '../../../../gen_job_id';
 
 
 
-const CteateJob = ({ show, onHide, closeModal }) => {
+const CreateJob = ({ show, onHide, closeModal }) => {
+
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
-        setUser(user)
+        setUser(user);
+        const id = JobIdFunc();
+        setJobsData({
+            title: '',
+            email: '',
+            start_date: '',
+            dead_line: '',
+            erd: '',
+            desc: '',
+            job_id: id
+        })
 
-        const job = JobIdFunc();
-        setJobsData({title: '',
-        email: '',
-        start_date: '',
-        dead_line: '',
-        erd: '',
-        desc: '',
-        job_id: job});
-        
-        console.log(job)
-    },[])
+    }, [])
 
-    const [user, setUser] = useState();
-    const [jobID, setJobID] = useState('');
     const [companyName, setCompanyName] = useState('');
 
     const [jobsData, setJobsData] = useState({
@@ -38,13 +36,14 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         dead_line: '',
         erd: '',
         desc: '',
-        job_id: jobID
+        job_id: ''
     });
 
     const [spinner, setSpinner] = useState(false);
     console.log(jobsData)
     
 
+    const [user, setUser] = useState()
 
 
     const handleChange = (e) => {
@@ -53,7 +52,7 @@ const CteateJob = ({ show, onHide, closeModal }) => {
 
         setJobsData({ ...jobsData, [name]: value })
     };
-
+console.log(jobsData.job_id)
 
     // const setCompany = (e) => {
     //     setCompanyName(e.target.value);
@@ -168,4 +167,4 @@ const CteateJob = ({ show, onHide, closeModal }) => {
         </>
     );
 }
-export default CteateJob;
+export default CreateJob;

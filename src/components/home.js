@@ -229,7 +229,8 @@ export default class Home extends Component{
                                                                                 sub_status_lm: res.data[0].sub_status_lm,
                                                                                 sub_status_rm: res.data[0].sub_status_rm,
                                                                                 sub_status_compt_mgt: res.data[0].sub_status_compt_mgt,
-                                                                                tic : res.data[0].tic
+                                                                                tic: res.data[0].tic,
+                                                                                jobs: res.data[0].jobs
                                                                                 }
 
                                                                                 // Save Individual data to session Storage

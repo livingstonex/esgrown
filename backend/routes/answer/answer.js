@@ -42,7 +42,10 @@ router.route(`/:corpid/:jobid`).get((req, res) => {
     const job_id = req.params.jobid;
 
     Answer.find( {$and: [{corp_id: corp_id}, {job_id: job_id}]} )
-            .then(ans => res.json(ans))
+            .then(ans => {
+                console.log(ans)
+                res.json(ans)
+            })
             .catch(err => res.status(400).json('Error: ' + err));
 });
 

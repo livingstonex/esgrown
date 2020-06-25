@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const Admin = require('../../models/admin/admin.model');
+const FIS = require('../../models/admin/field_of_study.model');
 
 
 //create country admin or admin
@@ -109,6 +110,22 @@ router.route(`/delete/:id`).post((req, res) => {
         .then(del => res.json(del))
         .catch(err => res.status().json(err));
 });
+
+
+// ==================== Create Field of Intended Study ===========================
+router.route('/fis/add').post((req, res) => { 
+    const level_of_edu = req.body.level_of_edu;
+    const field = req.body.field;
+    const subjects = req.body.subjects;
+
+    
+    // Create a new fis instance
+    const fis = new FIS({level_of_edu, field, subjects});
+    // Save the instance to the db
+    fis.save()
+        .then(fis => res.json(fis))
+        .catch(err => console.log('Err: ' + err));
+ });
 
 
 module.exports = router;
