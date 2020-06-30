@@ -52,7 +52,6 @@ const CreateJob = ({ show, onHide, closeModal }) => {
 
         setJobsData({ ...jobsData, [name]: value })
     };
-console.log(jobsData.job_id)
 
     // const setCompany = (e) => {
     //     setCompanyName(e.target.value);

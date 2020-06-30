@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import SearchBar from './components/search';
 import CreateJob from './components/create-job';
 import toast from '../../../util/toast';
+import EditJobs from './components/jobseditmodal';
 
 
 
@@ -19,7 +20,8 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
 
     const [show, setShow] = useState(false);
     const [user, setUser] = useState();
-    const [editData, setEditData] = useState();
+    const [editData, setEditData] = useState('');
+    const [showEdit, setShowEdit] = useState(false)
 
 
 
@@ -65,16 +67,18 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
     }
 
     const editJob = (e) => {
-        const editTitle = e.target.getAttribute('data-id');
-
+        const editjobid= e.target.getAttribute('data-jobid');
+        
+        console.log(editjobid)
         const edit = jobs.filter(j => {
-            return j.title === editTitle;
+            return j.job_id === editjobid;
         })
-
+        console.log(edit)
         setEditData(edit);
+        setShowEdit(true);
 
     }
-
+console.log(editData)
     return (
         <>
             <div className="container" style={{ marginTop: '70px' }}>
@@ -99,7 +103,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                         <div className="col"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Start Date</span></div>
                         <div className="col"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Dead Line</span></div>
                         <div className="col"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Expected Resumption Date</span></div>
-                        <div className="col" style={{ fontWeight: "bold" }}><span style={{ fontSize: "18px", float: 'right', marginRight: '60px' }}>View</span></div>
+                        <div className="col" style={{ fontWeight: "bold" }}><span style={{ fontSize: "18px", float: 'right', marginRight: '60px' }}>Actions</span></div>
                     </div><br /><br />
 
                     {
@@ -119,7 +123,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                                                             ....
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item data-index={index} data-id={j.title} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
+                                                            <Dropdown.Item data-index={index} data-jobid={j.job_id} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
                                                             <Dropdown.Item data-index={index} data-id={j._id} onClick={deleteJob} ><DeleteIcon style={{ color: 'brown' }} /> Delete</Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
@@ -134,6 +138,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                 </div>
             </div>
             <CreateJob show={show} onHide={() => setShow(!show)} closeModal={closeModal} />
+            <EditJobs show={showEdit} onHide={() => setShowEdit(!showEdit)} data={editData} />
         </>
     );
 }
