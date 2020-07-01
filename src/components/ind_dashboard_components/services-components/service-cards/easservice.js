@@ -44,7 +44,7 @@ const EASService = () => {
 
             }).catch(err => console.log(err));
 
-        // axios.get(`http://172.31.25.52/servicecontenteas/`)
+        // axios.get(`http://18.188.101.36:5000/servicecontenteas/`)
         //     .then(res => {
 
         //         if (user.sub_status_eas === 'active') {
@@ -52,7 +52,7 @@ const EASService = () => {
         //             //make a call to the intended study api and get all stored intended study
         //             // if user level of education == res.data.level of edu && intended study == res.data.intended study
         //             // setData(res.data.subjects)
-                        //when he clicks on any of the subjects, make an api call to get content for each subject
+        //when he clicks on any of the subjects, make an api call to get content for each subject
         //         }
 
 

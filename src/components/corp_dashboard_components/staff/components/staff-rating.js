@@ -29,7 +29,7 @@ const StaffRating = ({ show, onHide, details, closeModal }) => {
             staff_ratings: {
                 staff_id: details._id,
                 staff_name: details.fullname,
-                staff_email:details.email,
+                staff_email: details.email,
                 staff_phone: details.phone,
                 civility: rating.civility,
                 professionalism: rating.professionalism,
@@ -38,10 +38,10 @@ const StaffRating = ({ show, onHide, details, closeModal }) => {
         }
 
         try {
-            const res = await axios.post(`http://172.31.25.52/rate/staff/add`, data);
+            const res = await axios.post(`http://18.188.101.36:5000/rate/staff/add`, data);
 
             console.log(res.data);
-            toast(res.data,'success')
+            toast(res.data, 'success')
             closeModal()
 
         } catch (e) {

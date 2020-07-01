@@ -54,7 +54,7 @@ class QuestionsComponent extends Component {
 
     //check if user has taken this exercise b4
     checkIfUserHasTakenEx(user, exid) {
-        axios.post(`http://172.31.25.52/answer/check`, {
+        axios.post(`http://18.188.101.36:5000/answer/check`, {
             user_id: user,
             ex_id: exid
         }).then(res => {
@@ -71,7 +71,7 @@ class QuestionsComponent extends Component {
         const user = JSON.parse(sessionStorage.getItem('key'));
         this.setState({ userName: user.name })
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
-        axios.get(`http://172.31.25.52/question/${this.props.exercise._id}`)
+        axios.get(`http://18.188.101.36:5000/question/${this.props.exercise._id}`)
             .then(res => {
                 console.log(res.data)
                 if (res.data.length > 0) {
@@ -203,7 +203,7 @@ class QuestionsComponent extends Component {
         // send to db
         try {
             this.setState({ submitting: true })
-            axios.post(`http://172.31.25.52/answer/add`, data)
+            axios.post(`http://18.188.101.36:5000/answer/add`, data)
                 .then(res => {
                     this.setState({ submitting: false })
                     this.setState({ showScoreModal: true })

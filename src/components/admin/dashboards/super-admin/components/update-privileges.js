@@ -67,10 +67,10 @@ const UpdatePrivileges = () => {
             privilege: privilege.split('/')
         }
 
-        axios.post(`http://172.31.25.52/admin/update/${userId}`, data)
+        axios.post(`http://18.188.101.36:5000/admin/update/${userId}`, data)
             .then(res => {
                 if (res.data) {
-                    axios.get(`http://172.31.25.52/admin/country_admins`)
+                    axios.get(`http://18.188.101.36:5000/admin/country_admins`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -91,12 +91,12 @@ const UpdatePrivileges = () => {
 
     const deleteCA = () => {
 
-        axios.post(`http://172.31.25.52/admin/delete/${deleteUser._id}`)
+        axios.post(`http://18.188.101.36:5000/admin/delete/${deleteUser._id}`)
             .then(res => {
                 if (res.data) {
 
                     //fetch admins after delete
-                    axios.get(`http://172.31.25.52/admin/country_admins`)
+                    axios.get(`http://18.188.101.36:5000/admin/country_admins`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -115,7 +115,7 @@ const UpdatePrivileges = () => {
     useEffect(() => {
 
         setSpinner(true)
-        axios.get(`http://172.31.25.52/admin/country_admins`)
+        axios.get(`http://18.188.101.36:5000/admin/country_admins`)
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);

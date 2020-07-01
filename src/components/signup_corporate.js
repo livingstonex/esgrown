@@ -106,7 +106,7 @@ export default class IndividualSignUp extends Component {
             }
 
 
-            axios.post('http://172.31.25.52/corporates/check_corp_email', corporate)
+            axios.post('http://18.188.101.36:5000/corporates/check_corp_email', corporate)
                 .then(res => {
                     if (res.data.length > 0) {
                         //display a flash message that user already exists
@@ -120,7 +120,7 @@ export default class IndividualSignUp extends Component {
                             country: '',
                         });
                     } else {
-                        axios.post('http://172.31.25.52/corporates/add', corporate)
+                        axios.post('http://18.188.101.36:5000/corporates/add', corporate)
                             .then(res => {
                                 const Global_CorpUser = {
                                     isLogged: true,

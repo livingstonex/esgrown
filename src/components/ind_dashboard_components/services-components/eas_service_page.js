@@ -23,7 +23,7 @@ const EASServicePage = () => {
         }
 
         //make request to api to get sub status
-        // axios.get(`http://172.31.25.52/subscriptioneas/${userData.id}`)
+        // axios.get(`http://18.188.101.36:5000/subscriptioneas/${userData.id}`)
         //     .then(res => {
         //         if (res.data[0] > 0) {
         //             res.data[0].sub_status == 'active' ? setPageEAS(1) : setPageEAS(2)

@@ -26,12 +26,12 @@ const CreateAdmin = () => {
         generalKnowledge: false
     });
     const [juniorTutorPrivilege, setJuniorTutorPrivilege] = useState({
-            mathematics: false,
-            socialStudies: false,
-            integratedScience: false,
-            businessStudies: false,
-            generalKnowledge: false,
-            history: false
+        mathematics: false,
+        socialStudies: false,
+        integratedScience: false,
+        businessStudies: false,
+        generalKnowledge: false,
+        history: false
     });
     const [adminType, setAdminType] = useState('');
 
@@ -103,7 +103,7 @@ const CreateAdmin = () => {
     const checkUsername = (e) => {
         const u = e.target.value;
 
-        axios.post(`http://172.31.25.52/admin/check/username/${u}`)
+        axios.post(`http://18.188.101.36:5000/admin/check/username/${u}`)
             .then(res => {
                 if (res.data.length > 0) {
                     alert(`username ${u} has been taken`)
@@ -126,7 +126,7 @@ const CreateAdmin = () => {
         const assignedJuniorTutorPrivileges = Object.keys(juniorTutorPrivilege).filter(tutor => {
             return juniorTutorPrivilege[tutor] === true;
         });
-        
+
         let privileges;
 
         if (adminType === "Admin") {
@@ -157,7 +157,7 @@ const CreateAdmin = () => {
 
         console.log(data);
 
-        axios.post(`http://172.31.25.52/admin/add`, data)
+        axios.post(`http://18.188.101.36:5000/admin/add`, data)
             .then(res => {
                 console.log(res.data);
                 if (res.data) {

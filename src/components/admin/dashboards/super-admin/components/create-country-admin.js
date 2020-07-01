@@ -35,7 +35,7 @@ const CreateCountryAdmin = () => {
     const checkCountry = (e) => {
         const country = e.target.value;
 
-        axios.post(`http://172.31.25.52/admin/check/${country}`)
+        axios.post(`http://18.188.101.36:5000/admin/check/${country}`)
             .then(res => {
                 if (res.data.length > 0) {
                     alert("An admin already exist for " + country)
@@ -51,7 +51,7 @@ const CreateCountryAdmin = () => {
         const u = e.target.value;
         console.log(e.target.value);
 
-        axios.post(`http://172.31.25.52/admin/check/username/${u}`)
+        axios.post(`http://18.188.101.36:5000/admin/check/username/${u}`)
             .then(res => {
                 if (res.data.length > 0) {
                     alert(`username ${u} already exist`)
@@ -72,7 +72,7 @@ const CreateCountryAdmin = () => {
             privilege: state.privileges.split('/')
 
         }
-        axios.post(`http://172.31.25.52/admin/add`, data)
+        axios.post(`http://18.188.101.36:5000/admin/add`, data)
             .then(res => {
                 console.log(res.data);
                 if (res.data) {

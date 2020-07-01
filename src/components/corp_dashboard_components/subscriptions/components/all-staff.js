@@ -21,7 +21,7 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
         setCompany(company);
 
         // //make a request quest and get all company/school staff with sub inactive for subscription
-        axios.get(`http://172.31.25.52/individuals/staff/${company.id}`)
+        axios.get(`http://18.188.101.36:5000/individuals/staff/${company.id}`)
             .then(res => {
                 const unsubscribedStaff = res.data.filter(staff => {
                     return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed';
@@ -40,7 +40,7 @@ const AllStaff = ({ show, onHide, amount, closeStaffModal }) => {
 
     const refreshStaff = () => {
 
-        axios.get(`http://172.31.25.52/individuals/staff/${company.id}`)
+        axios.get(`http://18.188.101.36:5000/individuals/staff/${company.id}`)
             .then(res => {
                 const unsubscribedStaff = res.data.filter(staff => {
                     return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed';

@@ -58,7 +58,7 @@ export default class Home extends Component {
 
 
         // //Make a post to the api route for login
-        // axios.post('http://172.31.25.52/individuals/login_email', User)
+        // axios.post('http://18.188.101.36:5000/individuals/login_email', User)
         //         .then(res => {
         //             //console.log(res.data[0].password);
         //             if(res.data.length > 0){
@@ -69,7 +69,7 @@ export default class Home extends Component {
         //                     hash_password:res.data[0].password,
         //                     normal_password: User.password
         //                 }
-        //                 axios.post('http://172.31.25.52/individuals/login', user_data)
+        //                 axios.post('http://18.188.101.36:5000/individuals/login', user_data)
         //                         .then(res => {
         //                             console.log(res.data);
         //                             if(res.data == 1){
@@ -202,7 +202,7 @@ export default class Home extends Component {
                                                             }
                                                             // ==========================================
                                                             //Make a post to the api route for login
-                                                            axios.post('http://172.31.25.52/individuals/login', User)
+                                                            axios.post('http://18.188.101.36:5000/individuals/login', User)
                                                                 .then(res => {
                                                                     if (res.data.length > 0) {
                                                                         console.log("data found")

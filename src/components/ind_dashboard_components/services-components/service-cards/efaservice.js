@@ -17,7 +17,7 @@ const EFASService = () => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
 
-        axios.get(`http://172.31.25.52/servicecontentefa/`)
+        axios.get(`http://18.188.101.36:5000/servicecontentefa/`)
             .then(res => {
                 if (user.status === "individual" && user.org_type === "school" && user.sub_status_efa === "active") {
 
