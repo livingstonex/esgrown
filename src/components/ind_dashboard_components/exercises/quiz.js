@@ -33,10 +33,8 @@ const Quiz = ({ question, handelUserAns, submitAns, duration, setPage, maxScore 
                     <div className="d-flex justify-content-center align-items-center">
                         <Card style={{ marginLeft: '50%' }}>
                             <Card.Body>
-                                {/* <span style={{ fontSize: '18px', fontWeight: 'bolder' }}>Number of Questions: {question ? question.length : ""}  */}
                                 <Typography gutterBottom variant="" component="h5">
                                     Number of Questions: {question ? question.length : ""}
-                                    {/* </span> */}
                                 </Typography>
                                 <Typography gutterBottom variant="" component="h6">
                                     <TimerComponent duration={duration} setPage={setPage} />
