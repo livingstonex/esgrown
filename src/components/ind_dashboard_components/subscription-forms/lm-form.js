@@ -52,7 +52,7 @@ export default function Form(props) {
 
         try {
             setSpinner(true);
-            axios.post('http://172.31.25.52/subscriptionlm/add', SubObject)
+            axios.post('http://172.31.25.52:5000/subscriptionlm/add', SubObject)
                 .then((res) => {
                     console.log(res.data);
                     setSpinner(false);
@@ -82,7 +82,7 @@ export default function Form(props) {
         setUserId(userId);
 
         //get sub status for user
-        // axios.get(`http://172.31.25.52/subscriptionlm/${userData.id}`)
+        // axios.get(`http://172.31.25.52:5000/subscriptionlm/${userData.id}`)
         //     .then(res => {
         //         if (res.data[0].ref != null) {
         //             // setSubStatus(res.data[0].sub_status);
@@ -125,13 +125,13 @@ export default function Form(props) {
                 }
 
                 //update eas substatus
-                axios.post(`http://172.31.25.52/subscriptionlm/update/lmref/${userId}`, data)
+                axios.post(`http://172.31.25.52:5000/subscriptionlm/update/lmref/${userId}`, data)
                     .then(res => console.log(res))
                     .catch(err => console.log(err))
 
 
                 //update user details
-                axios.post(`http://172.31.25.52/individuals/update/substatus/${userId}`, { sub_status_lm: client[0].status, })
+                axios.post(`http://172.31.25.52:5000/individuals/update/substatus/${userId}`, { sub_status_lm: client[0].status, })
                     .then(res => {
                         const globalUser = JSON.parse(sessionStorage.getItem('key'));
 

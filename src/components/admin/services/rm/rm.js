@@ -13,13 +13,13 @@ const RM = () => {
     const [rmlog, setRmlog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://172.31.25.52/servicecontentrm/add`;
+    const newContentUrl = `http://172.31.25.52:5000/servicecontentrm/add`;
 
 
 
     useEffect(() => {
 
-        axios.get(`http://172.31.25.52/servicecontentrm/`)
+        axios.get(`http://172.31.25.52:5000/servicecontentrm/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setRmlog(res.data);

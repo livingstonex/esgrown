@@ -77,11 +77,11 @@ const UpdatePrivileges = () => {
         }
 
 
-        axios.post(`http://172.31.25.52/admin/update/${userId}`, data)
+        axios.post(`http://172.31.25.52:5000/admin/update/${userId}`, data)
             .then(res => {
                 if (res.data) {
 
-                    axios.post(`http://172.31.25.52/admin/admins/${user.country}`)
+                    axios.post(`http://172.31.25.52:5000/admin/admins/${user.country}`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -112,12 +112,12 @@ const UpdatePrivileges = () => {
 
     const deleteCA = () => {
 
-        axios.post(`http://172.31.25.52/admin/delete/${deleteUser._id}`)
+        axios.post(`http://172.31.25.52:5000/admin/delete/${deleteUser._id}`)
             .then(res => {
                 if (res.data) {
 
                     //fetch admins after delete
-                    axios.post(`http://172.31.25.52/admin/admins/${user.country}`)
+                    axios.post(`http://172.31.25.52:5000/admin/admins/${user.country}`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -138,7 +138,7 @@ const UpdatePrivileges = () => {
         setUser(user)
 
         setSpinner(true)
-        axios.post(`http://172.31.25.52/admin/admins/${user.country}`)
+        axios.post(`http://172.31.25.52:5000/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);

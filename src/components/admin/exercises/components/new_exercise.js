@@ -8,7 +8,7 @@ import { set } from 'mongoose';
 
 const NewExercises = ({ service, refreshContentLog, title}) => {
 
-    const exUrl = `http://172.31.25.52/excercise/add`;
+    const exUrl = `http://172.31.25.52:5000/excercise/add`;
 
     const [page, setPage] = useState(0)
 
@@ -80,7 +80,7 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
                 score: score
             }
 
-            axios.post(`http://172.31.25.52/question/add`, questionData)
+            axios.post(`http://172.31.25.52:5000/question/add`, questionData)
                 .then(res => {
                     console.log(res.data);
                     setSpinner(false);
@@ -91,7 +91,7 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
                     setExId(res.data.excercise_id);
 
                     //get number of questions and display
-                    axios.post(`http://172.31.25.52/question/${res.data.excercise_id}`)
+                    axios.post(`http://172.31.25.52:5000/question/${res.data.excercise_id}`)
                         .then(res => setTotalQ(res.data.length))
                         .catch(err => console.log(err))
 
@@ -289,7 +289,7 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
     // Get all jobs by corpid
     function getAllJobs(corpid) {
         try {
-            axios.get(`http://172.31.25.52/jobs/${corpid}`)
+            axios.get(`http://172.31.25.52:5000/jobs/${corpid}`)
                 .then(jobs => {
                     // console.log(jobs.data[0].jobs);
                     setJobs(jobs.data[0].jobs);
