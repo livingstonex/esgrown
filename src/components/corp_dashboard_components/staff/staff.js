@@ -43,7 +43,7 @@ const Staff = ({ ex_rankingpage }) => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user);
 
-        axios.get(`http://18.188.101.36/individuals/staff/${user.id}`)
+        axios.get(`http://localhost:5000/individuals/staff/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     setStaff(res.data);
@@ -53,7 +53,7 @@ const Staff = ({ ex_rankingpage }) => {
 
         //check if this is the beginning of the term and get the total weeks for the term
 
-        axios.get(`http://18.188.101.36/rate/teacher/check/${user.org_name}`)
+        axios.get(`http://localhost:5000/rate/teacher/check/${user.org_name}`)
             .then(res => {
 
                 setLastDoc(res.data.reverse()[0])
@@ -76,7 +76,7 @@ const Staff = ({ ex_rankingpage }) => {
         setShow(false);
         setShowEdit(false)
 
-        axios.get(`http://18.188.101.36/individuals/staff/${user.id}`)
+        axios.get(`http://localhost:5000/individuals/staff/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     setStaff(res.data);
