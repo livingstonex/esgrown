@@ -41,7 +41,7 @@ const CreateJob = ({ show, onHide, closeModal }) => {
 
     const [spinner, setSpinner] = useState(false);
     console.log(jobsData)
-    
+
 
     const [user, setUser] = useState()
 
@@ -70,14 +70,14 @@ const CreateJob = ({ show, onHide, closeModal }) => {
         }
 
         //post job to server
-        axios.post(`http://localhost:5000/jobs/add`, submitData)
+        axios.post(`http://172.31.25.52/jobs/add`, submitData)
             .then(res => {
                 console.log(res.data)
                 if (res.data) {
                     setSpinner(false);
                     closeModal();
                 }
-                
+
             })
             .catch(err => console.log(err));
 
@@ -86,7 +86,7 @@ const CreateJob = ({ show, onHide, closeModal }) => {
             email: '',
             start_date: '',
             dead_line: '',
-            erd:'',
+            erd: '',
             desc: ''
 
         });
@@ -96,7 +96,7 @@ const CreateJob = ({ show, onHide, closeModal }) => {
     return (
         <>
 
-            <Modal show={show} onHide={onHide} centered style={{marginTop:'60px', marginBottom:'70px'}}>
+            <Modal show={show} onHide={onHide} centered style={{ marginTop: '60px', marginBottom: '70px' }}>
 
                 <div className="container">
                     {/* <div className="row mt-3">
@@ -161,8 +161,8 @@ const CreateJob = ({ show, onHide, closeModal }) => {
                     </Modal.Footer>
                 </div>
             </Modal>
-            <br/>
-            <br/>
+            <br />
+            <br />
         </>
     );
 }

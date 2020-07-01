@@ -52,7 +52,7 @@ export default function IntendedFieldOfStudyField(){
         // Attempt to make request
         try{
             setLoading(true);
-            const res = await axios.post(`http://localhost:5000/admin/fis/add`, obj);
+            const res = await axios.post(`http://172.31.25.52/admin/fis/add`, obj);
             console.log(res);
             if(res.status == 200) {
                 setLoading(false);

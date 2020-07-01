@@ -46,7 +46,7 @@ const Exercises = ({ setRmExercisePage }) => {
         if (user.sub_status_rm === 'active' && user.jobs.length != 0) {
 
             user.jobs.map(item => {
-                axios.get(`http://localhost:5000/excercise/rm/${item.job_id}`)
+                axios.get(`http://172.31.25.52/excercise/rm/${item.job_id}`)
                     .then(res => {
                         if (res.data.length !== 0) {
                             setExId(res.data)
@@ -62,7 +62,7 @@ const Exercises = ({ setRmExercisePage }) => {
 
 
         // //rm exercises
-        // axios.get(`http://localhost:5000/excercise/rm/`)
+        // axios.get(`http://172.31.25.52/excercise/rm/`)
         //     .then(res => {
         //         console.log(res.data)
 
@@ -84,7 +84,7 @@ const Exercises = ({ setRmExercisePage }) => {
 
 
         //lm exercise
-        axios.get(`http://localhost:5000/excercise`)
+        axios.get(`http://172.31.25.52/excercise`)
             .then(res => {
 
                 const lm = res.data.filter((r) => {

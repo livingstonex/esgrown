@@ -47,7 +47,7 @@ export default function ExcerciseRankings({ page }) {
     // Get all jobs by company id
     function getJobs(id){
         try {
-            axios.get(`http://localhost:5000/jobs/${id}`)
+            axios.get(`http://172.31.25.52/jobs/${id}`)
                 .then(res => {
                     if (res.data.length !== 0) {
                         setJobs(res.data[0].jobs);
@@ -75,7 +75,7 @@ export default function ExcerciseRankings({ page }) {
     function getAnswers(jobId) {
 
         try {
-            axios.get(`http://localhost:5000/answer/job/${jobId}`)
+            axios.get(`http://172.31.25.52/answer/job/${jobId}`)
                 .then(res => {
                     console.log(res.data);
 
@@ -112,7 +112,7 @@ export default function ExcerciseRankings({ page }) {
     // Get all jobs by corp_id
     // function getJobs(corpid) {
     //     try {
-    //         axios.get(`http://localhost:5000/jobs/${corpid}`)
+    //         axios.get(`http://172.31.25.52/jobs/${corpid}`)
     //             .then(res => {
     //                 // console.log(res.data[0]);
     //                 setJobs(res.data[0].jobs);
@@ -138,7 +138,7 @@ export default function ExcerciseRankings({ page }) {
     // function getAnswersByJob(corpid, jobid){
     //     try {
     //         setSpinner(true);
-    //         axios.get(`http://localhost:5000/answer/${corpid}/${jobid}`)
+    //         axios.get(`http://172.31.25.52/answer/${corpid}/${jobid}`)
     //                 .then(answers => { 
     //                     setSpinner(false);
     //                     setAnswers(answers.data);

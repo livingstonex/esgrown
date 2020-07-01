@@ -44,7 +44,7 @@ const EASService = () => {
 
             }).catch(err => console.log(err));
 
-        // axios.get(`http://localhost:5000/servicecontenteas/`)
+        // axios.get(`http://172.31.25.52/servicecontenteas/`)
         //     .then(res => {
 
         //         if (user.sub_status_eas === 'active') {

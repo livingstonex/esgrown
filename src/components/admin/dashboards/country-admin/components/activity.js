@@ -24,7 +24,7 @@ const Activity = () => {
         const user = JSON.parse(sessionStorage.getItem("key"));
         setUser(user)
 
-        axios.post(`http://localhost:5000/admin/admins/${user.country}`)
+        axios.post(`http://172.31.25.52/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
                     setAdmin(res.data);
@@ -41,7 +41,7 @@ const Activity = () => {
         console.log(id)
 
         //get exercises
-        axios.get(`http://localhost:5000/excercise/activity/${id}`)
+        axios.get(`http://172.31.25.52/excercise/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setExActivity(res.data)
@@ -49,14 +49,14 @@ const Activity = () => {
             })
             .catch(err => console.log(err));
         //get EAS
-        axios.get(`http://localhost:5000/servicecontenteas/activity/${id}`)
+        axios.get(`http://172.31.25.52/servicecontenteas/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setEasActivity(res.data)
                 }
             }).catch(err => console.log(err));
         //get EFA
-        axios.get(`http://localhost:5000/servicecontentefa/activity/${id}`)
+        axios.get(`http://172.31.25.52/servicecontentefa/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setEfaActivity(res.data)
@@ -64,7 +64,7 @@ const Activity = () => {
             }).catch(err => console.log(err));
 
         // get LM 
-        axios.get(`http://localhost:5000/servicecontentlm/activity/${id}`)
+        axios.get(`http://172.31.25.52/servicecontentlm/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setLmActivity(res.data)
@@ -72,7 +72,7 @@ const Activity = () => {
             }).catch(err => console.log(err));
 
         // get RM 
-        axios.get(`http://localhost:5000/servicecontentlm/activity/${id}`)
+        axios.get(`http://172.31.25.52/servicecontentlm/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setRmActivity(res.data)
