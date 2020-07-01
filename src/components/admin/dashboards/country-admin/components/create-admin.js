@@ -103,7 +103,7 @@ const CreateAdmin = () => {
     const checkUsername = (e) => {
         const u = e.target.value;
 
-        axios.post(`http://localhost:5000/admin/check/username/${u}`)
+        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/check/username/${u}`)
             .then(res => {
                 if (res.data.length > 0) {
                     alert(`username ${u} has been taken`)
@@ -157,7 +157,7 @@ const CreateAdmin = () => {
 
         console.log(data);
 
-        axios.post(`http://localhost:5000/admin/add`, data)
+        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/add`, data)
             .then(res => {
                 console.log(res.data);
                 if (res.data) {

@@ -47,7 +47,7 @@ class QuestionsComponent extends Component {
 
 
         //get questions
-        axios.post(`http://localhost:5000/question/${this.props.exerciseId}`)
+        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/question/${this.props.exerciseId}`)
             .then(res => {
                 if (res.data.length > 0) {
                     this.setState({
@@ -151,7 +151,7 @@ class QuestionsComponent extends Component {
         }
 
         //send to db
-        axios.post(`http://localhost:5000/answer/add`, data)
+        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/answer/add`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 

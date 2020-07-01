@@ -13,13 +13,13 @@ const LM = () => {
     const [lmlog, setLmlog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://localhost:5000/servicecontentlm/add`;
+    const newContentUrl = `http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentlm/add`;
 
 
 
     useEffect(() => {
 
-        axios.get(`http://localhost:5000/servicecontentlm/`)
+        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentlm/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setLmlog(res.data);

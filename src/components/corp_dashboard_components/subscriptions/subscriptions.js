@@ -26,7 +26,7 @@ const Subscription = () => {
 
         setRMSub(company.sub_status_rm)
 
-        // axios.get(`http://localhost:5000/corporatesubscriptions/${company.id}`)
+        // axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/corporatesubscriptions/${company.id}`)
         //     .then(res => {
         //         if (res.data.length > 0) {
         //             if(res.data.sub_status_rm === 'active')

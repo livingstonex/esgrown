@@ -34,7 +34,7 @@ export default function RMContentCreation() {
 
     function getCorpContent(id) {
         try {
-            axios.get(`http://localhost:5000/corpservicecontent/corp/${id}`)
+            axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/corpservicecontent/corp/${id}`)
                 .then(res => {
                     setData(res.data);
                     setSpinner(false)

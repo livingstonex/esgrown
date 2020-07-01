@@ -17,7 +17,7 @@ const ExercisesLog = ({ ex, spinner, title }) => {
         const id = e.target.id;
         setQuesSpinner(true)
 
-        axios.get(`http://localhost:5000/question/${id}`)
+        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/question/${id}`)
             .then(res => {
                 setQues(res.data)
                 setQuesSpinner(false)

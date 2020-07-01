@@ -27,7 +27,7 @@ class EfaUpdateForm extends Component {
         };
 
         //make axios request and update
-        axios.post(`http://localhost:5000/subscriptionefa/update/${this.state.user_id}`, data)
+        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionefa/update/${this.state.user_id}`, data)
             .then(response => {
                 if (response.status == 200) {
                     this.setState({
@@ -48,7 +48,7 @@ class EfaUpdateForm extends Component {
 
         this.setState({ user_id: userData.id });
 
-        axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
+        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionefa/${userData.id}`)
             .then(response => this.setState({
                 levelOfEducation: response.data[0].levelofeducation,
                 nextIntendedEductionLevel: response.data[0].next_intended_education_level,

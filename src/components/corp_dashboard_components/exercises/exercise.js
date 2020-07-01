@@ -32,7 +32,7 @@ const CorpExercise = () => {
             setPage(0)
         }
         //get subscriptions
-        // axios.get(`http://localhost:5000/corporatesubscriptions/${user.id}`)
+        // axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/corporatesubscriptions/${user.id}`)
         // .then(res => {
         //     if(res.data){
         //         const lm = res.data.filter(srv => {

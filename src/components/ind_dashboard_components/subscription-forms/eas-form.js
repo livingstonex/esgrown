@@ -92,7 +92,7 @@ export default function Form(props) {
         }
         try {
             setSpinner(true);
-            axios.post('http://localhost:5000/subscriptioneas/add', SubObject)
+            axios.post('http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptioneas/add', SubObject)
                 .then((res) => {
                     setSpinner(false);
                     setModalShow(false);
@@ -132,13 +132,13 @@ export default function Form(props) {
                 }
 
                 //update eas substatus
-                axios.post(`http://localhost:5000/subscriptioneas/update/easref/${userId}`, data)
+                axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptioneas/update/easref/${userId}`, data)
                     .then(res => console.log(res.data))
                     .catch(err => console.log(err))
 
 
                 //update user details
-                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, { sub_status_eas: client[0].status })
+                axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/individuals/update/substatus/${userId}`, { sub_status_eas: client[0].status })
                     .then(res => {
                         const globalUser = JSON.parse(sessionStorage.getItem('key'));
 

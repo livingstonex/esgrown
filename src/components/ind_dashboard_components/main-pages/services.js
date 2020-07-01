@@ -17,7 +17,7 @@
 // export default function Services() {
 
 
-    
+
 //     const [pageRM, setPageRM] = useState(0);
 //     const [pageLM, setPageLM] = useState(0);
 //     const [pageEAS, setPageEAS] = useState(0);
@@ -31,13 +31,13 @@
 
 //         //make request to api to get sub status
 //         //eas
-//         // axios.get(`http://localhost:5000/subscriptioneas/${userData.id}`)
+//         // axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptioneas/${userData.id}`)
 //         //     .then(res => {
 //         //         res.data[0].sub_status ? setPageEAS(1) : setPageEAS(2)
 //         //     }).catch(err => console.log(err));
 
 //         //efa
-//         // axios.get(`http://localhost:5000/subscriptionefa/${userData.id}`)
+//         // axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionefa/${userData.id}`)
 //         //     .then(res => {
 
 //         //         res.data[0].sub_status ? setPageEFA(1) : setPageEFA(2)
@@ -46,14 +46,14 @@
 //         //     .catch(err => console.log(err))
 
 //         // //lm
-//         // axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
+//         // axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionlm/${userData.id}`)
 //         //     .then(res => {
 //         //         res.data[0].sub_status ? setPageLM(1) : setPageLM(2);
 //         //     })
 //         //     .catch(err => console.log(err))
 
 //         // //rm
-//         axios.get(`http://localhost:5000/subscriptionrm/${userData.id}`)
+//         axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionrm/${userData.id}`)
 //             .then(res => {
 //                 res.data[0].sub_status ? setPageRM(1) : setPageRM(2);
 //             })
@@ -76,7 +76,7 @@
 //                     <br />
 //                     {(pageLM === 0) ? <Spinner as="span" animation="grow" size="lg" role="status" aria-hidden="true" /> : (pageLM === 1) ? <LMService /> : (pageLM === 2) ? <LMCard /> : ""}
 //                 </div> */}
-                
+
 //                 <div className="col col-lg-12 col-sm-6" >
 //                     <br />
 //                     {(pageRM === 0) ? <Spinner as="span" animation="grow" size="lg" role="status" aria-hidden="true" /> : (pageRM === 1) ? <RMService /> : (pageRM === 2) ? <RMCard /> : ""}

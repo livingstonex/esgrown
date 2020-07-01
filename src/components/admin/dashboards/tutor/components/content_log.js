@@ -31,7 +31,7 @@ const ContentLog = (props) => {
         const level = user.tutor_level.toLowerCase();
 
 
-        axios.get(`http://localhost:5000/${level}/${subject}/${user.id}`)
+        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/${level}/${subject}/${user.id}`)
             .then(res => {
                 if (res.data) {
                     setSpinner(false)
