@@ -26,7 +26,7 @@ const Subscription = () => {
 
         setRMSub(company.sub_status_rm)
 
-        // axios.get(`http://172.31.25.52:5000/corporatesubscriptions/${company.id}`)
+        // axios.get(`http://172.31.25.52/corporatesubscriptions/${company.id}`)
         //     .then(res => {
         //         if (res.data.length > 0) {
         //             if(res.data.sub_status_rm === 'active')
@@ -98,11 +98,11 @@ const Subscription = () => {
                                         Subscribed
                                 </button>
                                     :
-                                <button
-                                    className="btn mt-3 py-2 border-0"
-                                    style={{ background: '#21A5E7', color: 'white' }}
-                                    onClick={() => setrmform(!rmform)}
-                                >
+                                    <button
+                                        className="btn mt-3 py-2 border-0"
+                                        style={{ background: '#21A5E7', color: 'white' }}
+                                        onClick={() => setrmform(!rmform)}
+                                    >
                                         Subscribe
                                 </button>}
                             </CardActions>

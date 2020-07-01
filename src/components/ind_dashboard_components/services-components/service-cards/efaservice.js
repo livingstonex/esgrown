@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import GenServiceCard from './gen_service_card';
@@ -17,7 +17,7 @@ const EFASService = () => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
 
-        axios.get(`http://172.31.25.52:5000/servicecontentefa/`)
+        axios.get(`http://172.31.25.52/servicecontentefa/`)
             .then(res => {
                 if (user.status === "individual" && user.org_type === "school" && user.sub_status_efa === "active") {
 
@@ -86,9 +86,10 @@ const EFASService = () => {
         <React.fragment>
             {
                 spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
-                        return (
-                            <GenServiceCard data={data}/>
-                        )})
+                    return (
+                        <GenServiceCard data={data} />
+                    )
+                })
             }
         </React.fragment>
     );

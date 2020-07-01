@@ -4,7 +4,7 @@ import { Card, CardActionArea, Typography, CardContent, CardActions } from '@mat
 import { Spinner } from 'react-bootstrap';
 import QuestionComponentRM from './questionscomponent';
 import QuestionComponentLM from './questionscomponent';
-import toast  from '../../../util/toast';
+import toast from '../../../util/toast';
 
 
 
@@ -46,7 +46,7 @@ const Exercises = ({ setRmExercisePage }) => {
         if (user.sub_status_rm === 'active' && user.jobs.length != 0) {
 
             user.jobs.map(item => {
-                axios.get(`http://172.31.25.52:5000/excercise/rm/${item.job_id}`)
+                axios.get(`http://172.31.25.52/excercise/rm/${item.job_id}`)
                     .then(res => {
                         if (res.data.length !== 0) {
                             setExId(res.data)
@@ -58,11 +58,11 @@ const Exercises = ({ setRmExercisePage }) => {
 
         }
 
-        
+
 
 
         // //rm exercises
-        // axios.get(`http://172.31.25.52:5000/excercise/rm/`)
+        // axios.get(`http://172.31.25.52/excercise/rm/`)
         //     .then(res => {
         //         console.log(res.data)
 
@@ -84,7 +84,7 @@ const Exercises = ({ setRmExercisePage }) => {
 
 
         //lm exercise
-        axios.get(`http://172.31.25.52:5000/excercise`)
+        axios.get(`http://172.31.25.52/excercise`)
             .then(res => {
 
                 const lm = res.data.filter((r) => {
@@ -124,7 +124,7 @@ const Exercises = ({ setRmExercisePage }) => {
         setDisplayQuestions(true)
 
     }
- 
+
 
     return (
         <>
@@ -141,7 +141,7 @@ const Exercises = ({ setRmExercisePage }) => {
                                 </Typography>
                                 {/* map through jobs and display cards  */}
                                 <div className="d-flex justify-content-around">
-                                    { mapJobs() }
+                                    {mapJobs()}
                                 </div>
                             </CardContent>
 
@@ -203,21 +203,21 @@ const Exercises = ({ setRmExercisePage }) => {
 
     function mapJobs() {
         return exId.map(item => (
-                    <Card className="mt-5" style={{ width: '35%' }}>
-                        <CardActionArea>
-                            <CardContent >
-                                <Typography gutterBottom variant="" component="p">
-                                    {item.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
+            <Card className="mt-5" style={{ width: '35%' }}>
+                <CardActionArea>
+                    <CardContent >
+                        <Typography gutterBottom variant="" component="p">
+                            {item.title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
                             <div className="btn btn-info bt-sm" onClick={() => setRmExercisePage(item)} disabled={{}} >Take Exercise </div>
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                        </CardActions>
-                    </Card>
-                ));
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                <CardActions>
+                </CardActions>
+            </Card>
+        ));
     }
 
 

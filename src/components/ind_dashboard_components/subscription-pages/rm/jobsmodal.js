@@ -4,7 +4,7 @@ import axios from 'axios';
 import toast from '../../../../util/toast';
 
 
-const JobsModal = ({ show, onHide, closeModal}) => {
+const JobsModal = ({ show, onHide, closeModal }) => {
 
     const [data, setData] = useState([]);
     const [disabled, setDisabled] = useState(false)
@@ -20,7 +20,7 @@ const JobsModal = ({ show, onHide, closeModal}) => {
         console.log(user)
 
         //make api call to get all jobs and set in state
-        axios.get(`http://172.31.25.52:5000/jobs`)
+        axios.get(`http://172.31.25.52/jobs`)
             .then(res => {
                 if (res.data.length > 0) {
                     setData(res.data)
@@ -31,7 +31,7 @@ const JobsModal = ({ show, onHide, closeModal}) => {
 
 
         //check to see if user has applied for max jobs allowed
-        axios.get(`http://172.31.25.52:5000/applications/check/${user.id}`)
+        axios.get(`http://172.31.25.52/applications/check/${user.id}`)
             .then(res => {
                 if (res.data.jobs_applied_for.length > 1) {
                     setDisabled(true)
@@ -75,14 +75,14 @@ const JobsModal = ({ show, onHide, closeModal}) => {
                 job_title: jobTitle,
                 job_id: jobID,
                 deadline: deadline
-            } ,
-            
-            
+            },
+
+
         }
 
         try {
             setLoading(true)
-            axios.post(`http://172.31.25.52:5000/applications/add`, postData)
+            axios.post(`http://172.31.25.52/applications/add`, postData)
                 .then(res => {
                     setLoading(false);
                     toast(res.data.msg, 'info')
@@ -101,12 +101,12 @@ const JobsModal = ({ show, onHide, closeModal}) => {
                     setLoading(false)
                     console.log(err)
                 });
-            
+
         } catch (e) {
             console.log(e)
         }
 
-        
+
     }
 
 

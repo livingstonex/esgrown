@@ -54,7 +54,7 @@ class QuestionsComponent extends Component {
 
     //check if user has taken this exercise b4
     checkIfUserHasTakenEx(user, exid) {
-        axios.post(`http://172.31.25.52:5000/answer/check`, {
+        axios.post(`http://172.31.25.52/answer/check`, {
             user_id: user,
             ex_id: exid
         }).then(res => {
@@ -71,7 +71,7 @@ class QuestionsComponent extends Component {
         const user = JSON.parse(sessionStorage.getItem('key'));
         this.setState({ userName: user.name })
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
-        axios.get(`http://172.31.25.52:5000/question/${this.props.exercise._id}`)
+        axios.get(`http://172.31.25.52/question/${this.props.exercise._id}`)
             .then(res => {
                 console.log(res.data)
                 if (res.data.length > 0) {
@@ -182,7 +182,7 @@ class QuestionsComponent extends Component {
 
         //get user total score
         const total = this.state.userAns.reduce((a, b) => {
-            return a + b.userScore ;
+            return a + b.userScore;
         }, 0)
 
 
@@ -202,8 +202,8 @@ class QuestionsComponent extends Component {
 
         // send to db
         try {
-            this.setState({submitting: true})
-            axios.post(`http://172.31.25.52:5000/answer/add`, data)
+            this.setState({ submitting: true })
+            axios.post(`http://172.31.25.52/answer/add`, data)
                 .then(res => {
                     this.setState({ submitting: false })
                     this.setState({ showScoreModal: true })
@@ -211,9 +211,9 @@ class QuestionsComponent extends Component {
                 })
                 .catch(err => console.log(err))
             //
-            
+
         } catch (error) {
-            
+
         }
 
 
@@ -232,7 +232,7 @@ class QuestionsComponent extends Component {
         return (
             <>
                 {
-                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} maxScore={this.maxScore}/> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
+                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} maxScore={this.maxScore} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
                 }
             </>
         );

@@ -25,7 +25,7 @@ class RmUpdateForm extends Component {
         };
 
         //make axios request and update
-        axios.post(`http://172.31.25.52:5000/subscriptionrm/update/${this.state.user_id}`, data)
+        axios.post(`http://172.31.25.52/subscriptionrm/update/${this.state.user_id}`, data)
             .then(response => {
                 if (response.status == 200) {
                     this.setState({ message: 'Subscription details updated successful' })
@@ -43,12 +43,12 @@ class RmUpdateForm extends Component {
         this.setState({ user_id: userData.id });
 
         if (userData.sub_status_rm == 'active') {
-            this.setState({sub_status: 'active'})
+            this.setState({ sub_status: 'active' })
         }
 
         console.log(userData);
 
-        // axios.get(`http://172.31.25.52:5000/subscriptionrm/${userData.id}`)
+        // axios.get(`http://172.31.25.52/subscriptionrm/${userData.id}`)
         //     .then(response => this.setState({
         //         highestlevelOfEducation: response.data[0].highest_level_of_education,
         //         intendedStudy: response.data[0].field_of_training,
@@ -59,7 +59,7 @@ class RmUpdateForm extends Component {
     }
 
     closeModal = () => {
-        this.setState({jobsModal: false})
+        this.setState({ jobsModal: false })
     }
 
 
@@ -117,10 +117,10 @@ class RmUpdateForm extends Component {
                         <Button className="btn btn-sm btn-info" onClick={this.handleUpdate}>Update</Button>
                         {
                             this.state.sub_status == 'active' ?
-                            <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal })}>Add Job </button>
+                                <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal })}>Add Job </button>
                                 : ""
                         }
-                        
+
                     </ModalFooter>
                 </Modal>
                 <JobsModal onHide={() => this.setState({ jobsModal: false })} show={this.state.jobsModal} closeModal={() => this.closeModal()} />

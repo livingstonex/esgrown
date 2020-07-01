@@ -1,65 +1,65 @@
 import React, { Component } from "react";
 import { AuthContext } from "../AuthContext";
-import {Link} from "react-router-dom";
-import {Button, OverlayTrigger, Form, Container, Row, Col} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Button, OverlayTrigger, Form, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import toast from '../util/toast';
 
 
-export default class CorporateLogin extends Component{
-    constructor(props){
+export default class CorporateLogin extends Component {
+    constructor(props) {
         super(props);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            email:'',
-            password:''
+            email: '',
+            password: ''
         }
     }
 
-    onChangeEmail(e){
+    onChangeEmail(e) {
         this.setState({
             email: e.target.value
         });
     }
 
-    onChangePassword(e){
+    onChangePassword(e) {
         this.setState({
             password: e.target.value
         });
     }
 
-    onSubmit(e){
-        
+    onSubmit(e) {
+
     }
 
-    
-    render(){
+
+    render() {
         const formStyle = {
-            'border':'1px solid skyblue',
-            'border-radius':'5px',
-            'margin-top':'60px'
+            'border': '1px solid skyblue',
+            'border-radius': '5px',
+            'margin-top': '60px'
         };
         return (
             <AuthContext.Consumer>
                 {
                     (context) => (
 
-                <div>
-                    <Row>
-                        <Col className="col-xl-4 col-lg-4 col-md-3 col-sm-2 col-1" ></Col>
-                        <Col>
-                            <Container style={formStyle}>
-                                    <br/>
-                                        <label style={{'fontWeight':'bold'}}>Sign In to your Corporate Account</label>
+                        <div>
+                            <Row>
+                                <Col className="col-xl-4 col-lg-4 col-md-3 col-sm-2 col-1" ></Col>
+                                <Col>
+                                    <Container style={formStyle}>
+                                        <br />
+                                        <label style={{ 'fontWeight': 'bold' }}>Sign In to your Corporate Account</label>
                                         <Form>
                                             <Form.Group controlId="formBasicEmail">
                                                 <Form.Label>Email address:</Form.Label>
-                                                <Form.Control type="email" required placeholder="Enter email"  onChange={this.onChangeEmail} value={this.state.email}/>
+                                                <Form.Control type="email" required placeholder="Enter email" onChange={this.onChangeEmail} value={this.state.email} />
                                                 <Form.Text className="text-muted">
-                                                We'll never share your email with anyone else.
+                                                    We'll never share your email with anyone else.
                                                 </Form.Text>
                                             </Form.Group>
                                             <Form.Group controlId="formBasicPassword">
@@ -74,92 +74,92 @@ export default class CorporateLogin extends Component{
                                                     password: this.state.password
                                                 }
 
-                                        //Make a post to the api route for login
-                                        axios.post('http://172.31.25.52:5000/corporates/login_corporate_email', Corporate_User)
-                                            .then(res => {
-                                                //console.log(res.data[0].password);
-                                                if (res.data.length > 0) {
-                                                    const cid = res.data[0]._id;
-                                                    const cuser_name = res.data[0].org_name;
-                                                    const cuser_email = res.data[0].email;
-                                                    const cuser_phone = res.data[0].phone;
-                                                    const cuser_doi = res.data[0].doi;
-                                                    const cuser_country = res.data[0].country;
-                                                    const cuser_state = res.data[0].state;
-                                                    const cuser_status = res.data[0].status;
-                                                    const org_type = res.data[0].org_type
+                                                //Make a post to the api route for login
+                                                axios.post('http://172.31.25.52/corporates/login_corporate_email', Corporate_User)
+                                                    .then(res => {
+                                                        //console.log(res.data[0].password);
+                                                        if (res.data.length > 0) {
+                                                            const cid = res.data[0]._id;
+                                                            const cuser_name = res.data[0].org_name;
+                                                            const cuser_email = res.data[0].email;
+                                                            const cuser_phone = res.data[0].phone;
+                                                            const cuser_doi = res.data[0].doi;
+                                                            const cuser_country = res.data[0].country;
+                                                            const cuser_state = res.data[0].state;
+                                                            const cuser_status = res.data[0].status;
+                                                            const org_type = res.data[0].org_type
 
-                                                    console.log(res.data[0]);
-                                                    console.log(Corporate_User.password);
-                                                    const corp_user_data = {
-                                                        email: res.data[0].email,
-                                                        hash_password: res.data[0].password,
-                                                        normal_password: Corporate_User.password
-                                                    }
-                                                    axios.post('http://172.31.25.52:5000/corporates/login_corporate', corp_user_data)
-                                                        .then(res => {
-                                                            console.log(res.data);
-                                                            if (res.data == 1) {
-                                                                // alert("Corporate Login Successfull");
-                                                                toast("Corporate Login Successfull",'success')
-                                                                //uPDATE CONTEXT AUTH DATA HERE AND NAVIGATE TO THE DASHBOARD
-                                                                context.setUserAuthData(true);
-
-                                                                
-                                                                const Global_CorpUser = {
-                                                                    isLogged: true,
-                                                                    id: cid,
-                                                                    email: cuser_email,
-                                                                    name: cuser_name,
-                                                                    phone: cuser_phone,
-                                                                    dos: cuser_doi,
-                                                                    country: cuser_country,
-                                                                    state: cuser_state,
-                                                                    status: cuser_status,
-                                                                    org_type: org_type
-
-                                                                }
-
-                                                                sessionStorage.setItem("key", JSON.stringify(Global_CorpUser));
-                                                                console.log(JSON.parse(sessionStorage.getItem("key")));
-
-                                                                window.location = "/frontier";
-                                                            } else {
-                                                                // alert("Password wrong, please try again");
-                                                                toast("Password wrong, please try again",'error')
+                                                            console.log(res.data[0]);
+                                                            console.log(Corporate_User.password);
+                                                            const corp_user_data = {
+                                                                email: res.data[0].email,
+                                                                hash_password: res.data[0].password,
+                                                                normal_password: Corporate_User.password
                                                             }
-                                                        })
-                                                        .catch(error => toast(`Error is: "  ${error}`, 'error'));
-                                                } else {
-                                                    // alert("Your email address is not correct");
-                                                    toast("Your email address is not incorrect",'warn')
-                                                }
-                                            })
-                                            .catch(error => toast(`Error is:  ${error}`, 'error'));
-                                                
+                                                            axios.post('http://172.31.25.52/corporates/login_corporate', corp_user_data)
+                                                                .then(res => {
+                                                                    console.log(res.data);
+                                                                    if (res.data == 1) {
+                                                                        // alert("Corporate Login Successfull");
+                                                                        toast("Corporate Login Successfull", 'success')
+                                                                        //uPDATE CONTEXT AUTH DATA HERE AND NAVIGATE TO THE DASHBOARD
+                                                                        context.setUserAuthData(true);
 
-                                        //Reset the textfields to show blank by emptying the state
-                                        this.setState({
-                                            email: '',
-                                            password: ''
-                                        });
-                                        
+
+                                                                        const Global_CorpUser = {
+                                                                            isLogged: true,
+                                                                            id: cid,
+                                                                            email: cuser_email,
+                                                                            name: cuser_name,
+                                                                            phone: cuser_phone,
+                                                                            dos: cuser_doi,
+                                                                            country: cuser_country,
+                                                                            state: cuser_state,
+                                                                            status: cuser_status,
+                                                                            org_type: org_type
+
+                                                                        }
+
+                                                                        sessionStorage.setItem("key", JSON.stringify(Global_CorpUser));
+                                                                        console.log(JSON.parse(sessionStorage.getItem("key")));
+
+                                                                        window.location = "/frontier";
+                                                                    } else {
+                                                                        // alert("Password wrong, please try again");
+                                                                        toast("Password wrong, please try again", 'error')
+                                                                    }
+                                                                })
+                                                                .catch(error => toast(`Error is: "  ${error}`, 'error'));
+                                                        } else {
+                                                            // alert("Your email address is not correct");
+                                                            toast("Your email address is not incorrect", 'warn')
+                                                        }
+                                                    })
+                                                    .catch(error => toast(`Error is:  ${error}`, 'error'));
+
+
+                                                //Reset the textfields to show blank by emptying the state
+                                                this.setState({
+                                                    email: '',
+                                                    password: ''
+                                                });
+
                                             }}>
                                                 Login
                                                 </Button>
-                                                <br/>
-                                            
+                                            <br />
+
                                             <label>Forgot password? <Link to="/forgotPassword">Reset</Link></label>
-                                            <br/>
+                                            <br />
                                         </Form>
-                                        <br/>
+                                        <br />
                                     </Container>
                                 </Col>
-                        <Col className="col-xl-4 col-lg-4 col-md-3 col-sm-2 col-1" ></Col>
-                    </Row>
-                    </div>
-                )
-            }
+                                <Col className="col-xl-4 col-lg-4 col-md-3 col-sm-2 col-1" ></Col>
+                            </Row>
+                        </div>
+                    )
+                }
             </AuthContext.Consumer>
 
         );

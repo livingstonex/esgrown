@@ -37,7 +37,7 @@ class EasUpdateForm extends Component {
 
 
         //make axios request to update db
-        axios.post(`http://172.31.25.52:5000/subscriptioneas/update/${id}`, data)
+        axios.post(`http://172.31.25.52/subscriptioneas/update/${id}`, data)
             .then(response => {
                 if (response.status === 200) {
                     this.setState({ message: 'Subscription details updated successful' })
@@ -56,7 +56,7 @@ class EasUpdateForm extends Component {
         this.setState({ user_id: userData.id });
 
 
-        axios.get(`http://172.31.25.52:5000/subscriptioneas/${userData.id}`)
+        axios.get(`http://172.31.25.52/subscriptioneas/${userData.id}`)
             .then(res => this.setState({
                 levelOfEducation: res.data[0].levelofeducation,
                 intendedStudy: res.data[0].field_of_intended_study,
@@ -83,7 +83,7 @@ class EasUpdateForm extends Component {
     render() {
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === 'active' ? '#97ba0d':'#e68723'  ;
+        const sub_statusColor = this.state.sub_status === 'active' ? '#97ba0d' : '#e68723';
 
         const buttonText = this.state.sub_status === 'active' ? 'PAID' : 'PAY';
 
@@ -150,7 +150,7 @@ class EasUpdateForm extends Component {
                     <ModalFooter>
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
                         {' '}{''}
-                        <Button style={{ background: '#1c8496', border:'#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
+                        <Button style={{ background: '#1c8496', border: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
                     </ModalFooter>
                 </Modal>
             </div>

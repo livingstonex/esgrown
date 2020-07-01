@@ -27,12 +27,12 @@ class EfaUpdateForm extends Component {
         };
 
         //make axios request and update
-        axios.post(`http://172.31.25.52:5000/subscriptionefa/update/${this.state.user_id}`, data)
+        axios.post(`http://172.31.25.52/subscriptionefa/update/${this.state.user_id}`, data)
             .then(response => {
                 if (response.status == 200) {
                     this.setState({
                         message: 'Subscription details updated successful'
-})
+                    })
                 }
             })
             .catch(err => this.setState({ message: 'There was a problem updating your account. Please try again' }))
@@ -48,7 +48,7 @@ class EfaUpdateForm extends Component {
 
         this.setState({ user_id: userData.id });
 
-        axios.get(`http://172.31.25.52:5000/subscriptionefa/${userData.id}`)
+        axios.get(`http://172.31.25.52/subscriptionefa/${userData.id}`)
             .then(response => this.setState({
                 levelOfEducation: response.data[0].levelofeducation,
                 nextIntendedEductionLevel: response.data[0].next_intended_education_level,
@@ -94,7 +94,7 @@ class EfaUpdateForm extends Component {
                             <FormGroup>
                                 <div className="row mt-3">
                                     <div className="col input-group">
-                                        <select className="form-control" name="levelOfEducation" value={this.state.levelOfEducation} disabled={this.state.LOE } required onChange={this.changeHandler}>
+                                        <select className="form-control" name="levelOfEducation" value={this.state.levelOfEducation} disabled={this.state.LOE} required onChange={this.changeHandler}>
                                             <option>Level of Education</option>
                                             <option value="degree">Degree</option>
                                             <option value="masters">Masters</option>

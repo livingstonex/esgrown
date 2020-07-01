@@ -100,7 +100,7 @@ const AdminLogin = () => {
 
 
                                                 //check login details
-                                                axios.post(`http://172.31.25.52:5000/admin/login`, loginData)
+                                                axios.post(`http://172.31.25.52/admin/login`, loginData)
                                                     .then(res => {
                                                         if (res.data !== 'failed') {
                                                             context.setUserAuthData(true);
@@ -109,10 +109,10 @@ const AdminLogin = () => {
                                                                 name: res.data.name,
                                                                 privilege: res.data.privilege,
                                                                 email: res.data.email,
-                                                                tutor_level:res.data.tutor_level,
+                                                                tutor_level: res.data.tutor_level,
                                                                 role: res.data.role,
                                                                 country: res.data.country,
-                                                                id:res.data._id,
+                                                                id: res.data._id,
                                                                 isLogged: true,
                                                                 status: "ADMIN"
                                                             }

@@ -32,9 +32,9 @@ const RMService = () => {
         if (user.sub_status_rm === 'active') {
             setJobs(user.jobs);
         }
-            
 
-        // axios.get(`http://172.31.25.52:5000/servicecontentrm/`)
+
+        // axios.get(`http://172.31.25.52/servicecontentrm/`)
         //     .then(res => {
         //         if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
 
@@ -104,31 +104,31 @@ const RMService = () => {
                 //         return (
                 //             <GenServiceCard data={data}/>
                 //         )})
-                (page === 0) ? 
-                (jobs.length === 0) ? <p>you have not applied for any jobs yet</p>
-                    :
-                    jobs.map(item => {              
-                        return (
-                            <Card className="mt-5" style={{width:'50%'}}>
-                                <CardActionArea>
-                                    <CardContent >
-                                        <Typography gutterBottom variant="" component="p">
-                                            {item.job_title}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            <div className="btn btn-info bt-sm" onClick={getContent(item.job_id)} disabled={loading}>View Content {loading ? <i className="fa fa-spinner fa-spin"></i>:"" }</div>
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions>
-                                </CardActions>
-                            </Card>
-                        );
-                    }) : 
-                    (page === 1) ? 
-                        <GenServiceCard data={data} goBack={goBack()}/>
-                        :'default empty'
-                
+                (page === 0) ?
+                    (jobs.length === 0) ? <p>you have not applied for any jobs yet</p>
+                        :
+                        jobs.map(item => {
+                            return (
+                                <Card className="mt-5" style={{ width: '50%' }}>
+                                    <CardActionArea>
+                                        <CardContent >
+                                            <Typography gutterBottom variant="" component="p">
+                                                {item.job_title}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                <div className="btn btn-info bt-sm" onClick={getContent(item.job_id)} disabled={loading}>View Content {loading ? <i className="fa fa-spinner fa-spin"></i> : ""}</div>
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+                                    </CardActions>
+                                </Card>
+                            );
+                        }) :
+                    (page === 1) ?
+                        <GenServiceCard data={data} goBack={goBack()} />
+                        : 'default empty'
+
             }
         </div>
 
@@ -138,8 +138,8 @@ const RMService = () => {
         // get contents from rm service content endpoint, based on job id
         try {
             setLoading(true);
-            axios.get(`http://172.31.25.52:5000/corpservicecontent/${id}`)
-                .then(res => { 
+            axios.get(`http://172.31.25.52/corpservicecontent/${id}`)
+                .then(res => {
                     setLoading(false);
                     setData(res.data);
                     setPage(1)
@@ -149,7 +149,7 @@ const RMService = () => {
                     setLoading(false);
                 })
         } catch (error) {
-            
+
         }
     }
 

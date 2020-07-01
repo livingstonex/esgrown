@@ -12,7 +12,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
-        
+
     }, []);
 
     const rate = event => {
@@ -26,7 +26,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
 
         const data = {
             org: user.name,
-            total_weeks: lastDoc ? lastDoc.total_weeks : weeks ,
+            total_weeks: lastDoc ? lastDoc.total_weeks : weeks,
             ratings: {
                 name: details.fullname,
                 personnel_id: details._id,
@@ -38,14 +38,14 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
             }
         }
 
-        axios.post(`http://172.31.25.52:5000/rate/teacher/add`, data)
+        axios.post(`http://172.31.25.52/rate/teacher/add`, data)
             .then(res => {
                 if (res.data === 1) {
                     toast(`teacher has already been rated for the week`, "warn");
                 } else {
                     toast(`teacher rating successful`, "success");
                 }
-                
+
                 closeModal();
             })
             .catch(err => toast(err, "error"))

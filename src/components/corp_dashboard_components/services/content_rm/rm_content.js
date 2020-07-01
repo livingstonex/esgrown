@@ -7,7 +7,7 @@ import { setDefaultLocale } from 'react-datepicker';
 
 export default function RMContentCreation() {
 
-    
+
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
@@ -34,11 +34,11 @@ export default function RMContentCreation() {
 
     function getCorpContent(id) {
         try {
-            axios.get(`http://172.31.25.52:5000/corpservicecontent/corp/${id}`)
+            axios.get(`http://172.31.25.52/corpservicecontent/corp/${id}`)
                 .then(res => {
                     setData(res.data);
                     setSpinner(false)
-                 })
+                })
                 .catch(err => {
                     console.log(err);
                 });

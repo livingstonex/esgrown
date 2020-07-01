@@ -67,16 +67,16 @@ const UpdatePrivileges = () => {
             privilege: privilege.split('/')
         }
 
-        axios.post(`http://172.31.25.52:5000/admin/update/${userId}`, data)
+        axios.post(`http://172.31.25.52/admin/update/${userId}`, data)
             .then(res => {
                 if (res.data) {
-                        axios.get(`http://172.31.25.52:5000/admin/country_admins`)
-                            .then(res => {
-                                if (res.data) {
-                                    setAdmins(res.data);
-                                }
-                            })
-                            .catch(err => console.log(err))
+                    axios.get(`http://172.31.25.52/admin/country_admins`)
+                        .then(res => {
+                            if (res.data) {
+                                setAdmins(res.data);
+                            }
+                        })
+                        .catch(err => console.log(err))
                 }
                 setUpdateSpinner(false);
                 setShow(false);
@@ -86,17 +86,17 @@ const UpdatePrivileges = () => {
 
 
 
-    
-    
-    
+
+
+
     const deleteCA = () => {
 
-        axios.post(`http://172.31.25.52:5000/admin/delete/${deleteUser._id}`)
+        axios.post(`http://172.31.25.52/admin/delete/${deleteUser._id}`)
             .then(res => {
                 if (res.data) {
 
                     //fetch admins after delete
-                    axios.get(`http://172.31.25.52:5000/admin/country_admins`)
+                    axios.get(`http://172.31.25.52/admin/country_admins`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -115,7 +115,7 @@ const UpdatePrivileges = () => {
     useEffect(() => {
 
         setSpinner(true)
-        axios.get(`http://172.31.25.52:5000/admin/country_admins`)
+        axios.get(`http://172.31.25.52/admin/country_admins`)
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);
@@ -139,7 +139,7 @@ const UpdatePrivileges = () => {
                                 return (
 
                                     <div className="col col-lg-4 col-sm-6">
-                                        <Card style={{ height: '310px', background: '#F7F7F7',marginBottom:'10px' }}>
+                                        <Card style={{ height: '310px', background: '#F7F7F7', marginBottom: '10px' }}>
                                             <CardContent >
                                                 <Typography gutterBottom variant="" component="h5" style={{ textAlign: 'center' }}>
                                                     <span >{ad.name}</span>
@@ -190,7 +190,7 @@ const UpdatePrivileges = () => {
                         </div>
                     </div>
             }
-            <Modal show={show} hide={() => setShow(!show)} admin={adminforupdate} getprivilege={getPrivileges} update={updateUser} spinner={Updatespinner}/>
+            <Modal show={show} hide={() => setShow(!show)} admin={adminforupdate} getprivilege={getPrivileges} update={updateUser} spinner={Updatespinner} />
             <DeleteModal show={deleteUserModal} hide={() => setDeleteUserModal(!deleteUserModal)} user={deleteUser} del={deleteCA} />
         </>
     );

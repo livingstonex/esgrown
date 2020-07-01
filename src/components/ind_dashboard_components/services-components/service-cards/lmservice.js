@@ -16,7 +16,7 @@ const LMService = () => {
     //get data from api
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
-        axios.get(`http://172.31.25.52:5000/servicecontentlm/`)
+        axios.get(`http://172.31.25.52/servicecontentlm/`)
             .then(res => {
                 if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
 
@@ -83,9 +83,10 @@ const LMService = () => {
         <React.fragment>
             {
                 spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
-                        return (
-                            <GenServiceCard data={data}/>
-                        )})
+                    return (
+                        <GenServiceCard data={data} />
+                    )
+                })
             }
         </React.fragment>
     );

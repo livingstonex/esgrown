@@ -101,11 +101,11 @@ export default class IndividualSignUp extends Component {
 
     }
 
-    onSubmit(e){
+    onSubmit(e) {
         e.preventDefault();
 
         const TIC = this.state.org_type === 'school' ? md5(this.state.email).substring(0, 8).toUpperCase() : null;
-        
+
         const individual = {
             fullname: this.state.fullname,
             email: this.state.email,
@@ -120,13 +120,13 @@ export default class IndividualSignUp extends Component {
             org_name: this.state.org_name ? this.state.org_name : null,
             tic: TIC,
             sub_status_eas: "inactive",
-            sub_status_efa:"inactive",
-            sub_status_lm:"inactive",
-            sub_status_rm:"inactive",
+            sub_status_efa: "inactive",
+            sub_status_lm: "inactive",
+            sub_status_rm: "inactive",
             sub_status_compt_mgt: "inactive"
         }
 
-        axios.post('http://172.31.25.52:5000/individuals/check_email', individual)
+        axios.post('http://172.31.25.52/individuals/check_email', individual)
             .then(res => {
                 if (res.data.length > 0) {
                     //display a flash message that user already exists
@@ -146,7 +146,7 @@ export default class IndividualSignUp extends Component {
                     });
                 } else {
 
-                    axios.post('http://172.31.25.52:5000/individuals/add', individual)
+                    axios.post('http://172.31.25.52/individuals/add', individual)
                         .then(res => {
                             console.log("User Registration Successful: " + res.data.fullname);
 
@@ -163,7 +163,7 @@ export default class IndividualSignUp extends Component {
                                 status: res.data.status,
                                 org_name: res.data.org_name,
                                 org_type: res.data.org_type,
-                                jobs:res.data.jobs
+                                jobs: res.data.jobs
 
                             }
 

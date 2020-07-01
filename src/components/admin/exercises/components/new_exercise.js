@@ -6,9 +6,9 @@ import { set } from 'mongoose';
 
 
 
-const NewExercises = ({ service, refreshContentLog, title}) => {
+const NewExercises = ({ service, refreshContentLog, title }) => {
 
-    const exUrl = `http://172.31.25.52:5000/excercise/add`;
+    const exUrl = `http://172.31.25.52/excercise/add`;
 
     const [page, setPage] = useState(0)
 
@@ -66,39 +66,39 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
     const createQuestion = () => {
 
 
-            setSpinner(true);
+        setSpinner(true);
 
-            const splitOptions = options.split(',');
+        const splitOptions = options.split(',');
 
-            const splitAns = ans.split(',');
+        const splitAns = ans.split(',');
 
-            const questionData = {
-                excercise_id: exId,
-                question: question,
-                options: splitOptions,
-                correct_ans: splitAns,
-                score: score
-            }
+        const questionData = {
+            excercise_id: exId,
+            question: question,
+            options: splitOptions,
+            correct_ans: splitAns,
+            score: score
+        }
 
-            axios.post(`http://172.31.25.52:5000/question/add`, questionData)
-                .then(res => {
-                    console.log(res.data);
-                    setSpinner(false);
-                    setAns('');
-                    setQuestion('')
-                    setOptions('')
-                    setScore('')
-                    setExId(res.data.excercise_id);
+        axios.post(`http://172.31.25.52/question/add`, questionData)
+            .then(res => {
+                console.log(res.data);
+                setSpinner(false);
+                setAns('');
+                setQuestion('')
+                setOptions('')
+                setScore('')
+                setExId(res.data.excercise_id);
 
-                    //get number of questions and display
-                    axios.post(`http://172.31.25.52:5000/question/${res.data.excercise_id}`)
-                        .then(res => setTotalQ(res.data.length))
-                        .catch(err => console.log(err))
+                //get number of questions and display
+                axios.post(`http://172.31.25.52/question/${res.data.excercise_id}`)
+                    .then(res => setTotalQ(res.data.length))
+                    .catch(err => console.log(err))
 
-                })
-                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
 
-            console.log(questionData);
+        console.log(questionData);
     }
 
 
@@ -142,20 +142,20 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
         //     return;
 
         // } 
-    
+
         setSpinner(true);
 
-            axios.post(exUrl, exData)
-                .then(res => {
-                    setExId(res.data._id);
-                    setSpinner(false);
-                    setPage(2)
-                    refreshContentLog();
-                    console.log(res.data)
-                })
-                .catch(err => {
-                    alert('oops ' + err);
-                })
+        axios.post(exUrl, exData)
+            .then(res => {
+                setExId(res.data._id);
+                setSpinner(false);
+                setPage(2)
+                refreshContentLog();
+                console.log(res.data)
+            })
+            .catch(err => {
+                alert('oops ' + err);
+            })
 
         console.log(exData)
 
@@ -289,7 +289,7 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
     // Get all jobs by corpid
     function getAllJobs(corpid) {
         try {
-            axios.get(`http://172.31.25.52:5000/jobs/${corpid}`)
+            axios.get(`http://172.31.25.52/jobs/${corpid}`)
                 .then(jobs => {
                     // console.log(jobs.data[0].jobs);
                     setJobs(jobs.data[0].jobs);

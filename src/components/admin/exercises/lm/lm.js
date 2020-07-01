@@ -15,7 +15,7 @@ const LMexercises = () => {
 
     useEffect(() => {
         //get exercises then questions using exercise id
-        axios.get(`http://172.31.25.52:5000/excercise/`)
+        axios.get(`http://172.31.25.52/excercise/`)
             .then(res => {
                 if (res.data.length > 0) {
                     const lmEx = res.data.filter((ex) => {
@@ -32,7 +32,7 @@ const LMexercises = () => {
     const refreshContentLog = () => {
 
         //get exercises then using exercise id
-        axios.get(`http://172.31.25.52:5000/excercise/`)
+        axios.get(`http://172.31.25.52/excercise/`)
             .then(res => {
                 if (res.data.length > 0) {
                     const rmEx = res.data.filter((ex) => {

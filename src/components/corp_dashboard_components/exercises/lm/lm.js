@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LMexercisesLog from '../../../admin/exercises/components/exercise_log';
 import LMexercisesNewContent from '../../../admin/exercises/components/new_exercise';
@@ -16,7 +16,7 @@ const LMexercises = () => {
     useEffect(() => {
         const comp = JSON.parse(sessionStorage.getItem('key'));
         //get exercises then questions using exercise id
-        axios.get(`http://172.31.25.52:5000/excercise/activity/${comp.id}`)
+        axios.get(`http://172.31.25.52/excercise/activity/${comp.id}`)
             .then(res => {
                 if (res.data) {
                     const lmEx = res.data.filter((ex) => {

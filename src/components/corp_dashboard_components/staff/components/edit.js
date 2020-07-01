@@ -9,11 +9,11 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
 
     const [edit, setEdit] = useState([]);
     const [state, setState] = useState({
-        
+
     })
 
     useEffect(() => {
-        axios.get(`http://172.31.25.52:5000/individuals/`)
+        axios.get(`http://172.31.25.52/individuals/`)
             .then(res => {
                 if (res.data.length > 0) {
                     const ind = res.data.filter(st => {
@@ -27,26 +27,26 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
 
     console.log(edit)
 
-   const onChange = (e) => {
-       setEdit({
-           ...edit,
-           [e.target.name]: e.target.value
-       })
+    const onChange = (e) => {
+        setEdit({
+            ...edit,
+            [e.target.name]: e.target.value
+        })
     }
 
-    const submitEdit = async() => {
+    const submitEdit = async () => {
 
         const data = {
             fullname: edit.fullname,
             email: edit.email
         }
         try {
-            const res = await axios.post(`http://172.31.25.52:5000/individuals/staff/update/${edit._id}`, data);
+            const res = await axios.post(`http://172.31.25.52/individuals/staff/update/${edit._id}`, data);
             console.log(res.dat);
             closeModal()
 
         } catch (e) {
-           console.log(e) 
+            console.log(e)
         }
 
     }
@@ -82,13 +82,13 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
                             </div>
                             {
                                 edit && edit.tic ?
-                                <div className="row mt-3">
-                                    <div className="col">
-                                        <label style={{ fontWeight: 'bold' }}>Teacher Identification Code</label>
-                                        <input type="text" disabled value={edit.tic} className="form-control" required />
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <label style={{ fontWeight: 'bold' }}>Teacher Identification Code</label>
+                                            <input type="text" disabled value={edit.tic} className="form-control" required />
+                                        </div>
                                     </div>
-                                </div>
-                                : ""
+                                    : ""
                             }
 
 

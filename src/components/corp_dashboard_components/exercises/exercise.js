@@ -19,7 +19,7 @@ const CorpExercise = () => {
 
     const [company, setCompany] = useState();
     const [spinner, setSpinner] = useState(true);
-    const [RMex, setRMex] = useState(false) 
+    const [RMex, setRMex] = useState(false)
     const [page, setPage] = useState(0)
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const CorpExercise = () => {
             setPage(0)
         }
         //get subscriptions
-        // axios.get(`http://172.31.25.52:5000/corporatesubscriptions/${user.id}`)
+        // axios.get(`http://172.31.25.52/corporatesubscriptions/${user.id}`)
         // .then(res => {
         //     if(res.data){
         //         const lm = res.data.filter(srv => {
@@ -62,41 +62,41 @@ const CorpExercise = () => {
 
     return (
         <>
-            
-            {(page == 0) ? "" :(page == 1) ?
-                    <>
-                        <div className="container" style={{marginTop:'70px'}}>
-                            <div className="row justify-content-center">
-                                <div className="col col-lg-5 col-sm-6">
-                                    <Card className="">
-                                        <CardActionArea onClick={setRmPage}>
-                                            <CardMedia
-                                                component="img"
-                                                alt="Recruitment Management"
-                                                height="140"
-                                                image={Img}
-                                                title="Recruitment Management"
-                                            />
-                                            <CardContent >
-                                                <Typography gutterBottom variant="" component="h5">
-                                                    Corporate Recruitment Management Exercises
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    Widespread group of squamate reptiles, with over 6,000 species, ranging
-                                                    across all continents except Antarctica
-                                        </Typography>
-                                            </CardContent>
-                                        </CardActionArea>
-                                        <CardActions>
 
-                                        </CardActions>
-                                    </Card>
-                                </div>
+            {(page == 0) ? "" : (page == 1) ?
+                <>
+                    <div className="container" style={{ marginTop: '70px' }}>
+                        <div className="row justify-content-center">
+                            <div className="col col-lg-5 col-sm-6">
+                                <Card className="">
+                                    <CardActionArea onClick={setRmPage}>
+                                        <CardMedia
+                                            component="img"
+                                            alt="Recruitment Management"
+                                            height="140"
+                                            image={Img}
+                                            title="Recruitment Management"
+                                        />
+                                        <CardContent >
+                                            <Typography gutterBottom variant="" component="h5">
+                                                Corporate Recruitment Management Exercises
+                                                </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Widespread group of squamate reptiles, with over 6,000 species, ranging
+                                                across all continents except Antarctica
+                                        </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+
+                                    </CardActions>
+                                </Card>
                             </div>
                         </div>
-                    </> 
+                    </div>
+                </>
 
-             : (page === 2) ? <RMExercises /> : ""}
+                : (page === 2) ? <RMExercises /> : ""}
         </>
     );
     // return (

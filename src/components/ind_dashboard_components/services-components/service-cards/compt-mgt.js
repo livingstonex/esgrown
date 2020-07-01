@@ -20,13 +20,13 @@ const EASService = () => {
 
         if (user.sub_status_compt_mgt === 'active') {
 
-            axios.get(`http://172.31.25.52:5000/competence/service/`)
+            axios.get(`http://172.31.25.52/competence/service/`)
                 .then(res => {
                     if (user.tic !== null) {
                         const teacherData = res.data.filter(td => {
                             return td.user_class === 'teacher'
                         })
-                        
+
                         setData(teacherData);
 
                     } else {
@@ -37,7 +37,7 @@ const EASService = () => {
                 .catch(err => console.log(err))
         }
 
-        
+
     }, []);
 
     return (

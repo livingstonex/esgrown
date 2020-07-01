@@ -23,7 +23,7 @@ const EASServicePage = () => {
         }
 
         //make request to api to get sub status
-        // axios.get(`http://172.31.25.52:5000/subscriptioneas/${userData.id}`)
+        // axios.get(`http://172.31.25.52/subscriptioneas/${userData.id}`)
         //     .then(res => {
         //         if (res.data[0] > 0) {
         //             res.data[0].sub_status == 'active' ? setPageEAS(1) : setPageEAS(2)
@@ -43,21 +43,21 @@ const EASServicePage = () => {
         //     </div>
         // </div>
 
-        <div className="container-fluid" style={{height:'auto',}}>
+        <div className="container-fluid" style={{ height: 'auto', }}>
             <div className="d-flex justify-content-center">
-                <div className="row" style={{width:'75%', height:'100%'}}>
-                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col" style={{padding:"0px"}}><div className="left_col"></div></div>
-                    <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-12 center_col" style={{background:'#f5f5f5', paddingLeft:"30px", paddingRight:"30px", paddingTop:"15px",}}>
-                            <div className="scroll d-flex justify-content-center" style={{height:'100%', width:'100%',}}> 
+                <div className="row" style={{ width: '75%', height: '100%' }}>
+                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col" style={{ padding: "0px" }}><div className="left_col"></div></div>
+                    <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-12 center_col" style={{ background: '#f5f5f5', paddingLeft: "30px", paddingRight: "30px", paddingTop: "15px", }}>
+                        <div className="scroll d-flex justify-content-center" style={{ height: '100%', width: '100%', }}>
                             {/*  border: '1px solid', borderRightColor:'#E8E6E6', borderLeftColor:'#E8E6E6' */}
-                                {/* Inner Div */}
-                                <div className="col">
-                                    {(pageEAS === 1) ? <EASService/> : (pageEAS === 2) ? <EASVideoCard /> : ""}
-                                </div>
-                              {/* {(pageEAS === 1) ? <EASService/> : (pageEAS === 2) ? <EASVideoCard /> : ""} */}
+                            {/* Inner Div */}
+                            <div className="col">
+                                {(pageEAS === 1) ? <EASService /> : (pageEAS === 2) ? <EASVideoCard /> : ""}
                             </div>
+                            {/* {(pageEAS === 1) ? <EASService/> : (pageEAS === 2) ? <EASVideoCard /> : ""} */}
+                        </div>
                     </div>
-                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col" style={{padding:"0px"}}><div className="right_col"></div></div>
+                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col" style={{ padding: "0px" }}><div className="right_col"></div></div>
                 </div>
             </div>
         </div>
