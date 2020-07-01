@@ -194,7 +194,7 @@ export default function MiniDrawer() {
 
     } else {
       //get eas subscription
-      axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptioneas/${userData.id}`)
+      axios.get(`http://18.188.101.36:5000/subscriptioneas/${userData.id}`)
         .then(res => {
 
           if (res.data.length > 0) {
@@ -204,14 +204,14 @@ export default function MiniDrawer() {
                 "lastLogin": userData.lastLogin
               }
               //get eas notifications
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontenteas/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/servicecontenteas/notification`, lastLogin)
                 .then(res => {
                   setEasNotification(res.data)
                 })
                 .catch(err => console.log(err));
 
               //get eas exercises
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/excercise/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/excercise/notification`, lastLogin)
                 .then(res => {
 
                   const easEx = res.data.filter(ex => {
@@ -229,7 +229,7 @@ export default function MiniDrawer() {
         .catch(err => console.log(err));
 
       //get efa subscription
-      axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionefa/${userData.id}`)
+      axios.get(`http://18.188.101.36:5000/subscriptionefa/${userData.id}`)
         .then(res => {
 
           if (res.data.length > 0) {
@@ -239,7 +239,7 @@ export default function MiniDrawer() {
                 "lastLogin": userData.lastLogin
               }
               // get efa notifications
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentefa/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/servicecontentefa/notification`, lastLogin)
                 .then(res => {
                   setEfaNotification(res.data);
 
@@ -248,7 +248,7 @@ export default function MiniDrawer() {
                 .catch(err => console.log(err));
 
               //get efa exercises
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/excercise/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/excercise/notification`, lastLogin)
                 .then(res => {
 
                   const efaEx = res.data.filter(ex => {
@@ -266,7 +266,7 @@ export default function MiniDrawer() {
 
 
       //get lm subscription
-      axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionlm/${userData.id}`)
+      axios.get(`http://18.188.101.36:5000/subscriptionlm/${userData.id}`)
         .then(res => {
 
           if (res.data.length > 0) {
@@ -276,7 +276,7 @@ export default function MiniDrawer() {
                 "lastLogin": userData.lastLogin
               }
               //get lm notifications
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentlm/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/servicecontentlm/notification`, lastLogin)
                 .then(res => {
                   setLmNotification(res.data)
 
@@ -284,7 +284,7 @@ export default function MiniDrawer() {
                 .catch(err => console.log(err));
 
               //get lm exercises
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/excercise/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/excercise/notification`, lastLogin)
                 .then(res => {
 
                   const lmEx = res.data.filter(ex => {
@@ -303,7 +303,7 @@ export default function MiniDrawer() {
 
 
       //get rm subscription
-      axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/subscriptionrm/${userData.id}`)
+      axios.get(`http://18.188.101.36:5000/subscriptionrm/${userData.id}`)
         .then(res => {
 
           if (res.data.length > 0) {
@@ -313,7 +313,7 @@ export default function MiniDrawer() {
                 "lastLogin": userData.lastLogin
               }
               // get rm notifications
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentrm/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/servicecontentrm/notification`, lastLogin)
                 .then(res => {
 
                   setRmNotification(res.data)
@@ -322,7 +322,7 @@ export default function MiniDrawer() {
                 .catch(err => console.log(err));
 
               //get rm exercises
-              axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/excercise/notification`, lastLogin)
+              axios.post(`http://18.188.101.36:5000/excercise/notification`, lastLogin)
                 .then(res => {
 
                   const rmEx = res.data.filter(ex => {

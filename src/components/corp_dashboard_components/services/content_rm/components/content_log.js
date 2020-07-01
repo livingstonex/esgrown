@@ -15,7 +15,7 @@ const Contentlog = () => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
 
-        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/corpservicecontent/corp/${user.id}`)
+        axios.get(`http://18.188.101.36:5000/corpservicecontent/corp/${user.id}`)
             .then(res => {
                 console.log(res.data)
                 setData(res.data);

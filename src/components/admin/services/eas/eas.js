@@ -13,12 +13,12 @@ const EAS = () => {
     const [easlog, setEaslog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontenteas/add`;
+    const newContentUrl = `http://18.188.101.36:5000/servicecontenteas/add`;
 
 
     useEffect(() => {
 
-        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontenteas/`)
+        axios.get(`http://18.188.101.36:5000/servicecontenteas/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setEaslog(res.data);

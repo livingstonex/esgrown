@@ -14,7 +14,7 @@ const EASService = () => {
     let [counter, setCounter] = useState(1)
     const [chunk, setChunk] = useState([]);
 
-    const chunkify = (arr, size) => {
+    const chunkify = useCallback((arr, size) => {
         let currentChunk
         if (counter == 1) {
             currentChunk = arr.slice(0, size);
@@ -26,7 +26,7 @@ const EASService = () => {
             return currentChunk
 
         }
-    }
+    })
 
     const loadMore = () => {
         setCounter(counter + 1);
@@ -44,7 +44,7 @@ const EASService = () => {
 
             }).catch(err => console.log(err));
 
-        // axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontenteas/`)
+        // axios.get(`http://18.188.101.36:5000/servicecontenteas/`)
         //     .then(res => {
 
         //         if (user.sub_status_eas === 'active') {

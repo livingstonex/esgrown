@@ -13,7 +13,7 @@ const AllAdmins = () => {
 
     useEffect(() => {
 
-        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/country_admins`)
+        axios.get(`http://18.188.101.36:5000/admin/country_admins`)
             .then(res => {
                 if (res.data) {
                     setCountryAdmins(res.data);

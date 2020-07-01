@@ -77,11 +77,11 @@ const UpdatePrivileges = () => {
         }
 
 
-        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/update/${userId}`, data)
+        axios.post(`http://18.188.101.36:5000/admin/update/${userId}`, data)
             .then(res => {
                 if (res.data) {
 
-                    axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/admins/${user.country}`)
+                    axios.post(`http://18.188.101.36:5000/admin/admins/${user.country}`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -112,12 +112,12 @@ const UpdatePrivileges = () => {
 
     const deleteCA = () => {
 
-        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/delete/${deleteUser._id}`)
+        axios.post(`http://18.188.101.36:5000/admin/delete/${deleteUser._id}`)
             .then(res => {
                 if (res.data) {
 
                     //fetch admins after delete
-                    axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/admins/${user.country}`)
+                    axios.post(`http://18.188.101.36:5000/admin/admins/${user.country}`)
                         .then(res => {
                             if (res.data) {
                                 setAdmins(res.data);
@@ -138,7 +138,7 @@ const UpdatePrivileges = () => {
         setUser(user)
 
         setSpinner(true)
-        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/admins/${user.country}`)
+        axios.post(`http://18.188.101.36:5000/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);

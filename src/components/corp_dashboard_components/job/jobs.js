@@ -29,7 +29,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
         //get all jobs
-        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/jobs/${user.id}`)
+        axios.get(`http://18.188.101.36:5000/jobs/${user.id}`)
             .then(res => {
                 if (res.data.length !== 0) {
                     setJobs(res.data);
@@ -50,7 +50,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
     const closeModal = () => {
         setShow(false);
 
-        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/jobs/${user.id}`)
+        axios.get(`http://18.188.101.36:5000/jobs/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     setJobs(res.data);

@@ -13,13 +13,13 @@ const RM = () => {
     const [rmlog, setRmlog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentrm/add`;
+    const newContentUrl = `http://18.188.101.36:5000/servicecontentrm/add`;
 
 
 
     useEffect(() => {
 
-        axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/servicecontentrm/`)
+        axios.get(`http://18.188.101.36:5000/servicecontentrm/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setRmlog(res.data);

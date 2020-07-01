@@ -18,7 +18,7 @@ const Home = () => {
         setUser(user)
 
         setSpinner(true)
-        axios.post(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/admin/admins/${user.country}`)
+        axios.post(`http://18.188.101.36:5000/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);

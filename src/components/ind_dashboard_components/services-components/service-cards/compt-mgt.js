@@ -20,7 +20,7 @@ const EASService = () => {
 
         if (user.sub_status_compt_mgt === 'active') {
 
-            axios.get(`http://ec2-18-188-101-36.us-east-2.compute.amazonaws.com:5000/competence/service/`)
+            axios.get(`http://18.188.101.36:5000/competence/service/`)
                 .then(res => {
                     if (user.tic !== null) {
                         const teacherData = res.data.filter(td => {
