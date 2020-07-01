@@ -126,7 +126,7 @@ export default class IndividualSignUp extends Component {
             sub_status_compt_mgt: "inactive"
         }
 
-        axios.post('http://18.188.101.36:5000/individuals/check_email', individual)
+        axios.post('http://18.188.101.36/individuals/check_email', individual)
             .then(res => {
                 if (res.data.length > 0) {
                     //display a flash message that user already exists
@@ -146,7 +146,7 @@ export default class IndividualSignUp extends Component {
                     });
                 } else {
 
-                    axios.post('http://18.188.101.36:5000/individuals/add', individual)
+                    axios.post('http://18.188.101.36/individuals/add', individual)
                         .then(res => {
                             console.log("User Registration Successful: " + res.data.fullname);
 

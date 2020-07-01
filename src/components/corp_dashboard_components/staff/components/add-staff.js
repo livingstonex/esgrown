@@ -69,7 +69,7 @@ const AddStaff = ({ show, onHide, closeModal = () => { }, refreshStaff = () => {
         }
 
 
-        axios.post('http://18.188.101.36:5000/individuals/check_email', submitData)
+        axios.post('http://18.188.101.36/individuals/check_email', submitData)
             .then(res => {
 
                 if (res.data.length > 0) {
@@ -79,7 +79,7 @@ const AddStaff = ({ show, onHide, closeModal = () => { }, refreshStaff = () => {
 
                         if (addExistinUser) {
                             //get the details of the user with this email and populate the form field
-                            axios.post('http://18.188.101.36:5000/individuals/add', submitData)
+                            axios.post('http://18.188.101.36/individuals/add', submitData)
                                 .then(res => {
                                     if (res.data) {
                                         notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} added successful`, 'success')
@@ -103,7 +103,7 @@ const AddStaff = ({ show, onHide, closeModal = () => { }, refreshStaff = () => {
                     setSpinner(false);
                 };
                 if (res.data.length == 0) {
-                    axios.post('http://18.188.101.36:5000/individuals/add', submitData)
+                    axios.post('http://18.188.101.36/individuals/add', submitData)
                         .then(res => {
                             if (res.data) {
                                 notify(`Great! ${user && user.org_type === "school" ? "Teacher" : "Staff"} added successful`, 'success')

@@ -16,7 +16,7 @@ const LMexercises = () => {
     useEffect(() => {
         const comp = JSON.parse(sessionStorage.getItem('key'));
         //get exercises then questions using exercise id
-        axios.get(`http://18.188.101.36:5000/excercise/activity/${comp.id}`)
+        axios.get(`http://18.188.101.36/excercise/activity/${comp.id}`)
             .then(res => {
                 if (res.data) {
                     const lmEx = res.data.filter((ex) => {

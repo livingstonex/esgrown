@@ -168,7 +168,7 @@ export default function Profile() {
     // }
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/individuals/update/email/` + user_id, { email: email })
+    axios.post(`http://18.188.101.36/individuals/update/email/` + user_id, { email: email })
       .then((res) => {
         console.log('Email Update successful: ' + res.data);
         handleClickSnack();
@@ -185,7 +185,7 @@ export default function Profile() {
 
     const user_id = user.id;
 
-    axios.post('http://18.188.101.36:5000/individuals/update/gender/' + user_id, { gender: gender })
+    axios.post('http://18.188.101.36/individuals/update/gender/' + user_id, { gender: gender })
       .then((res) => {
         console.log('Gender Update successful: ' + res.data);
         handleClickSnack();
@@ -201,7 +201,7 @@ export default function Profile() {
     e.preventDefault();
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/individuals/update/phone/` + user_id, { phone: phone })
+    axios.post(`http://18.188.101.36/individuals/update/phone/` + user_id, { phone: phone })
       .then((res) => {
         console.log('Phone Update successful: ' + res.data);
         handleClickSnack();
@@ -217,7 +217,7 @@ export default function Profile() {
     e.preventDefault();
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/individuals/update/country/` + user_id, { country: country })
+    axios.post(`http://18.188.101.36/individuals/update/country/` + user_id, { country: country })
       .then((res) => {
         console.log('Country Update successful: ' + res.data);
         handleClickSnack();
@@ -233,7 +233,7 @@ export default function Profile() {
     e.preventDefault();
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/individuals/update/state/` + user_id, { state: state })
+    axios.post(`http://18.188.101.36/individuals/update/state/` + user_id, { state: state })
       .then((res) => {
         console.log('State Update successful: ' + res.data);
         handleClickSnack();

@@ -57,7 +57,7 @@ const CreateForm = (props) => {
         const subject = props.title.toLowerCase();
         const level = user.tutor_level.toLowerCase();
 
-        axios.post(`http://18.188.101.36:5000/${level}/${subject}/add`, data)
+        axios.post(`http://18.188.101.36/${level}/${subject}/add`, data)
             .then(res => {
                 if (res.data) {
                     alert('content created successfully');

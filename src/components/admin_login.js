@@ -100,7 +100,7 @@ const AdminLogin = () => {
 
 
                                                 //check login details
-                                                axios.post(`http://18.188.101.36:5000/admin/login`, loginData)
+                                                axios.post(`http://18.188.101.36/admin/login`, loginData)
                                                     .then(res => {
                                                         if (res.data !== 'failed') {
                                                             context.setUserAuthData(true);

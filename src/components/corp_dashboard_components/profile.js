@@ -168,7 +168,7 @@ export default function Profile() {
     // }
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/corporates/update/email/` + user_id, { email: email })
+    axios.post(`http://18.188.101.36/corporates/update/email/` + user_id, { email: email })
       .then((res) => {
         console.log('Email Update successful: ' + res.data);
         handleClickSnack();
@@ -185,7 +185,7 @@ export default function Profile() {
     e.preventDefault();
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/corporates/update/phone/` + user_id, { phone: phone })
+    axios.post(`http://18.188.101.36/corporates/update/phone/` + user_id, { phone: phone })
       .then((res) => {
         console.log('Phone Update successful: ' + res.data);
         handleClickSnack();
@@ -201,7 +201,7 @@ export default function Profile() {
     e.preventDefault();
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/corporates/update/country/` + user_id, { country: country })
+    axios.post(`http://18.188.101.36/corporates/update/country/` + user_id, { country: country })
       .then((res) => {
         console.log('Country Update successful: ' + res.data);
         handleClickSnack();
@@ -217,7 +217,7 @@ export default function Profile() {
     e.preventDefault();
 
     const user_id = user.id;
-    axios.post(`http://18.188.101.36:5000/corporates/update/state/` + user_id, { state: state })
+    axios.post(`http://18.188.101.36/corporates/update/state/` + user_id, { state: state })
       .then((res) => {
         console.log('State Update successful: ' + res.data);
         handleClickSnack();
