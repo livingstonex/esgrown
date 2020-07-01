@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 const { initClientDbConnection } = require('./util/dbutil');
 
 
@@ -10,6 +11,12 @@ require('dotenv').config();
 //setup express
 const app = express();
 const port = process.env.PORT || 5000;
+
+//Serve Static React Files
+app.use(express.static("../build"));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build", "index.html"));
+});
 
 
 //setup middleware
