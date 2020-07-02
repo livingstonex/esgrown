@@ -103,7 +103,7 @@ const CreateAdmin = () => {
     const checkUsername = (e) => {
         const u = e.target.value;
 
-        axios.post(`http://172.31.25.5:5000/admin/check/username/${u}`)
+        axios.post(`http://13.59.192.18/admin/check/username/${u}`)
             .then(res => {
                 if (res.data.length > 0) {
                     alert(`username ${u} has been taken`)
@@ -157,7 +157,7 @@ const CreateAdmin = () => {
 
         console.log(data);
 
-        axios.post(`http://172.31.25.5:5000/admin/add`, data)
+        axios.post(`http://13.59.192.18/admin/add`, data)
             .then(res => {
                 console.log(res.data);
                 if (res.data) {

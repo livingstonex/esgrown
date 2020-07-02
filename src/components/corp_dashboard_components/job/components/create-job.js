@@ -70,7 +70,7 @@ const CreateJob = ({ show, onHide, closeModal }) => {
         }
 
         //post job to server
-        axios.post(`http://172.31.25.5:5000/jobs/add`, submitData)
+        axios.post(`http://13.59.192.18/jobs/add`, submitData)
             .then(res => {
                 console.log(res.data)
                 if (res.data) {

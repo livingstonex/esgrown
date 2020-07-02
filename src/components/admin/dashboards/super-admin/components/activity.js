@@ -21,7 +21,7 @@ const Activity = () => {
 
     useEffect(() => {
 
-        axios.get(`http://172.31.25.5:5000/admin/country_admins`)
+        axios.get(`http://13.59.192.18/admin/country_admins`)
             .then(res => {
                 if (res.data) {
                     setAdmin(res.data);
@@ -38,7 +38,7 @@ const Activity = () => {
         console.log(id)
 
         //get exercises
-        axios.get(`http://172.31.25.5:5000/excercise/activity/${id}`)
+        axios.get(`http://13.59.192.18/excercise/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setExActivity(res.data)
@@ -46,14 +46,14 @@ const Activity = () => {
             })
             .catch(err => console.log(err));
         //get EAS
-        axios.get(`http://172.31.25.5:5000/servicecontenteas/activity/${id}`)
+        axios.get(`http://13.59.192.18/servicecontenteas/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setEasActivity(res.data)
                 }
             }).catch(err => console.log(err));
         //get EFA
-        axios.get(`http://172.31.25.5:5000/servicecontentefa/activity/${id}`)
+        axios.get(`http://13.59.192.18/servicecontentefa/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setEfaActivity(res.data)
@@ -61,7 +61,7 @@ const Activity = () => {
             }).catch(err => console.log(err));
 
         // get LM 
-        axios.get(`http://172.31.25.5:5000/servicecontentlm/activity/${id}`)
+        axios.get(`http://13.59.192.18/servicecontentlm/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setLmActivity(res.data)
@@ -69,7 +69,7 @@ const Activity = () => {
             }).catch(err => console.log(err));
 
         // get RM 
-        axios.get(`http://172.31.25.5:5000/servicecontentlm/activity/${id}`)
+        axios.get(`http://13.59.192.18/servicecontentlm/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setRmActivity(res.data)

@@ -13,7 +13,7 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
     })
 
     useEffect(() => {
-        axios.get(`http://172.31.25.5:5000/individuals/`)
+        axios.get(`http://13.59.192.18/individuals/`)
             .then(res => {
                 if (res.data.length > 0) {
                     const ind = res.data.filter(st => {
@@ -41,7 +41,7 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
             email: edit.email
         }
         try {
-            const res = await axios.post(`http://172.31.25.5:5000/individuals/staff/update/${edit._id}`, data);
+            const res = await axios.post(`http://13.59.192.18/individuals/staff/update/${edit._id}`, data);
             console.log(res.dat);
             closeModal()
 
