@@ -52,7 +52,7 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
         }
 
         // console.log(subData);
-        axios.post(`http://13.59.192.18/corporatesubscriptions/add`, subData)
+        axios.post(`http://13.59.192.18/api/corporatesubscriptions/add`, subData)
             .then(res => {
                 if (res.data) {
                     closeModal();
@@ -91,7 +91,7 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
                     ref: response.reference
                 }
 
-                axios.post(`http://13.59.192.18/corporatesubscriptions/update/ref/${user.id}`, data)
+                axios.post(`http://13.59.192.18/api/corporatesubscriptions/update/ref/${user.id}`, data)
                     .then(res => {
                         let lS = JSON.parse(sessionStorage.getItem('key'));
                         lS.sub_status_rm = client[0].status;
@@ -102,7 +102,7 @@ const RMSubForm = ({ show, onHide, closeModal }) => {
                     })
                     .catch(err => console.log(err));
 
-                axios.post(`http://13.59.192.18/corporates/update/status/${user.id}`, data)
+                axios.post(`http://13.59.192.18/api/corporates/update/status/${user.id}`, data)
                     .then(res => console.log(res.data)).catch(err => console.log(err))
 
             })

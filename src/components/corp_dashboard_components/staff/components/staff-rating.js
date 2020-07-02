@@ -38,7 +38,7 @@ const StaffRating = ({ show, onHide, details, closeModal }) => {
         }
 
         try {
-            const res = await axios.post(`http://13.59.192.18/rate/staff/add`, data);
+            const res = await axios.post(`http://13.59.192.18/api/rate/staff/add`, data);
 
             console.log(res.data);
             toast(res.data, 'success')

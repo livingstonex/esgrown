@@ -31,13 +31,13 @@
 
 //         //make request to api to get sub status
 //         //eas
-//         // axios.get(`http://13.59.192.18/subscriptioneas/${userData.id}`)
+//         // axios.get(`http://13.59.192.18/api/subscriptioneas/${userData.id}`)
 //         //     .then(res => {
 //         //         res.data[0].sub_status ? setPageEAS(1) : setPageEAS(2)
 //         //     }).catch(err => console.log(err));
 
 //         //efa
-//         // axios.get(`http://13.59.192.18/subscriptionefa/${userData.id}`)
+//         // axios.get(`http://13.59.192.18/api/subscriptionefa/${userData.id}`)
 //         //     .then(res => {
 
 //         //         res.data[0].sub_status ? setPageEFA(1) : setPageEFA(2)
@@ -46,14 +46,14 @@
 //         //     .catch(err => console.log(err))
 
 //         // //lm
-//         // axios.get(`http://13.59.192.18/subscriptionlm/${userData.id}`)
+//         // axios.get(`http://13.59.192.18/api/subscriptionlm/${userData.id}`)
 //         //     .then(res => {
 //         //         res.data[0].sub_status ? setPageLM(1) : setPageLM(2);
 //         //     })
 //         //     .catch(err => console.log(err))
 
 //         // //rm
-//         axios.get(`http://13.59.192.18/subscriptionrm/${userData.id}`)
+//         axios.get(`http://13.59.192.18/api/subscriptionrm/${userData.id}`)
 //             .then(res => {
 //                 res.data[0].sub_status ? setPageRM(1) : setPageRM(2);
 //             })

@@ -24,7 +24,7 @@ const UpdateCorp = ({ show, onHide, closeModal, service }) => {
         setUser(user)
 
 
-        axios.get(`http://13.59.192.18/corporatesubscriptions/${user.id}`)
+        axios.get(`http://13.59.192.18/api/corporatesubscriptions/${user.id}`)
             .then(res => {
                 // if (res.data.length > 0) {
                 //     const data = res.data.filter(r => {
@@ -60,7 +60,7 @@ const UpdateCorp = ({ show, onHide, closeModal, service }) => {
             email: email,
         }
 
-        axios.post(`http://13.59.192.18/corporatesubscriptions/update/email/${user.id}`, data)
+        axios.post(`http://13.59.192.18/api/corporatesubscriptions/update/email/${user.id}`, data)
             .then(res => {
                 alert(res.data);
                 setSpinner(false)
@@ -89,7 +89,7 @@ const UpdateCorp = ({ show, onHide, closeModal, service }) => {
         }
 
         //make axios call an update ref and sub status
-        axios.post(`http://13.59.192.18/corporatesubscriptions/update/ref/${userr.id}`, data)
+        axios.post(`http://13.59.192.18/api/corporatesubscriptions/update/ref/${userr.id}`, data)
             .then(res => alert('Your payment has been received'))
             .catch(err => console.log(err));
     }

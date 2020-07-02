@@ -25,7 +25,7 @@ class RmUpdateForm extends Component {
         };
 
         //make axios request and update
-        axios.post(`http://13.59.192.18/subscriptionrm/update/${this.state.user_id}`, data)
+        axios.post(`http://13.59.192.18/api/subscriptionrm/update/${this.state.user_id}`, data)
             .then(response => {
                 if (response.status == 200) {
                     this.setState({ message: 'Subscription details updated successful' })
@@ -48,7 +48,7 @@ class RmUpdateForm extends Component {
 
         console.log(userData);
 
-        // axios.get(`http://13.59.192.18/subscriptionrm/${userData.id}`)
+        // axios.get(`http://13.59.192.18/api/subscriptionrm/${userData.id}`)
         //     .then(response => this.setState({
         //         highestlevelOfEducation: response.data[0].highest_level_of_education,
         //         intendedStudy: response.data[0].field_of_training,

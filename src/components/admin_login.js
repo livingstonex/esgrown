@@ -100,7 +100,7 @@ const AdminLogin = () => {
 
 
                                                 //check login details
-                                                axios.post(`http://13.59.192.18/admin/login`, loginData)
+                                                axios.post(`http://13.59.192.18/api/admin/login`, loginData)
                                                     .then(res => {
                                                         if (res.data !== 'failed') {
                                                             context.setUserAuthData(true);
