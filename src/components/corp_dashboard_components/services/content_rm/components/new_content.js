@@ -84,7 +84,7 @@ const NewContent = ({ reloadContentLog }) => {
             }
 
 
-            axios.post(`http://18.188.101.36:5000/corpservicecontent/add`, submitData)
+            axios.post(`http://172.31.25.5:5000/corpservicecontent/add`, submitData)
                 .then(res => {
                     console.log(res.data)
                     setSpinner(false)
@@ -169,7 +169,7 @@ const NewContent = ({ reloadContentLog }) => {
     // Get all jobs by corpid
     function getAllJobs(corpid) {
         try {
-            axios.get(`http://18.188.101.36:5000/jobs/${corpid}`)
+            axios.get(`http://172.31.25.5:5000/jobs/${corpid}`)
                 .then(jobs => {
                     // console.log(jobs.data[0].jobs);
                     setJobs(jobs.data[0].jobs);

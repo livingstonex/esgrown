@@ -37,7 +37,7 @@ class EasUpdateForm extends Component {
 
 
         //make axios request to update db
-        axios.post(`http://18.188.101.36:5000/subscriptioneas/update/${id}`, data)
+        axios.post(`http://172.31.25.5:5000/subscriptioneas/update/${id}`, data)
             .then(response => {
                 if (response.status === 200) {
                     this.setState({ message: 'Subscription details updated successful' })
@@ -56,7 +56,7 @@ class EasUpdateForm extends Component {
         this.setState({ user_id: userData.id });
 
 
-        axios.get(`http://18.188.101.36:5000/subscriptioneas/${userData.id}`)
+        axios.get(`http://172.31.25.5:5000/subscriptioneas/${userData.id}`)
             .then(res => this.setState({
                 levelOfEducation: res.data[0].levelofeducation,
                 intendedStudy: res.data[0].field_of_intended_study,

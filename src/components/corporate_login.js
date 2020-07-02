@@ -75,7 +75,7 @@ export default class CorporateLogin extends Component {
                                                 }
 
                                                 //Make a post to the api route for login
-                                                axios.post('http://18.188.101.36:5000/corporates/login_corporate_email', Corporate_User)
+                                                axios.post('http://172.31.25.5:5000/corporates/login_corporate_email', Corporate_User)
                                                     .then(res => {
                                                         //console.log(res.data[0].password);
                                                         if (res.data.length > 0) {
@@ -96,7 +96,7 @@ export default class CorporateLogin extends Component {
                                                                 hash_password: res.data[0].password,
                                                                 normal_password: Corporate_User.password
                                                             }
-                                                            axios.post('http://18.188.101.36:5000/corporates/login_corporate', corp_user_data)
+                                                            axios.post('http://172.31.25.5:5000/corporates/login_corporate', corp_user_data)
                                                                 .then(res => {
                                                                     console.log(res.data);
                                                                     if (res.data == 1) {
