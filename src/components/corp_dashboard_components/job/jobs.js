@@ -29,7 +29,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
         //get all jobs
-        axios.get(`http://13.59.192.18/api/jobs/${user.id}`)
+        axios.get(`http://localhost:5000/api/jobs/${user.id}`)
             .then(res => {
                 if (res.data.length !== 0) {
                     setJobs(res.data);
@@ -50,7 +50,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
     const closeModal = () => {
         setShow(false);
 
-        axios.get(`http://13.59.192.18/api/jobs/${user.id}`)
+        axios.get(`http://localhost:5000/api/jobs/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     setJobs(res.data);

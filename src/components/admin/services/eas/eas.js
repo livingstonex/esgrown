@@ -13,12 +13,12 @@ const EAS = () => {
     const [easlog, setEaslog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://13.59.192.18/api/servicecontenteas/add`;
+    const newContentUrl = `http://localhost:5000/api/servicecontenteas/add`;
 
 
     useEffect(() => {
 
-        axios.get(`http://13.59.192.18/api/servicecontenteas/`)
+        axios.get(`http://localhost:5000/api/servicecontenteas/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setEaslog(res.data);

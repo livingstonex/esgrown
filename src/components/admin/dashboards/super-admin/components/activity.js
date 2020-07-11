@@ -21,7 +21,7 @@ const Activity = () => {
 
     useEffect(() => {
 
-        axios.get(`http://13.59.192.18/api/admin/country_admins`)
+        axios.get(`http://localhost:5000/api/admin/country_admins`)
             .then(res => {
                 if (res.data) {
                     setAdmin(res.data);
@@ -38,7 +38,7 @@ const Activity = () => {
         console.log(id)
 
         //get exercises
-        axios.get(`http://13.59.192.18/api/excercise/activity/${id}`)
+        axios.get(`http://localhost:5000/api/excercise/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setExActivity(res.data)
@@ -46,14 +46,14 @@ const Activity = () => {
             })
             .catch(err => console.log(err));
         //get EAS
-        axios.get(`http://13.59.192.18/api/servicecontenteas/activity/${id}`)
+        axios.get(`http://localhost:5000/api/servicecontenteas/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setEasActivity(res.data)
                 }
             }).catch(err => console.log(err));
         //get EFA
-        axios.get(`http://13.59.192.18/api/servicecontentefa/activity/${id}`)
+        axios.get(`http://localhost:5000/api/servicecontentefa/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setEfaActivity(res.data)
@@ -61,7 +61,7 @@ const Activity = () => {
             }).catch(err => console.log(err));
 
         // get LM 
-        axios.get(`http://13.59.192.18/api/servicecontentlm/activity/${id}`)
+        axios.get(`http://localhost:5000/api/servicecontentlm/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setLmActivity(res.data)
@@ -69,7 +69,7 @@ const Activity = () => {
             }).catch(err => console.log(err));
 
         // get RM 
-        axios.get(`http://13.59.192.18/api/servicecontentlm/activity/${id}`)
+        axios.get(`http://localhost:5000/api/servicecontentlm/activity/${id}`)
             .then(res => {
                 if (res.data) {
                     setRmActivity(res.data)

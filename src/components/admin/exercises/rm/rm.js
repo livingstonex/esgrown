@@ -18,7 +18,7 @@ const RMexercises = () => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
         //get exercises using corp id
-        axios.get(`http://13.59.192.18/api/excercise/${user.id}`)
+        axios.get(`http://localhost:5000/api/excercise/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     // const rmEx = res.data.filter((ex) => {
@@ -38,7 +38,7 @@ const RMexercises = () => {
     const refreshContentLog = () => {
 
         //get exercises then using exercise id
-        axios.get(`http://13.59.192.18/api/excercise/${user.id}`)
+        axios.get(`http://localhost:5000/api/excercise/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     const rmEx = res.data.filter((ex) => {

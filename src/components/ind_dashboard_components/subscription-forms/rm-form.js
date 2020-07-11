@@ -55,7 +55,7 @@ export default function Form(props) {
 
         try {
             setSpinner(true);
-            axios.post('http://13.59.192.18/api/subscriptionrm/add', SubObject)
+            axios.post('http://localhost:5000/api/subscriptionrm/add', SubObject)
                 .then((res) => {
                     console.log(res.data);
                     setSpinner(false);
@@ -87,7 +87,7 @@ export default function Form(props) {
         setUserId(userId);
 
         //get sub status for user
-        // axios.get(`http://13.59.192.18/api/subscriptionrm/${userData.id}`)
+        // axios.get(`http://localhost:5000/api/subscriptionrm/${userData.id}`)
         //     .then(res => {
         //         if (res.data[0].ref != null) {
         //             // setSubStatus(res.data[0].sub_status);
@@ -131,13 +131,13 @@ export default function Form(props) {
                 }
 
                 //update eas substatus
-                axios.post(`http://13.59.192.18/api/subscriptionrm/update/rmref/${userId}`, data)
+                axios.post(`http://localhost:5000/api/subscriptionrm/update/rmref/${userId}`, data)
                     .then(res => console.log(res))
                     .catch(err => console.log(err))
 
 
                 //update user details
-                axios.post(`http://13.59.192.18/api/individuals/update/substatus/${userId}`, { sub_status_rm: client[0].status, })
+                axios.post(`http://localhost:5000/api/individuals/update/substatus/${userId}`, { sub_status_rm: client[0].status, })
                     .then(res => {
                         const globalUser = JSON.parse(sessionStorage.getItem('key'));
 

@@ -13,13 +13,13 @@ const EAS = () => {
     const [efalog, setEfalog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://13.59.192.18/api/servicecontentefa/add`;
+    const newContentUrl = `http://localhost:5000/api/servicecontentefa/add`;
 
 
 
     useEffect(() => {
 
-        axios.get(`http://13.59.192.18/api/servicecontentefa/`)
+        axios.get(`http://localhost:5000/api/servicecontentefa/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setEfalog(res.data);

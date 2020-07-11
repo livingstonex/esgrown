@@ -34,7 +34,7 @@ const RMService = () => {
         }
 
 
-        // axios.get(`http://13.59.192.18/api/servicecontentrm/`)
+        // axios.get(`http://localhost:5000/api/servicecontentrm/`)
         //     .then(res => {
         //         if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
 
@@ -138,7 +138,7 @@ const RMService = () => {
         // get contents from rm service content endpoint, based on job id
         try {
             setLoading(true);
-            axios.get(`http://13.59.192.18/api/corpservicecontent/${id}`)
+            axios.get(`http://localhost:5000/api/corpservicecontent/${id}`)
                 .then(res => {
                     setLoading(false);
                     setData(res.data);

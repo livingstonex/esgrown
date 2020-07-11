@@ -4,9 +4,6 @@ import axios from 'axios';
 import GenServiceCard from './gen_service_card';
 
 
-
-
-
 const EASService = () => {
 
     const [spinner, setSpinner] = useState(true)
@@ -44,7 +41,7 @@ const EASService = () => {
 
             }).catch(err => console.log(err));
 
-        // axios.get(`http://13.59.192.18/api/servicecontenteas/`)
+        // axios.get(`http://localhost:5000/api/servicecontenteas/`)
         //     .then(res => {
 
         //         if (user.sub_status_eas === 'active') {

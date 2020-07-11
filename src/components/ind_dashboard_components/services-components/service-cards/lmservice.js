@@ -16,7 +16,7 @@ const LMService = () => {
     //get data from api
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
-        axios.get(`http://13.59.192.18/api/servicecontentlm/`)
+        axios.get(`http://localhost:5000/api/servicecontentlm/`)
             .then(res => {
                 if (user.status === "individual" && user.org_type === "school" && user.sub_status === "active") {
 
