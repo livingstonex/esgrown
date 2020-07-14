@@ -12,11 +12,11 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// //Serve Static React Files
-// app.use(express.static("../build"));
-// app.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../build", "index.html"));
-// });
+//Serve Static React Files
+app.use(express.static("../build"));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build", "index.html"));
+});
 
 
 //setup middleware
