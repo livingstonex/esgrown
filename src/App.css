@@ -1,0 +1,61 @@
+.App {
+  text-align: center;
+}
+
+.bg{
+  /* background-image: url('./img/bg1.jpg');   no-repeat center center fixed */
+  background: url('./img/banner.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Login Button */
+.btn_submit{
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
+  color: #FFFFFF;
+  /* margin-top: 30px; */
+  text-align: center;
+  /* 53a6e7 linear-gradient(268.61deg, #1A1CF8 27.36%, #0EB3F3 77.37%)*/
+  background-color: #53a6e7;
+  border-color: #53a6e7;
+  opacity: 1;
+  }
+
+
