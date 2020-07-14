@@ -18,7 +18,7 @@ const RMexercises = () => {
         const comp = JSON.parse(sessionStorage.getItem('key'));
         setUser(comp);
         //get exercises then questions using exercise id
-        axios.get(`http://localhost:5000/api/excercise/${comp.id}`)
+        axios.get(`http://localhost:5000/excercise/${comp.id}`)
             .then(res => {
                 if (res.data) {
                     setEx(res.data);
@@ -32,7 +32,7 @@ const RMexercises = () => {
     const refreshContentLog = () => {
 
         //get exercises then using exercise id
-        axios.get(`http://localhost:5000/api/excercise/${user.id}`)
+        axios.get(`http://localhost:5000/excercise/${user.id}`)
             .then(res => {
                 if (res.data.length > 0) {
                     setEx(res.data);

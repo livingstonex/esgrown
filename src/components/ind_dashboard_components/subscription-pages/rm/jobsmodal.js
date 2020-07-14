@@ -20,7 +20,7 @@ const JobsModal = ({ show, onHide, closeModal }) => {
         console.log(user)
 
         //make api call to get all jobs and set in state
-        axios.get(`http://localhost:5000/api/jobs`)
+        axios.get(`http://localhost:5000/jobs`)
             .then(res => {
                 if (res.data.length > 0) {
                     setData(res.data)
@@ -31,7 +31,7 @@ const JobsModal = ({ show, onHide, closeModal }) => {
 
 
         //check to see if user has applied for max jobs allowed
-        axios.get(`http://localhost:5000/api/applications/check/${user.id}`)
+        axios.get(`http://localhost:5000/applications/check/${user.id}`)
             .then(res => {
                 if (res.data.jobs_applied_for.length > 1) {
                     setDisabled(true)
@@ -82,7 +82,7 @@ const JobsModal = ({ show, onHide, closeModal }) => {
 
         try {
             setLoading(true)
-            axios.post(`http://localhost:5000/api/applications/add`, postData)
+            axios.post(`http://localhost:5000/applications/add`, postData)
                 .then(res => {
                     setLoading(false);
                     toast(res.data.msg, 'info')

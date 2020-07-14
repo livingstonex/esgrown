@@ -18,7 +18,7 @@ const Home = () => {
         setUser(user)
 
         setSpinner(true)
-        axios.post(`http://localhost:5000/api/admin/admins/${user.country}`)
+        axios.post(`http://localhost:5000/admin/admins/${user.country}`)
             .then(res => {
                 if (res.data) {
                     setAdmins(res.data);

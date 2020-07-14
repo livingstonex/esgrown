@@ -38,7 +38,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
             }
         }
 
-        axios.post(`http://localhost:5000/api/rate/teacher/add`, data)
+        axios.post(`http://localhost:5000/rate/teacher/add`, data)
             .then(res => {
                 if (res.data === 1) {
                     toast(`teacher has already been rated for the week`, "warn");

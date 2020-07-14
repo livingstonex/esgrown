@@ -106,7 +106,7 @@ export default class IndividualSignUp extends Component {
             }
 
 
-            axios.post('http://localhost:5000/api/corporates/check_corp_email', corporate)
+            axios.post('http://localhost:5000/corporates/check_corp_email', corporate)
                 .then(res => {
                     if (res.data.length > 0) {
                         //display a flash message that user already exists
@@ -120,7 +120,7 @@ export default class IndividualSignUp extends Component {
                             country: '',
                         });
                     } else {
-                        axios.post('http://localhost:5000/api/corporates/add', corporate)
+                        axios.post('http://localhost:5000/corporates/add', corporate)
                             .then(res => {
                                 const Global_CorpUser = {
                                     isLogged: true,

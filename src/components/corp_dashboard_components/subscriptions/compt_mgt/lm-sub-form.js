@@ -34,7 +34,7 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
         setUser(userr)
 
 
-        axios.get(`http://localhost:5000/api/individuals/staff/${userr.id}`)
+        axios.get(`http://localhost:5000/individuals/staff/${userr.id}`)
             .then(res => {
                 const unsubscribedStaff = res.data.filter(staff => {
                     return staff.sub_status_compt_mgt === 'inactive' || staff.sub_status_compt_mgt === 'completed';
@@ -92,11 +92,11 @@ const LMSubForm = ({ show, onHide, closeModal }) => {
 
         //update substatus of paid staff
         staff.map(st => {
-            axios.post(`http://localhost:5000/api/individuals/update/substatus/${st._id}`, data)
+            axios.post(`http://localhost:5000/individuals/update/substatus/${st._id}`, data)
                 .then(res => console.log(res.data))
                 .catch(err => console.log(err));
 
-            axios.post(`http://localhost:5000/api/competence/management/add`, {
+            axios.post(`http://localhost:5000/competence/management/add`, {
                 user_id: st._id,
                 company_id: user.id,
                 org_type: user.org_type,

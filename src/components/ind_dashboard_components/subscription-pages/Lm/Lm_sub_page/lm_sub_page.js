@@ -20,7 +20,7 @@ class LmUpdateForm extends Component {
             highest_level_of_education: this.state.highestlevelOfEducation
         }
 
-        axios.post(`http://localhost:5000/api/subscriptionlm/update/${this.state.user_id}`, data)
+        axios.post(`http://localhost:5000/subscriptionlm/update/${this.state.user_id}`, data)
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
@@ -37,7 +37,7 @@ class LmUpdateForm extends Component {
 
         this.setState({ user_id: userData.id });
 
-        axios.get(`http://localhost:5000/api/subscriptionlm/${userData.id}`)
+        axios.get(`http://localhost:5000/subscriptionlm/${userData.id}`)
             .then(response => this.setState({
                 highestlevelOfEducation: response.data[0].highest_level_of_education,
                 natureOfBusiness: response.data[0].nature_of_work_business

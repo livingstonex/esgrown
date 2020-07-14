@@ -13,13 +13,13 @@ const RM = () => {
     const [rmlog, setRmlog] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    const newContentUrl = `http://localhost:5000/api/servicecontentrm/add`;
+    const newContentUrl = `http://localhost:5000/servicecontentrm/add`;
 
 
 
     useEffect(() => {
 
-        axios.get(`http://localhost:5000/api/servicecontentrm/`)
+        axios.get(`http://localhost:5000/servicecontentrm/`)
             .then(res => {
                 if (res.data.length > 0) {
                     setRmlog(res.data);
