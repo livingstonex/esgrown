@@ -41,7 +41,6 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
     }, []);
 
 
-
     console.log(jobs);
 
     //close jobs create modal and reload jobs

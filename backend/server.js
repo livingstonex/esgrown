@@ -91,7 +91,7 @@ const teacherRating = require('./routes/ratings/teacher-ratings');
 const staffRating = require('./routes/ratings/staff-rating');
 const comptMgtRoute = require('./routes/corporate/competence/compt_mgt');
 const comptMgtService = require('./routes/service-content/servicecontent-compt-mgt');
-const CorpServiceContent = require('./routes/corporate/corp_service_content/corp_service_content');
+const CorpServiceContent = require('./routes/corp_service_content/corp_service_content');
 
 
 

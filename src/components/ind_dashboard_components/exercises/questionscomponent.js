@@ -45,7 +45,6 @@ class QuestionsComponent extends Component {
     componentDidMount() {
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
 
-
         //get questions
         axios.post(`http://localhost:5000/question/${this.props.exerciseId}`)
             .then(res => {
