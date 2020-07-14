@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RMexercisesLog from '../../../admin/exercises/components/exercise_log';
 import RMexercisesNewContent from '../../../admin/exercises/components/new_exercise';
@@ -42,7 +42,7 @@ const RMexercises = () => {
             .catch(err => console.log(err));
 
     }
-    
+
     return (
         <>
             <div className="container">

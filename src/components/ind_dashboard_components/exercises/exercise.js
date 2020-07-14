@@ -4,7 +4,7 @@ import { Card, CardActionArea, Typography, CardContent, CardActions } from '@mat
 import { Spinner } from 'react-bootstrap';
 import QuestionComponentRM from './questionscomponent';
 import QuestionComponentLM from './questionscomponent';
-import toast  from '../../../util/toast';
+import toast from '../../../util/toast';
 
 
 
@@ -58,7 +58,7 @@ const Exercises = ({ setRmExercisePage }) => {
 
         }
 
-        
+
 
 
         // //rm exercises
@@ -126,6 +126,7 @@ const Exercises = ({ setRmExercisePage }) => {
     }
  
 
+
     return (
         <>
             <div className="container">
@@ -141,7 +142,7 @@ const Exercises = ({ setRmExercisePage }) => {
                                 </Typography>
                                 {/* map through jobs and display cards  */}
                                 <div className="d-flex justify-content-around">
-                                    { mapJobs() }
+                                    {mapJobs()}
                                 </div>
                             </CardContent>
 
@@ -203,21 +204,21 @@ const Exercises = ({ setRmExercisePage }) => {
 
     function mapJobs() {
         return exId.map(item => (
-                    <Card className="mt-5" style={{ width: '35%' }}>
-                        <CardActionArea>
-                            <CardContent >
-                                <Typography gutterBottom variant="" component="p">
-                                    {item.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
+            <Card className="mt-5" style={{ width: '35%' }}>
+                <CardActionArea>
+                    <CardContent >
+                        <Typography gutterBottom variant="" component="p">
+                            {item.title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
                             <div className="btn btn-info bt-sm" onClick={() => setRmExercisePage(item)} disabled={{}} >Take Exercise </div>
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                        </CardActions>
-                    </Card>
-                ));
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                <CardActions>
+                </CardActions>
+            </Card>
+        ));
     }
 
 

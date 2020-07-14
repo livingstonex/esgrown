@@ -43,7 +43,7 @@ class RmUpdateForm extends Component {
         this.setState({ user_id: userData.id });
 
         if (userData.sub_status_rm == 'active') {
-            this.setState({sub_status: 'active'})
+            this.setState({ sub_status: 'active' })
         }
 
         console.log(userData);
@@ -59,7 +59,7 @@ class RmUpdateForm extends Component {
     }
 
     closeModal = () => {
-        this.setState({jobsModal: false})
+        this.setState({ jobsModal: false })
     }
 
 
@@ -117,10 +117,10 @@ class RmUpdateForm extends Component {
                         <Button className="btn btn-sm btn-info" onClick={this.handleUpdate}>Update</Button>
                         {
                             this.state.sub_status == 'active' ?
-                            <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal })}>Add Job </button>
+                                <button className="btn btn-sm btn-info" style={{ background: '#21a5e7', border: '#21a5e7' }} onClick={() => this.setState({ jobsModal: !this.state.jobsModal })}>Add Job </button>
                                 : ""
                         }
-                        
+
                     </ModalFooter>
                 </Modal>
                 <JobsModal onHide={() => this.setState({ jobsModal: false })} show={this.state.jobsModal} closeModal={() => this.closeModal()} />

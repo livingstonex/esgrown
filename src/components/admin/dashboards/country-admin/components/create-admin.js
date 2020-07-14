@@ -26,12 +26,12 @@ const CreateAdmin = () => {
         generalKnowledge: false
     });
     const [juniorTutorPrivilege, setJuniorTutorPrivilege] = useState({
-            mathematics: false,
-            socialStudies: false,
-            integratedScience: false,
-            businessStudies: false,
-            generalKnowledge: false,
-            history: false
+        mathematics: false,
+        socialStudies: false,
+        integratedScience: false,
+        businessStudies: false,
+        generalKnowledge: false,
+        history: false
     });
     const [adminType, setAdminType] = useState('');
 
@@ -126,7 +126,7 @@ const CreateAdmin = () => {
         const assignedJuniorTutorPrivileges = Object.keys(juniorTutorPrivilege).filter(tutor => {
             return juniorTutorPrivilege[tutor] === true;
         });
-        
+
         let privileges;
 
         if (adminType === "Admin") {

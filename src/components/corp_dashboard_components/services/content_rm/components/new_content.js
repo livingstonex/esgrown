@@ -6,7 +6,7 @@ import toast from '../../../../../util/toast';
 
 
 
-const NewContent = ({ reloadContentLog}) => {
+const NewContent = ({ reloadContentLog }) => {
 
     const [data, setData] = useState({
         title: '',
@@ -103,10 +103,10 @@ const NewContent = ({ reloadContentLog}) => {
                 job_id: '',
                 job_deadline: ''
             })
-            
+
         }
 
-        
+
 
     }
 

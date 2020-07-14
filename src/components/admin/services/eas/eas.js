@@ -28,7 +28,7 @@ const EAS = () => {
                     setSpinner(false)
                 }
             }).catch(err => alert('oops ' + err))
-    },[])
+    }, [])
 
     return (
         <>

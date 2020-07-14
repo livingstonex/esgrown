@@ -83,7 +83,7 @@ class EasUpdateForm extends Component {
     render() {
         const { isOpen, toggle } = this.props;
 
-        const sub_statusColor = this.state.sub_status === 'active' ? '#97ba0d':'#e68723'  ;
+        const sub_statusColor = this.state.sub_status === 'active' ? '#97ba0d' : '#e68723';
 
         const buttonText = this.state.sub_status === 'active' ? 'PAID' : 'PAY';
 
@@ -150,7 +150,7 @@ class EasUpdateForm extends Component {
                     <ModalFooter>
                         {this.state.message === 'Subscription details updated successful' ? <span style={{ color: 'green' }}>{this.state.message}</span> : <span style={{ color: 'red' }}>{this.state.message}</span>}
                         {' '}{''}
-                        <Button style={{ background: '#1c8496', border:'#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
+                        <Button style={{ background: '#1c8496', border: '#1c8496', color: 'white' }} onClick={this.handleUpdate}>Update</Button>
                     </ModalFooter>
                 </Modal>
             </div>

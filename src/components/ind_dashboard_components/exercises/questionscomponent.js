@@ -45,6 +45,7 @@ class QuestionsComponent extends Component {
     componentDidMount() {
         // this.intervalId = setInterval(this.timer.bind(this), 1000);
 
+
         //get questions
         axios.post(`http://localhost:5000/question/${this.props.exerciseId}`)
             .then(res => {
@@ -73,12 +74,12 @@ class QuestionsComponent extends Component {
     }
 
     setPage = () => {
-        this.setState({page: 3})
+        this.setState({ page: 3 })
     }
 
     handelUserAns = (e) => {
         //check if user ans is correct ie user ans should be equal to question correct ans. if correct user score is equal to quetion.score else 0. add user score to the posted object
-        if (e.target.type == 'radio') {
+        if (e.target.type === 'radio') {
             const q = e.target.parentNode.parentNode.parentNode.firstChild.value;
             const a = e.target.value;
             const score = e.target.getAttribute('data-score');
@@ -131,7 +132,7 @@ class QuestionsComponent extends Component {
 
 
     submitAns = () => {
-        //attache corp id along with ans
+        //attach corp id along with ans
         const userData = JSON.parse(sessionStorage.getItem('key'));
         const { name, email } = userData;
 

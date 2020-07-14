@@ -480,7 +480,6 @@ export default function MiniDrawer() {
     handleClose();
   }
 
-  
 
   //Drawer Open and  Close Functions
   const handleDrawerOpen = () => {
@@ -792,7 +791,7 @@ export default function MiniDrawer() {
         <main className={classes.content}>
 
           {
-            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises setRmExercisePage={setRmExercisePage} /> : (page == 11) ? <CompetenceMgt /> : (page === 10) ? <QuestionComponent exercise={RMEx}/> : ""}
+            (page == 0) ? <Account /> : (page == 1) ? <Profile /> : (page == 2) ? <Subscription /> : (page == 3) ? <EASServicePage /> : (page == 4) ? <EFAServicePage /> : (page == 5) ? <RMServicePage /> : (page == 6) ? <LMServicePage /> : (page == 7) ? <Exercises setRmExercisePage={setRmExercisePage} /> : (page == 11) ? <CompetenceMgt /> : (page === 10) ? <QuestionComponent exercise={RMEx} /> : ""}
         </main>
       </div>
     </>

@@ -10,7 +10,7 @@ const ExercisesLog = ({ ex, spinner, title }) => {
 
     const [ques, setQues] = useState([]);
     const [quesSpinner, setQuesSpinner] = useState(false)
-    
+
 
     const getQuestions = (e) => {
 
@@ -44,7 +44,7 @@ const ExercisesLog = ({ ex, spinner, title }) => {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey={data._id}>
                                         <Card.Body>
-                                            <span style={{ color: '#97BA10', fontStyle:'italic' }}>Number of Questions: {ques.length}</span>
+                                            <span style={{ color: '#97BA10', fontStyle: 'italic' }}>Number of Questions: {ques.length}</span>
                                             <hr />
                                             {quesSpinner ? <Spinner size="sm" animation="grow" />
                                                 :
@@ -62,7 +62,7 @@ const ExercisesLog = ({ ex, spinner, title }) => {
                                                                     );
                                                                 })}
                                                             </ul>
-                                                            <span style={{ color: '#97BA10'}}>{"correct answer: " + q.correct_ans}</span>
+                                                            <span style={{ color: '#97BA10' }}>{"correct answer: " + q.correct_ans}</span>
                                                             <br />
                                                             <span style={{ color: '#97BA10' }}>{q.score + " marks"}</span>
                                                             <hr />

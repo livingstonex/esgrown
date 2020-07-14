@@ -83,9 +83,10 @@ const LMService = () => {
         <React.fragment>
             {
                 spinner ? <div className="d-flex justify-content-center"><i className="fa fa-spinner fa-spin"></i></div> : data.map((data) => {
-                        return (
-                            <GenServiceCard data={data}/>
-                        )})
+                    return (
+                        <GenServiceCard data={data} />
+                    )
+                })
             }
         </React.fragment>
     );

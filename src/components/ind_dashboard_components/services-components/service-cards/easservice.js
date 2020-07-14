@@ -4,9 +4,6 @@ import axios from 'axios';
 import GenServiceCard from './gen_service_card';
 
 
-
-
-
 const EASService = () => {
 
     const [spinner, setSpinner] = useState(true)
@@ -52,14 +49,14 @@ const EASService = () => {
         //             //make a call to the intended study api and get all stored intended study
         //             // if user level of education == res.data.level of edu && intended study == res.data.intended study
         //             // setData(res.data.subjects)
-                        //when he clicks on any of the subjects, make an api call to get content for each subject
+        //when he clicks on any of the subjects, make an api call to get content for each subject
         //         }
 
 
         //         setSpinner(false);
         //     })
         //     .catch(err => console.log(err))
-    }, []);
+    }, [chunkify]);
 
     return (
         // <div className="container">

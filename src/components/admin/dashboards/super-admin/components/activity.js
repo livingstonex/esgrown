@@ -15,8 +15,8 @@ const Activity = () => {
     const [lmActivity, setLmActivity] = useState([]);
     const [rmActivity, setRmActivity] = useState([]);
 
-    
-    
+
+
 
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const Activity = () => {
                     setEfaActivity(res.data)
                 }
             }).catch(err => console.log(err));
-        
+
         // get LM 
         axios.get(`http://localhost:5000/servicecontentlm/activity/${id}`)
             .then(res => {
@@ -67,7 +67,7 @@ const Activity = () => {
                     setLmActivity(res.data)
                 }
             }).catch(err => console.log(err));
-        
+
         // get RM 
         axios.get(`http://localhost:5000/servicecontentlm/activity/${id}`)
             .then(res => {
@@ -84,7 +84,7 @@ const Activity = () => {
             {
                 spinner ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> :
                     <div className="container mt-5 pt-4">
-                        <div className="d-flex justify-content-center"><h5 style={{fontFamily:'quicksand', color:'grey'}}>Country Admin's Activities</h5></div>
+                        <div className="d-flex justify-content-center"><h5 style={{ fontFamily: 'quicksand', color: 'grey' }}>Country Admin's Activities</h5></div>
                         <div className="row">
 
                             {admins.map(ad => {

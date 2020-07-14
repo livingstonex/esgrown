@@ -29,7 +29,7 @@ const StaffRating = ({ show, onHide, details, closeModal }) => {
             staff_ratings: {
                 staff_id: details._id,
                 staff_name: details.fullname,
-                staff_email:details.email,
+                staff_email: details.email,
                 staff_phone: details.phone,
                 civility: rating.civility,
                 professionalism: rating.professionalism,
@@ -41,7 +41,7 @@ const StaffRating = ({ show, onHide, details, closeModal }) => {
             const res = await axios.post(`http://localhost:5000/rate/staff/add`, data);
 
             console.log(res.data);
-            toast(res.data,'success')
+            toast(res.data, 'success')
             closeModal()
 
         } catch (e) {

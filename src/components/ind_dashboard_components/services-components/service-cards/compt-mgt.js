@@ -26,7 +26,7 @@ const EASService = () => {
                         const teacherData = res.data.filter(td => {
                             return td.user_class === 'teacher'
                         })
-                        
+
                         setData(teacherData);
 
                     } else {
@@ -37,7 +37,7 @@ const EASService = () => {
                 .catch(err => console.log(err))
         }
 
-        
+
     }, []);
 
     return (

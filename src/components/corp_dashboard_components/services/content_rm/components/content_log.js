@@ -11,7 +11,7 @@ const Contentlog = () => {
     const [user, setUser] = useState([]);
     const [spinner, setSpinner] = useState(true);
 
-    useEffect(() => { 
+    useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
 
@@ -25,12 +25,11 @@ const Contentlog = () => {
                 console.log(err);
             });
     }, []);
-    
     return (
         <>
             <Card style={{ padding: '5px', height: '800px', overflow: 'scroll', marginRight: '20px' }} className="col col-lg-5 col-sm-6">
                 {/* <h6 style={{ textAlign: 'center' }}>{title}</h6> */}
-                {spinner ? <Spinner animation="grow" /> : data.length === 0 ? <div className="d-flex justify-content-center" style={{fontSize:'25px',fontFamily: 'quicksand',color:'grey'}}>No Content Yet</div> :
+                {spinner ? <Spinner animation="grow" /> : data.length === 0 ? <div className="d-flex justify-content-center" style={{ fontSize: '25px', fontFamily: 'quicksand', color: 'grey' }}>No Content Yet</div> :
                     <Accordion defaultActiveKey="0">
                         {data.map(data => {
                             return (
@@ -53,7 +52,6 @@ const Contentlog = () => {
                             )
                         })}
                     </Accordion>
-                    
                 }
             </Card>
         </>

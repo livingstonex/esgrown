@@ -31,9 +31,9 @@ const UpdateCorp = ({ show, onHide, closeModal, service }) => {
                 //         return r.service === service;
                 //     })
 
-                    setEmail(res.data.email)
-                    setUpdateData(res.data);
-                    setSpinner(false)
+                setEmail(res.data.email)
+                setUpdateData(res.data);
+                setSpinner(false)
 
                 // }
 

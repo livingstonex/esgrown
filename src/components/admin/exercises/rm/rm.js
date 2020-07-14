@@ -31,7 +31,7 @@ const RMexercises = () => {
             })
             .catch(err => console.log(err));
 
-    },[])
+    }, [])
 
     console.log(ex)
 
@@ -49,7 +49,7 @@ const RMexercises = () => {
                 }
             })
             .catch(err => console.log(err));
-    
+
     }
     return (
         <>
@@ -58,7 +58,7 @@ const RMexercises = () => {
                     <RMexercisesLog title={title} ex={ex} spinner={spinner} />
                     <RMexercisesNewContent service={service} title={NewContentTitle} refreshContentLog={refreshContentLog} />
                 </div>
-        </div>
+            </div>
         </>
     );
 }

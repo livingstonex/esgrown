@@ -6,7 +6,7 @@ import { set } from 'mongoose';
 
 
 
-const NewExercises = ({ service, refreshContentLog, title}) => {
+const NewExercises = ({ service, refreshContentLog, title }) => {
 
     const exUrl = `http://localhost:5000/excercise/add`;
 
@@ -66,39 +66,39 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
     const createQuestion = () => {
 
 
-            setSpinner(true);
+        setSpinner(true);
 
-            const splitOptions = options.split(',');
+        const splitOptions = options.split(',');
 
-            const splitAns = ans.split(',');
+        const splitAns = ans.split(',');
 
-            const questionData = {
-                excercise_id: exId,
-                question: question,
-                options: splitOptions,
-                correct_ans: splitAns,
-                score: score
-            }
+        const questionData = {
+            excercise_id: exId,
+            question: question,
+            options: splitOptions,
+            correct_ans: splitAns,
+            score: score
+        }
 
-            axios.post(`http://localhost:5000/question/add`, questionData)
-                .then(res => {
-                    console.log(res.data);
-                    setSpinner(false);
-                    setAns('');
-                    setQuestion('')
-                    setOptions('')
-                    setScore('')
-                    setExId(res.data.excercise_id);
+        axios.post(`http://localhost:5000/question/add`, questionData)
+            .then(res => {
+                console.log(res.data);
+                setSpinner(false);
+                setAns('');
+                setQuestion('')
+                setOptions('')
+                setScore('')
+                setExId(res.data.excercise_id);
 
-                    //get number of questions and display
-                    axios.post(`http://localhost:5000/question/${res.data.excercise_id}`)
-                        .then(res => setTotalQ(res.data.length))
-                        .catch(err => console.log(err))
+                //get number of questions and display
+                axios.post(`http://localhost:5000/question/${res.data.excercise_id}`)
+                    .then(res => setTotalQ(res.data.length))
+                    .catch(err => console.log(err))
 
-                })
-                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
 
-            console.log(questionData);
+        console.log(questionData);
     }
 
 
@@ -142,20 +142,20 @@ const NewExercises = ({ service, refreshContentLog, title}) => {
         //     return;
 
         // } 
-    
+
         setSpinner(true);
 
-            axios.post(exUrl, exData)
-                .then(res => {
-                    setExId(res.data._id);
-                    setSpinner(false);
-                    setPage(2)
-                    refreshContentLog();
-                    console.log(res.data)
-                })
-                .catch(err => {
-                    alert('oops ' + err);
-                })
+        axios.post(exUrl, exData)
+            .then(res => {
+                setExId(res.data._id);
+                setSpinner(false);
+                setPage(2)
+                refreshContentLog();
+                console.log(res.data)
+            })
+            .catch(err => {
+                alert('oops ' + err);
+            })
 
         console.log(exData)
 

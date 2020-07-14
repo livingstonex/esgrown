@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let LM = require('../models/subscriptionS/subscriptionLM.model');
+let LM = require('../models/subscriptions/subscriptionLM.model');
 
 router.route('/add').post((req, res) => {
     const user_id = req.body.user_id;

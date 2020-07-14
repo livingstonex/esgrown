@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import SearchBar from './components/search';
 import CreateJob from './components/create-job';
 import toast from '../../../util/toast';
+import EditJobs from './components/jobseditmodal';
 
 
 
@@ -19,7 +20,8 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
 
     const [show, setShow] = useState(false);
     const [user, setUser] = useState();
-    const [editData, setEditData] = useState();
+    const [editData, setEditData] = useState('');
+    const [showEdit, setShowEdit] = useState(false)
 
 
 
@@ -64,16 +66,18 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
     }
 
     const editJob = (e) => {
-        const editTitle = e.target.getAttribute('data-id');
+        const editjobid = e.target.getAttribute('data-jobid');
 
+        console.log(editjobid)
         const edit = jobs.filter(j => {
-            return j.title === editTitle;
+            return j.job_id === editjobid;
         })
-
+        console.log(edit)
         setEditData(edit);
+        setShowEdit(true);
 
     }
-
+    console.log(editData)
     return (
         <>
             <div className="container" style={{ marginTop: '70px' }}>
@@ -83,9 +87,9 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
 
                         <div className="col-lg-6" style={{ cursor: 'pointer' }} >
                             <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn" style={{ background: 'lightgrey',color:'white' }} onClick={contentCreation}>Create content</div>
+                                <div className="btn" style={{ background: 'lightgrey', color: 'white' }} onClick={contentCreation}>Create content</div>
                                 <div className="btn" style={{ background: 'lightgrey', color: 'white' }} onClick={exerciseCreation}>Create Exercises</div>
-                                <div className="btn" style={{ background: 'lightgrey',color:'white' }} onClick={() => setShow(!show)}>Add Jobs</div>
+                                <div className="btn" style={{ background: 'lightgrey', color: 'white' }} onClick={() => setShow(!show)}>Add Jobs</div>
                                 {/* <div style={{ fontSize: '16px', fontWeight: 'bolder' }} onClick={() => setShow(!show)}> <AddCircleIcon fontSize="large" />  Add Jobs</div> */}
                             </div>
                         </div>
@@ -98,7 +102,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                         <div className="col"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Start Date</span></div>
                         <div className="col"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Dead Line</span></div>
                         <div className="col"><span style={{ fontSize: "18px", fontWeight: "bold" }}>Expected Resumption Date</span></div>
-                        <div className="col" style={{ fontWeight: "bold" }}><span style={{ fontSize: "18px", float: 'right', marginRight: '60px' }}>View</span></div>
+                        <div className="col" style={{ fontWeight: "bold" }}><span style={{ fontSize: "18px", float: 'right', marginRight: '60px' }}>Actions</span></div>
                     </div><br /><br />
 
                     {
@@ -107,8 +111,8 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                                 return job.jobs.map((j, index) => {
                                     return (
                                         <>
-                                            <div className=" d-flex justify-content-center align-items-center" key={index} style={{ height: '50px', background: "silver", borderRadius: '5px',  marginBottom: '15px', textAlign: 'center', }}>
-                                                <div className="col" style={{ textAlign: 'center', fontSize:'10px' }}>{j.title}</div>
+                                            <div className=" d-flex justify-content-center align-items-center" key={index} style={{ height: '50px', background: "silver", borderRadius: '5px', marginBottom: '15px', textAlign: 'center', }}>
+                                                <div className="col" style={{ textAlign: 'center', fontSize: '10px' }}>{j.title}</div>
                                                 <div className="col" >{j.start_date}</div>
                                                 <div className="col" >{j.dead_line}</div>
                                                 <div className="col" >{j.erd}</div>
@@ -118,7 +122,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                                                             ....
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
-                                                            <Dropdown.Item data-index={index} data-id={j.title} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
+                                                            <Dropdown.Item data-index={index} data-jobid={j.job_id} onClick={editJob} ><EditIcon style={{ color: 'green' }} /> Edit</Dropdown.Item>
                                                             <Dropdown.Item data-index={index} data-id={j._id} onClick={deleteJob} ><DeleteIcon style={{ color: 'brown' }} /> Delete</Dropdown.Item>
                                                         </Dropdown.Menu>
                                                     </Dropdown>
@@ -133,6 +137,7 @@ const Jobs = ({ contentCreation, exerciseCreation }) => {
                 </div>
             </div>
             <CreateJob show={show} onHide={() => setShow(!show)} closeModal={closeModal} />
+            <EditJobs show={showEdit} onHide={() => setShowEdit(!showEdit)} data={editData} />
         </>
     );
 }

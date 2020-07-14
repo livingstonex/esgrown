@@ -4,7 +4,7 @@ import axios from 'axios';
 import toast from '../../../../util/toast';
 
 
-const JobsModal = ({ show, onHide, closeModal}) => {
+const JobsModal = ({ show, onHide, closeModal }) => {
 
     const [data, setData] = useState([]);
     const [disabled, setDisabled] = useState(false)
@@ -75,9 +75,9 @@ const JobsModal = ({ show, onHide, closeModal}) => {
                 job_title: jobTitle,
                 job_id: jobID,
                 deadline: deadline
-            } ,
-            
-            
+            },
+
+
         }
 
         try {
@@ -101,12 +101,12 @@ const JobsModal = ({ show, onHide, closeModal}) => {
                     setLoading(false)
                     console.log(err)
                 });
-            
+
         } catch (e) {
             console.log(e)
         }
 
-        
+
     }
 
 

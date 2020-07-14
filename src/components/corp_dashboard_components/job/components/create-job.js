@@ -41,7 +41,7 @@ const CreateJob = ({ show, onHide, closeModal }) => {
 
     const [spinner, setSpinner] = useState(false);
     console.log(jobsData)
-    
+
 
     const [user, setUser] = useState()
 
@@ -52,7 +52,6 @@ const CreateJob = ({ show, onHide, closeModal }) => {
 
         setJobsData({ ...jobsData, [name]: value })
     };
-console.log(jobsData.job_id)
 
     // const setCompany = (e) => {
     //     setCompanyName(e.target.value);
@@ -78,7 +77,7 @@ console.log(jobsData.job_id)
                     setSpinner(false);
                     closeModal();
                 }
-                
+
             })
             .catch(err => console.log(err));
 
@@ -87,7 +86,7 @@ console.log(jobsData.job_id)
             email: '',
             start_date: '',
             dead_line: '',
-            erd:'',
+            erd: '',
             desc: ''
 
         });
@@ -97,7 +96,7 @@ console.log(jobsData.job_id)
     return (
         <>
 
-            <Modal show={show} onHide={onHide} centered style={{marginTop:'60px', marginBottom:'70px'}}>
+            <Modal show={show} onHide={onHide} centered style={{ marginTop: '60px', marginBottom: '70px' }}>
 
                 <div className="container">
                     {/* <div className="row mt-3">
@@ -162,8 +161,8 @@ console.log(jobsData.job_id)
                     </Modal.Footer>
                 </div>
             </Modal>
-            <br/>
-            <br/>
+            <br />
+            <br />
         </>
     );
 }

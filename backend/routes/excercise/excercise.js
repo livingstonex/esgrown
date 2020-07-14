@@ -38,6 +38,16 @@ router.route(`/:corpid`).get((req, res) => {
 
 
 
+//========================== get all exercises by job id =========================================
+
+router.route(`/rm/:jobid`).get((req, res) => { 
+    EX.find({ job_id: req.params.jobid })
+        .then(exe => res.json(exe))
+        .catch(err => res.status(400).json(err))
+});
+
+
+
 
 // ============================= Get update based on user last login ===============================
 

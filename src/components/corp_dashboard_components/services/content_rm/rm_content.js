@@ -7,7 +7,6 @@ import { setDefaultLocale } from 'react-datepicker';
 
 export default function RMContentCreation() {
 
-    
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
@@ -38,7 +37,7 @@ export default function RMContentCreation() {
                 .then(res => {
                     setData(res.data);
                     setSpinner(false)
-                 })
+                })
                 .catch(err => {
                     console.log(err);
                 });

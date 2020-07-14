@@ -89,10 +89,10 @@ const AddStaff = ({ show, onHide, closeModal = () => { }, refreshStaff = () => {
                                     }
                                 })
                                 .catch(err => notify(err.message, 'error'));
-                        } 
+                        }
                     }
-                    
-                        notify("User with this email already exists", "warn");
+
+                    notify("User with this email already exists", "warn");
 
                     setData({
                         name: '',

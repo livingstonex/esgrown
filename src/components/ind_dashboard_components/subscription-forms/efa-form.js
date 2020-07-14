@@ -156,7 +156,7 @@ export default function Form(props) {
 
 
                 //update user details
-                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, { sub_status_efa: client[0].status,})
+                axios.post(`http://localhost:5000/individuals/update/substatus/${userId}`, { sub_status_efa: client[0].status, })
                     .then(res => {
                         const globalUser = JSON.parse(sessionStorage.getItem('key'));
 

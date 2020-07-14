@@ -12,7 +12,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('key'));
         setUser(user)
-        
+
     }, []);
 
     const rate = event => {
@@ -26,7 +26,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
 
         const data = {
             org: user.name,
-            total_weeks: lastDoc ? lastDoc.total_weeks : weeks ,
+            total_weeks: lastDoc ? lastDoc.total_weeks : weeks,
             ratings: {
                 name: details.fullname,
                 personnel_id: details._id,
@@ -45,7 +45,7 @@ const Rate = ({ show, onHide, details, closeModal, weeks, lastDoc }) => {
                 } else {
                     toast(`teacher rating successful`, "success");
                 }
-                
+
                 closeModal();
             })
             .catch(err => toast(err, "error"))

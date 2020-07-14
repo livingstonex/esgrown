@@ -98,11 +98,11 @@ const Subscription = () => {
                                         Subscribed
                                 </button>
                                     :
-                                <button
-                                    className="btn mt-3 py-2 border-0"
-                                    style={{ background: '#21A5E7', color: 'white' }}
-                                    onClick={() => setrmform(!rmform)}
-                                >
+                                    <button
+                                        className="btn mt-3 py-2 border-0"
+                                        style={{ background: '#21A5E7', color: 'white' }}
+                                        onClick={() => setrmform(!rmform)}
+                                    >
                                         Subscribe
                                 </button>}
                             </CardActions>

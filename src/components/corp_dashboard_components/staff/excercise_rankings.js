@@ -45,7 +45,7 @@ export default function ExcerciseRankings({ page }) {
     );
 
     // Get all jobs by company id
-    function getJobs(id){
+    function getJobs(id) {
         try {
             axios.get(`http://localhost:5000/jobs/${id}`)
                 .then(res => {
@@ -145,7 +145,7 @@ export default function ExcerciseRankings({ page }) {
     //                 })
     //                 .catch(err => console.log(err));
     //     } catch (error) {
-            
+
     //     }
     // }
 

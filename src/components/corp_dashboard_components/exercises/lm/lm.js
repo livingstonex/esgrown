@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LMexercisesLog from '../../../admin/exercises/components/exercise_log';
 import LMexercisesNewContent from '../../../admin/exercises/components/new_exercise';

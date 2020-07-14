@@ -17,7 +17,7 @@
 // export default function Services() {
 
 
-    
+
 //     const [pageRM, setPageRM] = useState(0);
 //     const [pageLM, setPageLM] = useState(0);
 //     const [pageEAS, setPageEAS] = useState(0);
@@ -76,7 +76,7 @@
 //                     <br />
 //                     {(pageLM === 0) ? <Spinner as="span" animation="grow" size="lg" role="status" aria-hidden="true" /> : (pageLM === 1) ? <LMService /> : (pageLM === 2) ? <LMCard /> : ""}
 //                 </div> */}
-                
+
 //                 <div className="col col-lg-12 col-sm-6" >
 //                     <br />
 //                     {(pageRM === 0) ? <Spinner as="span" animation="grow" size="lg" role="status" aria-hidden="true" /> : (pageRM === 1) ? <RMService /> : (pageRM === 2) ? <RMCard /> : ""}

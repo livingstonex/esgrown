@@ -53,7 +53,7 @@ const ContentLog = (props) => {
                                         <>
 
                                             <Card className="col col-lg-4 col-sm-6 mr-3">
-                                                <br/>
+                                                <br />
                                                 <CardActionArea>
                                                     {
                                                         data.media ? data.media.split('/')[0] === "data:image" ? <img src={data.media} style={{ width: '100%' }} /> : <video src={data.media} controls style={{ width: '100%' }}></video> : ''
@@ -63,7 +63,7 @@ const ContentLog = (props) => {
                                                             {data.title}
                                                         </Typography>
                                                         <Typography variant="body2" color="textSecondary" component="p">
-                                                            {data.content.substring(0,200)}
+                                                            {data.content.substring(0, 200)}
                                                         </Typography>
                                                     </CardContent>
                                                 </CardActionArea>

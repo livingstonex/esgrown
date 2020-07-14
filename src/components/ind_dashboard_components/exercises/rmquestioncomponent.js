@@ -182,7 +182,7 @@ class QuestionsComponent extends Component {
 
         //get user total score
         const total = this.state.userAns.reduce((a, b) => {
-            return a + b.userScore ;
+            return a + b.userScore;
         }, 0)
 
 
@@ -202,7 +202,7 @@ class QuestionsComponent extends Component {
 
         // send to db
         try {
-            this.setState({submitting: true})
+            this.setState({ submitting: true })
             axios.post(`http://localhost:5000/answer/add`, data)
                 .then(res => {
                     this.setState({ submitting: false })
@@ -211,9 +211,9 @@ class QuestionsComponent extends Component {
                 })
                 .catch(err => console.log(err))
             //
-            
+
         } catch (error) {
-            
+
         }
 
 
@@ -232,7 +232,7 @@ class QuestionsComponent extends Component {
         return (
             <>
                 {
-                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} maxScore={this.maxScore}/> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
+                    (this.state.page == 1) ? <StartBtn setStart={this.setStart} duration={this.props.duration} disabled={this.state.disabled} exTaken={this.state.exTaken} /> : (this.state.page == 2) ? <Quiz question={question} submitAns={this.submitAns} handelUserAns={this.handelUserAns} duration={duration} setPage={this.setPage} maxScore={this.maxScore} /> : (this.state.page == 3) ? <SubmitBtn submitAns={this.submitAns} /> : (this.state.page == 0) ? "" : ""
                 }
             </>
         );

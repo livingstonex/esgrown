@@ -9,7 +9,7 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
 
     const [edit, setEdit] = useState([]);
     const [state, setState] = useState({
-        
+
     })
 
     useEffect(() => {
@@ -27,14 +27,14 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
 
     console.log(edit)
 
-   const onChange = (e) => {
-       setEdit({
-           ...edit,
-           [e.target.name]: e.target.value
-       })
+    const onChange = (e) => {
+        setEdit({
+            ...edit,
+            [e.target.name]: e.target.value
+        })
     }
 
-    const submitEdit = async() => {
+    const submitEdit = async () => {
 
         const data = {
             fullname: edit.fullname,
@@ -46,7 +46,7 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
             closeModal()
 
         } catch (e) {
-           console.log(e) 
+            console.log(e)
         }
 
     }
@@ -82,13 +82,13 @@ const EditStaff = ({ show, onHide, id, user, closeModal }) => {
                             </div>
                             {
                                 edit && edit.tic ?
-                                <div className="row mt-3">
-                                    <div className="col">
-                                        <label style={{ fontWeight: 'bold' }}>Teacher Identification Code</label>
-                                        <input type="text" disabled value={edit.tic} className="form-control" required />
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <label style={{ fontWeight: 'bold' }}>Teacher Identification Code</label>
+                                            <input type="text" disabled value={edit.tic} className="form-control" required />
+                                        </div>
                                     </div>
-                                </div>
-                                : ""
+                                    : ""
                             }
 
 

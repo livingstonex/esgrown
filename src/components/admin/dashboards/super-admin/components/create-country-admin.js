@@ -16,7 +16,7 @@ const CreateCountryAdmin = () => {
             email: '',
             privileges: '',
             username: '',
-            password:'',
+            password: '',
             usertype: 'Country Admin'
         }
 
@@ -55,7 +55,7 @@ const CreateCountryAdmin = () => {
             .then(res => {
                 if (res.data.length > 0) {
                     alert(`username ${u} already exist`)
-                } 
+                }
             })
             .catch(err => console.log(err))
     }
@@ -72,27 +72,27 @@ const CreateCountryAdmin = () => {
             privilege: state.privileges.split('/')
 
         }
-        axios.post(`http://localhost:5000/admin/add`,data)
+        axios.post(`http://localhost:5000/admin/add`, data)
             .then(res => {
                 console.log(res.data);
-            if (res.data) {
-                alert('Admin created successfully')
-                setState({
-                    name: '',
-                    email: '',
-                    privileges: '',
-                    username: '',
-                    password: '',
-                    usertype: ''
-                })
+                if (res.data) {
+                    alert('Admin created successfully')
+                    setState({
+                        name: '',
+                        email: '',
+                        privileges: '',
+                        username: '',
+                        password: '',
+                        usertype: ''
+                    })
+                    setSpinner(false)
+                }
+            })
+            .catch(err => {
+                console.log(err);
                 setSpinner(false)
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            setSpinner(false)
 
-        })
+            })
     }
 
     return (

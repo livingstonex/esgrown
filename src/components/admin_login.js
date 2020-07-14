@@ -109,10 +109,10 @@ const AdminLogin = () => {
                                                                 name: res.data.name,
                                                                 privilege: res.data.privilege,
                                                                 email: res.data.email,
-                                                                tutor_level:res.data.tutor_level,
+                                                                tutor_level: res.data.tutor_level,
                                                                 role: res.data.role,
                                                                 country: res.data.country,
-                                                                id:res.data._id,
+                                                                id: res.data._id,
                                                                 isLogged: true,
                                                                 status: "ADMIN"
                                                             }
